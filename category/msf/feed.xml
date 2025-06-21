@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Msf on jra&#39;s thoughts</title>
+    <link>https://blog.nella.org/category/msf/</link>
+    <description>Recent content in Msf on jra&#39;s thoughts</description>
+    <generator>Hugo -- 0.147.8</generator>
+    <language>en-US</language>
+    <lastBuildDate>Tue, 31 Mar 2009 00:07:38 +0000</lastBuildDate>
+    <atom:link href="https://blog.nella.org/category/msf/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>My favorite things, all at once!</title>
+      <link>https://blog.nella.org/2009/03/31/my-favorite-things-all-at-once/</link>
+      <pubDate>Tue, 31 Mar 2009 00:07:38 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=608</guid> 
+      <description>&lt;p&gt;Yay for &lt;a href=&#34;http://www.caida.org/~kc/&#34;&gt;old friends&lt;/a&gt;, economics, and technology! All at once!&lt;/p&gt;
+&lt;p&gt;kc wrote a &lt;a href=&#34;http://blog.caida.org/best_available_data/2009/03/29/icannrir-research-agenda-writ-large/&#34;&gt;blog posting with her humble ideas&lt;/a&gt; on how to use IP address space tax. Wait&amp;hellip; there&amp;rsquo;s a tax on address space? Yes, because it has become a scare quantity, because people are too lazy to move to IPv6, IPv4 address space is running out. The best of all bad ideas about what to do about this is to make an open market for address space, as though network addresses were some kind of useful piece of property with any kind of useful value. (BTW: When the present econolypse is over, and the next bubble starts, it will be an IPv4 address space bubble. Mark my words&amp;hellip;) Address space is bits. We can make more bits&amp;hellip; Look! I just made some! But because the value of a network exists in everyone who is using it, not just &lt;strong&gt;your&lt;/strong&gt; implementation of the network, you can&amp;rsquo;t just add bits in your IP stack and get any benefit. So, while bits are free, and address space could conceiveably be free, because we have a network with limited space, we have a scarce asset. And, of course, what do humans do with scarce assets? We make bubbles! Yay for bubbles!&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>The New Yorker on Aid Work</title>
+      <link>https://blog.nella.org/2009/01/09/the-new-yorker-on-aid-work/</link>
+      <pubDate>Fri, 09 Jan 2009 15:22:16 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=464</guid> 
+      <description>&lt;p&gt;There is a really excellent &lt;a href=&#34;http://www.newyorker.com/reporting/2009/01/05/090105fa_fact_harr?printable=true&#34;&gt;article on aid work&lt;/a&gt; in The New Yorker.&lt;/p&gt;
+&lt;p&gt;Though this is pretty much a write-only blog at this point, and I don&amp;rsquo;t really know if anyone cares, here are my reactions to the article:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;It is remarkably candid, but&amp;hellip;&lt;/li&gt;
+&lt;li&gt;it is too hopeless&amp;hellip;&lt;/li&gt;
+&lt;li&gt;because it focuses too much on the UN and not enough on independent actors.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Of course, any reader of mine know my biases: I am a cynical humanist capitalist from Silicon Valley (engaged to be married to a practical humanist socialist from Switzerland), who chose to work with MSF due to it&amp;rsquo;s independence. Because this article speaks to the core of my identity, of course my biases are going to be the key to my understanding of it.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>The OC</title>
+      <link>https://blog.nella.org/2008/12/13/the-oc/</link>
+      <pubDate>Sat, 13 Dec 2008 18:22:46 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=450</guid> 
+      <description>&lt;p&gt;(Good lord is this a day for blogging. I suppose sometimes the dam breaks and the thoughts spill out&amp;hellip;)&lt;/p&gt;
+&lt;p&gt;Today I got a question from &lt;a href=&#34;http://aidworkerdaily.com&#34;&gt;Jon&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;What is OCA and OCP? MSF is getting into the acronym business like everyone else!&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;The simple answer: OC = Operating Centre, or Cell depending on the person.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;OCB - Brussels&lt;/li&gt;
+&lt;li&gt;OCA - Amsterdam&lt;/li&gt;
+&lt;li&gt;OCBA - Barcelona/Athens&lt;/li&gt;
+&lt;li&gt;OCG - Geneva&lt;/li&gt;
+&lt;li&gt;OCP - The mythical Parisian OC, which does not exist as far as I know&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;An OC is supposed to be a reflection of the difference between the hosting section, which has a responsibility to communicate with the people of the country for temoinage and fundraising, recruit, etc and the OC, which has a responsibility to all of the donor sections that contribute to it to get the work done, and report back what got done, so that the donor section can explain to their constituency what got done with the $$.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Baby Season</title>
+      <link>https://blog.nella.org/2008/11/02/baby-season/</link>
+      <pubDate>Sun, 02 Nov 2008 14:14:14 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=419</guid> 
+      <description>&lt;p&gt;Marina is doing a project right now in her Public Health class where she has to make a project proposal (the whole thing, with the Gant charts, the budget, etc) for a Maternal Health project in a fictional health district in a fictional country in Africa.&lt;/p&gt;
+&lt;p&gt;As we were discussing it, I came up with a question&amp;hellip; what is the variation in pregnancy over the course of a year? Is it seasonal? If so, in which cultures yes and which cultures no? Why?&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Shame and Aid Work</title>
+      <link>https://blog.nella.org/2008/10/13/shame-and-aid-work/</link>
+      <pubDate>Mon, 13 Oct 2008 17:06:00 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=367</guid> 
+      <description>&lt;p&gt;&lt;a href=&#34;http://humanitarianrelief.change.org/blog/view/bonjour_monsieur_-_what_to_do_when_rebels_overrun_your_compound&#34;&gt;This&lt;/a&gt; is a story a bit like mine from Chad, though we were not faced with bandits/rebels/soldiers directly. The feelings of shame and regret she has are related to the complicated feelings I had on leaving Chad as well.&lt;/p&gt;
+&lt;p&gt;In my case, we had nothing to be ashamed of &amp;ndash; we took good care of ourselves and our staff and were not bad guests anywhere. But it does give you a sense of shame that as an expat you are different: you&amp;rsquo;re allowed to just go away, and your colleagues can&amp;rsquo;t.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>A Call for Help</title>
+      <link>https://blog.nella.org/2008/10/11/a-call-for-help/</link>
+      <pubDate>Sat, 11 Oct 2008 13:09:20 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=352</guid> 
+      <description>&lt;p&gt;&lt;a href=&#34;http://www.iol.co.za/index.php?set_id=1&amp;amp;click_id=3069&amp;amp;art_id=vn20081010055634633C272033&#34;&gt;Something very wrong&lt;/a&gt; is going on on South Africa, and the world is missing it:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&amp;ldquo;It is better for us to be here than go for reintegration. The South Africans want to kill us and the government is trying to kill us. Reintegration&amp;rsquo;s a death sentence. We&amp;rsquo;d rather die here together,&amp;rdquo; said Johnny Kaka.&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;MSF is only one voice, and &lt;a href=&#34;http://www.msf.org/msfinternational/invoke.cfm?objectid=D3341261-15C5-F00A-257A117997E83742&amp;amp;component=toolkit.pressrelease&amp;amp;method=full_html&#34;&gt;though they are speaking out&lt;/a&gt;, the immigrants in South Africa need more people to speak for them.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>NSA is Spying on MSF</title>
+      <link>https://blog.nella.org/2008/10/10/nsa-is-spying-on-msf/</link>
+      <pubDate>Fri, 10 Oct 2008 10:29:36 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=347</guid> 
+      <description>&lt;p&gt;Here&amp;rsquo;s a &lt;a href=&#34;http://www.salon.com/opinion/greenwald/2008/10/09/eavesdropping/&#34;&gt;story&lt;/a&gt; that&amp;rsquo;s, unfortunately, not a surprise:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;KINNE: And over the course of my time, as we slowly began to identify phone numbers and who belonged to what, one thing that gave me grave concern was that as we identified phone numbers, we started to find more and more and more numbers that belonged not to any organizations affiliated with terrorism or with military &amp;hellip; with militaries of Iraq or Afghanistan or elsewhere, but with humanitarian aid organizations, non-governmental organizations, who include the International Red Cross, Red Crescent, &lt;strong&gt;Doctors Without Borders&lt;/strong&gt;, a whole host of humanitarian aid organizations. And it also included journalists&amp;hellip;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Same conversation, different venue</title>
+      <link>https://blog.nella.org/2008/10/09/same-conversation-different-venue/</link>
+      <pubDate>Thu, 09 Oct 2008 12:53:14 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=343</guid> 
+      <description>&lt;p&gt;The dirty secret of aid work&amp;hellip; it always comes down to this&amp;hellip; the navel-gazing, &amp;ldquo;why am I here&amp;rdquo;, &amp;ldquo;why is it so ineffective&amp;rdquo; conversation.&lt;/p&gt;
+&lt;p&gt;Usually it happens around the campfire, over a bottle of locally made beer, or perhaps for the lucky coordination team in the capital city, at the nearby expat-only restaurant over a nice bottle of South African wine. As with everything this century, it&amp;rsquo;s &lt;a href=&#34;http://www.aidworkers.net/?q=node/1604&#34;&gt;moved onto the Internet&lt;/a&gt;. But the essential tone of the conversation, and the impossibility of resolving the problem remains.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>And now a word from your local public health authorities...</title>
+      <link>https://blog.nella.org/2008/10/03/and-now-a-word-from-your-local-public-health-authorities/</link>
+      <pubDate>Fri, 03 Oct 2008 16:29:08 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=323</guid> 
+      <description>&lt;p&gt;Headline from a Scientific American blog posting:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.sciam.com/blog/60-second-science/post.cfm?id=measles-is-back-and-its-because-you-2008-08-22&amp;amp;sc=rss&#34;&gt;Measles is back, and it&amp;rsquo;s because your kids aren&amp;rsquo;t vaccinated&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;There was a measles epidemic in the canton of Vaud in Switzerland this year. MSF was thinking about intervening and setting up a vaccination site in Place Ripon, but the corrupt, inefficient, and chronically underfunded local health authorities managed to handle the crisis themselves and MSF just monitored the situation from it&amp;rsquo;s base in Geneva.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Crowd control in Ethiopia</title>
+      <link>https://blog.nella.org/2008/10/01/crowd-control-in-ethiopia/</link>
+      <pubDate>Wed, 01 Oct 2008 10:10:49 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=309</guid> 
+      <description>&lt;p&gt;My major job in Ethiopia this summer was crowd control. As a log, I am responsible for setting up the facilities where we work &amp;ndash; a little bit of &lt;a href=&#34;http://www.pioneeringmadeeasy.co.uk/bridges/susbridgefrench.html&#34;&gt;pioneering merit badge&lt;/a&gt;, &lt;a href=&#34;https://goo.gl/photos/A1qLju91NNxJa2pA6&#34;&gt;architecture&lt;/a&gt;, and a whole lot of &lt;a href=&#34;http://www.usafe.af.mil/shared/media/photodb/photos/060623-f-3366c-005.JPG&#34;&gt;crowd control&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Here are two pictures from MSF&amp;rsquo;s interventions in Ethiopia that give you an idea of what my job looked like: &lt;a href=&#34;http://www.msf.fr/slideshow.php?related=82&amp;amp;ids=15&#34;&gt;the lines&lt;/a&gt;, &lt;a href=&#34;http://www.msf.fr/slideshow.php?related=82&amp;amp;ids=16&#34;&gt;talking to mothers&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;MSF training didn&amp;rsquo;t prepare me for crowd control, which is too bad. There are some simple principles, and learning them by trial and error is dangerous and not very much fun (not for the log, not for the medical team, and especially not for the beneficiaries). The basic principle is &amp;ldquo;calm people are safe, scared people are dangerous&amp;rdquo;. Everything else follows from there. Keep people informed, and set up your site so that even if they don&amp;rsquo;t understand or can&amp;rsquo;t hear the verbal instructions, they can see what&amp;rsquo;s happening and be confident that they are waiting for something of value, and that it won&amp;rsquo;t run out before they get it.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>I&#39;m Back!</title>
+      <link>https://blog.nella.org/2008/09/25/im-back/</link>
+      <pubDate>Thu, 25 Sep 2008 16:17:15 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=290</guid> 
+      <description>&lt;p&gt;After an extended downtime due to lack of give-a-shit on my part, my blog is back, and I am back to blogging. Expect something here daily, which is my goal.&lt;/p&gt;
+&lt;p&gt;Lots and lots of news&amp;hellip; where to start? I suppose at the last post. Since then, Marina and I were evacuated from Chad due to fighting in the town where our project was located. We then found a nice little meningitis emergency in DR Congo. When we came home we had a little vacation, then I went to the USA to see family after close to a year away. We found separate postings with MSF for the summer, which was hard but worthwhile. Marina worked in Myanmar doing mobile clinics from boats, and I went to Oromyia, Ethiopia to participate in an nutritional emergency intervention.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>In their own words</title>
+      <link>https://blog.nella.org/2005/07/26/in-their-own-words/</link>
+      <pubDate>Tue, 26 Jul 2005 14:06:27 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=171</guid> 
+      <description>&lt;p&gt;MSF has a culture of civil (and not so civil) disagreement among it&amp;rsquo;s volunteers, executives, sections, field offices, and so on. To me, this shows that it is a vibrant community of passionate people. The only times in my career when I&amp;rsquo;ve really gotten angry about something was when I cared enough to fight for it.&lt;/p&gt;
+&lt;p&gt;Because the actors in the mini-dramas of MSF are widely dispersed, they seem to have developed a habit of using written communication to fight their battles. I suppose written communication is the most amenable to translation, too. It&amp;rsquo;s great for observers like me, because it means that if you can get your hands on the what the organization is saying among itself, you can see how it works, even as an outsider. Try that with Microsoft!&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>The Skeletons in MSF&#39;s Closet</title>
+      <link>https://blog.nella.org/2005/07/23/the-skeletons-in-msfs-closet/</link>
+      <pubDate>Sat, 23 Jul 2005 08:56:25 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=170</guid> 
+      <description>&lt;p&gt;I might have just gone &lt;strong&gt;too far&lt;/strong&gt; in my quest to learn ever more about MSF. I came across &lt;a href=&#34;https://web.archive.org/web/20070202194507/http://www.ssrc.org/programs/emergencies/publications/torrente.pdf&#34;&gt;this article (107 kb PDF)&lt;/a&gt;. It has interesting details about the internal struggles in MSF&amp;rsquo;s history and in it&amp;rsquo;s current operations.&lt;/p&gt;
+&lt;p&gt;Some interesting things:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;MSF-Belgium was created as a separate legal entity with MSF-France&amp;rsquo;s blessing. Quickly MSF-Belgium&amp;rsquo;s differing interpretation of the mission angered MSF-France, so much so that MSF-France attempted to strip MSF-Belgium of the MSF name in 1985. They failed.&lt;/li&gt;
+&lt;li&gt;The 5 current operational sections used to be 6: MSF-Greece was created to be operational. However, in 1999 MSF-Greece was expelled from the MSF movement over its stance on intervention in Kosovo. It has been reintegrated into the MSF movement as of early 2005, but its operations are now done under the authority of MSF-Spain.&lt;/li&gt;
+&lt;li&gt;Government funding dropped from 50% in 1999 to 20% in 2003. That was due to the increased private-donor fundraising power of the new sections (Australia, Japan, USA, etc).&lt;/li&gt;
+&lt;li&gt;MSF-France relies on MSF-USA for close to 40% of it&amp;rsquo;s operational funds.&lt;/li&gt;
+&lt;li&gt;MSF-Holland has only 20% Dutch citizens in the field. They rely on other sections to make up the other 80%.&lt;/li&gt;
+&lt;li&gt;Internal controls meant to ensure external communications are consistent and do not jeopardize any operations are sometimes (perhaps routinely?) ignored in order to prevent the consultation and coordination process from watering down the message.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;None of that really changes my desire to work for MSF, but it does explain where some of the friction I&amp;rsquo;ve heard returned volunteers talk about comes from. One volunteer told me that it&amp;rsquo;s not true that MSF doesn&amp;rsquo;t play well with other NGO&amp;rsquo;s. But he went on to say that MSF-X is more likely to work with Oxfam or GOAL than to cooperate peacefully with MSF-Y! (Take that with a grain of salt, of course&amp;hellip;)&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

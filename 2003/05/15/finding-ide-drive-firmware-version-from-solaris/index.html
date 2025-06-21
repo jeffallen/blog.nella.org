@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Finding IDE drive firmware version from Solaris | jra&#39;s thoughts</title>
+<meta name="keywords" content="">
+<meta name="description" content="I am working on a mysterious bug at work, and absent of any other promising theories, I decided to compare the firmware revision of all the hard drives involved to see if that correlated with the pattern of problems. If you aren&rsquo;t a sysadmin, that will either not make any sense at all, or will give you some insight into what our lives are like.
+So I figured it can&rsquo;t be too hard, right? Getting this info from a SCSI disk turns out to be easy, as long as you have Veritas NetBackup server installed, and are on a Sparc. You run &ldquo;sgscan&rdquo;, which uses the SCSI Generic driver to scan the buses. Fine, but I was on Solaris x86, and though I did have the NetBackup client package available to me, sgscan is only available in the server install.">
+<meta name="author" content="jra">
+<link rel="canonical" href="https://blog.nella.org/2003/05/15/finding-ide-drive-firmware-version-from-solaris/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.3beea2776320e39a6c8d0589cd10cf4cbbbe3ca9b6f0363cfeef1417ed39a195.css" integrity="sha256-O&#43;6id2Mg45psjQWJzRDPTLu&#43;PKm28DY8/u8UF&#43;05oZU=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://blog.nella.org/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://blog.nella.org/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://blog.nella.org/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://blog.nella.org/apple-touch-icon.png">
+<link rel="mask-icon" href="https://blog.nella.org/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://blog.nella.org/2003/05/15/finding-ide-drive-firmware-version-from-solaris/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend&display=swap" rel="stylesheet">
+<meta property="og:url" content="https://blog.nella.org/2003/05/15/finding-ide-drive-firmware-version-from-solaris/">
+  <meta property="og:site_name" content="jra&#39;s thoughts">
+  <meta property="og:title" content="Finding IDE drive firmware version from Solaris">
+  <meta property="og:description" content="I am working on a mysterious bug at work, and absent of any other promising theories, I decided to compare the firmware revision of all the hard drives involved to see if that correlated with the pattern of problems. If you aren’t a sysadmin, that will either not make any sense at all, or will give you some insight into what our lives are like.
+So I figured it can’t be too hard, right? Getting this info from a SCSI disk turns out to be easy, as long as you have Veritas NetBackup server installed, and are on a Sparc. You run “sgscan”, which uses the SCSI Generic driver to scan the buses. Fine, but I was on Solaris x86, and though I did have the NetBackup client package available to me, sgscan is only available in the server install.">
+  <meta property="og:locale" content="en-US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2003-05-15T19:23:07+00:00">
+    <meta property="article:modified_time" content="2003-05-15T19:23:07+00:00">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Finding IDE drive firmware version from Solaris">
+<meta name="twitter:description" content="I am working on a mysterious bug at work, and absent of any other promising theories, I decided to compare the firmware revision of all the hard drives involved to see if that correlated with the pattern of problems. If you aren&rsquo;t a sysadmin, that will either not make any sense at all, or will give you some insight into what our lives are like.
+So I figured it can&rsquo;t be too hard, right? Getting this info from a SCSI disk turns out to be easy, as long as you have Veritas NetBackup server installed, and are on a Sparc. You run &ldquo;sgscan&rdquo;, which uses the SCSI Generic driver to scan the buses. Fine, but I was on Solaris x86, and though I did have the NetBackup client package available to me, sgscan is only available in the server install.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://blog.nella.org/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Finding IDE drive firmware version from Solaris",
+      "item": "https://blog.nella.org/2003/05/15/finding-ide-drive-firmware-version-from-solaris/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Finding IDE drive firmware version from Solaris",
+  "name": "Finding IDE drive firmware version from Solaris",
+  "description": "I am working on a mysterious bug at work, and absent of any other promising theories, I decided to compare the firmware revision of all the hard drives involved to see if that correlated with the pattern of problems. If you aren\u0026rsquo;t a sysadmin, that will either not make any sense at all, or will give you some insight into what our lives are like.\nSo I figured it can\u0026rsquo;t be too hard, right? Getting this info from a SCSI disk turns out to be easy, as long as you have Veritas NetBackup server installed, and are on a Sparc. You run \u0026ldquo;sgscan\u0026rdquo;, which uses the SCSI Generic driver to scan the buses. Fine, but I was on Solaris x86, and though I did have the NetBackup client package available to me, sgscan is only available in the server install.\n",
+  "keywords": [
+    
+  ],
+  "articleBody": "I am working on a mysterious bug at work, and absent of any other promising theories, I decided to compare the firmware revision of all the hard drives involved to see if that correlated with the pattern of problems. If you aren’t a sysadmin, that will either not make any sense at all, or will give you some insight into what our lives are like.\nSo I figured it can’t be too hard, right? Getting this info from a SCSI disk turns out to be easy, as long as you have Veritas NetBackup server installed, and are on a Sparc. You run “sgscan”, which uses the SCSI Generic driver to scan the buses. Fine, but I was on Solaris x86, and though I did have the NetBackup client package available to me, sgscan is only available in the server install.\nAfter digging around some, I learned about the uscsi(7) man page. Interesting stuff there, and good unique terms to search on in Google. As a result, I found some code at MIT I could adapt to do the same thing sgscan was doing, but for free, and in source form, so I could compile it on Solaris x86. The resulting program is here.\nOf course, this is only for SCSI, not for IDE. I did it because I thought it would be nice to understand how sgscan does its work, and also because I was hoping that Solaris’ unified handling of disk and tape devices might extend far enough to make IDE drives act like SCSI ones for the sake of inquiries. No such luck. When you run it on a raw device for an IDE drive, you get “inappropriate ioctl”.\nI knew that IDE drives get probed at boot just like SCSI ones do. I found this line in my logs, and then went and found the corresponding code in the Solaris source.\ngda: Disk0: ",
+  "wordCount" : "753",
+  "inLanguage": "en",
+  "datePublished": "2003-05-15T19:23:07Z",
+  "dateModified": "2003-05-15T19:23:07Z",
+  "author":{
+    "@type": "Person",
+    "name": "jra"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://blog.nella.org/2003/05/15/finding-ide-drive-firmware-version-from-solaris/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "jra's thoughts",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://blog.nella.org/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://blog.nella.org/" accesskey="h" title="jra&#39;s thoughts (Alt + H)">jra&#39;s thoughts</a>
+            <div class="logo-switches">
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://blog.nella.org/">Home</a>&nbsp;»&nbsp;<a href="https://blog.nella.org/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      Finding IDE drive firmware version from Solaris
+    </h1>
+    <div class="post-meta"><span title='2003-05-15 19:23:07 +0000 +0000'>May 15, 2003</span>&nbsp;·&nbsp;4 min&nbsp;·&nbsp;jra
+
+</div>
+  </header> 
+  <div class="post-content"><p>I am working on a mysterious bug at work, and absent of any other promising theories, I decided to compare the firmware revision of all the hard drives involved to see if that correlated with the pattern of problems. If you aren&rsquo;t a sysadmin, that will either not make any sense at all, or will give you some insight into what our lives are like.</p>
+<p>So I figured it can&rsquo;t be too hard, right? Getting this info from a SCSI disk turns out to be easy, as long as you have Veritas NetBackup server installed, and are on a Sparc. You run &ldquo;sgscan&rdquo;, which uses the SCSI Generic driver to scan the buses. Fine, but I was on Solaris x86, and though I did have the NetBackup client package available to me, sgscan is only available in the server install.</p>
+<p>After digging around some, I learned about the uscsi(7) man page. Interesting stuff there, and good unique terms to search on in Google. As a result, I found some code at MIT I could adapt to do the same thing sgscan was doing, but for free, and in source form, so I could compile it on Solaris x86. The resulting program is <a href="http://www.nella.org/jra/geek/ur/ur.c">here</a>.</p>
+<p>Of course, this is only for SCSI, not for IDE. I did it because I thought it would be nice to understand how sgscan does its work, and also because I was hoping that Solaris&rsquo; unified handling of disk and tape devices might extend far enough to make IDE drives act like SCSI ones for the sake of inquiries. No such luck. When you run it on a raw device for an IDE drive, you get &ldquo;inappropriate ioctl&rdquo;.</p>
+<p>I knew that IDE drives get probed at boot just like SCSI ones do. I found this line in my logs, and then went and found the corresponding code in the Solaris source.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>gda: Disk0:  &lt;Vendor &#39;Gen-ATA &#39; Product &#39;Maxtor 5T030H3  &#39;&gt;
+</span></span></code></pre></div><p>That convinced me that it was very likely the data I needed was there in the kernel, but the gda driver had not bothered to print it out. I toyed briefly with trying to compile the gda driver, but I know from past experience that the Solaris sources are pretty much read-only they way they ship them. Critical files are missing (hello, tcp.c, where are you?) and the Makefiles assume that you are sitting at Scott McNealy&rsquo;s desk in Mountain View.</p>
+<p>So I started digging, planning to use adb to ferret out the info. Let me tell you, digging backwards from the log message towards the probe was <strong>not</strong> a good idea. I wasted lots of time out in kernel hinterland, then finally realized that &ldquo;Gen-ATA&rdquo; is probably not coming from the disk (duh!), and could probably be found in the source, and would act as a useful signpost. From there it got much easier, since I could see that indeed the firmware revision gets copied out of the inquiry reply from the IDE disk and put into the fake SCSI inquiry structure. (This faking they do is part of what got me thinking uscsi(7) would be enough.)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#a6e22e">ata_disk_fake_inquiry</span>(
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">ata_drv_t</span> <span style="color:#f92672">*</span>ata_drvp)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> ata_id <span style="color:#f92672">*</span>ata_idp <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>ata_drvp<span style="color:#f92672">-&gt;</span>ad_id;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> scsi_inquiry <span style="color:#f92672">*</span>inqp <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>ata_drvp<span style="color:#f92672">-&gt;</span>ad_inquiry;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">ADBG_TRACE</span>((<span style="color:#e6db74">&#34;ata_disk_fake_inquiry enteredn&#34;</span>));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (ata_idp<span style="color:#f92672">-&gt;</span>ai_config <span style="color:#f92672">&amp;</span> ATA_ID_REM_DRV) <span style="color:#75715e">/* ide removable bit */</span>
+</span></span><span style="display:flex;"><span>inqp<span style="color:#f92672">-&gt;</span>inq_rmb <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;      <span style="color:#75715e">/* scsi removable bit */</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>(<span style="color:#66d9ef">void</span>) <span style="color:#a6e22e">strncpy</span>(inqp<span style="color:#f92672">-&gt;</span>inq_vid, <span style="color:#e6db74">&#34;Gen-ATA &#34;</span>, <span style="color:#66d9ef">sizeof</span> (inqp<span style="color:#f92672">-&gt;</span>inq_vid));
+</span></span><span style="display:flex;"><span>inqp<span style="color:#f92672">-&gt;</span>inq_dtype <span style="color:#f92672">=</span> DTYPE_DIRECT;
+</span></span><span style="display:flex;"><span>inqp<span style="color:#f92672">-&gt;</span>inq_qual <span style="color:#f92672">=</span> DPQ_POSSIBLE;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>(<span style="color:#66d9ef">void</span>) <span style="color:#a6e22e">strncpy</span>(inqp<span style="color:#f92672">-&gt;</span>inq_pid, ata_idp<span style="color:#f92672">-&gt;</span>ai_model,
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">sizeof</span> (inqp<span style="color:#f92672">-&gt;</span>inq_pid));
+</span></span><span style="display:flex;"><span>(<span style="color:#66d9ef">void</span>) <span style="color:#a6e22e">strncpy</span>(inqp<span style="color:#f92672">-&gt;</span>inq_revision, ata_idp<span style="color:#f92672">-&gt;</span>ai_fw,
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">sizeof</span> (inqp<span style="color:#f92672">-&gt;</span>inq_revision));
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Finally, I came up with the following bit of ADB magic which will print out all the info. (You paste in the first part up to 40c, it prints the rest.)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># adb -k
+</span></span><span style="display:flex;"><span>physmem 3f8b0
+</span></span><span style="display:flex;"><span>(*((***ata_state)+0t12))+0t20/20c
+</span></span><span style="display:flex;"><span>(*((***ata_state)+0t12))+0t50/8c
+</span></span><span style="display:flex;"><span>(*((***ata_state)+0t12))+0t58/40c
+</span></span><span style="display:flex;"><span>(*((***ata_state)+0t76))+0t20/20c
+</span></span><span style="display:flex;"><span>(*((***ata_state)+0t76))+0t50/8c
+</span></span><span style="display:flex;"><span>(*((***ata_state)+0t76))+0t58/40c
+</span></span><span style="display:flex;"><span>0xe153761c:     T3RJ9B7C
+</span></span><span style="display:flex;"><span>0xe153763a:     TAH71DP0
+</span></span><span style="display:flex;"><span>0xe153763e:     Maxtor 5T030H3
+</span></span><span style="display:flex;"><span>0xe153791c:     V80KQ8WC
+</span></span><span style="display:flex;"><span>0xe153793a:     ZAH814YO
+</span></span><span style="display:flex;"><span>0xe153793e:     Maxtor 98196H8
+</span></span></code></pre></div><p>That&rsquo;s the serial number first, then the revision, then the model number of the disk. The second set of data is for the slave IDE device on the primary controller. I do not have a machine with multiple controllers to test with, but you&rsquo;d be monkeying around with the part of the expressions nearest the ata_state to skip to the second controller. Good luck!</p>
+<p>This is a read-only adb operation, so it is very safe. I did it on all of our machines while they were in service, and I still work for my employer. However, YMMV. Do not <strong>ever</strong> start up adb unless you either can tolerate a panic, or know why you are not going to make one.</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+
+<ul class="share-buttons">
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Finding IDE drive firmware version from Solaris on linkedin"
+            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.nella.org%2f2003%2f05%2f15%2ffinding-ide-drive-firmware-version-from-solaris%2f&amp;title=Finding%20IDE%20drive%20firmware%20version%20from%20Solaris&amp;summary=Finding%20IDE%20drive%20firmware%20version%20from%20Solaris&amp;source=https%3a%2f%2fblog.nella.org%2f2003%2f05%2f15%2ffinding-ide-drive-firmware-version-from-solaris%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Finding IDE drive firmware version from Solaris on ycombinator"
+            href="https://news.ycombinator.com/submitlink?t=Finding%20IDE%20drive%20firmware%20version%20from%20Solaris&u=https%3a%2f%2fblog.nella.org%2f2003%2f05%2f15%2ffinding-ide-drive-firmware-version-from-solaris%2f">
+            <svg version="1.1" xml:space="preserve" width="30px" height="30px" viewBox="0 0 512 512" fill="currentColor"
+                xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
+                <path
+                    d="M449.446 0C483.971 0 512 28.03 512 62.554L512 449.446C512 483.97 483.97 512 449.446 512L62.554 512C28.03 512 0 483.97 0 449.446L0 62.554C0 28.03 28.029 0 62.554 0L449.446 0ZM183.8767 87.9921H121.8427L230.6673 292.4508V424.0079H281.3328V292.4508L390.1575 87.9921H328.1233L256 238.2489z" />
+            </svg>
+        </a>
+    </li>
+</ul>
+
+  </footer>
+</article>
+    </main>
+    
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

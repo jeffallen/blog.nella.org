@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Clojure on jra&#39;s thoughts</title>
+    <link>https://blog.nella.org/category/clojure/</link>
+    <description>Recent content in Clojure on jra&#39;s thoughts</description>
+    <generator>Hugo -- 0.147.8</generator>
+    <language>en-US</language>
+    <lastBuildDate>Wed, 21 Feb 2024 16:19:18 +0000</lastBuildDate>
+    <atom:link href="https://blog.nella.org/category/clojure/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Playing (cards) with Clojure</title>
+      <link>https://blog.nella.org/2024/02/21/playing-cards-with-clojure/</link>
+      <pubDate>Wed, 21 Feb 2024 16:19:18 +0000</pubDate>
+       <guid isPermaLink="false">https://blog.nella.org/?p=1389</guid> 
+      <description>&lt;p&gt;I&amp;rsquo;m learning Clojure, which is a modern Lisp, which is hosted on the JVM. I&amp;rsquo;m so far really liking the focus on integrating the benefits of functional programming into a modern environment. It is pragmatic and reasonable. It feels like programming for grown-ups, in the same way that Node.js feels like programming for people with more energy than sense.&lt;/p&gt;
+&lt;p&gt;While riding on the train with my kids, I told them, &amp;ldquo;Hey, I&amp;rsquo;m learning this new language, let&amp;rsquo;s use it to make a card game since we don&amp;rsquo;t have any cards with us.&amp;rdquo; Clojure, as a Lisp, is meant to be usable interactively from a REPL and since I was on my phone in a train, I used an in-browser version of Clojure called ClojureScript. The one I used is at &lt;a href=&#34;http://trycojure.org&#34;&gt;http://trycojure.org&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

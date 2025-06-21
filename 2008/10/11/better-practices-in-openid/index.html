@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Better Practices in OpenID | jra&#39;s thoughts</title>
+<meta name="keywords" content="">
+<meta name="description" content="Yahoo published some best practices on OpenID, but I have one they forgot.
+Imran and I were talking at OpenCoffee Leeds the other day and we independently and together came up with this realization:
+OpenID providers should be required to be OpenID consumers first.
+Why? Well, the problem OpenID is trying to solve is &ldquo;too many usernames&rdquo;, which really equates to &ldquo;too many authentication providers&rdquo;. That means that the last thing we need is more stinkin&rsquo; authentication providers. OpenID providers who are not also OpenID consumers, are just making the problem worse.">
+<meta name="author" content="jra">
+<link rel="canonical" href="https://blog.nella.org/2008/10/11/better-practices-in-openid/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.3beea2776320e39a6c8d0589cd10cf4cbbbe3ca9b6f0363cfeef1417ed39a195.css" integrity="sha256-O&#43;6id2Mg45psjQWJzRDPTLu&#43;PKm28DY8/u8UF&#43;05oZU=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://blog.nella.org/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://blog.nella.org/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://blog.nella.org/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://blog.nella.org/apple-touch-icon.png">
+<link rel="mask-icon" href="https://blog.nella.org/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://blog.nella.org/2008/10/11/better-practices-in-openid/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend&display=swap" rel="stylesheet">
+<meta property="og:url" content="https://blog.nella.org/2008/10/11/better-practices-in-openid/">
+  <meta property="og:site_name" content="jra&#39;s thoughts">
+  <meta property="og:title" content="Better Practices in OpenID">
+  <meta property="og:description" content="Yahoo published some best practices on OpenID, but I have one they forgot.
+Imran and I were talking at OpenCoffee Leeds the other day and we independently and together came up with this realization:
+OpenID providers should be required to be OpenID consumers first.
+Why? Well, the problem OpenID is trying to solve is “too many usernames”, which really equates to “too many authentication providers”. That means that the last thing we need is more stinkin’ authentication providers. OpenID providers who are not also OpenID consumers, are just making the problem worse.">
+  <meta property="og:locale" content="en-US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2008-10-11T18:10:55+00:00">
+    <meta property="article:modified_time" content="2008-10-11T18:10:55+00:00">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Better Practices in OpenID">
+<meta name="twitter:description" content="Yahoo published some best practices on OpenID, but I have one they forgot.
+Imran and I were talking at OpenCoffee Leeds the other day and we independently and together came up with this realization:
+OpenID providers should be required to be OpenID consumers first.
+Why? Well, the problem OpenID is trying to solve is &ldquo;too many usernames&rdquo;, which really equates to &ldquo;too many authentication providers&rdquo;. That means that the last thing we need is more stinkin&rsquo; authentication providers. OpenID providers who are not also OpenID consumers, are just making the problem worse.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://blog.nella.org/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Better Practices in OpenID",
+      "item": "https://blog.nella.org/2008/10/11/better-practices-in-openid/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Better Practices in OpenID",
+  "name": "Better Practices in OpenID",
+  "description": "Yahoo published some best practices on OpenID, but I have one they forgot.\nImran and I were talking at OpenCoffee Leeds the other day and we independently and together came up with this realization:\nOpenID providers should be required to be OpenID consumers first.\nWhy? Well, the problem OpenID is trying to solve is \u0026ldquo;too many usernames\u0026rdquo;, which really equates to \u0026ldquo;too many authentication providers\u0026rdquo;. That means that the last thing we need is more stinkin\u0026rsquo; authentication providers. OpenID providers who are not also OpenID consumers, are just making the problem worse.\n",
+  "keywords": [
+    
+  ],
+  "articleBody": "Yahoo published some best practices on OpenID, but I have one they forgot.\nImran and I were talking at OpenCoffee Leeds the other day and we independently and together came up with this realization:\nOpenID providers should be required to be OpenID consumers first.\nWhy? Well, the problem OpenID is trying to solve is “too many usernames”, which really equates to “too many authentication providers”. That means that the last thing we need is more stinkin’ authentication providers. OpenID providers who are not also OpenID consumers, are just making the problem worse.\nDon’t believe me? Don’t understand me? Let’s try an example. User J controls his own domain name. For sake of example, call it “nella.org”. He wants to be his own authentication provider, and take back total, final control of his name online – he is tired of being jeff.allen here, jeff.r.allen there and jra99 in a third place. He just wants to be nella.org/jra forever, or at least for as long as he can afford to pay for the domain name. He’s also lazy, so he uses delegation, and at least that seems to work right (but read on).\nHe starts looking for places to use his shiny new OpenID. He can use it on his blog, because it is Wordpress, and Wordpress is an OpenID consumer. He can use it at SourceForge. Nifty. But that’s where it ends. He tries to use it to log in to Yahoo, but because Yahoo is an OpenID provider, he can’t associate his OpenID with his Yahoo account. He continues searching and continues finding the same thing – he’s already got 10 OpenIDs he doesn’t want, and can’t use the OpenID he does want!\nImran made the observation that the “before you generate, accept” rule is like the GPL: recursive in order to focus effort on building instead of competing. It occurs to me as I write this that it’s also like the Robustness Principle (which I prefer to remeber as Postel’s Law in order to commemorate a great man): Be conservative in what you do; be liberal in what you accept from others.\nBlogger is a special case. First, Blogger authentication is the Google Account, so if Google was an OpenID consumer, then Blogger would be too. But they aren’t. Except they are, kind of, because one of the options in Blogger when leaving a comment is to login with OpenID. Which according to lots of people, works. For nella.org/jra it doesn’t work, and it seems to have something to do with delegation, because with my undelegated OpenID, it works. Memo to Blogger: stop adding buggy features to your site and hop the train down to Mountain View to visit the GooglePlex to help the Google Accounts team become OpenID consumers. That would fix your problem better and fix all the other Google properties as well.\nWhich brings me to my second proposed best practice: Test delegation, in every conceivable configuration!\nDelegation is super-major-cool-magic, and if your site can’t do it right, then you are not doing OpenID right and pissing off the power users who should be complementing you.\nPS: This is a common complaint, so hopefully OpenID consumers are listening and will get off their ass and implement the actually useful side of the protocol. It’s not so hard… take Wordpress as an example. When a new OpenID arrives, it creates an anonymous account, ties the OpenID to it, and lets the user login. Later, if they care enough, they finish setting up their account.\n",
+  "wordCount" : "587",
+  "inLanguage": "en",
+  "datePublished": "2008-10-11T18:10:55Z",
+  "dateModified": "2008-10-11T18:10:55Z",
+  "author":{
+    "@type": "Person",
+    "name": "jra"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://blog.nella.org/2008/10/11/better-practices-in-openid/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "jra's thoughts",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://blog.nella.org/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://blog.nella.org/" accesskey="h" title="jra&#39;s thoughts (Alt + H)">jra&#39;s thoughts</a>
+            <div class="logo-switches">
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://blog.nella.org/">Home</a>&nbsp;»&nbsp;<a href="https://blog.nella.org/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      Better Practices in OpenID
+    </h1>
+    <div class="post-meta"><span title='2008-10-11 18:10:55 +0000 +0000'>October 11, 2008</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;jra
+
+</div>
+  </header> 
+  <div class="post-content"><p>Yahoo published <a href="http://developer.yahoo.com/openid/bestpractices.html">some best practices</a> on OpenID, but I have one they forgot.</p>
+<p><a href="http://imran.typepad.com/">Imran</a> and I were talking at <a href="http://imran.typepad.com/blog/opencoffee/">OpenCoffee Leeds</a> the other day and we independently and together came up with this realization:</p>
+<p><strong>OpenID providers should be required to be OpenID consumers first.</strong></p>
+<p>Why? Well, the problem OpenID is trying to solve is &ldquo;too many usernames&rdquo;, which really equates to &ldquo;too many authentication providers&rdquo;. That means that the <strong>last thing</strong> we need is more stinkin&rsquo; authentication providers. OpenID providers who are not also OpenID consumers, are just <strong>making the problem worse</strong>.</p>
+<p>Don&rsquo;t believe me? Don&rsquo;t understand me? Let&rsquo;s try an example. User J controls his own domain name. For sake of example, call it &ldquo;nella.org&rdquo;. He wants to be his own authentication provider, and take back total, final control of his name online &ndash; he is tired of being jeff.allen here, jeff.r.allen there and jra99 in a third place. He just wants to be nella.org/jra forever, or at least for as long as he can afford to pay for the domain name. He&rsquo;s also lazy, so he uses delegation, and at least that seems to work right (but read on).</p>
+<p>He starts looking for places to use his shiny new OpenID. He can use it on his blog, because it is Wordpress, and Wordpress is an OpenID consumer. He can use it at SourceForge. Nifty. But that&rsquo;s where it ends. He tries to use it to log in to Yahoo, but because Yahoo is an OpenID provider, he can&rsquo;t associate his OpenID with his Yahoo account. He continues searching and continues finding the same thing &ndash; he&rsquo;s already got 10 OpenIDs he <strong>doesn&rsquo;t</strong> want, and <strong>can&rsquo;t use the OpenID he does want</strong>!</p>
+<p>Imran made the observation that the &ldquo;before you generate, accept&rdquo; rule is like the GPL: recursive in order to focus effort on building instead of competing. It occurs to me as I write this that it&rsquo;s also like the <a href="http://en.wikipedia.org/wiki/Robustness_Principle">Robustness Principle</a> (which I prefer to remeber as Postel&rsquo;s Law in order to commemorate a great man): Be conservative in what you do; be liberal in what you accept from others.</p>
+<p>Blogger is a special case. First, Blogger authentication is the Google Account, so if Google was an OpenID consumer, then Blogger would be too. But they aren&rsquo;t. Except they are, kind of, because one of the options in Blogger when leaving a comment is to login with OpenID. Which according to lots of people, works. For nella.org/jra it doesn&rsquo;t work, and it seems to have something to do with delegation, because with my undelegated OpenID, it works. <strong>Memo to Blogger:</strong> stop adding buggy features to your site and hop the train down to Mountain View to visit the GooglePlex to help the Google Accounts team become OpenID consumers. That would fix your problem better and fix all the other Google properties as well.</p>
+<p>Which brings me to my second proposed best practice: <strong>Test delegation, in every conceivable configuration!</strong></p>
+<p>Delegation is super-major-cool-magic, and if your site can&rsquo;t do it right, then you are not doing OpenID right and pissing off the power users who should be complementing you.</p>
+<p>PS: This is a <a href="https://bugs.launchpad.net/launchpad-foundations/+bug/210943">common</a> <a href="http://blog.wired.com/monkeybites/2008/01/is-yahoo-gearin.html#comment-96406202">complaint</a>, so hopefully OpenID consumers are listening and will get off their ass and implement the actually useful side of the protocol. It&rsquo;s not so hard&hellip; take Wordpress as an example. When a new OpenID arrives, it creates an anonymous account, ties the OpenID to it, and lets the user login. Later, if they care enough, they finish setting up their account.</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+
+<ul class="share-buttons">
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Better Practices in OpenID on linkedin"
+            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.nella.org%2f2008%2f10%2f11%2fbetter-practices-in-openid%2f&amp;title=Better%20Practices%20in%20OpenID&amp;summary=Better%20Practices%20in%20OpenID&amp;source=https%3a%2f%2fblog.nella.org%2f2008%2f10%2f11%2fbetter-practices-in-openid%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Better Practices in OpenID on ycombinator"
+            href="https://news.ycombinator.com/submitlink?t=Better%20Practices%20in%20OpenID&u=https%3a%2f%2fblog.nella.org%2f2008%2f10%2f11%2fbetter-practices-in-openid%2f">
+            <svg version="1.1" xml:space="preserve" width="30px" height="30px" viewBox="0 0 512 512" fill="currentColor"
+                xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
+                <path
+                    d="M449.446 0C483.971 0 512 28.03 512 62.554L512 449.446C512 483.97 483.97 512 449.446 512L62.554 512C28.03 512 0 483.97 0 449.446L0 62.554C0 28.03 28.029 0 62.554 0L449.446 0ZM183.8767 87.9921H121.8427L230.6673 292.4508V424.0079H281.3328V292.4508L390.1575 87.9921H328.1233L256 238.2489z" />
+            </svg>
+        </a>
+    </li>
+</ul>
+
+  </footer>
+</article>
+    </main>
+    
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

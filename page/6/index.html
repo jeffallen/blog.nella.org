@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head>
+	<meta name="generator" content="Hugo 0.147.8"><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>jra&#39;s thoughts</title>
+
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="canonical" href="https://blog.nella.org/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.3beea2776320e39a6c8d0589cd10cf4cbbbe3ca9b6f0363cfeef1417ed39a195.css" integrity="sha256-O&#43;6id2Mg45psjQWJzRDPTLu&#43;PKm28DY8/u8UF&#43;05oZU=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://blog.nella.org/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://blog.nella.org/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://blog.nella.org/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://blog.nella.org/apple-touch-icon.png">
+<link rel="mask-icon" href="https://blog.nella.org/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" type="application/rss+xml" href="https://blog.nella.org/feed.xml">
+<link rel="alternate" type="application/json" href="https://blog.nella.org/index.json">
+<link rel="alternate" hreflang="en" href="https://blog.nella.org/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend&display=swap" rel="stylesheet">
+<meta property="og:url" content="https://blog.nella.org/">
+  <meta property="og:site_name" content="jra&#39;s thoughts">
+  <meta property="og:title" content="jra&#39;s thoughts">
+  <meta property="og:locale" content="en-US">
+  <meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jra&#39;s thoughts">
+<meta name="twitter:description" content="">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "jra's thoughts",
+  "url": "https://blog.nella.org/",
+  "description": "",
+  "logo": "https://blog.nella.org/favicon.ico",
+  "sameAs": [
+      
+  ]
+}
+</script>
+</head>
+
+<body class="list" id="top">
+<script>
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://blog.nella.org/" accesskey="h" title="jra&#39;s thoughts (Alt + H)">jra&#39;s thoughts</a>
+            <div class="logo-switches">
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main"> 
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">How to get started blogging
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>The first step is to think of a really good name. Like Apertura!
+Then have your hubbie set up your blog.
+Then write stuff!
+</p>
+  </div>
+  <footer class="entry-footer"><span title='2014-01-16 21:27:33 +0000 +0000'>January 16, 2014</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to How to get started blogging" href="https://blog.nella.org/2014/01/16/how-to-get-started-blogging/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Taking an MQTT server out for a few holes on the code golf course
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>A while ago at work, I needed to learn a little about MQTT. After reading the spec and finding this package that handles reading and writing the messages themselves, I decided to write a server.
+The result is here: https://github.com/jeffallen/mqtt.
+After I finished, I wanted to know if my server was comparable to Mosquitto, so I wrote some load testing tools. I found that my Go server was generally comparable to Mosquitto, in that it had the same order of magnitude for transaction rate and latency (but it was strictly slower than Mosquitto; there is a cost to pay for the benefits Go gives you). As usual, Go programs compare quite favorably to C programs in terms of memory safety, overall length, and readability. It is also useful to consider that my implementation took only a couple of days to get finished. A C program with equivalent safety, correctness, and speed would take much longer to write. I’ve written them, I know.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2013-12-05 14:16:00 +0000 +0000'>December 5, 2013</span>&nbsp;·&nbsp;4 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Taking an MQTT server out for a few holes on the code golf course" href="https://blog.nella.org/2013/12/05/mqtt-code-golf/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Qz for Mobile Phones
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>I love Quartz. however, I find that the best time/place for me to read it is on the train during my commute. And Quartz’s overly clever and overly dynamic website hates my phone’s browser. So I made Mobile Quartz to help me read it. The front page has the current top articles from Quartz. Click the links to see the article.
+I used this as a chance to write some Go on Google Appspot code, and it was really a pleasure.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2013-06-14 12:43:48 +0000 +0000'>June 14, 2013</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Qz for Mobile Phones" href="https://blog.nella.org/2013/06/14/qz-for-mobile-phones/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Making a time-lapse in Debian
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Make a script like this called “save”. Make it executable.
+#!/bin/sh ct=0 if [ -f &#34;ct&#34; ]; then ct=`cat ct` fi ct=`expr $ct &#43; 1` mv snap.jpg snap-$ct.jpg echo $ct &gt; ct Run “uvccapture -x648 -y480 -c./save -t20” to take a photo every 20 seconds.
+Then you can use a script like this to continually re-encode it and send it to your webserver: #!/bin/sh while true do rm out.mpg cat snap-*.jpg | ./ffmpeg -f image2pipe -r 1 -r 20 -vcodec mjpeg -i - out.mpg scp out.mpg jeff_allen@nella.org:nella.org/jra/geek/3d done
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2013-05-06 20:33:33 +0000 +0000'>May 6, 2013</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Making a time-lapse in Debian" href="https://blog.nella.org/2013/05/06/making-a-time-lapse-in-debian/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">The best safecracking scene EVAR
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>The Best Safecracking Scene, EVAR. ‘Nuff said.
+</p>
+  </div>
+  <footer class="entry-footer"><span title='2013-04-09 08:02:50 +0000 +0000'>April 9, 2013</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to The best safecracking scene EVAR" href="https://blog.nella.org/2013/04/09/the-best-safecracking-scene-evar/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">What I want: a Chrome plugin to report spelling errors
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Here’s what I want to do:
+See an error on a web page Select it and right click In the popup, choose “report a spelling error”. Have a box come up with three fields and a pair of ok/cancel buttons. The three fields are “change from”, “change to”, and Twitter id. The “change from” and Twitter id are auto-populated. The “change to” could be auto-populated using a web service that suggests spelling corrections. When I click on “OK”, it sends a Tweet announcing to the world that:
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2012-12-07 10:10:22 +0000 +0000'>December 7, 2012</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to What I want: a Chrome plugin to report spelling errors" href="https://blog.nella.org/2012/12/07/what-i-want-a-chrome-plugin-to-report-spelling-errors/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Double take
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>The nicest thing happened to me on the way home from work… I got one of those movie-perfect double takes from a guy I passed.
+Of course, it was probably due to the pretty rainbow umbrella I was carrying, while cruising along on my unicycle. Years ago I realized that if it’s a grey rainy day it is nice to have bright colours overhead. Black umbrellas should be outlawed!
+</p>
+  </div>
+  <footer class="entry-footer"><span title='2012-10-26 16:10:53 +0000 +0000'>October 26, 2012</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Double take" href="https://blog.nella.org/2012/10/26/double-take/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Typically Swiss
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>We love local products, so we love TerraSuisse. And we love their new advertisements:
+</p>
+  </div>
+  <footer class="entry-footer"><span title='2012-10-19 19:50:04 +0000 +0000'>October 19, 2012</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Typically Swiss" href="https://blog.nella.org/2012/10/19/918/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">A Dinosaur Story
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Once upon a time, long ago, long long ago… no… long long long ago, lived two dinosaurs. They had a wonderful life to themselves, since they came after the plants but before the humans. They had a land full of plants with no humans to bug them. They had clouds and rainbows and rivers and waterfalls. And they had plants. Lots of plants.
+Which was a good thing, because Bobby the Brontosaurus loved eating plants. He ate like this: “omm nom nom” and he even ate while he talked like this. (Add omm nom nom’s into your talking. If your kid laughs, your doing it right. Then again, if he laughs he won’t go to sleep, so you might not be doing it right afterall.)
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2012-10-19 19:38:33 +0000 +0000'>October 19, 2012</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to A Dinosaur Story" href="https://blog.nella.org/2012/10/19/a-dinosaur-story/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Sugru
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>I had a great first Sugru experience! I scratched my finger on the way to work on my unicycle. I thought, dammit, I’m gonna fix that! So I bought some from my phone on the train. Cool!
+A few days later, it arrived in the post. I was having a hard time explaining why I was so excited about it to my wife. So I sat down, cut open my first packet and started fixing. My wife got interested, fast! She asked, would this stick to the door handle to make a bumper? I said, go try! And off she ran with my Sugru, leaving me grinning and cutting open a new packet…
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2012-10-10 16:36:14 +0000 +0000'>October 10, 2012</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Sugru" href="https://blog.nella.org/2012/10/10/sugru/"></a>
+</article>
+<footer class="page-footer">
+  <nav class="pagination">
+    <a class="prev" href="https://blog.nella.org/page/5/">
+      «&nbsp;Prev&nbsp;
+    </a>
+    <a class="next" href="https://blog.nella.org/page/7/">Next&nbsp;&nbsp;»
+    </a>
+  </nav>
+</footer>
+    </main>
+    
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+</body>
+
+</html>

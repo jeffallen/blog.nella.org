@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>The impatient producer | jra&#39;s thoughts</title>
+<meta name="keywords" content="">
+<meta name="description" content="Last week I showed how a channel could link a producer and a consumer, and I idly speculated on how you&rsquo;d set the depth of the queue, relative to the rate and variability of the producer and the consumer&rsquo;s need for new input.
+This weekend, I got to thinking about my next interesting Go project. It will be an HTTP proxy that can do some nifty tricks to offload a slow Internet link. One of the features I thought I might add would be something to send all the new HTML it sees through a secondary processing system in order to find extra assets it might want to cache. This is a case of a producer that wants to act totally independently of the consumer. If the secondary processing goroutine is slow, or hung inserting something into a database, or whatever, the producer (the HTTP reply) can&rsquo;t hang &ndash; he needs to reply to the client.">
+<meta name="author" content="jra">
+<link rel="canonical" href="https://blog.nella.org/2011/01/11/the-impatient-producer/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.3beea2776320e39a6c8d0589cd10cf4cbbbe3ca9b6f0363cfeef1417ed39a195.css" integrity="sha256-O&#43;6id2Mg45psjQWJzRDPTLu&#43;PKm28DY8/u8UF&#43;05oZU=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://blog.nella.org/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://blog.nella.org/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://blog.nella.org/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://blog.nella.org/apple-touch-icon.png">
+<link rel="mask-icon" href="https://blog.nella.org/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://blog.nella.org/2011/01/11/the-impatient-producer/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend&display=swap" rel="stylesheet">
+<meta property="og:url" content="https://blog.nella.org/2011/01/11/the-impatient-producer/">
+  <meta property="og:site_name" content="jra&#39;s thoughts">
+  <meta property="og:title" content="The impatient producer">
+  <meta property="og:description" content="Last week I showed how a channel could link a producer and a consumer, and I idly speculated on how you’d set the depth of the queue, relative to the rate and variability of the producer and the consumer’s need for new input.
+This weekend, I got to thinking about my next interesting Go project. It will be an HTTP proxy that can do some nifty tricks to offload a slow Internet link. One of the features I thought I might add would be something to send all the new HTML it sees through a secondary processing system in order to find extra assets it might want to cache. This is a case of a producer that wants to act totally independently of the consumer. If the secondary processing goroutine is slow, or hung inserting something into a database, or whatever, the producer (the HTTP reply) can’t hang – he needs to reply to the client.">
+  <meta property="og:locale" content="en-US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2011-01-11T04:17:52+00:00">
+    <meta property="article:modified_time" content="2011-01-11T04:17:52+00:00">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="The impatient producer">
+<meta name="twitter:description" content="Last week I showed how a channel could link a producer and a consumer, and I idly speculated on how you&rsquo;d set the depth of the queue, relative to the rate and variability of the producer and the consumer&rsquo;s need for new input.
+This weekend, I got to thinking about my next interesting Go project. It will be an HTTP proxy that can do some nifty tricks to offload a slow Internet link. One of the features I thought I might add would be something to send all the new HTML it sees through a secondary processing system in order to find extra assets it might want to cache. This is a case of a producer that wants to act totally independently of the consumer. If the secondary processing goroutine is slow, or hung inserting something into a database, or whatever, the producer (the HTTP reply) can&rsquo;t hang &ndash; he needs to reply to the client.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://blog.nella.org/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "The impatient producer",
+      "item": "https://blog.nella.org/2011/01/11/the-impatient-producer/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "The impatient producer",
+  "name": "The impatient producer",
+  "description": "Last week I showed how a channel could link a producer and a consumer, and I idly speculated on how you\u0026rsquo;d set the depth of the queue, relative to the rate and variability of the producer and the consumer\u0026rsquo;s need for new input.\nThis weekend, I got to thinking about my next interesting Go project. It will be an HTTP proxy that can do some nifty tricks to offload a slow Internet link. One of the features I thought I might add would be something to send all the new HTML it sees through a secondary processing system in order to find extra assets it might want to cache. This is a case of a producer that wants to act totally independently of the consumer. If the secondary processing goroutine is slow, or hung inserting something into a database, or whatever, the producer (the HTTP reply) can\u0026rsquo;t hang \u0026ndash; he needs to reply to the client.\n",
+  "keywords": [
+    
+  ],
+  "articleBody": "Last week I showed how a channel could link a producer and a consumer, and I idly speculated on how you’d set the depth of the queue, relative to the rate and variability of the producer and the consumer’s need for new input.\nThis weekend, I got to thinking about my next interesting Go project. It will be an HTTP proxy that can do some nifty tricks to offload a slow Internet link. One of the features I thought I might add would be something to send all the new HTML it sees through a secondary processing system in order to find extra assets it might want to cache. This is a case of a producer that wants to act totally independently of the consumer. If the secondary processing goroutine is slow, or hung inserting something into a database, or whatever, the producer (the HTTP reply) can’t hang – he needs to reply to the client.\nThe solution is to hook up a dispatcher between the producer and one or more consumers. If you just wanted several consumers working, they can just all read from the same channel, and safely take the next item. But if you want to give some kind of guarantee to the producer that it won’t hang, you need to put the dispatcher in the loop. (Of course, the producer can also check for itself that it’s not going to hang by doing a non-blocking write on the channel, then throw away the work unit if it would block. But if you don’t want things getting thrown away, the dispatcher solution is better.) The dispatcher is written so that it can’t block. It finds a consumer ready to take the work unit, and if it doesn’t, then it makes a new one and sends the work unit to the new consumer. If the consumers are too slow, instead of making more of them (risking to make the system suffer collapse) it panics. Not nice, but better to fail fast, and clearly.\nThe result is in the jra-go.googlecode.com/hg repository as a module named autocon. Have a look.\nAs usual, I want to point out some things I liked/disliked about how this turned out.\nFirst, take a look at the autoConsumer type: it’s private. Why? Because the interface this thing gives to the outside world (the producer) is just a channel. The producer doesn’t get a pointer to an object, it just gets the channel it will be talking to. If you wanted to tune or monitor the dispatcher, this wouldn’t work. But I decided to start out with the simplest thing, and this is it. In fact, when it came time to write the tests cases in autocon_test.go I had a problem; I wanted to know what was happening inside, but I didn’t even have a pointer to the autoConsumer to go dig into it, because once NewAutoConsumer returns, the only thing in the entire system that has a pointer to the autoConsumer is run(). I solved that problem with lexically bound channels, so that my workers had access to the same channel that the test routine did. Then the test routine empties the channel looking to see if the right amount of garbage comes out of it (nothing more, nothing less).\nOne thing that’s not too nice is I had to add a runtime.Gosched in the test routines to get them to work. And as usual with scheduling problems, it’s sensitive. When I was debugging scheduling problems using fmt.Print, I got different behavior than when I debugged using println. Why? Because the fmt package uses a channel to implement a leaky bucket of unused pp structures, and the scheduling decisions are disrupted by popping and pushing them inside of fmt.Println. Lesson: beware of fmt when debugging scheduler problems.\nA better solution to finessing the scheduler with runtime.Gosched would be to arrange for a positive signal to come back that the workers had run and done their job and were ready to have the work checked. But because channels don’t have a “wait until 10 are outstanding” kind of primitive, I would have instead needed to implement some kind of condition variable. It didn’t seem like the right place, down in a test routine, to be doing that!\nAnother thing I really don’t like about Go, but don’t have a solution for, is the boilerplate “if closed()” after “for x := range ch”. When a goroutine is blocked on a read on a channel, and another goroutine closes it, the channel becomes readable. The result it returns is a nil. If you don’t want to litter your code with a bunch of “if x != nil”, you need to catch that case early and bail out. Luckily, the closed() primitive tells you what you need to know. I think the behavior of closed channels is just right in Go as it is; it is the unavoidable reality check you get when you go from beautiful theory into ugly practice.\nAnd while I am beating up on myself, let me point out that I’m using a label and a labeled goto. Using labels always seems to me like some kind of failure; like it’s just four little characters short of a goto. But the need is undeniable; when you call break inside of nested for loops, the language spec says that the innermost loop will be broken. In this case, I don’t need it, but it somehow improves readability, in that the label explains exactly which loop we are exiting and why. I am deeply conflicted about loop labels, and I suppose the only answer is to keep using them until I get over it, or until I break the habit.\n",
+  "wordCount" : "953",
+  "inLanguage": "en",
+  "datePublished": "2011-01-11T04:17:52Z",
+  "dateModified": "2011-01-11T04:17:52Z",
+  "author":{
+    "@type": "Person",
+    "name": "jra"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://blog.nella.org/2011/01/11/the-impatient-producer/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "jra's thoughts",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://blog.nella.org/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://blog.nella.org/" accesskey="h" title="jra&#39;s thoughts (Alt + H)">jra&#39;s thoughts</a>
+            <div class="logo-switches">
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://blog.nella.org/">Home</a>&nbsp;»&nbsp;<a href="https://blog.nella.org/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      The impatient producer
+    </h1>
+    <div class="post-meta"><span title='2011-01-11 04:17:52 +0000 +0000'>January 11, 2011</span>&nbsp;·&nbsp;5 min&nbsp;·&nbsp;jra
+
+</div>
+  </header> 
+  <div class="post-content"><p>Last week I showed how a channel could link a producer and a consumer, and I idly speculated on how you&rsquo;d set the depth of the queue, relative to the rate and variability of the producer and the consumer&rsquo;s need for new input.</p>
+<p>This weekend, I got to thinking about my next interesting Go project. It will be an HTTP proxy that can do some nifty tricks to offload a slow Internet link. One of the features I thought I might add would be something to send all the new HTML it sees through a secondary processing system in order to find extra assets it might want to cache. This is a case of a producer that wants to act totally independently of the consumer. If the secondary processing goroutine is slow, or hung inserting something into a database, or whatever, the producer (the HTTP reply) can&rsquo;t hang &ndash; he needs to reply to the client.</p>
+<p>The solution is to hook up a dispatcher between the producer and one or more consumers. If you just wanted several consumers working, they can just all read from the same channel, and safely take the next item. But if you want to give some kind of guarantee to the producer that it won&rsquo;t hang, you need to put the dispatcher in the loop. (Of course, the producer can also check for itself that it&rsquo;s not going to hang by doing a non-blocking write on the channel, then throw away the work unit if it would block. But if you don&rsquo;t want things getting thrown away, the dispatcher solution is better.) The dispatcher is written so that it can&rsquo;t block. It finds a consumer ready to take the work unit, and if it doesn&rsquo;t, then it makes a new one and sends the work unit to the new consumer. If the consumers are too slow, instead of making more of them (risking to make the system suffer collapse) it panics. Not nice, but better to fail fast, and clearly.</p>
+<p>The result is in the jra-go.googlecode.com/hg repository as a module named <a href="http://code.google.com/p/jra-go/source/browse/autocon/autocon.go">autocon</a>. Have a look.</p>
+<p>As usual, I want to point out some things I liked/disliked about how this turned out.</p>
+<p>First, take a look at the autoConsumer type: it&rsquo;s private. Why? Because the interface this thing gives to the outside world (the producer) is just a channel. The producer doesn&rsquo;t get a pointer to an object, it just gets the channel it will be talking to. If you wanted to tune or monitor the dispatcher, this wouldn&rsquo;t work. But I decided to start out with the simplest thing, and this is it. In fact, when it came time to write the tests cases in <a href="http://code.google.com/p/jra-go/source/browse/autocon/autocon_test.go">autocon_test.go</a> I had a problem; I wanted to know what was happening inside, but I didn&rsquo;t even have a pointer to the autoConsumer to go dig into it, because once NewAutoConsumer returns, the only thing in the entire system that has a pointer to the autoConsumer is run(). I solved that problem with lexically bound channels, so that my workers had access to the same channel that the test routine did. Then the test routine empties the channel looking to see if the right amount of garbage comes out of it (nothing more, nothing less).</p>
+<p>One thing that&rsquo;s not too nice is I had to add a runtime.Gosched in the test routines to get them to work. And as usual with scheduling problems, it&rsquo;s sensitive. When I was debugging scheduling problems using fmt.Print, I got different behavior than when I debugged using println. Why? Because the fmt package uses a channel to implement a leaky bucket of unused pp structures, and the scheduling decisions are disrupted by popping and pushing them inside of fmt.Println. Lesson: beware of fmt when debugging scheduler problems.</p>
+<p>A better solution to finessing the scheduler with runtime.Gosched would be to arrange for a positive signal to come back that the workers had run and done their job and were ready to have the work checked. But because channels don&rsquo;t have a &ldquo;wait until 10 are outstanding&rdquo; kind of primitive, I would have instead needed to implement some kind of condition variable. It didn&rsquo;t seem like the right place, down in a test routine, to be doing that!</p>
+<p>Another thing I really don&rsquo;t like about Go, but don&rsquo;t have a solution for, is the boilerplate &ldquo;if closed()&rdquo; after &ldquo;for x := range ch&rdquo;. When a goroutine is blocked on a read on a channel, and another goroutine closes it, the channel becomes readable. The result it returns is a nil. If you don&rsquo;t want to litter your code with a bunch of &ldquo;if x != nil&rdquo;, you need to catch that case early and bail out. Luckily, the closed() primitive tells you what you need to know. I think the behavior of closed channels is just right in Go as it is; it is the unavoidable reality check you get when you go from beautiful theory into ugly practice.</p>
+<p>And while I am beating up on myself, let me point out that I&rsquo;m using a label and a labeled goto. Using labels always seems to me like some kind of failure; like it&rsquo;s just four little characters short of a goto. But the need is undeniable; when you call break inside of nested for loops, the language spec says that the innermost loop will be broken. In this case, I don&rsquo;t need it, but it somehow improves readability, in that the label explains exactly which loop we are exiting and why. I am deeply conflicted about loop labels, and I suppose the only answer is to keep using them until I get over it, or until I break the habit.</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+
+<ul class="share-buttons">
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share The impatient producer on linkedin"
+            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.nella.org%2f2011%2f01%2f11%2fthe-impatient-producer%2f&amp;title=The%20impatient%20producer&amp;summary=The%20impatient%20producer&amp;source=https%3a%2f%2fblog.nella.org%2f2011%2f01%2f11%2fthe-impatient-producer%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share The impatient producer on ycombinator"
+            href="https://news.ycombinator.com/submitlink?t=The%20impatient%20producer&u=https%3a%2f%2fblog.nella.org%2f2011%2f01%2f11%2fthe-impatient-producer%2f">
+            <svg version="1.1" xml:space="preserve" width="30px" height="30px" viewBox="0 0 512 512" fill="currentColor"
+                xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
+                <path
+                    d="M449.446 0C483.971 0 512 28.03 512 62.554L512 449.446C512 483.97 483.97 512 449.446 512L62.554 512C28.03 512 0 483.97 0 449.446L0 62.554C0 28.03 28.029 0 62.554 0L449.446 0ZM183.8767 87.9921H121.8427L230.6673 292.4508V424.0079H281.3328V292.4508L390.1575 87.9921H328.1233L256 238.2489z" />
+            </svg>
+        </a>
+    </li>
+</ul>
+
+  </footer>
+</article>
+    </main>
+    
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

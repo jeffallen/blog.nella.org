@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Who said life is fair? The Go scheduler certainly didn&#39;t... | jra&#39;s thoughts</title>
+<meta name="keywords" content="">
+<meta name="description" content="In my last post, I showed a program that had a strange behavior that caught my eye. I was trying to look at how Go handles shared access to globals, but the program also had the unintended effect of measuring the &ldquo;fairness&rdquo; of the Go scheduler. Here&rsquo;s the program again, for context:
+package main
+
+import &#34;runtime&#34;
+
+var x int
+var ch = make(chan bool)
+
+func f(inc int) {
+	for {
+		println(&#34;f: &#34;, inc)
+		x &#43;= inc
+		ch &lt;- true
+	}
+}
+
+func main() {
+	go f(1)
+	go f(-1)
+	runtime.Gosched()
+
+	for {
+		_ = &lt;- ch
+		_ = &lt;- ch
+		println(&#34;main sees x = &#34;, x)
+	}
+}
+When you run this with GOMAXPROCS=3, and you are on a machine with at least three cores, you get precisely what you&rsquo;d expect: three system threads, each one running one goroutine, and total fairness: f(1) happens once for every f(-1), and the long-run value of x is around 0, but sometimes higher or lower.">
+<meta name="author" content="jra">
+<link rel="canonical" href="https://blog.nella.org/2010/11/08/who-said-life-is-fair-the-go-scheduler-certainly-didnt/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.3beea2776320e39a6c8d0589cd10cf4cbbbe3ca9b6f0363cfeef1417ed39a195.css" integrity="sha256-O&#43;6id2Mg45psjQWJzRDPTLu&#43;PKm28DY8/u8UF&#43;05oZU=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://blog.nella.org/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://blog.nella.org/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://blog.nella.org/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://blog.nella.org/apple-touch-icon.png">
+<link rel="mask-icon" href="https://blog.nella.org/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://blog.nella.org/2010/11/08/who-said-life-is-fair-the-go-scheduler-certainly-didnt/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend&display=swap" rel="stylesheet">
+<meta property="og:url" content="https://blog.nella.org/2010/11/08/who-said-life-is-fair-the-go-scheduler-certainly-didnt/">
+  <meta property="og:site_name" content="jra&#39;s thoughts">
+  <meta property="og:title" content="Who said life is fair? The Go scheduler certainly didn&#39;t...">
+  <meta property="og:description" content="In my last post, I showed a program that had a strange behavior that caught my eye. I was trying to look at how Go handles shared access to globals, but the program also had the unintended effect of measuring the “fairness” of the Go scheduler. Here’s the program again, for context:
+package main import &#34;runtime&#34; var x int var ch = make(chan bool) func f(inc int) { for { println(&#34;f: &#34;, inc) x &#43;= inc ch &lt;- true } } func main() { go f(1) go f(-1) runtime.Gosched() for { _ = &lt;- ch _ = &lt;- ch println(&#34;main sees x = &#34;, x) } } When you run this with GOMAXPROCS=3, and you are on a machine with at least three cores, you get precisely what you’d expect: three system threads, each one running one goroutine, and total fairness: f(1) happens once for every f(-1), and the long-run value of x is around 0, but sometimes higher or lower.">
+  <meta property="og:locale" content="en-US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2010-11-08T08:35:27+00:00">
+    <meta property="article:modified_time" content="2010-11-08T08:35:27+00:00">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Who said life is fair? The Go scheduler certainly didn&#39;t...">
+<meta name="twitter:description" content="In my last post, I showed a program that had a strange behavior that caught my eye. I was trying to look at how Go handles shared access to globals, but the program also had the unintended effect of measuring the &ldquo;fairness&rdquo; of the Go scheduler. Here&rsquo;s the program again, for context:
+package main
+
+import &#34;runtime&#34;
+
+var x int
+var ch = make(chan bool)
+
+func f(inc int) {
+	for {
+		println(&#34;f: &#34;, inc)
+		x &#43;= inc
+		ch &lt;- true
+	}
+}
+
+func main() {
+	go f(1)
+	go f(-1)
+	runtime.Gosched()
+
+	for {
+		_ = &lt;- ch
+		_ = &lt;- ch
+		println(&#34;main sees x = &#34;, x)
+	}
+}
+When you run this with GOMAXPROCS=3, and you are on a machine with at least three cores, you get precisely what you&rsquo;d expect: three system threads, each one running one goroutine, and total fairness: f(1) happens once for every f(-1), and the long-run value of x is around 0, but sometimes higher or lower.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://blog.nella.org/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Who said life is fair? The Go scheduler certainly didn't...",
+      "item": "https://blog.nella.org/2010/11/08/who-said-life-is-fair-the-go-scheduler-certainly-didnt/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Who said life is fair? The Go scheduler certainly didn't...",
+  "name": "Who said life is fair? The Go scheduler certainly didn\u0027t...",
+  "description": "In my last post, I showed a program that had a strange behavior that caught my eye. I was trying to look at how Go handles shared access to globals, but the program also had the unintended effect of measuring the \u0026ldquo;fairness\u0026rdquo; of the Go scheduler. Here\u0026rsquo;s the program again, for context:\npackage main import \u0026#34;runtime\u0026#34; var x int var ch = make(chan bool) func f(inc int) { for { println(\u0026#34;f: \u0026#34;, inc) x += inc ch \u0026lt;- true } } func main() { go f(1) go f(-1) runtime.Gosched() for { _ = \u0026lt;- ch _ = \u0026lt;- ch println(\u0026#34;main sees x = \u0026#34;, x) } } When you run this with GOMAXPROCS=3, and you are on a machine with at least three cores, you get precisely what you\u0026rsquo;d expect: three system threads, each one running one goroutine, and total fairness: f(1) happens once for every f(-1), and the long-run value of x is around 0, but sometimes higher or lower.\n",
+  "keywords": [
+    
+  ],
+  "articleBody": "In my last post, I showed a program that had a strange behavior that caught my eye. I was trying to look at how Go handles shared access to globals, but the program also had the unintended effect of measuring the “fairness” of the Go scheduler. Here’s the program again, for context:\npackage main import \"runtime\" var x int var ch = make(chan bool) func f(inc int) { for { println(\"f: \", inc) x += inc ch \u003c- true } } func main() { go f(1) go f(-1) runtime.Gosched() for { _ = \u003c- ch _ = \u003c- ch println(\"main sees x = \", x) } } When you run this with GOMAXPROCS=3, and you are on a machine with at least three cores, you get precisely what you’d expect: three system threads, each one running one goroutine, and total fairness: f(1) happens once for every f(-1), and the long-run value of x is around 0, but sometimes higher or lower.\nWhen you run this with GOMAXPROCS=1, you see something else. x goes to infinity because the goroutines are called in a unchanging cycle like this:\n\\* f(1)\n\\* f(1)\n\\* f(-1)\n\\* main\nTalk about two steps forward, one step back!\nNow, no one ever said life was fair, nor that the Go scheduler is fair. But in the spirit of digging down into Go more, let’s go find out why not.\nTaking a look at the assembly for main, we can see that each read on the channel results in a call into runtime.readchan1. It is this call into the runtime that causes main() to yield control to the scheduler and let the f(1), f(1), f(-1) cycle begin again, so it should be interesting. If we go take a look at that function (see $GOROOT/src/pkg/runtime/chan.c) it’s not easy to understand right away how marking the sending goroutine as unblocked and ready results in the behavior we see. But this does give us a chance to talk about the Go runtime’s debugging feature, which is useful.\nThis snippet from chan.c shows how the Go runtime does debugging:\nstatic int32 debug = 0; ... void chanrecv(Hchan* c, byte *ep, bool* pres) { ... f(debug) printf(\"chanrecv: chan=%p\\n\", c); Not exactly earth-shattering, I know, but this is what’s nice about Go’s code: it is the simplest possible thing that work.\nIf you change debug = 0 to debug = 1, then recompile (gomake -C $GOMAKE/src/pkg/runtime clean install) your runtime will now spam out messages about channels. This pattern works for other modules, like slices and the scheduler (found in proc.c). Once we have debugging turned on in our runtime, we recompile and relink the test program, and now we have this output:\n1: makechan: chan=0xb7f1d000; elemsize=1; elemalg=0; elemalign=1; dataqsiz=0 2: f: 1 3: chansend: chan=0xb7f1d000; elem=1 4: f: -1 5: chansend: chan=0xb7f1d000; elem=1 6: chanrecv: chan=0xb7f1d000 7: chanrecv: chan=0xb7f1d000 8: main sees x = 0 9: chanrecv: chan=0xb7f1d000 10: f: 1 11: chansend: chan=0xb7f1d000; elem=1 12: f: 1 13: chansend: chan=0xb7f1d000; elem=1 14: f: -1 15: chansend: chan=0xb7f1d000; elem=1 16: chanrecv: chan=0xb7f1d000 17: main sees x = 1 18: chanrecv: chan=0xb7f1d000 19: chanrecv: chan=0xb7f1d000 Hidden in there is the answer to our question, but we’ll have to take it line by line to find it. I have added line numbers to help talk about the output.\nIn lines 2-5, f(1) and f(-1) do their thing and then block themselves by writing to the channel. Once they are both blocked, and now that the channel has got two values waiting on it, main wakes up and receives them both (lines 6-8). In line 9, main’s just gone to sleep waiting on the channel at the top of its loop, on the second time through the loop.\nNow that main is asleep, the scheduler looks around for something to do. f(1) and f(-1) are runnable because they are no longer blocked on their channel writes. In lines 10 and 11, f(1) gets a chance to increment x, and then sends on the channel. What we expect to happen now (on average, anyway) is that f(-1) will get a chance to run. Instead f(1) gets to run again (lines 12-13). Why? Because main was already sleeping on the channel when f(1) wrote to it. Instead of being put to sleep, f(1) completes it’s write and keeps running. On the second write to the channel, it ends up asleep.\nThis points out the key lesson about unbuffered channels from this post: if the receiver is blocked on a read, and the sender does a send, he zips right through the send without yielding control to the Go scheduler.\nAfter f(1) takes the second trip through the loop and finds that the reader is now waiting to wake up on the value he wrote last time through, now he finally goes to sleep. In $GOROOT/src/pkg/runtime/chan.c, in function chansend, the difference between the first time through f(1) and the second time through f(1) is the difference between the dequeue returns non-nil case and the code that follows, where a new pseudo-g is allocated and filled in, then gosched() is called, resulting in the f(1) goroutine yielding.\nThe Go runtime needs to choose the next goroutine to run. It has now got two choices, main and f(-1). It takes the routine that was marked runnable longest ago and runs it; in this case f(-1). Why? Probably to ensure that goroutines cannot be starved for time to run. f(-1) decrements and then tries to send on the channel, but is discovers that there’s no waiting channel reader (remember, f(1) filled up main’s outstanding read request before) and goes to sleep. main gets to run and reads f(1)’s first value (line 9, which happens after line 15), then it’s second (line 16). It prints, loops, finds the message from f(-1) and then goes to sleep again.\nSo it’s clear that due to the behavior of writes onto channels with pending readers, this program is not doing what we wanted at all. A solution is to use two channels instead of one shared channel:\npackage main import \"runtime\" var x int func f(inc int, ch chan bool) { for { println(\"f: \", inc) x += inc ch \u003c- true } } func main() { ch1 := make(chan bool) ch2 := make(chan bool) go f(1, ch1) go f(-1, ch2) runtime.Gosched() for { _ = \u003c- ch1 _ = \u003c- ch2 println(\"main sees x = \", x) } } The results are satisfying:\nmakechan: chan=0xb7e47000; elemsize=1; elemalg=0; elemalign=1; dataqsiz=0 makechan: chan=0xb7e477c0; elemsize=1; elemalg=0; elemalign=1; dataqsiz=0 f: 1 chansend: chan=0xb7e47000; elem=1 f: -1 chansend: chan=0xb7e477c0; elem=1 chanrecv: chan=0xb7e47000 chanrecv: chan=0xb7e477c0 main sees x = 0 chanrecv: chan=0xb7e47000 f: 1 chansend: chan=0xb7e47000; elem=1 f: 1 chansend: chan=0xb7e47000; elem=1 f: -1 chansend: chan=0xb7e477c0; elem=1 chanrecv: chan=0xb7e477c0 main sees x = 1 chanrecv: chan=0xb7e47000 chanrecv: chan=0xb7e477c0 f: -1 chansend: chan=0xb7e477c0; elem=1 f: -1 chansend: chan=0xb7e477c0; elem=1 f: 1 chansend: chan=0xb7e47000; elem=1 main sees x = 0 Note that there’s a new interesting pattern, f(1), f(1), f(-1), main, f(-1), f(-1), f(1), main. But that one will have to wait for another post, the baby wants to play… :)\n",
+  "wordCount" : "1189",
+  "inLanguage": "en",
+  "datePublished": "2010-11-08T08:35:27Z",
+  "dateModified": "2010-11-08T08:35:27Z",
+  "author":{
+    "@type": "Person",
+    "name": "jra"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://blog.nella.org/2010/11/08/who-said-life-is-fair-the-go-scheduler-certainly-didnt/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "jra's thoughts",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://blog.nella.org/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://blog.nella.org/" accesskey="h" title="jra&#39;s thoughts (Alt + H)">jra&#39;s thoughts</a>
+            <div class="logo-switches">
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://blog.nella.org/">Home</a>&nbsp;»&nbsp;<a href="https://blog.nella.org/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      Who said life is fair? The Go scheduler certainly didn&#39;t...
+    </h1>
+    <div class="post-meta"><span title='2010-11-08 08:35:27 +0000 +0000'>November 8, 2010</span>&nbsp;·&nbsp;6 min&nbsp;·&nbsp;jra
+
+</div>
+  </header> 
+  <div class="post-content"><p>In my last post, I showed a program that had a strange behavior that caught my eye. I was trying to look at how Go handles shared access to globals, but the program also had the unintended effect of measuring the &ldquo;fairness&rdquo; of the Go scheduler. Here&rsquo;s the program again, for context:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;runtime&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">x</span> <span style="color:#66d9ef">int</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">ch</span> = make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">bool</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">f</span>(<span style="color:#a6e22e">inc</span> <span style="color:#66d9ef">int</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> {
+</span></span><span style="display:flex;"><span>		println(<span style="color:#e6db74">&#34;f: &#34;</span>, <span style="color:#a6e22e">inc</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">x</span> <span style="color:#f92672">+=</span> <span style="color:#a6e22e">inc</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">go</span> <span style="color:#a6e22e">f</span>(<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">go</span> <span style="color:#a6e22e">f</span>(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">Gosched</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">_</span> = <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">ch</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">_</span> = <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">ch</span>
+</span></span><span style="display:flex;"><span>		println(<span style="color:#e6db74">&#34;main sees x = &#34;</span>, <span style="color:#a6e22e">x</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>When you run this with GOMAXPROCS=3, and you are on a machine with at least three cores, you get precisely what you&rsquo;d expect: three system threads, each one running one goroutine, and total fairness: f(1) happens once for every f(-1), and the long-run value of x is around 0, but sometimes higher or lower.</p>
+<p>When you run this with GOMAXPROCS=1, you see something else. x goes to infinity because the goroutines are called in a unchanging cycle like this:</p>
+<p>\* f(1)</p>
+<p>\* f(1)</p>
+<p>\* f(-1)</p>
+<p>\* main</p>
+<p>Talk about two steps forward, one step back!</p>
+<p>Now, no one ever said life was fair, nor that the Go scheduler is fair. But in the spirit of digging down into Go more, let&rsquo;s go find out why not.</p>
+<p>Taking a look at the assembly for main, we can see that each read on the channel results in a call into runtime.readchan1. It is this call into the runtime that causes main() to yield control to the scheduler and let the f(1), f(1), f(-1) cycle begin again, so it should be interesting. If we go take a look at that function (see $GOROOT/src/pkg/runtime/chan.c) it&rsquo;s not easy to understand right away how marking the sending goroutine as unblocked and ready results in the behavior we see. But this does give us a chance to talk about the Go runtime&rsquo;s debugging feature, which is useful.</p>
+<p>This snippet from chan.c shows how the Go runtime does debugging:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">static</span>  <span style="color:#66d9ef">int32</span> <span style="color:#a6e22e">debug</span> = <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">void</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">chanrecv</span>(<span style="color:#a6e22e">Hchan</span><span style="color:#f92672">*</span> <span style="color:#a6e22e">c</span>, <span style="color:#66d9ef">byte</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">ep</span>, <span style="color:#66d9ef">bool</span><span style="color:#f92672">*</span> <span style="color:#a6e22e">pres</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">f</span>(<span style="color:#a6e22e">debug</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;chanrecv: chan=%p\n&#34;</span>, <span style="color:#a6e22e">c</span>);
+</span></span></code></pre></div><p>Not exactly earth-shattering, I know, but this is what&rsquo;s nice about Go&rsquo;s code: it is the simplest possible thing that work.</p>
+<p>If you change debug = 0 to debug = 1, then recompile (gomake -C $GOMAKE/src/pkg/runtime clean install) your runtime will now spam out messages about channels. This pattern works for other modules, like slices and the scheduler (found in proc.c). Once we have debugging turned on in our runtime, we recompile and relink the test program, and now we have this output:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span> 1: makechan: chan=0xb7f1d000; elemsize=1; elemalg=0; elemalign=1; dataqsiz=0
+</span></span><span style="display:flex;"><span> 2: f:  1
+</span></span><span style="display:flex;"><span> 3: chansend: chan=0xb7f1d000; elem=1
+</span></span><span style="display:flex;"><span> 4: f:  -1
+</span></span><span style="display:flex;"><span> 5: chansend: chan=0xb7f1d000; elem=1
+</span></span><span style="display:flex;"><span> 6: chanrecv: chan=0xb7f1d000
+</span></span><span style="display:flex;"><span> 7: chanrecv: chan=0xb7f1d000
+</span></span><span style="display:flex;"><span> 8: main sees x =  0
+</span></span><span style="display:flex;"><span> 9: chanrecv: chan=0xb7f1d000
+</span></span><span style="display:flex;"><span>10: f:  1
+</span></span><span style="display:flex;"><span>11: chansend: chan=0xb7f1d000; elem=1
+</span></span><span style="display:flex;"><span>12: f:  1
+</span></span><span style="display:flex;"><span>13: chansend: chan=0xb7f1d000; elem=1
+</span></span><span style="display:flex;"><span>14: f:  -1
+</span></span><span style="display:flex;"><span>15: chansend: chan=0xb7f1d000; elem=1
+</span></span><span style="display:flex;"><span>16: chanrecv: chan=0xb7f1d000
+</span></span><span style="display:flex;"><span>17: main sees x =  1
+</span></span><span style="display:flex;"><span>18: chanrecv: chan=0xb7f1d000
+</span></span><span style="display:flex;"><span>19: chanrecv: chan=0xb7f1d000
+</span></span></code></pre></div><p>Hidden in there is the answer to our question, but we&rsquo;ll have to take it line by line to find it. I have added line numbers to help talk about the output.</p>
+<p>In lines 2-5, f(1) and f(-1) do their thing and then block themselves by writing to the channel. Once they are both blocked, and now that the channel has got two values waiting on it, main wakes up and receives them both (lines 6-8). In line 9, main&rsquo;s just gone to sleep waiting on the channel at the top of its loop, on the second time through the loop.</p>
+<p>Now that main is asleep, the scheduler looks around for something to do. f(1) and f(-1) are runnable because they are no longer blocked on their channel writes. In lines 10 and 11, f(1) gets a chance to increment x, and then sends on the channel. What we expect to happen now (on average, anyway) is that f(-1) will get a chance to run. Instead f(1) gets to run again (lines 12-13). Why? Because main was already sleeping on the channel when f(1) wrote to it. Instead of being put to sleep, f(1) completes it&rsquo;s write and keeps running. On the second write to the channel, it ends up asleep.</p>
+<p>This points out the <strong>key lesson</strong> about unbuffered channels from this post: if the receiver is blocked on a read, and the sender does a send, he zips right through the send without yielding control to the Go scheduler.</p>
+<p>After f(1) takes the second trip through the loop and finds that the reader is now waiting to wake up on the value he wrote last time through, now he finally goes to sleep. In $GOROOT/src/pkg/runtime/chan.c, in function chansend, the difference between the first time through f(1) and the second time through f(1) is the difference between the dequeue returns non-nil case and the code that follows, where a new pseudo-g is allocated and filled in, then gosched() is called, resulting in the f(1) goroutine yielding.</p>
+<p>The Go runtime needs to choose the next goroutine to run. It has now got two choices, main and f(-1). It takes the routine that was marked runnable longest ago and runs it; in this case f(-1). Why? Probably to ensure that goroutines cannot be starved for time to run. f(-1) decrements and then tries to send on the channel, but is discovers that there&rsquo;s no waiting channel reader (remember, f(1) filled up main&rsquo;s outstanding read request before) and goes to sleep. main gets to run and reads f(1)&rsquo;s first value (line 9, which happens after line 15), then it&rsquo;s second (line 16). It prints, loops, finds the message from f(-1) and then goes to sleep again.</p>
+<p>So it&rsquo;s clear that due to the behavior of writes onto channels with pending readers, this program is not doing what we wanted at all. A solution is to use two channels instead of one shared channel:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>package main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>import <span style="color:#e6db74">&#34;runtime&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> x <span style="color:#a6e22e">int</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> f(inc <span style="color:#a6e22e">int</span>, ch chan <span style="color:#a6e22e">bool</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> {
+</span></span><span style="display:flex;"><span>		println(<span style="color:#e6db74">&#34;f: &#34;</span>, inc)
+</span></span><span style="display:flex;"><span>		x <span style="color:#f92672">+=</span> inc
+</span></span><span style="display:flex;"><span>		ch <span style="color:#f92672">&lt;-</span> true
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> main() {
+</span></span><span style="display:flex;"><span>	ch1 :<span style="color:#f92672">=</span> make(chan <span style="color:#a6e22e">bool</span>)
+</span></span><span style="display:flex;"><span>	ch2 :<span style="color:#f92672">=</span> make(chan <span style="color:#a6e22e">bool</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	go f(<span style="color:#ae81ff">1</span>, ch1)
+</span></span><span style="display:flex;"><span>	go f(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, ch2)
+</span></span><span style="display:flex;"><span>	runtime<span style="color:#f92672">.</span>Gosched()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> {
+</span></span><span style="display:flex;"><span>		_ <span style="color:#f92672">=</span> <span style="color:#f92672">&lt;-</span> ch1
+</span></span><span style="display:flex;"><span>		_ <span style="color:#f92672">=</span> <span style="color:#f92672">&lt;-</span> ch2
+</span></span><span style="display:flex;"><span>		println(<span style="color:#e6db74">&#34;main sees x = &#34;</span>, x)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The results are satisfying:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>makechan: chan=0xb7e47000; elemsize=1; elemalg=0; elemalign=1; dataqsiz=0
+</span></span><span style="display:flex;"><span>makechan: chan=0xb7e477c0; elemsize=1; elemalg=0; elemalign=1; dataqsiz=0
+</span></span><span style="display:flex;"><span>f:  1
+</span></span><span style="display:flex;"><span>chansend: chan=0xb7e47000; elem=1
+</span></span><span style="display:flex;"><span>f:  -1
+</span></span><span style="display:flex;"><span>chansend: chan=0xb7e477c0; elem=1
+</span></span><span style="display:flex;"><span>chanrecv: chan=0xb7e47000
+</span></span><span style="display:flex;"><span>chanrecv: chan=0xb7e477c0
+</span></span><span style="display:flex;"><span>main sees x =  0
+</span></span><span style="display:flex;"><span>chanrecv: chan=0xb7e47000
+</span></span><span style="display:flex;"><span>f:  1
+</span></span><span style="display:flex;"><span>chansend: chan=0xb7e47000; elem=1
+</span></span><span style="display:flex;"><span>f:  1
+</span></span><span style="display:flex;"><span>chansend: chan=0xb7e47000; elem=1
+</span></span><span style="display:flex;"><span>f:  -1
+</span></span><span style="display:flex;"><span>chansend: chan=0xb7e477c0; elem=1
+</span></span><span style="display:flex;"><span>chanrecv: chan=0xb7e477c0
+</span></span><span style="display:flex;"><span>main sees x =  1
+</span></span><span style="display:flex;"><span>chanrecv: chan=0xb7e47000
+</span></span><span style="display:flex;"><span>chanrecv: chan=0xb7e477c0
+</span></span><span style="display:flex;"><span>f:  -1
+</span></span><span style="display:flex;"><span>chansend: chan=0xb7e477c0; elem=1
+</span></span><span style="display:flex;"><span>f:  -1
+</span></span><span style="display:flex;"><span>chansend: chan=0xb7e477c0; elem=1
+</span></span><span style="display:flex;"><span>f:  1
+</span></span><span style="display:flex;"><span>chansend: chan=0xb7e47000; elem=1
+</span></span><span style="display:flex;"><span>main sees x =  0
+</span></span></code></pre></div><p>Note that there&rsquo;s a new interesting pattern, f(1), f(1), f(-1), main, f(-1), f(-1), f(1), main. But that one will have to wait for another post, the baby wants to play&hellip; :)</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+
+<ul class="share-buttons">
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Who said life is fair? The Go scheduler certainly didn&#39;t... on linkedin"
+            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.nella.org%2f2010%2f11%2f08%2fwho-said-life-is-fair-the-go-scheduler-certainly-didnt%2f&amp;title=Who%20said%20life%20is%20fair%3f%20The%20Go%20scheduler%20certainly%20didn%27t...&amp;summary=Who%20said%20life%20is%20fair%3f%20The%20Go%20scheduler%20certainly%20didn%27t...&amp;source=https%3a%2f%2fblog.nella.org%2f2010%2f11%2f08%2fwho-said-life-is-fair-the-go-scheduler-certainly-didnt%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Who said life is fair? The Go scheduler certainly didn&#39;t... on ycombinator"
+            href="https://news.ycombinator.com/submitlink?t=Who%20said%20life%20is%20fair%3f%20The%20Go%20scheduler%20certainly%20didn%27t...&u=https%3a%2f%2fblog.nella.org%2f2010%2f11%2f08%2fwho-said-life-is-fair-the-go-scheduler-certainly-didnt%2f">
+            <svg version="1.1" xml:space="preserve" width="30px" height="30px" viewBox="0 0 512 512" fill="currentColor"
+                xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
+                <path
+                    d="M449.446 0C483.971 0 512 28.03 512 62.554L512 449.446C512 483.97 483.97 512 449.446 512L62.554 512C28.03 512 0 483.97 0 449.446L0 62.554C0 28.03 28.029 0 62.554 0L449.446 0ZM183.8767 87.9921H121.8427L230.6673 292.4508V424.0079H281.3328V292.4508L390.1575 87.9921H328.1233L256 238.2489z" />
+            </svg>
+        </a>
+    </li>
+</ul>
+
+  </footer>
+</article>
+    </main>
+    
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

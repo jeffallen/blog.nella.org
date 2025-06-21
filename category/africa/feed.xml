@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Africa on jra&#39;s thoughts</title>
+    <link>https://blog.nella.org/category/africa/</link>
+    <description>Recent content in Africa on jra&#39;s thoughts</description>
+    <generator>Hugo -- 0.147.8</generator>
+    <language>en-US</language>
+    <lastBuildDate>Fri, 08 May 2009 14:54:10 +0000</lastBuildDate>
+    <atom:link href="https://blog.nella.org/category/africa/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Community Finance in West Africa</title>
+      <link>https://blog.nella.org/2009/05/08/community-finance-in-west-africa/</link>
+      <pubDate>Fri, 08 May 2009 14:54:10 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=675</guid> 
+      <description>&lt;p&gt;Vasco Pyjama &lt;a href=&#34;http://vasco-pyjama.livejournal.com/233192.html&#34;&gt;talks about community finance&lt;/a&gt;. The ROSCA is known as a &amp;ldquo;sou-sou&amp;rdquo; in west Africa, or at least in Nimba county, Liberia. Sousous run for a fixed term, based on the number of members. If there are 10 members and the contribution is $10, each month one of the members will get $90 (9 other members * $10 each). At the end of ten months, the sousou can either be restarted, or the membership can be renegotiated (for example, to drop people who failed to pay on time during the past sousou period). If the sousou is reconstituted with more or fewer people, it doesn&amp;rsquo;t really change anything, it just runs shorter or longer until the next restart. Sousous run best when they are between 6 and 12 people for social and economic reasons (a 5x - 11x payoff is manageable in a cash society). The order of the payouts is determined randomly at the startup meeting of the sousou. Sometimes people negotiate to trade their places in the payout order in order to assure that the sousou payout would arrive at a time that was convenient for them.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Repair vs Replace</title>
+      <link>https://blog.nella.org/2009/04/10/repair-vs-replace/</link>
+      <pubDate>Fri, 10 Apr 2009 07:56:47 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=632</guid> 
+      <description>&lt;p&gt;What are the economic effects of the repair vs replace decision? Interesting question, that.&lt;/p&gt;
+&lt;p&gt;If you missed &amp;ldquo;more local employment of the blue collar type&amp;rdquo;, &lt;a href=&#34;http://www.npr.org/blogs/money/2009/04/repair_beats_replace.html&#34;&gt;go read this&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;There is a slight diversion of purchasing strategy, repair rather than replace. This feeds a blue collar industry in the local region.&lt;/p&gt;
+&lt;p&gt;It used to be, when money was loose, replace with new was the norm. If the repair was 75 percent of the cost of replacement a new motor was ordered, the old motor was scraped, and the country of origin (Mexico, China, Taiwan) benefited. These beautiful USA built, 50 year old, 200 horsepower motors, were going to the scrap heap.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>My favorite things, all at once!</title>
+      <link>https://blog.nella.org/2009/03/31/my-favorite-things-all-at-once/</link>
+      <pubDate>Tue, 31 Mar 2009 00:07:38 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=608</guid> 
+      <description>&lt;p&gt;Yay for &lt;a href=&#34;http://www.caida.org/~kc/&#34;&gt;old friends&lt;/a&gt;, economics, and technology! All at once!&lt;/p&gt;
+&lt;p&gt;kc wrote a &lt;a href=&#34;http://blog.caida.org/best_available_data/2009/03/29/icannrir-research-agenda-writ-large/&#34;&gt;blog posting with her humble ideas&lt;/a&gt; on how to use IP address space tax. Wait&amp;hellip; there&amp;rsquo;s a tax on address space? Yes, because it has become a scare quantity, because people are too lazy to move to IPv6, IPv4 address space is running out. The best of all bad ideas about what to do about this is to make an open market for address space, as though network addresses were some kind of useful piece of property with any kind of useful value. (BTW: When the present econolypse is over, and the next bubble starts, it will be an IPv4 address space bubble. Mark my words&amp;hellip;) Address space is bits. We can make more bits&amp;hellip; Look! I just made some! But because the value of a network exists in everyone who is using it, not just &lt;strong&gt;your&lt;/strong&gt; implementation of the network, you can&amp;rsquo;t just add bits in your IP stack and get any benefit. So, while bits are free, and address space could conceiveably be free, because we have a network with limited space, we have a scarce asset. And, of course, what do humans do with scarce assets? We make bubbles! Yay for bubbles!&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>O&#39;Reilly Ignite, UK North</title>
+      <link>https://blog.nella.org/2009/01/22/oreilly-ignite-uk-north/</link>
+      <pubDate>Thu, 22 Jan 2009 16:03:22 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=520</guid> 
+      <description>&lt;p&gt;Tonight I am giving a talk the Old Broadcasting House at &lt;a href=&#34;http://ignite.oreilly.com/2008/10/ignite-uk-north.html&#34;&gt;O&amp;rsquo;Reilly Ignite, UK North&lt;/a&gt;. &lt;a href=&#34;http://nella.org/jra/geek/ignite/ignite%20uk%20north%20-%20aid%202.0.pdf&#34;&gt;Here&lt;/a&gt; are my slides.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Update:&lt;/strong&gt; There&amp;rsquo;s a &lt;a href=&#34;http://blip.tv/file/1815674&#34;&gt;video here&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Malaria Medicine Advice</title>
+      <link>https://blog.nella.org/2008/12/13/malaria-medicine-advice/</link>
+      <pubDate>Sat, 13 Dec 2008 16:01:02 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=446</guid> 
+      <description>&lt;p&gt;A friend sent me this question:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Speaking of healthy, when you&amp;rsquo;re in Africa, do you take malaria medication the whole time you&amp;rsquo;re there? Is 45 days too long to take it?&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;First, taking it 45 days is no big deal. It&amp;rsquo;s taking it for months on end (9, 18, 60) that is not recommended &amp;ndash; not because of actual risks, but because of not enough study.&lt;/p&gt;
+&lt;p&gt;Second, here&amp;rsquo;s Jeff&amp;rsquo;s &amp;ldquo;cut-through-the-crap&amp;rdquo; guide to malaria meds:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>The Skills Exist, Use Them!</title>
+      <link>https://blog.nella.org/2008/12/01/the-skills-exist-use-them/</link>
+      <pubDate>Mon, 01 Dec 2008 22:51:23 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=443</guid> 
+      <description>&lt;p&gt;One of the headlines that came out of my trip to Freetown was &amp;ldquo;The Skills Exist, Use Them!&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;First, a bit more about what I was doing there. I was on a contract with the Health Metrics Network, which is a project running under the auspices of the World Health Organization, but funded by the Gates Foundation. HMN is supposed to go around building a network, not of routers and switches, but people who understand the challenges of constructing and running health information systems. Those people should be researchers, technologists, and public health people. And those people should be a mix of those &lt;strong&gt;talking&lt;/strong&gt; about it (easy to find in Geneva, they are &lt;em&gt;douze pour une centime&lt;/em&gt;) and those &lt;strong&gt;doing&lt;/strong&gt; it. The latter are a little harder to find&amp;hellip;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Hello, I&#39;m back!</title>
+      <link>https://blog.nella.org/2008/11/27/hello-im-back-2/</link>
+      <pubDate>Thu, 27 Nov 2008 15:26:38 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=438</guid> 
+      <description>&lt;p&gt;I am back from Freetown, freezing in Leeds. I&amp;rsquo;ve spent today trying to get software working including reinstalling Chrome (which started marking all words as misspelled) and Word Press which inexplicably started hanging.&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;ll write a note, maybe this weekend, about what I was doing in Freetown. It was fun, and we got a lot accomplished, so it&amp;rsquo;s a worthwhile story to tell.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>An Interview with a DVD-man</title>
+      <link>https://blog.nella.org/2008/11/15/an-interview-with-a-dvd-man/</link>
+      <pubDate>Sat, 15 Nov 2008 16:54:34 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=429</guid> 
+      <description>&lt;p&gt;Rare is the dinner in an expat restaurant in Africa which is not (politely and quietly) interrupted by a DVD-man. They have a stock of DVD&amp;rsquo;s in their backpacks, and work their way through the restaurant giving you a chance to peruse their wares. You have to see the DVDs to believe them, they are made up of several pirated Hollywood movies, with many different versions, all on one disc, enclosed in a professional-looking full color envelope. They have titles like &amp;ldquo;Segal vs Chan&amp;rdquo;&amp;hellip; a DVD full of Steve Segal and Jackie Chan movies. Another great title is &amp;ldquo;Superhero Schoolwork&amp;rdquo;, including Spiderman, Superman, and Wonderwoman (and all the sequels thereof). The DVD&amp;rsquo;s are billed as &amp;ldquo;50 in one&amp;rdquo;, though it requires some clever counting to find 50 movies on one disc. Typically, there are more like 12 movies on a DVD &amp;ndash; in itself an impressive achievement of DVD mastering and compression-algorithm optimization.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Hello from Freetown</title>
+      <link>https://blog.nella.org/2008/11/11/hello-from-freetown/</link>
+      <pubDate>Tue, 11 Nov 2008 15:09:28 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=427</guid> 
+      <description>&lt;p&gt;I started a two week trip to Freetown, Sierra Leone yesterday. I am here as an IT consultant for the Health Metrics Network, part of the World Health Organization. We are taking a bunch of random hardware that the government bought with a not-quite-complete architecture and putting in place a foundation for IT services related to the Health Information System. Of course, the HIS relies on lots and lots of low tech forms and paperwork &amp;ldquo;up country&amp;rdquo;, but there&amp;rsquo;s also a need for a datacenter in the capital.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>More ideas on how to innovate to serve poor communities</title>
+      <link>https://blog.nella.org/2008/10/27/more-ideas-on-how-to-innovate-to-serve-poor-communities/</link>
+      <pubDate>Mon, 27 Oct 2008 13:07:09 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=408</guid> 
+      <description>&lt;p&gt;Another reference I don&amp;rsquo;t want to lose: &lt;a href=&#34;http://designinafrica.wordpress.com/2008/10/23/innovation-in-africa-tips/&#34;&gt;Innovation in Africa Tips&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Also, why is it &amp;ldquo;in Africa&amp;rdquo;? What happened that Africa got so far behind, or is getting so much of the attention? Why don&amp;rsquo;t we advise people how to make a new clean water technology stick in SE Asia, or in South America anymore? Even a few years ago when I came to this world, there was much more discussion of all the poor places, and not just Africa.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>In Search of Deviants</title>
+      <link>https://blog.nella.org/2008/10/27/in-search-of-deviants/</link>
+      <pubDate>Mon, 27 Oct 2008 13:03:49 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=405</guid> 
+      <description>&lt;p&gt;&lt;a href=&#34;http://bloodandmilk.org/2008/05/22/things-i-believe-in-1-positive-deviance/&#34;&gt;Positive Deviance&lt;/a&gt; is a somewhat unnecessarily complicated name for something deeply humane and useful:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;In every village, there is at least one woman (usually a few) whose children are healthier than the rest. For whatever reason, that woman is better at navigating the complexities of village life and child nutrition. That woman has knowledge and skills which can be taught. You find her, you learn from her, you support her to teach her peers. That is positive deviance.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Ethan Zuckerman&#39;s Rules for Innovation</title>
+      <link>https://blog.nella.org/2008/10/21/ethan-zuckermans-rules-for-innovation/</link>
+      <pubDate>Tue, 21 Oct 2008 13:52:53 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=382</guid> 
+      <description>&lt;p&gt;Ethan just posted some &lt;a href=&#34;http://www.ethanzuckerman.com/blog/2008/10/17/innovating-from-constraint/&#34;&gt;rules for innovation&lt;/a&gt; which are interesting. The one that speaks most to me right now is #7, which states, &amp;ldquo;problems are not always obvious from afar&amp;rdquo;. That&amp;rsquo;s a big problem with the kind of &amp;ldquo;innovation&amp;rdquo; that happens with first-world government-funded NGO IT for Development work. It is easy for a programmer to sit in an office and say, &amp;ldquo;what Africans really need is more data collection via PDAs!&amp;rdquo; It is something else entirely for Malian Linux enthusiasts to say, &amp;ldquo;Downloading is too expensive, I bet I can make money distributing Open Source via a kiosk&amp;rdquo;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Shame and Aid Work</title>
+      <link>https://blog.nella.org/2008/10/13/shame-and-aid-work/</link>
+      <pubDate>Mon, 13 Oct 2008 17:06:00 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=367</guid> 
+      <description>&lt;p&gt;&lt;a href=&#34;http://humanitarianrelief.change.org/blog/view/bonjour_monsieur_-_what_to_do_when_rebels_overrun_your_compound&#34;&gt;This&lt;/a&gt; is a story a bit like mine from Chad, though we were not faced with bandits/rebels/soldiers directly. The feelings of shame and regret she has are related to the complicated feelings I had on leaving Chad as well.&lt;/p&gt;
+&lt;p&gt;In my case, we had nothing to be ashamed of &amp;ndash; we took good care of ourselves and our staff and were not bad guests anywhere. But it does give you a sense of shame that as an expat you are different: you&amp;rsquo;re allowed to just go away, and your colleagues can&amp;rsquo;t.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>When Not In Control, People Imagine Order</title>
+      <link>https://blog.nella.org/2008/10/13/when-not-in-control-people-imagine-order/</link>
+      <pubDate>Mon, 13 Oct 2008 10:04:22 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=365</guid> 
+      <description>&lt;p&gt;Science Friday did an &lt;a href=&#34;http://www.sciencefriday.com/program/archives/200810037&#34;&gt;interesting story recently&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;New research shows that when people perceive they have no control over a given situation, they are more likely to see illusions, patterns where none exist and even believe in conspiracy theories. The study suggests that people impose imaginary order when no real order can be perceived.&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;The first caller reports on how the conditions he experienced working as an aid worker in Somalia showed this. Also, he comments on the rough ride back to normality after suffering a situation with loss of control.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>A Call for Help</title>
+      <link>https://blog.nella.org/2008/10/11/a-call-for-help/</link>
+      <pubDate>Sat, 11 Oct 2008 13:09:20 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=352</guid> 
+      <description>&lt;p&gt;&lt;a href=&#34;http://www.iol.co.za/index.php?set_id=1&amp;amp;click_id=3069&amp;amp;art_id=vn20081010055634633C272033&#34;&gt;Something very wrong&lt;/a&gt; is going on on South Africa, and the world is missing it:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&amp;ldquo;It is better for us to be here than go for reintegration. The South Africans want to kill us and the government is trying to kill us. Reintegration&amp;rsquo;s a death sentence. We&amp;rsquo;d rather die here together,&amp;rdquo; said Johnny Kaka.&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;MSF is only one voice, and &lt;a href=&#34;http://www.msf.org/msfinternational/invoke.cfm?objectid=D3341261-15C5-F00A-257A117997E83742&amp;amp;component=toolkit.pressrelease&amp;amp;method=full_html&#34;&gt;though they are speaking out&lt;/a&gt;, the immigrants in South Africa need more people to speak for them.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Same conversation, different venue</title>
+      <link>https://blog.nella.org/2008/10/09/same-conversation-different-venue/</link>
+      <pubDate>Thu, 09 Oct 2008 12:53:14 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=343</guid> 
+      <description>&lt;p&gt;The dirty secret of aid work&amp;hellip; it always comes down to this&amp;hellip; the navel-gazing, &amp;ldquo;why am I here&amp;rdquo;, &amp;ldquo;why is it so ineffective&amp;rdquo; conversation.&lt;/p&gt;
+&lt;p&gt;Usually it happens around the campfire, over a bottle of locally made beer, or perhaps for the lucky coordination team in the capital city, at the nearby expat-only restaurant over a nice bottle of South African wine. As with everything this century, it&amp;rsquo;s &lt;a href=&#34;http://www.aidworkers.net/?q=node/1604&#34;&gt;moved onto the Internet&lt;/a&gt;. But the essential tone of the conversation, and the impossibility of resolving the problem remains.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Let&#39;s Map Africa!</title>
+      <link>https://blog.nella.org/2008/10/03/lets-map-africa/</link>
+      <pubDate>Fri, 03 Oct 2008 15:53:25 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=320</guid> 
+      <description>&lt;p&gt;I found a great post on Google&amp;rsquo;s Africa blog today &lt;a href=&#34;http://google-africa.blogspot.com/2008/10/lets-map-africa.html&#34;&gt;announcing Map Maker&lt;/a&gt;, a wiki-like way of increasing Google Map&amp;rsquo;s coverage of places where there&amp;rsquo;s very little data available for them to start with. As with everything Google, the launch version is a little not-smooth, and it is hard to understand how the moderation feature works. Am I supposed to be able to moderate other people, or is it the invisible Hand Of Google that moderates me? I can&amp;rsquo;t figure that part out yet, but I assume it is community moderation. That&amp;rsquo;s Not Evil, and when I last checked Google was Not Evil&amp;hellip;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>I&#39;m Back!</title>
+      <link>https://blog.nella.org/2008/09/25/im-back/</link>
+      <pubDate>Thu, 25 Sep 2008 16:17:15 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=290</guid> 
+      <description>&lt;p&gt;After an extended downtime due to lack of give-a-shit on my part, my blog is back, and I am back to blogging. Expect something here daily, which is my goal.&lt;/p&gt;
+&lt;p&gt;Lots and lots of news&amp;hellip; where to start? I suppose at the last post. Since then, Marina and I were evacuated from Chad due to fighting in the town where our project was located. We then found a nice little meningitis emergency in DR Congo. When we came home we had a little vacation, then I went to the USA to see family after close to a year away. We found separate postings with MSF for the summer, which was hard but worthwhile. Marina worked in Myanmar doing mobile clinics from boats, and I went to Oromyia, Ethiopia to participate in an nutritional emergency intervention.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

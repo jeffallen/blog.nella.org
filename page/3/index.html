@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head>
+	<meta name="generator" content="Hugo 0.147.8"><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>jra&#39;s thoughts</title>
+
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="canonical" href="https://blog.nella.org/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.3beea2776320e39a6c8d0589cd10cf4cbbbe3ca9b6f0363cfeef1417ed39a195.css" integrity="sha256-O&#43;6id2Mg45psjQWJzRDPTLu&#43;PKm28DY8/u8UF&#43;05oZU=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://blog.nella.org/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://blog.nella.org/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://blog.nella.org/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://blog.nella.org/apple-touch-icon.png">
+<link rel="mask-icon" href="https://blog.nella.org/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" type="application/rss+xml" href="https://blog.nella.org/feed.xml">
+<link rel="alternate" type="application/json" href="https://blog.nella.org/index.json">
+<link rel="alternate" hreflang="en" href="https://blog.nella.org/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend&display=swap" rel="stylesheet">
+<meta property="og:url" content="https://blog.nella.org/">
+  <meta property="og:site_name" content="jra&#39;s thoughts">
+  <meta property="og:title" content="jra&#39;s thoughts">
+  <meta property="og:locale" content="en-US">
+  <meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jra&#39;s thoughts">
+<meta name="twitter:description" content="">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "jra's thoughts",
+  "url": "https://blog.nella.org/",
+  "description": "",
+  "logo": "https://blog.nella.org/favicon.ico",
+  "sameAs": [
+      
+  ]
+}
+</script>
+</head>
+
+<body class="list" id="top">
+<script>
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://blog.nella.org/" accesskey="h" title="jra&#39;s thoughts (Alt + H)">jra&#39;s thoughts</a>
+            <div class="logo-switches">
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main"> 
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">The most important thing when go-fuzzing
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>The most important thing to know, when you are using go-fuzz, is that the cover metric should be increasing.
+I didn’t know that and I wasted one 12 hour run of fuzzing because my fuzzing function was misbehaving in a way that made it return the same useless error for every input no matter what. That meant that no matter what go-fuzz mutated in the input, it could not find a way to explore more code, and could not find any interesting bugs. It was trying to tell me this by not incrementing the cover metric it was reporting.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2016-01-09 15:00:42 +0000 +0000'>January 9, 2016</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to The most important thing when go-fuzzing" href="https://blog.nella.org/2016/01/09/the-most-important-thing-when-go-fuzzing/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Learning Swift, sans Xcode
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Say you are learning Swift. And like a good fanboi, the first thing you do is update to the latest and greatest because that’s like what you do when you are a nerd.
+But you live in Osh, Kyrgyzstan. You have bitchin’ FTTH from Unilink, but access outside of Kyrgyzstan is still limited by the great firewall that Putin has put up in Moscow or whatever. I don’t know, but it’s slow as hell.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2016-01-04 15:01:38 +0000 +0000'>January 4, 2016</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Learning Swift, sans Xcode" href="https://blog.nella.org/2016/01/04/learning-swift-sans-xcode/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Strictly HTTPS!
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Today I added this to the .htaccess files on my sites ( nella.org and blog.nella.org) in order to make them HTTPS only:
+Header set Strict-Transport-Security &#34;max-age=31536000&#34; You should too!
+</p>
+  </div>
+  <footer class="entry-footer"><span title='2015-12-12 11:52:50 +0000 +0000'>December 12, 2015</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Strictly HTTPS!" href="https://blog.nella.org/2015/12/12/strictly-https/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">HTTP/2: Thanks Cloudflare and Go!
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Look what happened today:
+2015/12/04 11:38:07 fetching https://nella.org 2015/12/04 11:38:08 {200 OK 200 HTTP/2.0 2 0 map[Server:[cloudflare-nginx] Date:[Fri, 04 Dec 2015 05:38:08 GMT] Content-Type:[text/html] Set-Cookie:[__cfduid=d3a3ea49ee46eb6a6803e2eb7f597e26e1449207488; expires=Sat, 03-Dec-16 05:38:08 GMT; path=/; domain=.nella.org; HttpOnly] Vary:[Accept-Encoding] Cf-Ray:[24f529d18893372c-ARN]] 0xc8203bbf60 -1 [] false map[] 0xc8200be000 0xc8206cc420} Thank you Go 1.6 and Cloudflare. You guys are bringing my website into the bright future of 2016 with no help at all from me. :)
+</p>
+  </div>
+  <footer class="entry-footer"><span title='2015-12-04 06:01:13 +0000 +0000'>December 4, 2015</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to HTTP/2: Thanks Cloudflare and Go!" href="https://blog.nella.org/2015/12/04/http2-thanks-cloudflare-and-go/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Industrial-scale power storage and waste heat
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>There will, eventually, be a giant wind farm above my house. I say eventually because though Switzerland is not immune from NIMBYism, our court system deals efficiently enough with oppositions so that if something is allowed by law (zoning laws, eco-protection laws, etc) then it does go through. The opposition (and there’s always opposition) does a few court challenges, it goes up a couple layers, sometimes to the supreme court, and the court rather quickly says, “It’s legal, shut up. If you don’t like it, change the laws, don’t come begging us to do so.”
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2015-07-31 09:38:45 +0000 +0000'>July 31, 2015</span>&nbsp;·&nbsp;4 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Industrial-scale power storage and waste heat" href="https://blog.nella.org/2015/07/31/industrial-scale-power-storage-and-waste-heat/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Hacking cars and fixing them
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>A few years ago, I read an academic paper on how to hack cars. Today news came out that what was previously demonstrated via direct access is also possible over the air.
+I thought it would be fun to look at the firmware update file that fixes this, to see what format it is in, what’s in it, etc. To get an update for 2014 Jeep Cherokees, you need a VIN. It turns out a used car sales website posted the VINs of their inventory on their website, so I found one: 1C4PJMDB6EW255433
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2015-07-24 11:52:18 +0000 +0000'>July 24, 2015</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Hacking cars and fixing them" href="https://blog.nella.org/2015/07/24/hacking-cars/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">The &#34;Listen Up&#34; Pledge
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Thanks, Dave, for speaking up for what’s right. I’m with you, buddy. I also find harassment offensive, and I pledge to do the same as you.
+We need to draw a line in the sand, and organize ourselves so that healthy, respectful teams are on one side of it, and trolls are on the other side of it.
+I’m so thankful that my boss has created a respectful, mixed workplace.
+</p>
+  </div>
+  <footer class="entry-footer"><span title='2015-06-17 07:02:47 +0000 +0000'>June 17, 2015</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to The &#34;Listen Up&#34; Pledge" href="https://blog.nella.org/2015/06/17/the-listen-up-pledge/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Jon Stewart on FIFA... lol
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>LOL:
+Swiss authorities… swiss! FIFA is so bad, they got arrested by the Swiss.
+See it here.
+</p>
+  </div>
+  <footer class="entry-footer"><span title='2015-05-28 13:58:44 +0000 +0000'>May 28, 2015</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Jon Stewart on FIFA... lol" href="https://blog.nella.org/2015/05/28/jon-stewart-on-fifa-lol/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Doing it the hard way
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>In my last post I offered to point out some things in Golang Challenge #2 submissions that struck me as “worthy of receiving a (polite) rebuke in code review”, otherwise known as WTFs.
+This is opt-in abuse. I don’t mind abusing my colleagues, when I know I can take them out for lunch later and buy them a beer. Hassling random Golang Challenge entrants is not my style. But some have decided they are up for it, even if I’m remote and can’t buy them a beer afterwards.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2015-04-24 09:21:07 +0000 +0000'>April 24, 2015</span>&nbsp;·&nbsp;7 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Doing it the hard way" href="https://blog.nella.org/2015/04/24/doing-it-the-hard-way/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Golang Challenge 2 comments
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>I’ve just finished evaluating 40 of the 105 entries to the Golang Challenge #2. The organizer, Satish, asked me to write up my thoughts.
+The main similarity I noticed in the entries was not enough testing. The vast majority of the entries used the tests provided in with the challenge unmodified. Taking the given tests without thinking critically about them lead people to make a number of critical mistakes, over and over again. The majority of the entries I graded passed the tests, but would not have stood up to production use. Of the 40 I graded, only 2 or 3 would have received a “ship it” from me in my day job. Those were (not by chance) the ones with extra tests beyond the ones provided in the challenge.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2015-04-23 14:44:32 +0000 +0000'>April 23, 2015</span>&nbsp;·&nbsp;6 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Golang Challenge 2 comments" href="https://blog.nella.org/2015/04/23/golang-challenge-2-comments/"></a>
+</article>
+<footer class="page-footer">
+  <nav class="pagination">
+    <a class="prev" href="https://blog.nella.org/page/2/">
+      «&nbsp;Prev&nbsp;
+    </a>
+    <a class="next" href="https://blog.nella.org/page/4/">Next&nbsp;&nbsp;»
+    </a>
+  </nav>
+</footer>
+    </main>
+    
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+</body>
+
+</html>

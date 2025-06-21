@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head>
+	<meta name="generator" content="Hugo 0.147.8"><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>jra&#39;s thoughts</title>
+
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="canonical" href="https://blog.nella.org/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.3beea2776320e39a6c8d0589cd10cf4cbbbe3ca9b6f0363cfeef1417ed39a195.css" integrity="sha256-O&#43;6id2Mg45psjQWJzRDPTLu&#43;PKm28DY8/u8UF&#43;05oZU=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://blog.nella.org/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://blog.nella.org/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://blog.nella.org/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://blog.nella.org/apple-touch-icon.png">
+<link rel="mask-icon" href="https://blog.nella.org/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" type="application/rss+xml" href="https://blog.nella.org/feed.xml">
+<link rel="alternate" type="application/json" href="https://blog.nella.org/index.json">
+<link rel="alternate" hreflang="en" href="https://blog.nella.org/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend&display=swap" rel="stylesheet">
+<meta property="og:url" content="https://blog.nella.org/">
+  <meta property="og:site_name" content="jra&#39;s thoughts">
+  <meta property="og:title" content="jra&#39;s thoughts">
+  <meta property="og:locale" content="en-US">
+  <meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jra&#39;s thoughts">
+<meta name="twitter:description" content="">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "jra's thoughts",
+  "url": "https://blog.nella.org/",
+  "description": "",
+  "logo": "https://blog.nella.org/favicon.ico",
+  "sameAs": [
+      
+  ]
+}
+</script>
+</head>
+
+<body class="list" id="top">
+<script>
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://blog.nella.org/" accesskey="h" title="jra&#39;s thoughts (Alt + H)">jra&#39;s thoughts</a>
+            <div class="logo-switches">
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main"> 
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">What&#39;s happening here? And when?
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>A while ago, I posted to the Go users list about what seemed like a problem in how Go was choosing registers versus global variables. Roger’s answer was “go RTFM”, which was precisely the right thing to do. However, it took reading it twice (I’d read it before) and some hard pondering to connect what I was reading to what I was seeing.
+In order to save you, the reader, from the same experience, here’s a more detailed explanation of how “happens before” applies to programs where coroutines are writing to and reading from globals. Disclaimer: You really shouldn’t be doing this. In Go, you “share memory by communicating, not communicate by sharing memory”. Asking questions about “what happens when two coroutines write to a global?” means you are already thinking about communicating by sharing, and you are in for a world of hurt. But in this case, I was exploring the concurrency model in coroutines in the absence of calls into the runtime (i.e. cooperative or not?) and so I wanted to avoid channels.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2010-11-01 07:25:45 +0000 +0000'>November 1, 2010</span>&nbsp;·&nbsp;5 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to What&#39;s happening here? And when?" href="https://blog.nella.org/2010/11/01/whats-happening-here-and-when/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Go Fun - the cost of threads
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Here’s a little program I wrote in Go. In it, I wanted to explore how it might work to create a giant “onion” of threads, passing messages in towards the center, where they would be reflected and sent back out. Why? Just for fun, to solidify my grasp on the syntax, to see what would happen.
+Here’s my program:
+package main import ( &#34;fmt&#34; &#34;time&#34; ) func make2() (chan int, chan int) { return make(chan int), make(chan int) } func makeAndEcho(ct int, in, out chan int) { var in2, out2 chan int; echo := func () { for !closed(in) { x := &lt;-in out &lt;- x } } pass := func () { for !closed(in) { select { case x := &lt;-in: { in2 &lt;- x } case x := &lt;-out2: { out &lt;- x } } } } if (ct == 0) { go echo() } else { in2, out2 = make2() makeAndEcho(ct-1, in2, out2) go pass() } } func try(depth, n int) { in, out := make2() makeAndEcho(depth, in, out) before := time.Nanoseconds() for i := 0; i &lt; n; i&#43;&#43; { in &lt;- 1 _ = &lt;- out } close(in) after := time.Nanoseconds() transits := int64(n*depth*2) fmt.Printf( &#34;%v round-trips, %v nsec/trip, %v nsec/transit for %v transits\n&#34;, n, (after-before)/int64(n), (after-before)/int64(transits), transits); } func main() { try(10, 10000) try(100, 10000) ch := make(chan int, 1) before := time.Nanoseconds() for i := 0; i &lt; 200000; i&#43;&#43; { ch &lt;- i _ = &lt;- ch } after := time.Nanoseconds() fmt.Printf( &#34;no threads: %v nsec/transit for %v transits\n&#34;, (after-before)/200000, 200000) } When you run it, you get this:
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2010-10-12 06:52:39 +0000 +0000'>October 12, 2010</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Go Fun - the cost of threads" href="https://blog.nella.org/2010/10/12/go-fun-the-cost-of-threads/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">The SQL backlash
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>I remember sitting in my databases class years ago and thinking, “This can’t possibly be the right way to store data.” It was a strange class, because it mixed theory and practice in a way that was anathema to the way I think. The theory part bored me to tears, and seemed ludicrously useless (first normal form? third normal form? who cares!). The practice part seemed ridiculously complicated and pointless. Why go to all that effort to write something down? Why not just write it? Yes, yes, I know, ACID and all that. I grudgingly learned it all, and I passed the class. But it never felt right to me. It felt like the students were putting on a performance to satisfy the teacher. It didn’t feel like Theory of Computing (i.e. Turing machines, regular expressions, the halting problem, etc), which just Felt Right.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2009-07-03 08:57:03 +0000 +0000'>July 3, 2009</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to The SQL backlash" href="https://blog.nella.org/2009/07/03/the-sql-backlash/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">&lt;nudge&gt; &lt;nudge&gt;, &lt;wink&gt; &lt;wink&gt;
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>FOP can get confused and do stupid things. Giving it a nudge in the right direction fixes it. For example, when a table is going to fill the page right up from where it starts to the end of the region available for it, it does ok. But add a footnote onto that table, and the footnote ends up dangling at the top of the next page.
+I thought a bit about why this is happening, and I thought about what if you added a keep to the footnote, etc. What I ended up wanting to do is to nudge down something higher on the page so that it created a bit of whitespace in a place where the reader wouldn’t notice. That made the table not fit, which made the table break, which put the table footnote where I expected it to be, instead of hanging in space.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2009-06-30 13:45:36 +0000 +0000'>June 30, 2009</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to  , " href="https://blog.nella.org/2009/06/30/733/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Dealing with a clogged link
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>A friend asked me a question that reminded me of some great resources I want to mention here (in case I ever need to find them again…)
+They are:
+How to Accelerate Your Internet Wireless Networking in the Developing World Wireless U In my response to my friend, I also touched on something interesting I learned from Cricket, and from years as a consultant. Here’s the big lesson:Â Infrastructure projects don’t sell themselves.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2009-06-30 11:29:59 +0000 +0000'>June 30, 2009</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Dealing with a clogged link" href="https://blog.nella.org/2009/06/30/dealing-with-a-clogged-link/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Disabling hyphenation in DocBook
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>When you are using the chain “DocBook -&gt; FO -&gt; PDF”, it is the FO processor that decides on the hyphenation of your words. This is because it knows the lengths of the lines it is making.
+In FOP, hyphenation can only be turned on and off at the level of &lt;fo:blocks&gt;. For some dumb reason, DocBook doesn’t have a way to turn off hyphenation in one region of the document.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2009-06-24 18:23:55 +0000 +0000'>June 24, 2009</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Disabling hyphenation in DocBook" href="https://blog.nella.org/2009/06/24/disabling-hyphenation-in-docbook/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Printing a Blog
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>I got interested in applying my new XSLT wizardry to the task of printing an entire blog. Like making every post into a big PDF and sending it off to a print-on-demand service. Digital backups = bad. Paper backups = good.
+I thought it would be easy, just do “Wordpress export”, then write the XSLT to turn the export XML file into FO, and process into PDF. Well, it is easy, in principle. But in practice it’s not.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2009-06-17 10:44:27 +0000 +0000'>June 17, 2009</span>&nbsp;·&nbsp;6 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Printing a Blog" href="https://blog.nella.org/2009/06/17/printing-a-blog/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Just Married
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>I’ve been away from the web for a while because I was in Olivone, Ticino, Switzerland getting married!
+Thanks to friends and family who came from so far away to witness such a special day.
+And thanks also to our wonderful vendors, who made the day go so well. If you are thinking of putting on a wedding in Blenio, give these guys a call:
+Restaurant/Hotel Arcobaleno Osteria Centrale Casa Lucomagno Pasticceria Bini for wedding cakes Viva gli sposi wedding photojournalism Giramondo Travel Agency for the wedding registry Sonpalaria, the heartbeat of the Ticinese dance floor! It feels different to be married. It seems like it shouldn’t… the house is the same, we still sleep on the same sides of the bed. But it’s different. Good. And safe. And happy. And… different.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2009-06-14 17:03:40 +0000 +0000'>June 14, 2009</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Just Married" href="https://blog.nella.org/2009/06/14/just-married/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Apache FOP and document properties
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>I am a little bit obsessive about checking out the document properties in PDF files I read. I can’t explain why, but there you have it.
+I was sad when I noticed the PDF file being emitted by my XML has no document properties. So I figured, no problem, I can just go find the right FO tags, grep for them in the DocBook XSL and reverse engineer what stuff I need to put into my DocBook to get them set right. I figured it would be something obscure like, or something. In fact, DocBook already knows who the author is, in order to format the title page nicely, so no dice there.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2009-05-24 10:31:35 +0000 +0000'>May 24, 2009</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Apache FOP and document properties" href="https://blog.nella.org/2009/05/24/apache-fop-and-document-properties/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">The &lt;xen&gt; of &lt;xslt&gt;
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>For a project I am doing right now, I descended into DocBook hell. Not completely unscathed, I made it through the learning curve (why don’t they call it what it is: The Unfathomable and Horrific Tunnel of Learning) and blinked slowly in the light of day.
+I realized DocBook is nice, but it’s not actually what I wanted. Doh.
+What I wanted was a structured way to represent my data, and I want two things to happen to it. Today, I want to publish my data with DocBook. Tomorrow I want someone to be able to suck the brains out of my DocBook document (leaving it to wander the earth as a zombie) and to put them into a wiki so that my project can become a community-maintained database, instead of being a single DocBook-formatted document that lives in my Subversion repository.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2009-05-23 12:25:11 +0000 +0000'>May 23, 2009</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to The of " href="https://blog.nella.org/2009/05/23/the-of/"></a>
+</article>
+<footer class="page-footer">
+  <nav class="pagination">
+    <a class="prev" href="https://blog.nella.org/page/8/">
+      «&nbsp;Prev&nbsp;
+    </a>
+    <a class="next" href="https://blog.nella.org/page/10/">Next&nbsp;&nbsp;»
+    </a>
+  </nav>
+</footer>
+    </main>
+    
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+</body>
+
+</html>

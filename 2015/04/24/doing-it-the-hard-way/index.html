@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Doing it the hard way | jra&#39;s thoughts</title>
+<meta name="keywords" content="">
+<meta name="description" content="In my last post I offered to point out some things in Golang Challenge #2 submissions that struck me as &ldquo;worthy of receiving a (polite) rebuke in code review&rdquo;, otherwise known as WTFs.
+This is opt-in abuse. I don&rsquo;t mind abusing my colleagues, when I know I can take them out for lunch later and buy them a beer. Hassling random Golang Challenge entrants is not my style. But some have decided they are up for it, even if I&rsquo;m remote and can&rsquo;t buy them a beer afterwards.">
+<meta name="author" content="jra">
+<link rel="canonical" href="https://blog.nella.org/2015/04/24/doing-it-the-hard-way/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.3beea2776320e39a6c8d0589cd10cf4cbbbe3ca9b6f0363cfeef1417ed39a195.css" integrity="sha256-O&#43;6id2Mg45psjQWJzRDPTLu&#43;PKm28DY8/u8UF&#43;05oZU=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://blog.nella.org/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://blog.nella.org/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://blog.nella.org/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://blog.nella.org/apple-touch-icon.png">
+<link rel="mask-icon" href="https://blog.nella.org/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://blog.nella.org/2015/04/24/doing-it-the-hard-way/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend&display=swap" rel="stylesheet">
+<meta property="og:url" content="https://blog.nella.org/2015/04/24/doing-it-the-hard-way/">
+  <meta property="og:site_name" content="jra&#39;s thoughts">
+  <meta property="og:title" content="Doing it the hard way">
+  <meta property="og:description" content="In my last post I offered to point out some things in Golang Challenge #2 submissions that struck me as “worthy of receiving a (polite) rebuke in code review”, otherwise known as WTFs.
+This is opt-in abuse. I don’t mind abusing my colleagues, when I know I can take them out for lunch later and buy them a beer. Hassling random Golang Challenge entrants is not my style. But some have decided they are up for it, even if I’m remote and can’t buy them a beer afterwards.">
+  <meta property="og:locale" content="en-US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2015-04-24T09:21:07+00:00">
+    <meta property="article:modified_time" content="2015-04-24T09:21:07+00:00">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Doing it the hard way">
+<meta name="twitter:description" content="In my last post I offered to point out some things in Golang Challenge #2 submissions that struck me as &ldquo;worthy of receiving a (polite) rebuke in code review&rdquo;, otherwise known as WTFs.
+This is opt-in abuse. I don&rsquo;t mind abusing my colleagues, when I know I can take them out for lunch later and buy them a beer. Hassling random Golang Challenge entrants is not my style. But some have decided they are up for it, even if I&rsquo;m remote and can&rsquo;t buy them a beer afterwards.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://blog.nella.org/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Doing it the hard way",
+      "item": "https://blog.nella.org/2015/04/24/doing-it-the-hard-way/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Doing it the hard way",
+  "name": "Doing it the hard way",
+  "description": "In my last post I offered to point out some things in Golang Challenge #2 submissions that struck me as \u0026ldquo;worthy of receiving a (polite) rebuke in code review\u0026rdquo;, otherwise known as WTFs.\nThis is opt-in abuse. I don\u0026rsquo;t mind abusing my colleagues, when I know I can take them out for lunch later and buy them a beer. Hassling random Golang Challenge entrants is not my style. But some have decided they are up for it, even if I\u0026rsquo;m remote and can\u0026rsquo;t buy them a beer afterwards.\n",
+  "keywords": [
+    
+  ],
+  "articleBody": "In my last post I offered to point out some things in Golang Challenge #2 submissions that struck me as “worthy of receiving a (polite) rebuke in code review”, otherwise known as WTFs.\nThis is opt-in abuse. I don’t mind abusing my colleagues, when I know I can take them out for lunch later and buy them a beer. Hassling random Golang Challenge entrants is not my style. But some have decided they are up for it, even if I’m remote and can’t buy them a beer afterwards.\nio.Toys\nFirst up, is Jason Clark. Jason’s entry is quite good, from an idiomatic Go point of view. He fell prey to the “under-testing” problem I mentioned, in that his entry does not handle message framing, or what happens if the buffer passed to Read is smaller than the incoming message. But what I’m really looking for for the purposes of this post are the WTF’s. And seeing io.TeeReader tipped me off that something interesting was about to happen:\n// Write encrypts the contents of p and writes it to the underlying io.Writer. func (w *SecureWriter) Write(p []byte) (int, error) { // Each message starts with a generated nonce. Only write the nonce once. if w.nonce == nil { var nonce [24]byte if _, err := io.ReadFull(io.TeeReader(rand.Reader, w.w), nonce[:]); err != nil { return 0, ErrNonceWrite } w.nonce = \u0026nonce } // encrypted and send message _, err := w.w.Write(box.SealAfterPrecomputation(nil, p, w.nonce, w.key)) if err != nil { return 0, err } return len(p), nil } So, the first problem here is that this is just wrong. The docs for NaCl are clear that security is compromised if you use the same nonce for two different messages. But second, the use of io.TeeReader here is overly clever. I didn’t even know what io.TeeReader did, but the docs are clear enough: “TeeReader returns a Reader that writes to w what it reads from r”. So what that line does is get the nonce from cyrpto.Rand, and send the nonce down the unencrypted channel (correct!) while also sending it into nonce, to be saved for later as w.nonce (not correct!). To reason about that line as a reader you need to keep two unrelated processes in mind at once (saving the nonce for later, and sending it down now), and then ask yourself if the error handling correct in both of those cases.\nSo, if ErrNonceWrite is returned, was a nonce sent down the connection anyway? What was it?\nThe simpler way of doing this is in two steps. First read into a local called nonce, and check the errors on reading. Once you are sure you have a good nonce, send it down with w.Write(). Checking errors correctly here is critical, because if you don’t manage to get a new nonce, you must not send the message, since you might be sending it with a nonce of all zeros. The second time you’ve done this, you’ve compromised your security.\nThere’s nothing wrong with using the nifty toys in the io package. And in fact, later in his submission, Jason uses io.MultiWriter in an interesting way. I can’t say that I’m personally 100% confident in the technique of using io.Copy to implement an echo server. I understand the theory, but it seems to me you become dependent on the right magic happening inside of io.Copy, instead of making sure that the logic of your program is front and center, where your reader can see it.\nAlways remember, code is for reading. When you work on a big system, with lots of coworkers, they will read and re-read your code for months and years after you’ve written it. Code is written once and read a thousand times. Make sure what’s there to read explains what you are doing and what you are depending on.\nAnd now for a random global problem… Trevor Arjeski got in touch and asked if he had any WTFs. By chance, the first file I clicked on was secure_io.go, and within the first few lines I knew, “we have a winner!”\nIn a crypto system, the quality of your random numbers matters. This has been known by professional cryptographers for decades, and to the rest of us since 1996. So when I saw that Trevor was importing “math/rand” instead of “crypto/rand”, I knew that he had a big problem coming.\nWorse, I read down a few lines and saw the global “seeded”. The problem with this global is that access to it is not protected from a data race. There are three options for how to fix this:\nNuke it: This problem calls for using the “crypto/rand” package, which does not need seeding by the Go programmer.\nMove it to init: Lazy initialization, controlled by a global flag can sometimes be more simply moved to explicit initialization, before main starts running. Go guarantees that init functions are run in a single-threaded context (the spec says: “Package initialization—variable initialization and the invocation of init functions—happens in a single goroutine, sequentially, one package at a time.”)\nUse sync.Once to arrange for something to be lazily initialized once and only once.\nI’ve said before that good testing matters. But to catch this data race, Trevor should have written a test that concurrently created multiple SecureWriters and written into them. Then he would have had to run “go test -race”. It is wonderful that Go has the race detector, but it is better to never write data races to begin with. And a good way to not write them is to not allocate any shared data.\nGet in the habit of asking hard questions about every global you see: when it is initialized? Are there writes to it? How are they sequenced with respect to reads?\nWant some practice? Move on to lines 14 and 15… :)\nAddicted to encoding/binary? Kristoffer Berdal got in touch and asked me to take a look. Kristoffer made a choice for readability that would eventually be a performance problem, if he wanted to benchmark and tune his implementation.\nIn his Writer we see a nice symmetrical list of calls to binary.Write. Reading through it, it makes the exact format of the protocol completely clear. So score points for self-documenting code!\nBut there’s a cost: check out the signature of binary.Write: func Write(w io.Writer, order ByteOrder, data interface{}) error\nThat means that each time we call into binary.Write, we’ll be doing a type conversion from the fundamental type of the third argument into an interface{}. This may involve an allocation, and once control gets inside of binary.Write, it will end up in the “fall back onto reflection” code path, because the nonce and (usually) the message are not less than 8 bytes long. Reflection is powerful and magical, and a strong point of Go. But it is not fast, when the alternative is not using reflection.\nA better choice for writing the nonce and the message, which are simple []byte types, would have been to use the Write method of the underlying io.Writer. (Also, this saves the reader of puzzling over what the meaning of the little endian representation of a [24]byte is…)\nOne thing that’s interesting about Go is that it can be highly friendly and easy like Python, or highly precise and speedy like C. Choosing when to do one or the other (or finding a way to do both) is the trick that requires experience. It is always important to first get it right, then get it clear, then measure, and only if measurement says to do so, make it fast. In a case like this, Kristoffer has written it right, and clearly. But by turning to a function that uses interface{} where there was another option, he left some performance on the table. Worse, he might have left behind a trap that a colleague will need to deal with later when the prototype goes to production and starts handling gigbits of data per second.\nThanks\nThanks to those who gave me permission to pick on them. I hope that they’ve enjoyed the 15 minutes of fame, and that we’ve all learned something useful.\n",
+  "wordCount" : "1357",
+  "inLanguage": "en",
+  "datePublished": "2015-04-24T09:21:07Z",
+  "dateModified": "2015-04-24T09:21:07Z",
+  "author":{
+    "@type": "Person",
+    "name": "jra"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://blog.nella.org/2015/04/24/doing-it-the-hard-way/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "jra's thoughts",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://blog.nella.org/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://blog.nella.org/" accesskey="h" title="jra&#39;s thoughts (Alt + H)">jra&#39;s thoughts</a>
+            <div class="logo-switches">
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://blog.nella.org/">Home</a>&nbsp;»&nbsp;<a href="https://blog.nella.org/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      Doing it the hard way
+    </h1>
+    <div class="post-meta"><span title='2015-04-24 09:21:07 +0000 +0000'>April 24, 2015</span>&nbsp;·&nbsp;7 min&nbsp;·&nbsp;jra
+
+</div>
+  </header> 
+  <div class="post-content"><p>In my <a href="/golang-challenge-2-comments/">last post</a> I offered to point out some things in Golang Challenge #2 submissions that struck me as &ldquo;worthy of receiving a (polite) rebuke in code review&rdquo;, otherwise known as WTFs.</p>
+<p>This is opt-in abuse. I don&rsquo;t mind abusing my colleagues, when I know I can take them out for lunch later and buy them a beer. Hassling random Golang Challenge entrants is not my style. But some have decided they are up for it, even if I&rsquo;m remote and can&rsquo;t buy them a beer afterwards.</p>
+<p><strong>io.Toys</strong></p>
+<p>First up, is <a href="https://github.com/golangchallenge/GCSolutions/blob/master/april15/normal/jason-clark/main.go">Jason Clark</a>. Jason&rsquo;s entry is quite good, from an idiomatic Go point of view. He fell prey to the &ldquo;under-testing&rdquo; problem I mentioned, in that his entry does not handle message framing, or what happens if the buffer passed to Read is smaller than the incoming message. But what I&rsquo;m really looking for for the purposes of this post are the WTF&rsquo;s. And seeing io.TeeReader tipped me off that something interesting was about to happen:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span><span style="color:#f92672">//</span> Write encrypts the contents of p <span style="color:#f92672">and</span> writes it to the underlying io<span style="color:#f92672">.</span>Writer<span style="color:#f92672">.</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (w <span style="color:#f92672">*</span>SecureWriter) Write(p []byte) (<span style="color:#a6e22e">int</span>, error) {
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">//</span> Each message starts with a generated nonce<span style="color:#f92672">.</span> Only write the nonce once<span style="color:#f92672">.</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> w<span style="color:#f92672">.</span>nonce <span style="color:#f92672">==</span> nil {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">var</span> nonce [<span style="color:#ae81ff">24</span>]byte
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> _, err :<span style="color:#f92672">=</span> io<span style="color:#f92672">.</span>ReadFull(io<span style="color:#f92672">.</span>TeeReader(rand<span style="color:#f92672">.</span>Reader, w<span style="color:#f92672">.</span>w), nonce[:]); err <span style="color:#f92672">!=</span> nil {
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>, ErrNonceWrite
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		w<span style="color:#f92672">.</span>nonce <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>nonce
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">//</span> encrypted <span style="color:#f92672">and</span> send message
+</span></span><span style="display:flex;"><span>	_, err :<span style="color:#f92672">=</span> w<span style="color:#f92672">.</span>w<span style="color:#f92672">.</span>Write(box<span style="color:#f92672">.</span>SealAfterPrecomputation(nil, p, w<span style="color:#f92672">.</span>nonce, w<span style="color:#f92672">.</span>key))
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> err <span style="color:#f92672">!=</span> nil {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>, err
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> len(p), nil
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>So, the first problem here is that this is just wrong. The docs for NaCl are clear that security is compromised if you use the same nonce for two different messages. But second, the use of io.TeeReader here is overly clever. I didn&rsquo;t even know what <a href="http://golang.org/pkg/io/#TeeReader">io.TeeReader</a> did, but the docs are clear enough: &ldquo;TeeReader returns a Reader that writes to w what it reads from r&rdquo;. So what that line does is get the nonce from cyrpto.Rand, and send the nonce down the unencrypted channel (correct!) while also sending it into nonce, to be saved for later as w.nonce (not correct!). To reason about that line as a reader you need to keep two unrelated processes in mind at once (saving the nonce for later, and sending it down now), and then ask yourself if the error handling correct in both of those cases.</p>
+<p>So, if ErrNonceWrite is returned, was a nonce sent down the connection anyway? What was it?</p>
+<p>The simpler way of doing this is in two steps. First read into a local called nonce, and check the errors on reading. Once you are sure you have a good nonce, send it down with w.Write(). Checking errors correctly here is critical, because if you don&rsquo;t manage to get a new nonce, you <strong>must not</strong> send the message, since you might be sending it with a nonce of all zeros. The second time you&rsquo;ve done this, you&rsquo;ve compromised your security.</p>
+<p>There&rsquo;s nothing wrong with using the nifty toys in the io package. And in fact, later in his submission, Jason <a href="https://github.com/golangchallenge/GCSolutions/blob/master/april15/normal/jason-clark/main.go#L158">uses io.MultiWriter in an interesting way</a>. I can&rsquo;t say that I&rsquo;m personally 100% confident in the technique of using io.Copy to implement an echo server. I understand the theory, but it seems to me you become dependent on the right magic happening inside of io.Copy, instead of making sure that the logic of your program is front and center, where your reader can see it.</p>
+<p>Always remember, code is for reading. When you work on a big system, with lots of coworkers, they will read and re-read your code for months and years after you&rsquo;ve written it. Code is written once and read a thousand times. Make sure what&rsquo;s there to read explains what you are doing and what you are depending on.</p>
+<p><strong>And now for a random global problem&hellip;</strong> <a href="https://github.com/trevorarjeski/go_challenge_2">Trevor Arjeski</a> got in touch and asked if he had any WTFs. By chance, the first file I clicked on was <a href="https://github.com/trevorarjeski/go_challenge_2/blob/master/secure_io.go">secure_io.go</a>, and within the first few lines I knew, &ldquo;we have a winner!&rdquo;</p>
+<p>In a crypto system, the quality of your random numbers matters. This has been known by <a href="http://www.nsa.gov">professional cryptographers</a> for decades, and to the rest of us since <a href="http://www.cs.berkeley.edu/~daw/papers/ddj-netscape.html">1996</a>. So when I saw that Trevor was importing &ldquo;math/rand&rdquo; instead of &ldquo;crypto/rand&rdquo;, I knew that he had a big problem coming.</p>
+<p>Worse, I read down a few lines and saw the <a href="https://github.com/trevorarjeski/go_challenge_2/blob/master/secure_io.go#L13">global &ldquo;seeded&rdquo;</a>. The problem with this global is that access to it is not protected from a data race. There are three options for how to fix this:</p>
+<ul>
+<li>
+<p>Nuke it: This problem calls for using the &ldquo;crypto/rand&rdquo; package, which does not need seeding by the Go programmer.</p>
+</li>
+<li>
+<p>Move it to init: Lazy initialization, controlled by a global flag can sometimes be more simply moved to explicit initialization, before main starts running. Go guarantees that init functions are run in a single-threaded context (the spec says: &ldquo;Package initialization—variable initialization and the invocation of init functions—happens in a single goroutine, sequentially, one package at a time.&rdquo;)</p>
+</li>
+<li>
+<p>Use sync.Once to arrange for something to be lazily initialized once and only once.</p>
+</li>
+</ul>
+<p>I&rsquo;ve said before that good testing matters. But to catch this data race, Trevor should have written a test that concurrently created multiple SecureWriters and written into them. Then he would have had to run &ldquo;go test -race&rdquo;. It is wonderful that Go has the race detector, but it is better to never write data races to begin with. And a good way to not write them is to not allocate any shared data.</p>
+<p>Get in the habit of asking hard questions about every global you see: when it is initialized? Are there writes to it? How are they sequenced with respect to reads?</p>
+<p>Want some practice? Move on to lines 14 and 15&hellip; :)</p>
+<p><strong>Addicted to encoding/binary?</strong> <a href="https://github.com/golangchallenge/GCSolutions/blob/master/april15/normal/kristoffer-berdal">Kristoffer Berdal</a> got in touch and asked me to take a look. Kristoffer made a choice for readability that would eventually be a performance problem, if he wanted to benchmark and tune his implementation.</p>
+<p>In <a href="https://github.com/golangchallenge/GCSolutions/blob/master/april15/normal/kristoffer-berdal/transport.go#L86">his Writer</a> we see a nice symmetrical list of calls to binary.Write. Reading through it, it makes the exact format of the protocol completely clear. So score points for self-documenting code!</p>
+<p>But there&rsquo;s a cost: check out the signature of <a href="http://golang.org/pkg/encoding/binary/#Write">binary.Write</a>: <code>func Write(w io.Writer, order ByteOrder, data interface{}) error</code></p>
+<p>That means that each time we call into binary.Write, we&rsquo;ll be doing a type conversion from the fundamental type of the third argument into an <code>interface{}</code>. This may involve <a href="http://research.swtch.com/interfaces">an allocation</a>, and once control gets inside of binary.Write, it will end up in the <a href="http://golang.org/src/encoding/binary/binary.go#L324">&ldquo;fall back onto reflection&rdquo;</a> code path, because the nonce and (usually) the message are not less than 8 bytes long. Reflection is powerful and magical, and a strong point of Go. But it is not fast, when the alternative is not using reflection.</p>
+<p>A better choice for writing the nonce and the message, which are simple []byte types, would have been to use the Write method of the underlying io.Writer. (Also, this saves the reader of puzzling over what the meaning of the little endian representation of a [24]byte is&hellip;)</p>
+<p>One thing that&rsquo;s interesting about Go is that it can be highly friendly and easy like Python, or highly precise and speedy like C. Choosing when to do one or the other (or finding a way to do both) is the trick that requires experience. It is always important to first get it right, then get it clear, then measure, and only if measurement says to do so, make it fast. In a case like this, Kristoffer has written it right, and clearly. But by turning to a function that uses interface{} where there was another option, he left some performance on the table. Worse, he might have left behind a trap that a colleague will need to deal with later when the prototype goes to production and starts handling gigbits of data per second.</p>
+<p><strong>Thanks</strong></p>
+<p>Thanks to those who gave me permission to pick on them. I hope that they&rsquo;ve enjoyed the 15 minutes of fame, and that we&rsquo;ve all learned something useful.</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+
+<ul class="share-buttons">
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Doing it the hard way on linkedin"
+            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.nella.org%2f2015%2f04%2f24%2fdoing-it-the-hard-way%2f&amp;title=Doing%20it%20the%20hard%20way&amp;summary=Doing%20it%20the%20hard%20way&amp;source=https%3a%2f%2fblog.nella.org%2f2015%2f04%2f24%2fdoing-it-the-hard-way%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Doing it the hard way on ycombinator"
+            href="https://news.ycombinator.com/submitlink?t=Doing%20it%20the%20hard%20way&u=https%3a%2f%2fblog.nella.org%2f2015%2f04%2f24%2fdoing-it-the-hard-way%2f">
+            <svg version="1.1" xml:space="preserve" width="30px" height="30px" viewBox="0 0 512 512" fill="currentColor"
+                xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
+                <path
+                    d="M449.446 0C483.971 0 512 28.03 512 62.554L512 449.446C512 483.97 483.97 512 449.446 512L62.554 512C28.03 512 0 483.97 0 449.446L0 62.554C0 28.03 28.029 0 62.554 0L449.446 0ZM183.8767 87.9921H121.8427L230.6673 292.4508V424.0079H281.3328V292.4508L390.1575 87.9921H328.1233L256 238.2489z" />
+            </svg>
+        </a>
+    </li>
+</ul>
+
+  </footer>
+</article>
+    </main>
+    
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

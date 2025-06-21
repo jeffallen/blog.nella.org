@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>A trip down the (split) rabbithole | jra&#39;s thoughts</title>
+<meta name="keywords" content="">
+<meta name="description" content="Note: This post is out of date, and will become increasingly out of date when Go&rsquo;s new contiguous stacks are implemented. I&rsquo;m leaving it here because it is still interesting, even if out of date.
+Go uses split stacks (also called segmented stacks in the literature) in order to allow thousands of stacks in the space that would normally be taken by hundreds of C-style contiguous stacks. There&rsquo;s a discussion of how to add split stacks to GCC here. Note: it was written by the author of gccgo, around the time he started porting Go to Gcc, so it&rsquo;s clear that he&rsquo;s adding split stacks to Gcc to help Go. But if it&rsquo;s helpful to C programmers as well, then so much the better!">
+<meta name="author" content="jra">
+<link rel="canonical" href="https://blog.nella.org/2011/02/15/a-trip-down-the-split-rabbithole/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.3beea2776320e39a6c8d0589cd10cf4cbbbe3ca9b6f0363cfeef1417ed39a195.css" integrity="sha256-O&#43;6id2Mg45psjQWJzRDPTLu&#43;PKm28DY8/u8UF&#43;05oZU=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://blog.nella.org/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://blog.nella.org/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://blog.nella.org/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://blog.nella.org/apple-touch-icon.png">
+<link rel="mask-icon" href="https://blog.nella.org/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://blog.nella.org/2011/02/15/a-trip-down-the-split-rabbithole/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend&display=swap" rel="stylesheet">
+<meta property="og:url" content="https://blog.nella.org/2011/02/15/a-trip-down-the-split-rabbithole/">
+  <meta property="og:site_name" content="jra&#39;s thoughts">
+  <meta property="og:title" content="A trip down the (split) rabbithole">
+  <meta property="og:description" content="Note: This post is out of date, and will become increasingly out of date when Go’s new contiguous stacks are implemented. I’m leaving it here because it is still interesting, even if out of date.
+Go uses split stacks (also called segmented stacks in the literature) in order to allow thousands of stacks in the space that would normally be taken by hundreds of C-style contiguous stacks. There’s a discussion of how to add split stacks to GCC here. Note: it was written by the author of gccgo, around the time he started porting Go to Gcc, so it’s clear that he’s adding split stacks to Gcc to help Go. But if it’s helpful to C programmers as well, then so much the better!">
+  <meta property="og:locale" content="en-US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2011-02-15T11:02:24+00:00">
+    <meta property="article:modified_time" content="2011-02-15T11:02:24+00:00">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="A trip down the (split) rabbithole">
+<meta name="twitter:description" content="Note: This post is out of date, and will become increasingly out of date when Go&rsquo;s new contiguous stacks are implemented. I&rsquo;m leaving it here because it is still interesting, even if out of date.
+Go uses split stacks (also called segmented stacks in the literature) in order to allow thousands of stacks in the space that would normally be taken by hundreds of C-style contiguous stacks. There&rsquo;s a discussion of how to add split stacks to GCC here. Note: it was written by the author of gccgo, around the time he started porting Go to Gcc, so it&rsquo;s clear that he&rsquo;s adding split stacks to Gcc to help Go. But if it&rsquo;s helpful to C programmers as well, then so much the better!">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://blog.nella.org/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "A trip down the (split) rabbithole",
+      "item": "https://blog.nella.org/2011/02/15/a-trip-down-the-split-rabbithole/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "A trip down the (split) rabbithole",
+  "name": "A trip down the (split) rabbithole",
+  "description": "Note: This post is out of date, and will become increasingly out of date when Go\u0026rsquo;s new contiguous stacks are implemented. I\u0026rsquo;m leaving it here because it is still interesting, even if out of date.\nGo uses split stacks (also called segmented stacks in the literature) in order to allow thousands of stacks in the space that would normally be taken by hundreds of C-style contiguous stacks. There\u0026rsquo;s a discussion of how to add split stacks to GCC here. Note: it was written by the author of gccgo, around the time he started porting Go to Gcc, so it\u0026rsquo;s clear that he\u0026rsquo;s adding split stacks to Gcc to help Go. But if it\u0026rsquo;s helpful to C programmers as well, then so much the better!\n",
+  "keywords": [
+    
+  ],
+  "articleBody": "Note: This post is out of date, and will become increasingly out of date when Go’s new contiguous stacks are implemented. I’m leaving it here because it is still interesting, even if out of date.\nGo uses split stacks (also called segmented stacks in the literature) in order to allow thousands of stacks in the space that would normally be taken by hundreds of C-style contiguous stacks. There’s a discussion of how to add split stacks to GCC here. Note: it was written by the author of gccgo, around the time he started porting Go to Gcc, so it’s clear that he’s adding split stacks to Gcc to help Go. But if it’s helpful to C programmers as well, then so much the better!\nIan’s article is dedicated to how he planned to add split stacks to GCC. I want to dig down to the lowest level and trace every single step of the process of maintaining split stacks in the native Go runtime. I hope you, dear reader, do too. Here we go…\nFirst, we need a program that’s going to use up all it’s stack. Since the point of this article is not to learn about Go’s stack-based object allocation we’ll use up the stack with return addresses, specifically to main:\npackage main func main() { main() } Now, don’t go running that just yet, or else you’ll have the out of memory killer on your back. Instead, go run that under gdb, setting a breakpoint on runtime.morestack:\n$ gdb 8.out (gdb) b runtime.morestack Breakpoint 1 at 0x80494de: file /home/jra/go/src/pkg/runtime/386/asm.s, line 150. (gdb) r Starting program: /home/jra/go-stuff/8.out Breakpoint 1, runtime.morestack () at /home/jra/go/src/pkg/runtime/386/asm.s:150 150\tget_tls(CX) Current language: auto; currently asm (gdb) bt #0 runtime.morestack () at /home/jra/go/src/pkg/runtime/386/asm.s:150 #1 0x08048c17 in main.main () at /home/jra/go-stuff/stack.go:3 #2 0x08048c1c in main.main () at /home/jra/go-stuff/stack.go:4 #3 0x08048c1c in main.main () at /home/jra/go-stuff/stack.go:4 #4 0x08048c1c in main.main () at /home/jra/go-stuff/stack.go:4 ... same thing for lots and lots of pages ... #1014 0x08048c1c in main.main () at /home/jra/go-stuff/stack.go:4 #1015 0x08049473 in runtime.mainstart () at /home/jra/go/src/pkg/runtime/386/asm.s:85 #1016 0x0804e5cd in runtime.initdone () at /home/jra/go/src/pkg/runtime/proc.c:145 Interesting stuff happens before and after this, so let’s try to sort through it. First, why did morestack get called? Because we are out of stack space. But how did we know? Ian’s explanation of split stacks lays this out pretty well: on the entry into every subroutine, we need to check how much space is left, and if it’s “not enough”, get a new stack to run on.\nWhen you take a look at the assembly listing for main as it leaves 8g, there’s nothing to see:\n$ 8g -S stack.go | head -10 --- prog list \"main\" --- 0000 (stack.go:3) TEXT main+0(SB),$0-0 0001 (stack.go:4) CALL ,main+0(SB) 0002 (stack.go:5) RET , But when you take a look at the assembly listing for main generated by 8l, you see something else:\n$ 8l -a stack.8 | head -8 codeblk [0x8048c00,0x805332a) at offset 0xc00 8048c00\tmain.main | (3)\tTEXT\tmain.main+0(SB),$0 8048c00\t658b0d00000000 | (3)\tMOVL\t(GS),CX 8048c07\t8b49f8 | (3)\tMOVL\t-8(CX),CX 8048c0a\t3b21 | (3)\tCMPL\tSP,(CX) 8048c0c\t7709 | (3)\tJHI\t,8048c17 8048c0e\t31d2 | (3)\tMOVL\t$0,DX 8048c10\t31c0 | (3)\tMOVL\t$0,AX 8048c12\te8c7080000 | (3)\tCALL\t,80494de+runtime.morestack 8048c17\te8e4ffffff | (4)\tCALL\t,8048c00+main.main 8048c1c\tc3 | (5)\tRET\t, So already we’ve found something interesting, which is that part of split stacks is implemented in the linker, not in the compiler. I don’t know why this is, but it’s probably another nice example of Broken Abstractions in Go.\nAnd what’s that code doing? It says, “find the current goroutine’s struct G, and compare the current stack pointer to g.stackguard”. In the Go runtime (Linux, x86), the GS segment register points to a segment descriptor table entry which was set using modify_ldt(2). The segment descriptor arranges that references like 0(GS) refer to the base of the struct Gobuf, which in turn has a pointer to the current struct G for the goroutine. The comparison is checking to see if we are about to run off the end of the stack. But what are the actual contents of these things? Let’s have a look, with a newly started copy of the program:\n$ gdb 8.out (gdb) b main.main Breakpoint 1 at 0x8048c00: file /home/jra/go-stuff/stack.go, line 3. (gdb) r Starting program: /home/jra/go-stuff/8.out Breakpoint 1, main.main () at /home/jra/go-stuff/stack.go:3 3\tfunc main() { Current language: auto; currently minimal (gdb) disas Dump of assembler code for function main.main: 0x08048c00 :\tmov %gs:0x0,%ecx 0x08048c07 :\tmov -0x8(%ecx),%ecx 0x08048c0a :\tcmp (%ecx),%esp 0x08048c0c :\tja 0x8048c17 0x08048c0e :\txor %edx,%edx 0x08048c10 :\txor %eax,%eax 0x08048c12 :\tcall 0x80494de 0x08048c17 :\tcall 0x8048c00 0x08048c1c :\tret End of assembler dump. (gdb) si 0x08048c07\t3\tfunc main() { (gdb) si 0x08048c0a\t3\tfunc main() { (gdb) info reg eax 0x0\t0 ecx 0xb7dc3000\t-1210306560 edx 0x1\t1 ebx 0x806a55c\t134653276 esp 0xb7dc50d4\t0xb7dc50d4 ebp 0xbf8feedc\t0xbf8feedc esi 0xb7dc3060\t-1210306464 edi 0xb7dd2100\t-1210244864 eip 0x8048c0a\t0x8048c0a eflags 0x200296\t[ PF AF SF IF ID ] cs 0x73\t115 ss 0x7b\t123 ds 0x7b\t123 es 0x7b\t123 fs 0x0\t0 gs 0x3f\t63 (gdb) x 0xb7dc3000 \u003c-- find out what (cx) is (i.e. stack guard) 0xb7dc3000:\t0xb7dc4100 Voila! This time through, we are not going to end up in runtime.morestack because the current stack pointer (0xb7dc50d4) is greater than the stack guard (0xb7dc4100).\nAnd how far above the end of the stack is the stack guard? This is explained in a giant comment in runtime.h, at least giant for the Go team’s standards, which is “less is better, even for comments”. :) We can take a look at it for ourselves as well. According to the definition of struct G, the stack base is the next pointer down from the stackguard:\n(gdb) x 0xb7dc3004 \u003c-- cx + 4 0xb7dc3004:\t0xb7dc50dc \u003c-- the stack base Now, stack base in this context is “the place where the stack starts growing down from”. So we have the following interesting places:\n0xb7dc50dc: stack base 0xb7dc50d4: current stack pointer 0xb7dc4100: stack guard 0xb7dc4000: end of the stack (see the constant StackGuard defined in runtime.h) If we fast forward a few thousand iterations of main, the current stack pointer is going to move down, one return address at a time, until the current stack pointer is less than the stack guard. At that point, we know we need more stack. We still have 128 bytes to work with, but some routines in the Go runtime can’t or don’t want to check for stack underflow, so we set the stack guard high enough to leave room for them to run. On Windows, the user-space exception handler could always get called, so the stack guard is much higher (2048 bytes) to leave room for it to work, since we don’t get a chance to hook it and teach it about split stacks.\nAs an aside, when you are reading the sources and you see “#pragma textflag 7” or when you see an assembly routine that starts like “TEXT runtimeÂ·exit(SB),7,$0”, it’s a routine that will not be checking for possible stack underflow. So it, and any sub-calls, had better require a maximum of 128 bytes of stack. This “7 flag” is a note from the compiler (via the assembler) to the linker asking it to refrain from adding the stack underflow check.\nTo take a look at the next step of the process, we need to turn our attention to morestack, which is found in runtime/386/asm.s. Things get complicated here, but there’s two steps that are important for our investigation: first, morestack puts some information away in the current struct M so that it can use it later including the size of the current stack frame and argument list of the current function call and the return address of the caller of the function that just got pre-empted. It is going to need this information to link the new stack to the old one.\nNote that morestack is in runtime/386/asm.s. It is processor-dependent, because it is grabbing stuff off the stack in a processor-dependent way. But it is not OS-dependent, which is interesting. On the other hand, the code that sets the segment registers (mentioned above) is OS dependent, because changing the global descriptor table requires ring-0 privileges.\nWhen morestack has saved away what it needs, it changes stacks to the scheduler’s stack, and then transfers control to runtime.newstack. Allocating a new stack is a sizeable chunk of work, because stacks are allocated using exactly the same mechanism as any other piece of memory allocated by the Go runtime. So we need to make sure we have a full stack available for runtime.mallocgc to run on. Note that morestack leaves via a CALL, but kills itself if it returns, because it knows that newstack is going to retun in a funky way (keep reading…). We’ll have to remember to take a look at newstack to find out how the return address pushed by CALL gets cleaned up.\nNewstack has some complexity related to reflection, so before we start let’s just agree to ignore that ok? We’ll come back to reflection low-level details some other day. Once we ignore the reflection stuff, newstack ends up relatively simple: allocate a new range of memory, decorate the top of it with something called a “struct Stktop”, then exit in a funky way.\nThe allocation step is fairly straightforward: calculate the size of the new stack, then . The size calculation is a bit interesting: the new stack will be the maximum of StackBig or of the amount of space needed by this function. StackBig is 4096 (8192 on Windows, see the comments for why). So if you’ve got one function in a call-chain that wants more stack space than the stack currently has, and even more than the stack is normally extended, it will get a stack of it’s own, and then when it calls another function, it may cause a second trip through morestack. Some magic happens inside of stackalloc to decide if it is currently safe to allocate a new stack with mallocgc, or if the new stack should come from a fixed-size allocator instead. Also, since the most commonly used stack is StackBig + StackExtra bytes long, there’s a shurtcut to avoid the heavier mallocgc route for that as well. So while the shorthand explanation of split stacks is that it is a technique to make stacks as easy to deal with as garbage collected objects, it’s not true that all stacks come directly from and go back into, the garbage collected pool.\nOnce the new stack is allocated, newstack “decorates” the top of it. It fills in a struct Stktop with information that will be used later when we are cleaning up the stack and transferring stacks from this one back to the last one. Next, newstack moves the frame and the arguments from the call that was preempted onto the new stack. With that we are ready to put the new stack to use.\nThis is where the funky exit comes. newstack uses gogocall, which is basically how the Go scheduler implements context switches. It switches onto the new stack and then arranges that the next RET that we hit (i.e. the RET at the end of the function that was preempted) will result in a jump to a certain function, called runtime.lessstack. gogocall exits with a JMP to the preempted function, so as not to mess up the stack it’s just put in order, and the preempted function starts running again on it’s new stack!\nlessstack, as the name implies, is the counterpart to morestack. It runs in the context of the old stack, but its job is to save things and prepare for the call to oldstack (the counterpart to newstack). It needs to save the return value, then switch onto the scheduling stack, for the same reason that morestack needed to. oldstack, as the counterpart to newstack does what you’d expect: it gets us off of the current stack (freeing it) and starts executing on the old stack. We need to carry two pieces of state from the returning function, the return value (in AX) and the “return arguments”, i.e. the results of the computation that was left on the stack. I haven’t looked into the Go call semantics enough to understand the difference between AX and the stuff returned on the stack, but regardless of wether I understand it or not, oldstack saves it. Then oldstack pulls a trick like newstack, exiting via gogo, which moves to the old stack by setting SP and PC to the values that morestack staved from the caller way back when.\nOpen question: if morestack is called twice before oldstack is called, why isn’t the original caller’s SP/PC stomped?\nSo, now you’ve been all the way down the rabbit hole with me. Did you have fun? Got questions, or answers to my open question?\n",
+  "wordCount" : "2159",
+  "inLanguage": "en",
+  "datePublished": "2011-02-15T11:02:24Z",
+  "dateModified": "2011-02-15T11:02:24Z",
+  "author":{
+    "@type": "Person",
+    "name": "jra"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://blog.nella.org/2011/02/15/a-trip-down-the-split-rabbithole/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "jra's thoughts",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://blog.nella.org/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://blog.nella.org/" accesskey="h" title="jra&#39;s thoughts (Alt + H)">jra&#39;s thoughts</a>
+            <div class="logo-switches">
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://blog.nella.org/">Home</a>&nbsp;»&nbsp;<a href="https://blog.nella.org/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      A trip down the (split) rabbithole
+    </h1>
+    <div class="post-meta"><span title='2011-02-15 11:02:24 +0000 +0000'>February 15, 2011</span>&nbsp;·&nbsp;11 min&nbsp;·&nbsp;jra
+
+</div>
+  </header> 
+  <div class="post-content"><p><em>Note:</em> This post is out of date, and will become increasingly out of date when Go&rsquo;s new contiguous stacks are implemented. I&rsquo;m leaving it here because it is still interesting, even if out of date.</p>
+<p>Go uses split stacks (also called segmented stacks in the literature) in order to allow thousands of stacks in the space that would normally be taken by hundreds of C-style contiguous stacks. There&rsquo;s a discussion of how to add split stacks to GCC <a href="http://gcc.gnu.org/wiki/SplitStacks">here</a>. Note: it was written by the author of gccgo, around the time he started porting Go to Gcc, so it&rsquo;s clear that he&rsquo;s adding split stacks to Gcc to help Go. But if it&rsquo;s helpful to C programmers as well, then so much the better!</p>
+<p>Ian&rsquo;s article is dedicated to how he planned to add split stacks to GCC. I want to dig down to the lowest level and trace every single step of the process of maintaining split stacks in the native Go runtime. I hope you, dear reader, do too. Here we go&hellip;</p>
+<p>First, we need a program that&rsquo;s going to use up all it&rsquo;s stack. Since the point of this article is not to learn about Go&rsquo;s stack-based object allocation we&rsquo;ll use up the stack with return addresses, specifically to main:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">main</span>()
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Now, don&rsquo;t go running that just yet, or else you&rsquo;ll have the out of memory killer on your back. Instead, go run that under gdb, setting a breakpoint on runtime.morestack:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ gdb 8.out
+</span></span><span style="display:flex;"><span>(gdb) b runtime.morestack
+</span></span><span style="display:flex;"><span>Breakpoint 1 at 0x80494de: file /home/jra/go/src/pkg/runtime/386/asm.s, line 150.
+</span></span><span style="display:flex;"><span>(gdb) r
+</span></span><span style="display:flex;"><span>Starting program: /home/jra/go-stuff/8.out
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Breakpoint 1, runtime.morestack ()
+</span></span><span style="display:flex;"><span>    at /home/jra/go/src/pkg/runtime/386/asm.s:150
+</span></span><span style="display:flex;"><span>150		get_tls(CX)
+</span></span><span style="display:flex;"><span>Current language:  auto; currently asm
+</span></span><span style="display:flex;"><span>(gdb) bt
+</span></span><span style="display:flex;"><span>#0  runtime.morestack () at /home/jra/go/src/pkg/runtime/386/asm.s:150
+</span></span><span style="display:flex;"><span>#1  0x08048c17 in main.main () at /home/jra/go-stuff/stack.go:3
+</span></span><span style="display:flex;"><span>#2  0x08048c1c in main.main () at /home/jra/go-stuff/stack.go:4
+</span></span><span style="display:flex;"><span>#3  0x08048c1c in main.main () at /home/jra/go-stuff/stack.go:4
+</span></span><span style="display:flex;"><span>#4  0x08048c1c in main.main () at /home/jra/go-stuff/stack.go:4
+</span></span><span style="display:flex;"><span>... same thing for lots and lots of pages ...
+</span></span><span style="display:flex;"><span>#1014 0x08048c1c in main.main () at /home/jra/go-stuff/stack.go:4
+</span></span><span style="display:flex;"><span>#1015 0x08049473 in runtime.mainstart ()
+</span></span><span style="display:flex;"><span>    at /home/jra/go/src/pkg/runtime/386/asm.s:85
+</span></span><span style="display:flex;"><span>#1016 0x0804e5cd in runtime.initdone ()
+</span></span><span style="display:flex;"><span>    at /home/jra/go/src/pkg/runtime/proc.c:145
+</span></span></code></pre></div><p>Interesting stuff happens before and after this, so let&rsquo;s try to sort through it. First, why did morestack get called? Because we are out of stack space. But how did we know? Ian&rsquo;s explanation of split stacks lays this out pretty well: on the entry into every subroutine, we need to check how much space is left, and if it&rsquo;s &ldquo;not enough&rdquo;, get a new stack to run on.</p>
+<p>When you take a look at the assembly listing for main as it leaves 8g, there&rsquo;s nothing to see:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ 8g -S stack.go | head -10
+</span></span><span style="display:flex;"><span>--- prog list &#34;main&#34; ---
+</span></span><span style="display:flex;"><span>0000 (stack.go:3) TEXT    main+0(SB),$0-0
+</span></span><span style="display:flex;"><span>0001 (stack.go:4) CALL    ,main+0(SB)
+</span></span><span style="display:flex;"><span>0002 (stack.go:5) RET     ,
+</span></span></code></pre></div><p>But when you take a look at the assembly listing for main generated by 8l, you see something else:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ 8l -a stack.8 | head -8
+</span></span><span style="display:flex;"><span>codeblk [0x8048c00,0x805332a) at offset 0xc00
+</span></span><span style="display:flex;"><span>8048c00	main.main            | (3)	TEXT	main.main+0(SB),$0
+</span></span><span style="display:flex;"><span>8048c00	658b0d00000000       | (3)	MOVL	(GS),CX
+</span></span><span style="display:flex;"><span>8048c07	8b49f8               | (3)	MOVL	-8(CX),CX
+</span></span><span style="display:flex;"><span>8048c0a	3b21                 | (3)	CMPL	SP,(CX)
+</span></span><span style="display:flex;"><span>8048c0c	7709                 | (3)	JHI	,8048c17
+</span></span><span style="display:flex;"><span>8048c0e	31d2                 | (3)	MOVL	$0,DX
+</span></span><span style="display:flex;"><span>8048c10	31c0                 | (3)	MOVL	$0,AX
+</span></span><span style="display:flex;"><span>8048c12	e8c7080000           | (3)	CALL	,80494de+runtime.morestack
+</span></span><span style="display:flex;"><span>8048c17	e8e4ffffff           | (4)	CALL	,8048c00+main.main
+</span></span><span style="display:flex;"><span>8048c1c	c3                   | (5)	RET	,
+</span></span></code></pre></div><p>So already we&rsquo;ve found something interesting, which is that part of split stacks is implemented in the linker, not in the compiler. I don&rsquo;t know why this is, but it&rsquo;s probably another nice example of <a href="http://research.swtch.com/2010/03/broken-abstractions-in-go.html">Broken Abstractions in Go</a>.</p>
+<p>And what&rsquo;s that code doing? It says, &ldquo;find the current goroutine&rsquo;s struct G, and compare the current stack pointer to g.stackguard&rdquo;. In the Go runtime (Linux, x86), the GS segment register points to a segment descriptor table entry which was set using modify_ldt(2). The segment descriptor arranges that references like 0(GS) refer to the base of the struct Gobuf, which in turn has a pointer to the current struct G for the goroutine. The comparison is checking to see if we are about to run off the end of the stack. But what are the actual contents of these things? Let&rsquo;s have a look, with a newly started copy of the program:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span><span style="color:#f92672">$</span> gdb <span style="color:#ae81ff">8.</span>out
+</span></span><span style="display:flex;"><span>(gdb) b main<span style="color:#f92672">.</span>main
+</span></span><span style="display:flex;"><span>Breakpoint <span style="color:#ae81ff">1</span> at <span style="color:#ae81ff">0x8048c00</span>: file <span style="color:#f92672">/</span>home<span style="color:#f92672">/</span>jra<span style="color:#f92672">/</span>go<span style="color:#f92672">-</span>stuff<span style="color:#f92672">/</span>stack<span style="color:#f92672">.</span>go, line <span style="color:#ae81ff">3.</span>
+</span></span><span style="display:flex;"><span>(gdb) r
+</span></span><span style="display:flex;"><span>Starting program: <span style="color:#f92672">/</span>home<span style="color:#f92672">/</span>jra<span style="color:#f92672">/</span>go<span style="color:#f92672">-</span>stuff<span style="color:#f92672">/</span><span style="color:#ae81ff">8.</span>out
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Breakpoint <span style="color:#ae81ff">1</span>, main<span style="color:#f92672">.</span>main () at <span style="color:#f92672">/</span>home<span style="color:#f92672">/</span>jra<span style="color:#f92672">/</span>go<span style="color:#f92672">-</span>stuff<span style="color:#f92672">/</span>stack<span style="color:#f92672">.</span>go:<span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">3</span>	<span style="color:#66d9ef">func</span> main() {
+</span></span><span style="display:flex;"><span>Current language:  auto; currently minimal
+</span></span><span style="display:flex;"><span>(gdb) disas
+</span></span><span style="display:flex;"><span>Dump of assembler code <span style="color:#66d9ef">for</span> function main<span style="color:#f92672">.</span>main:
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0x08048c00</span> :	mov    <span style="color:#f92672">%</span>gs:<span style="color:#ae81ff">0x0</span>,<span style="color:#f92672">%</span>ecx
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0x08048c07</span> :	mov    <span style="color:#f92672">-</span><span style="color:#ae81ff">0x8</span>(<span style="color:#f92672">%</span>ecx),<span style="color:#f92672">%</span>ecx
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0x08048c0a</span> :	cmp    (<span style="color:#f92672">%</span>ecx),<span style="color:#f92672">%</span>esp
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0x08048c0c</span> :	ja     <span style="color:#ae81ff">0x8048c17</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0x08048c0e</span> :	xor    <span style="color:#f92672">%</span>edx,<span style="color:#f92672">%</span>edx
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0x08048c10</span> :	xor    <span style="color:#f92672">%</span>eax,<span style="color:#f92672">%</span>eax
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0x08048c12</span> :	call   <span style="color:#ae81ff">0x80494de</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0x08048c17</span> :	call   <span style="color:#ae81ff">0x8048c00</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0x08048c1c</span> :	ret
+</span></span><span style="display:flex;"><span>End of assembler dump<span style="color:#f92672">.</span>
+</span></span><span style="display:flex;"><span>(gdb) si
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0x08048c07</span>	<span style="color:#ae81ff">3</span>	<span style="color:#66d9ef">func</span> main() {
+</span></span><span style="display:flex;"><span>(gdb) si
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0x08048c0a</span>	<span style="color:#ae81ff">3</span>	<span style="color:#66d9ef">func</span> main() {
+</span></span><span style="display:flex;"><span>(gdb) info reg
+</span></span><span style="display:flex;"><span>eax            <span style="color:#ae81ff">0x0</span>	<span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>ecx            <span style="color:#ae81ff">0xb7dc3000</span>	<span style="color:#f92672">-</span><span style="color:#ae81ff">1210306560</span>
+</span></span><span style="display:flex;"><span>edx            <span style="color:#ae81ff">0x1</span>	<span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>ebx            <span style="color:#ae81ff">0x806a55c</span>	<span style="color:#ae81ff">134653276</span>
+</span></span><span style="display:flex;"><span>esp            <span style="color:#ae81ff">0xb7dc50d4</span>	<span style="color:#ae81ff">0xb7dc50d4</span>
+</span></span><span style="display:flex;"><span>ebp            <span style="color:#ae81ff">0xbf8feedc</span>	<span style="color:#ae81ff">0xbf8feedc</span>
+</span></span><span style="display:flex;"><span>esi            <span style="color:#ae81ff">0xb7dc3060</span>	<span style="color:#f92672">-</span><span style="color:#ae81ff">1210306464</span>
+</span></span><span style="display:flex;"><span>edi            <span style="color:#ae81ff">0xb7dd2100</span>	<span style="color:#f92672">-</span><span style="color:#ae81ff">1210244864</span>
+</span></span><span style="display:flex;"><span>eip            <span style="color:#ae81ff">0x8048c0a</span>	<span style="color:#ae81ff">0x8048c0a</span>
+</span></span><span style="display:flex;"><span>eflags         <span style="color:#ae81ff">0x200296</span>	[ PF AF SF IF ID ]
+</span></span><span style="display:flex;"><span>cs             <span style="color:#ae81ff">0x73</span>	<span style="color:#ae81ff">115</span>
+</span></span><span style="display:flex;"><span>ss             <span style="color:#ae81ff">0x7b</span>	<span style="color:#ae81ff">123</span>
+</span></span><span style="display:flex;"><span>ds             <span style="color:#ae81ff">0x7b</span>	<span style="color:#ae81ff">123</span>
+</span></span><span style="display:flex;"><span>es             <span style="color:#ae81ff">0x7b</span>	<span style="color:#ae81ff">123</span>
+</span></span><span style="display:flex;"><span>fs             <span style="color:#ae81ff">0x0</span>	<span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>gs             <span style="color:#ae81ff">0x3f</span>	<span style="color:#ae81ff">63</span>
+</span></span><span style="display:flex;"><span>(gdb) x <span style="color:#ae81ff">0xb7dc3000</span>              <span style="color:#f92672">&lt;--</span> find out what (cx) is (i<span style="color:#f92672">.</span>e<span style="color:#f92672">.</span> stack guard)
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0xb7dc3000</span>:	<span style="color:#ae81ff">0xb7dc4100</span>
+</span></span></code></pre></div><p>Voila! This time through, we are not going to end up in runtime.morestack because the current stack pointer (0xb7dc50d4) is greater than the stack guard (0xb7dc4100).</p>
+<p>And how far above the end of the stack is the stack guard? This is explained in a giant comment in runtime.h, at least giant for the Go team&rsquo;s standards, which is &ldquo;less is better, even for comments&rdquo;. :) We can take a look at it for ourselves as well. According to the definition of struct G, the stack base is the next pointer down from the stackguard:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>(gdb) x 0xb7dc3004               &lt;-- cx + 4
+</span></span><span style="display:flex;"><span>0xb7dc3004:	0xb7dc50dc   &lt;-- the stack base
+</span></span></code></pre></div><p>Now, stack base in this context is &ldquo;the place where the stack starts growing down from&rdquo;. So we have the following interesting places:</p>
+<ul>
+<li>0xb7dc50dc: stack base</li>
+<li>0xb7dc50d4: current stack pointer</li>
+<li>0xb7dc4100: stack guard</li>
+<li>0xb7dc4000: end of the stack (see the constant StackGuard defined in runtime.h)</li>
+</ul>
+<p>If we fast forward a few thousand iterations of main, the current stack pointer is going to move down, one return address at a time, until the current stack pointer is less than the stack guard. At that point, we know we need more stack. We still have 128 bytes to work with, but some routines in the Go runtime can&rsquo;t or don&rsquo;t want to check for stack underflow, so we set the stack guard high enough to leave room for them to run. On Windows, the user-space exception handler could always get called, so the stack guard is much higher (2048 bytes) to leave room for it to work, since we don&rsquo;t get a chance to hook it and teach it about split stacks.</p>
+<p>As an aside, when you are reading the sources and you see &ldquo;#pragma textflag 7&rdquo; or when you see an assembly routine that starts like &ldquo;TEXT runtimeÂ·exit(SB),7,$0&rdquo;, it&rsquo;s a routine that will not be checking for possible stack underflow. So it, and any sub-calls, had better require a maximum of 128 bytes of stack. This &ldquo;7 flag&rdquo; is a note from the compiler (via the assembler) to the linker asking it to refrain from adding the stack underflow check.</p>
+<p>To take a look at the next step of the process, we need to turn our attention to morestack, which is found in runtime/386/asm.s. Things get complicated here, but there&rsquo;s two steps that are important for our investigation: first, morestack puts some information away in the current struct M so that it can use it later including the size of the current stack frame and argument list of the current function call and the return address of the <strong>caller</strong> of the function that just got pre-empted. It is going to need this information to link the new stack to the old one.</p>
+<p>Note that morestack is in runtime/386/asm.s. It is processor-dependent, because it is grabbing stuff off the stack in a processor-dependent way. But it is not OS-dependent, which is interesting. On the other hand, the code that sets the segment registers (mentioned above) is OS dependent, because changing the global descriptor table requires ring-0 privileges.</p>
+<p>When morestack has saved away what it needs, it changes stacks to the scheduler&rsquo;s stack, and then transfers control to runtime.newstack. Allocating a new stack is a sizeable chunk of work, because stacks are allocated using exactly the same mechanism as any other piece of memory allocated by the Go runtime. So we need to make sure we have a full stack available for runtime.mallocgc to run on. Note that morestack leaves via a CALL, but kills itself if it returns, because it knows that newstack is going to retun in a funky way (keep reading&hellip;). We&rsquo;ll have to remember to take a look at newstack to find out how the return address pushed by CALL gets cleaned up.</p>
+<p>Newstack has some complexity related to reflection, so before we start let&rsquo;s just agree to ignore that ok? We&rsquo;ll come back to reflection low-level details some other day. Once we ignore the reflection stuff, newstack ends up relatively simple: allocate a new range of memory, decorate the top of it with something called a &ldquo;struct Stktop&rdquo;, then exit in a funky way.</p>
+<p>The allocation step is fairly straightforward: calculate the size of the new stack, then . The size calculation is a bit interesting: the new stack will be the maximum of StackBig or of the amount of space needed by this function. StackBig is 4096 (8192 on Windows, see the comments for why). So if you&rsquo;ve got one function in a call-chain that wants more stack space than the stack currently has, and even <strong>more</strong> than the stack is normally extended, it will get a stack of it&rsquo;s own, and then when it calls another function, it may cause a second trip through morestack. Some magic happens inside of stackalloc to decide if it is currently safe to allocate a new stack with mallocgc, or if the new stack should come from a fixed-size allocator instead. Also, since the most commonly used stack is StackBig + StackExtra bytes long, there&rsquo;s a shurtcut to avoid the heavier mallocgc route for that as well. So while the shorthand explanation of split stacks is that it is a technique to make stacks as easy to deal with as garbage collected objects, it&rsquo;s not true that all stacks come directly from and go back into, the garbage collected pool.</p>
+<p>Once the new stack is allocated, newstack &ldquo;decorates&rdquo; the top of it. It fills in a struct Stktop with information that will be used later when we are cleaning up the stack and transferring stacks from this one back to the last one. Next, newstack moves the frame and the arguments from the call that was preempted onto the new stack. With that we are ready to put the new stack to use.</p>
+<p>This is where the funky exit comes. newstack uses gogocall, which is basically how the Go scheduler implements context switches. It switches onto the new stack and then arranges that the next RET that we hit (i.e. the RET at the end of the function that was preempted) will result in a jump to a certain function, called runtime.lessstack. gogocall exits with a JMP to the preempted function, so as not to mess up the stack it&rsquo;s just put in order, and the preempted function starts running again on it&rsquo;s new stack!</p>
+<p>lessstack, as the name implies, is the counterpart to morestack. It runs in the context of the old stack, but its job is to save things and prepare for the call to oldstack (the counterpart to newstack). It needs to save the return value, then switch onto the scheduling stack, for the same reason that morestack needed to. oldstack, as the counterpart to newstack does what you&rsquo;d expect: it gets us off of the current stack (freeing it) and starts executing on the old stack. We need to carry two pieces of state from the returning function, the return value (in AX) and the &ldquo;return arguments&rdquo;, i.e. the results of the computation that was left on the stack. I haven&rsquo;t looked into the Go call semantics enough to understand the difference between AX and the stuff returned on the stack, but regardless of wether I understand it or not, oldstack saves it. Then oldstack pulls a trick like newstack, exiting via gogo, which moves to the old stack by setting SP and PC to the values that morestack staved from the caller way back when.</p>
+<p>Open question: if <code>morestack </code> is called twice before <code>oldstack </code> is called, why isn&rsquo;t the original caller&rsquo;s SP/PC stomped?</p>
+<p>So, now you&rsquo;ve been all the way down the rabbit hole with me. Did you have fun? Got questions, or answers to my open question?</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+
+<ul class="share-buttons">
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share A trip down the (split) rabbithole on linkedin"
+            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.nella.org%2f2011%2f02%2f15%2fa-trip-down-the-split-rabbithole%2f&amp;title=A%20trip%20down%20the%20%28split%29%20rabbithole&amp;summary=A%20trip%20down%20the%20%28split%29%20rabbithole&amp;source=https%3a%2f%2fblog.nella.org%2f2011%2f02%2f15%2fa-trip-down-the-split-rabbithole%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share A trip down the (split) rabbithole on ycombinator"
+            href="https://news.ycombinator.com/submitlink?t=A%20trip%20down%20the%20%28split%29%20rabbithole&u=https%3a%2f%2fblog.nella.org%2f2011%2f02%2f15%2fa-trip-down-the-split-rabbithole%2f">
+            <svg version="1.1" xml:space="preserve" width="30px" height="30px" viewBox="0 0 512 512" fill="currentColor"
+                xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
+                <path
+                    d="M449.446 0C483.971 0 512 28.03 512 62.554L512 449.446C512 483.97 483.97 512 449.446 512L62.554 512C28.03 512 0 483.97 0 449.446L0 62.554C0 28.03 28.029 0 62.554 0L449.446 0ZM183.8767 87.9921H121.8427L230.6673 292.4508V424.0079H281.3328V292.4508L390.1575 87.9921H328.1233L256 238.2489z" />
+            </svg>
+        </a>
+    </li>
+</ul>
+
+  </footer>
+</article>
+    </main>
+    
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

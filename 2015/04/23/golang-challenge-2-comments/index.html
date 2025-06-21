@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Golang Challenge 2 comments | jra&#39;s thoughts</title>
+<meta name="keywords" content="">
+<meta name="description" content="I&rsquo;ve just finished evaluating 40 of the 105 entries to the Golang Challenge #2. The organizer, Satish, asked me to write up my thoughts.
+The main similarity I noticed in the entries was not enough testing. The vast majority of the entries used the tests provided in with the challenge unmodified. Taking the given tests without thinking critically about them lead people to make a number of critical mistakes, over and over again. The majority of the entries I graded passed the tests, but would not have stood up to production use. Of the 40 I graded, only 2 or 3 would have received a &ldquo;ship it&rdquo; from me in my day job. Those were (not by chance) the ones with extra tests beyond the ones provided in the challenge.">
+<meta name="author" content="jra">
+<link rel="canonical" href="https://blog.nella.org/2015/04/23/golang-challenge-2-comments/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.3beea2776320e39a6c8d0589cd10cf4cbbbe3ca9b6f0363cfeef1417ed39a195.css" integrity="sha256-O&#43;6id2Mg45psjQWJzRDPTLu&#43;PKm28DY8/u8UF&#43;05oZU=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://blog.nella.org/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://blog.nella.org/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://blog.nella.org/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://blog.nella.org/apple-touch-icon.png">
+<link rel="mask-icon" href="https://blog.nella.org/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://blog.nella.org/2015/04/23/golang-challenge-2-comments/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend&display=swap" rel="stylesheet">
+<meta property="og:url" content="https://blog.nella.org/2015/04/23/golang-challenge-2-comments/">
+  <meta property="og:site_name" content="jra&#39;s thoughts">
+  <meta property="og:title" content="Golang Challenge 2 comments">
+  <meta property="og:description" content="I’ve just finished evaluating 40 of the 105 entries to the Golang Challenge #2. The organizer, Satish, asked me to write up my thoughts.
+The main similarity I noticed in the entries was not enough testing. The vast majority of the entries used the tests provided in with the challenge unmodified. Taking the given tests without thinking critically about them lead people to make a number of critical mistakes, over and over again. The majority of the entries I graded passed the tests, but would not have stood up to production use. Of the 40 I graded, only 2 or 3 would have received a “ship it” from me in my day job. Those were (not by chance) the ones with extra tests beyond the ones provided in the challenge.">
+  <meta property="og:locale" content="en-US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2015-04-23T14:44:32+00:00">
+    <meta property="article:modified_time" content="2015-04-23T14:44:32+00:00">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Golang Challenge 2 comments">
+<meta name="twitter:description" content="I&rsquo;ve just finished evaluating 40 of the 105 entries to the Golang Challenge #2. The organizer, Satish, asked me to write up my thoughts.
+The main similarity I noticed in the entries was not enough testing. The vast majority of the entries used the tests provided in with the challenge unmodified. Taking the given tests without thinking critically about them lead people to make a number of critical mistakes, over and over again. The majority of the entries I graded passed the tests, but would not have stood up to production use. Of the 40 I graded, only 2 or 3 would have received a &ldquo;ship it&rdquo; from me in my day job. Those were (not by chance) the ones with extra tests beyond the ones provided in the challenge.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://blog.nella.org/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Golang Challenge 2 comments",
+      "item": "https://blog.nella.org/2015/04/23/golang-challenge-2-comments/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Golang Challenge 2 comments",
+  "name": "Golang Challenge 2 comments",
+  "description": "I\u0026rsquo;ve just finished evaluating 40 of the 105 entries to the Golang Challenge #2. The organizer, Satish, asked me to write up my thoughts.\nThe main similarity I noticed in the entries was not enough testing. The vast majority of the entries used the tests provided in with the challenge unmodified. Taking the given tests without thinking critically about them lead people to make a number of critical mistakes, over and over again. The majority of the entries I graded passed the tests, but would not have stood up to production use. Of the 40 I graded, only 2 or 3 would have received a \u0026ldquo;ship it\u0026rdquo; from me in my day job. Those were (not by chance) the ones with extra tests beyond the ones provided in the challenge.\n",
+  "keywords": [
+    
+  ],
+  "articleBody": "I’ve just finished evaluating 40 of the 105 entries to the Golang Challenge #2. The organizer, Satish, asked me to write up my thoughts.\nThe main similarity I noticed in the entries was not enough testing. The vast majority of the entries used the tests provided in with the challenge unmodified. Taking the given tests without thinking critically about them lead people to make a number of critical mistakes, over and over again. The majority of the entries I graded passed the tests, but would not have stood up to production use. Of the 40 I graded, only 2 or 3 would have received a “ship it” from me in my day job. Those were (not by chance) the ones with extra tests beyond the ones provided in the challenge.\nA key part of growing into a mature programmer is to understand that the problem as it arrives in your “todo basket” is rarely correctly specified. This challenge is no exception. The challenge asked participants to “make the given tests pass”, but didn’t mention if you could or should write extra tests. The bottom line is that you can always write extra tests, and by doing so, you will discover where the spec is weak, or wrong. You will also decide for yourself where the “edge” of the task is; thinking about tests you can and should write will help fix the size of the job at hand.\nWhat I’m describing here is test-driven development. Go’s tools make it easy to stay on the golden path of TDD, you just need to decide that you believe in its benefits, and then teach yourself the discipline to do it. In TDD, the tests push the implementation away from the hacky thing that seems to work towards the robust thing that actually does work, that lives alongside of proof that it works (the tests) and that will keep working even as the world changes around it (because you’ll fix the code when the tests start failing).\nTwo deficiencies in the given tests were that they did not test legitimate network behaviors like short reads, and they gave the impression that the protocol should be one-shot (i.e. set up a TCP connection, exchange public keys, echo one message and close). Given that the problem statement asked for an io.Reader and and io.Writer that encrypted data, it stands to reason that a good solution would be able to handle more than one message, since io.Reader/io.Writer are not one-shot interfaces.\nA common problem in TCP servers is short reads. Just because the sender put 1000 bytes into the TCP stream via one write system call does not mean you are guaranteed to receive those same 1000 bytes in a matching read call. To get that behavior, you’d need a reliable transaction protocol like SCTP. With TCP, all you are guaranteed is that the same bytes will arrive at the far end, in the same order.\nTo see where a short read can come from, we need to look at it one packet at a time. Imagine what happens if the sender gives the kernel 2000 bytes, then sleeps on a the read of a reply. If the MTU on the link is 1500 bytes, the TCP implementation might send out one packet with about 1500 bytes in it, and a second with 500 (the “about” is hand waving for the TCP/IP overhead we’re ignoring here). Now imagine that the second packet is lost, and the replacement is lost as well. On the third try it gets through. On the receiving end, what we see is 1000 bytes which arrive, followed by a pause and 500 more. If the pause is long enough, the kernel will decide to stop making the application wait around for the first 1000 bytes and pass them up. The reader, blocked in the recv() system call, will get unblocked and receive the 1000 bytes. The next time it blocks on recv(), it will get the enxt 500 bytes. This is one of many explanations for how you can get a short read. There’s no guarantees, and code that expects there to be is wrong and will fail in real life (but not in your fast, non-lossy, testing environment; in particular, if you test via localhost, you’re very unlikely to ever see short reads).\nBut short reads could some from someplace much simpler… from the tests. Consider how your challenge entry would have behaved if it was reading from an io.Reader that intentionally returned only one byte at a time.\nGiven the reality of short reads, it is up to the application to handle framing the bytes into messages. The majority of entries did not take this into consideration. The solution is that each message needs to be sent with it’s length. And when SecureReader reads from the underlying io.Reader, it needs to use something like ioutil.ReadAll to make certain all the bytes arrive, no matter how many calls to the underlying io.Reader it takes to get them all. But then that opens up the question of what to do when the connection hangs? Do you timeout? How can you cause ioutil.ReadAll to return early?\nIn Go, different pieces of the language and the standard library can be composed to make something better than any of them alone. A great way to read frames from the network is to prepend the frame with it’s length. You read the length using encoding/binary.Read, make an io.LimitedReader which is limited to the length, then give that LimitedReader to ioutil.ReadAll. You can handle timeouts by checking that if the underlying io.Reader satisfies an interface with SetReadDeadline in it (as the various connection types in package net do), and then using it to set a deadline. After the deadline passes, the underlying io.Reader will return a timeout error, which the LimitedReader will return to ioutil.ReadAll, which will cause it to return early, telling you that the read timed out.\nThe other thing I noticed is that even in a language designed for simplicity, there are a myriad of ways to do things too difficultly in Go. In other words, go is not WTF-proof. *\nThe only solution to this problem is that you need to read lots and lots of code (way, way more than your write!). Read the highest quality code you can find. Code from the Go core team is a very good choice (the standard library itself and side projects by Andrew, Russ, and Brad). You can also read the reviews of potential new code for the Go core (read the golang-dev mailing list to find out where the reviews are). By watching other people get their screw ups corrected, you can avoid making them in the first place! It is much easier on the ego too, to watch other people get corrected for a mistake you would have made. :)\n\\* In order to not single people out here in public I’m not going to talk about the specific WTF’s I saw. But if you’d be willing to have your code publicly mocked by me, drop me a line with a pointer to your challenge solution. If there’s a WTF in there, I’ll post about it and you’ll be infamous, and we can all have a good laugh… :)\n",
+  "wordCount" : "1216",
+  "inLanguage": "en",
+  "datePublished": "2015-04-23T14:44:32Z",
+  "dateModified": "2015-04-23T14:44:32Z",
+  "author":{
+    "@type": "Person",
+    "name": "jra"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://blog.nella.org/2015/04/23/golang-challenge-2-comments/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "jra's thoughts",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://blog.nella.org/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://blog.nella.org/" accesskey="h" title="jra&#39;s thoughts (Alt + H)">jra&#39;s thoughts</a>
+            <div class="logo-switches">
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://blog.nella.org/">Home</a>&nbsp;»&nbsp;<a href="https://blog.nella.org/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      Golang Challenge 2 comments
+    </h1>
+    <div class="post-meta"><span title='2015-04-23 14:44:32 +0000 +0000'>April 23, 2015</span>&nbsp;·&nbsp;6 min&nbsp;·&nbsp;jra
+
+</div>
+  </header> 
+  <div class="post-content"><p>I&rsquo;ve just finished evaluating 40 of the 105 entries to the <a href="http://golang-challenge.com/go-challenge2/">Golang Challenge #2</a>. The organizer, <a href="https://twitter.com/indianguru">Satish</a>, asked me to write up my thoughts.</p>
+<p>The main similarity I noticed in the entries was not enough testing. The vast majority of the entries used the tests provided in with the challenge unmodified. Taking the given tests without thinking critically about them lead people to make a number of critical mistakes, over and over again. The majority of the entries I graded passed the tests, but would not have stood up to production use. Of the 40 I graded, only 2 or 3 would have received a &ldquo;ship it&rdquo; from me in my day job. Those were (not by chance) the ones with extra tests beyond the ones provided in the challenge.</p>
+<p>A key part of growing into a mature programmer is to understand that the problem as it arrives in your &ldquo;todo basket&rdquo; is rarely correctly specified. This challenge is no exception. The challenge asked participants to &ldquo;make the given tests pass&rdquo;, but didn&rsquo;t mention if you could or should write extra tests. The bottom line is that you can <strong>always</strong> write extra tests, and by doing so, you will discover where the spec is weak, or wrong. You will also decide for yourself where the &ldquo;edge&rdquo; of the task is; thinking about tests you can and should write will help fix the size of the job at hand.</p>
+<p>What I&rsquo;m describing here is test-driven development. Go&rsquo;s tools make it easy to stay on the golden path of TDD, you just need to decide that you believe in its benefits, and then teach yourself the discipline to do it. In TDD, the tests push the implementation away from the hacky thing that seems to work towards the robust thing that actually does work, that lives alongside of proof that it works (the tests) and that will keep working even as the world changes around it (because you&rsquo;ll fix the code when the tests start failing).</p>
+<p>Two deficiencies in the given tests were that they did not test legitimate network behaviors like short reads, and they gave the impression that the protocol should be one-shot (i.e. set up a TCP connection, exchange public keys, echo one message and close). Given that the problem statement asked for an io.Reader and and io.Writer that encrypted data, it stands to reason that a good solution would be able to handle more than one message, since io.Reader/io.Writer are not one-shot interfaces.</p>
+<p>A common problem in TCP servers is short reads. Just because the sender put 1000 bytes into the TCP stream via one write system call does not mean you are guaranteed to receive those same 1000 bytes in a matching read call. To get that behavior, you&rsquo;d need a reliable transaction protocol like <a href="http://en.wikipedia.org/wiki/Stream_Control_Transmission_Protocol">SCTP</a>. With TCP, all you are guaranteed is that the same bytes will arrive at the far end, in the same order.</p>
+<p>To see where a short read can come from, we need to look at it one packet at a time. Imagine what happens if the sender gives the kernel 2000 bytes, then sleeps on a the read of a reply. If the MTU on the link is 1500 bytes, the TCP implementation might send out one packet with about 1500 bytes in it, and a second with 500 (the &ldquo;about&rdquo; is hand waving for the TCP/IP overhead we&rsquo;re ignoring here). Now imagine that the second packet is lost, and the replacement is lost as well. On the third try it gets through. On the receiving end, what we see is 1000 bytes which arrive, followed by a pause and 500 more. If the pause is long enough, the kernel will decide to stop making the application wait around for the first 1000 bytes and pass them up. The reader, blocked in the recv() system call, will get unblocked and receive the 1000 bytes. The next time it blocks on recv(), it will get the enxt 500 bytes. This is one of many explanations for how you can get a short read. There&rsquo;s no guarantees, and code that expects there to be is wrong and will fail in real life (but not in your fast, non-lossy, testing environment; in particular, if you test via localhost, you&rsquo;re very unlikely to ever see short reads).</p>
+<p>But short reads could some from someplace much simpler&hellip; from the tests. Consider how your challenge entry would have behaved if it was reading from an io.Reader that intentionally <a href="http://play.golang.org/p/QVXACfTcPN">returned only one byte at a time</a>.</p>
+<p>Given the reality of short reads, it is up to the application to handle framing the bytes into messages. The majority of entries did not take this into consideration. The solution is that each message needs to be sent with it&rsquo;s length. And when SecureReader reads from the underlying io.Reader, it needs to use something like <a href="https://golang.org/pkg/io/ioutil/#ReadAll">ioutil.ReadAll</a> to make certain all the bytes arrive, no matter how many calls to the underlying io.Reader it takes to get them all. But then that opens up the question of what to do when the connection hangs? Do you timeout? How can you cause ioutil.ReadAll to return early?</p>
+<p>In Go, different pieces of the language and the standard library can be composed to make something better than any of them alone. A great way to read frames from the network is to prepend the frame with it&rsquo;s length. You read the length using <a href="https://golang.org/pkg/encoding/binary/#Read">encoding/binary.Read</a>, make an io.LimitedReader which is limited to the length, then give that LimitedReader to ioutil.ReadAll. You can handle timeouts by checking that if the underlying io.Reader satisfies an interface with SetReadDeadline in it (as the various connection types in package <a href="https://golang.org/pkg/net/">net</a> do), and then using it to set a deadline. After the deadline passes, the underlying io.Reader will return a timeout error, which the LimitedReader will return to ioutil.ReadAll, which will cause it to return early, telling you that the read timed out.</p>
+<p>The other thing I noticed is that even in a language designed for simplicity, there are a myriad of ways to do things too difficultly in Go. In other words, go is not <a href="http://www.thedailywtf.com/">WTF</a>-proof. *</p>
+<p>The only solution to this problem is that you need to read lots and lots of code (way, way more than your write!). Read the highest quality code you can find. Code from the Go core team is a very good choice (the standard library itself and side projects by Andrew, Russ, and Brad). You can also read the reviews of potential new code for the Go core (read the golang-dev mailing list to find out where the reviews are). By watching other people get their screw ups corrected, you can avoid making them in the first place! It is much easier on the ego too, to watch other people get corrected for a mistake you would have made. :)</p>
+<p>\* In order to not single people out here in public I&rsquo;m not going to talk about the specific WTF&rsquo;s I saw. But if you&rsquo;d be willing to have your code publicly mocked by me, drop me a line with a pointer to your challenge solution. If there&rsquo;s a WTF in there, I&rsquo;ll post about it and you&rsquo;ll be infamous, and we can all have a good laugh&hellip; :)</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+
+<ul class="share-buttons">
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Golang Challenge 2 comments on linkedin"
+            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.nella.org%2f2015%2f04%2f23%2fgolang-challenge-2-comments%2f&amp;title=Golang%20Challenge%202%20comments&amp;summary=Golang%20Challenge%202%20comments&amp;source=https%3a%2f%2fblog.nella.org%2f2015%2f04%2f23%2fgolang-challenge-2-comments%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Golang Challenge 2 comments on ycombinator"
+            href="https://news.ycombinator.com/submitlink?t=Golang%20Challenge%202%20comments&u=https%3a%2f%2fblog.nella.org%2f2015%2f04%2f23%2fgolang-challenge-2-comments%2f">
+            <svg version="1.1" xml:space="preserve" width="30px" height="30px" viewBox="0 0 512 512" fill="currentColor"
+                xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
+                <path
+                    d="M449.446 0C483.971 0 512 28.03 512 62.554L512 449.446C512 483.97 483.97 512 449.446 512L62.554 512C28.03 512 0 483.97 0 449.446L0 62.554C0 28.03 28.029 0 62.554 0L449.446 0ZM183.8767 87.9921H121.8427L230.6673 292.4508V424.0079H281.3328V292.4508L390.1575 87.9921H328.1233L256 238.2489z" />
+            </svg>
+        </a>
+    </li>
+</ul>
+
+  </footer>
+</article>
+    </main>
+    
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

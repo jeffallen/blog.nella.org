@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Posts | jra&#39;s thoughts</title>
+<meta name="keywords" content="">
+<meta name="description" content="Posts - jra&#39;s thoughts">
+<meta name="author" content="">
+<link rel="canonical" href="https://blog.nella.org/posts/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.3beea2776320e39a6c8d0589cd10cf4cbbbe3ca9b6f0363cfeef1417ed39a195.css" integrity="sha256-O&#43;6id2Mg45psjQWJzRDPTLu&#43;PKm28DY8/u8UF&#43;05oZU=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://blog.nella.org/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://blog.nella.org/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://blog.nella.org/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://blog.nella.org/apple-touch-icon.png">
+<link rel="mask-icon" href="https://blog.nella.org/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" type="application/rss+xml" href="https://blog.nella.org/posts/feed.xml">
+<link rel="alternate" hreflang="en" href="https://blog.nella.org/posts/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend&display=swap" rel="stylesheet">
+<meta property="og:url" content="https://blog.nella.org/posts/">
+  <meta property="og:site_name" content="jra&#39;s thoughts">
+  <meta property="og:title" content="Posts">
+  <meta property="og:locale" content="en-US">
+  <meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Posts">
+<meta name="twitter:description" content="">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://blog.nella.org/posts/"
+    }
+  ]
+}
+</script>
+</head>
+
+<body class="list" id="top">
+<script>
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://blog.nella.org/" accesskey="h" title="jra&#39;s thoughts (Alt + H)">jra&#39;s thoughts</a>
+            <div class="logo-switches">
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main"> 
+<header class="page-header"><div class="breadcrumbs"><a href="https://blog.nella.org/">Home</a></div>
+  <h1>
+    Posts
+  </h1>
+</header>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Unzip -c is a thing, and it&#39;s good (as long as you use -q too)
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>I just fetched a Raspian disk image via bitorrent. It is a .zip instead of the .gz I would have chosen myself.
+If you have a .zip and you don’t want to do a temporary uncompress of it to get the .img to use with dd, you can use “unzip -q -c foo.zip” to get the contents of the zip file sprayed onto stdout. Then you can pipe it into dd.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2014-10-06 22:11:52 +0000 +0000'>October 6, 2014</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Unzip -c is a thing, and it&#39;s good (as long as you use -q too)" href="https://blog.nella.org/2014/10/06/unzip-c/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Strange characters in IP addresses
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>A long time ago, I worked for WebTV. The part of WebTV doing filtering for parental control was comparing IP addresses as strings. I managed to evade the parental controls when I noticed that the IP address parser was using an atoi that treated leading 0’s as octal and leading 0x’s as hex. By converting the octets of one of the blocked IP addresses into octal, I tricked the blacklist checker into letting me access the naughty bits.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2014-09-24 08:50:10 +0000 +0000'>September 24, 2014</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Strange characters in IP addresses" href="https://blog.nella.org/2014/09/24/strange-characters-in-ip-addresses/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Dell and the NSA
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>While I was reading this blog about how NSA’s bad-BIOS malware probably works, I was struck by a “coincidence”: Dell does significant amount of government contracting work. In fact, Ed Snowden worked for Dell at one point. NSA’s bad-BIOS targets the RAID cards in Dell servers.
+Now, Dell servers are widely deployed. I’ve used them in several jobs, for example. So it’s not unreasonable that NSA would target them, to get the best bang for the buck. But it also seems possible that in order to achieve the things Dell’s executives promised to NSA executives in fancy sales calls, some Dell engineers would find themselves using what they know about Dell servers to write bad-BIOS malware to attack those very servers.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2014-08-27 13:30:15 +0000 +0000'>August 27, 2014</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Dell and the NSA" href="https://blog.nella.org/2014/08/27/dell-and-the-nsa/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Medium, what&#39;s up with comments?
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Medium.com, why do you require me to use Twitter or Facebook to comment? With all your respect for language, ideas, and design, is it really possible that you think people who choose not to use either of those services don’t have anything useful or interesting to add to your conversations?
+</p>
+  </div>
+  <footer class="entry-footer"><span title='2014-08-19 07:46:35 +0000 +0000'>August 19, 2014</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Medium, what&#39;s up with comments?" href="https://blog.nella.org/2014/08/19/medium-whats-up-with-comments/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Moonrise
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>[video width=“1920” height=“1080” mp4=&#34;//nella.org/maltournee/2014-04-15-21.mp4&#34;][/video]
+</p>
+  </div>
+  <footer class="entry-footer"><span title='2014-04-15 22:25:08 +0000 +0000'>April 15, 2014</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Moonrise" href="https://blog.nella.org/2014/04/15/moonrise-2/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">What fits into Russia?
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p> Apparently Ukraine does, again now.
+</p>
+  </div>
+  <footer class="entry-footer"><span title='2014-03-18 23:36:54 +0000 +0000'>March 18, 2014</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to What fits into Russia?" href="https://blog.nella.org/2014/03/18/what-fits-into-russia/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Moonrise
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>My time-lapse camera in the attic is still working, though I resorted to adding an auto reboot once a week, because the Raspberry Pi is not acting too stable. And even then, sometimes it hangs. I blame the power supply. Because it’s always the power supply, right?
+Anyway watching the sun’s track northward as spring advances has given me a much better instinctive feel for celestial mechanics. And that made me pay closer attention to the moon rise last month. After 40 years on this planet I just realized that the moon, being in the same orbital plane as the sun and earth, traces the same track as the sun. Whoa. That means my attic window is perfectly oriented to catch a nice time-lapse of the moonrise!
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2014-03-18 23:10:39 +0000 +0000'>March 18, 2014</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Moonrise" href="https://blog.nella.org/2014/03/18/moonrise/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Here&#39;s a nickle kid, get yourself a better TTY
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>
+You know you’ve been doing this too long when nothing in an article like this is new to you.
+The first TTY I ever saw and (maybe) used was a TI, like this one. The librarian at my junior high borrowed it and used it to connect into Lexis-Nexis or something.
+But the funny thing is, even in the late 80’s this was out of style. PCs were taking over and so I didn’t see a TTY again until university. There I saw plenty of DEC VT-100’s. And jarthur.cs.hmc.edu, our giant multi-processing machine from Sequent had an honest-to-god paper TTY attached to its /dev/console port. The sysadmins liked it that way so that they could see dumps on paper in the morning if the machine crashed at night. I learned about fsck that way, by watching one of them coax the filesystem back to health. (By the way, fsck is for babies. Real men fix filesystems with fsdb. Look it up.)
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2014-02-12 04:37:03 +0000 +0000'>February 12, 2014</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Here&#39;s a nickle kid, get yourself a better TTY" href="https://blog.nella.org/2014/02/12/heres-a-nickle-kid/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">IPv6 in Mont-la-ville!
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>When I got my Raspberry Pi up and running, I reactivated my AICCU tunnel to Sixxs.net. But then I remembered that two years ago when I last touched IPv6, Swisscom was running a beta test to do IPv6 in the home.
+So today I went looking to see if the test still existed and if I could join it. Why? Well, to be honest, it never even occurred to me that IPv6 to the home was in production. The lack of IPv6 uptake has become one of those “so sad it’s funny” things in our industry. But guess what?
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2014-02-10 21:32:10 +0000 +0000'>February 10, 2014</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to IPv6 in Mont-la-ville!" href="https://blog.nella.org/2014/02/10/ipv6-in-mont-la-ville/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Live from Mont-la-ville
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p> Your browser does not support the video tag. The last few days I’ve been working on a new home hacking project. The eventual plan is to create a panoramic time-lapse of sunrise as seen from my house each morning. We’ve got a wonderful view, and recording some of those beautiful morning colors as the sun comes up over the Alps should make them easier to appreciate – without setting my alarm for 6 AM!
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2014-02-10 21:14:01 +0000 +0000'>February 10, 2014</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Live from Mont-la-ville" href="https://blog.nella.org/2014/02/10/live-from-mont-la-ville/"></a>
+</article>
+<footer class="page-footer">
+  <nav class="pagination">
+    <a class="prev" href="https://blog.nella.org/posts/page/4/">
+      «&nbsp;Prev&nbsp;
+    </a>
+    <a class="next" href="https://blog.nella.org/posts/page/6/">Next&nbsp;&nbsp;»
+    </a>
+  </nav>
+</footer>
+    </main>
+    
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Go | jra&#39;s thoughts</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="canonical" href="https://blog.nella.org/category/go/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.3beea2776320e39a6c8d0589cd10cf4cbbbe3ca9b6f0363cfeef1417ed39a195.css" integrity="sha256-O&#43;6id2Mg45psjQWJzRDPTLu&#43;PKm28DY8/u8UF&#43;05oZU=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://blog.nella.org/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://blog.nella.org/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://blog.nella.org/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://blog.nella.org/apple-touch-icon.png">
+<link rel="mask-icon" href="https://blog.nella.org/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" type="application/rss+xml" href="https://blog.nella.org/category/go/feed.xml">
+<link rel="alternate" hreflang="en" href="https://blog.nella.org/category/go/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend&display=swap" rel="stylesheet">
+<meta property="og:url" content="https://blog.nella.org/category/go/">
+  <meta property="og:site_name" content="jra&#39;s thoughts">
+  <meta property="og:title" content="Go">
+  <meta property="og:locale" content="en-US">
+  <meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Go">
+<meta name="twitter:description" content="">
+
+</head>
+
+<body class="list" id="top">
+<script>
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://blog.nella.org/" accesskey="h" title="jra&#39;s thoughts (Alt + H)">jra&#39;s thoughts</a>
+            <div class="logo-switches">
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main"> 
+<header class="page-header"><div class="breadcrumbs"><a href="https://blog.nella.org/">Home</a>&nbsp;»&nbsp;<a href="https://blog.nella.org/category/">Category</a></div>
+  <h1>
+    Go
+  </h1>
+</header>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Taking an MQTT server out for a few holes on the code golf course
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>A while ago at work, I needed to learn a little about MQTT. After reading the spec and finding this package that handles reading and writing the messages themselves, I decided to write a server.
+The result is here: https://github.com/jeffallen/mqtt.
+After I finished, I wanted to know if my server was comparable to Mosquitto, so I wrote some load testing tools. I found that my Go server was generally comparable to Mosquitto, in that it had the same order of magnitude for transaction rate and latency (but it was strictly slower than Mosquitto; there is a cost to pay for the benefits Go gives you). As usual, Go programs compare quite favorably to C programs in terms of memory safety, overall length, and readability. It is also useful to consider that my implementation took only a couple of days to get finished. A C program with equivalent safety, correctness, and speed would take much longer to write. I’ve written them, I know.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2013-12-05 14:16:00 +0000 +0000'>December 5, 2013</span>&nbsp;·&nbsp;4 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Taking an MQTT server out for a few holes on the code golf course" href="https://blog.nella.org/2013/12/05/mqtt-code-golf/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Qz for Mobile Phones
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>I love Quartz. however, I find that the best time/place for me to read it is on the train during my commute. And Quartz’s overly clever and overly dynamic website hates my phone’s browser. So I made Mobile Quartz to help me read it. The front page has the current top articles from Quartz. Click the links to see the article.
+I used this as a chance to write some Go on Google Appspot code, and it was really a pleasure.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2013-06-14 12:43:48 +0000 +0000'>June 14, 2013</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Qz for Mobile Phones" href="https://blog.nella.org/2013/06/14/qz-for-mobile-phones/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Zero Downtime upgrades of TCP servers in Go
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>A recent post on the golang-nuts mailing list mentioned that Nginx can upgrade on the fly without ever stopping listening to it’s listen socket. The trick is to unset close-on-exec on the listen socket, then fork/exec a new copy of the server (on the upgraded binary) with an argument to tell it to use the inherited file descriptor instead of calling socket() and listen(s).
+I wanted to see if I could achieve the same thing with Go, and what changes would be necessary to the standard libraries to make this possible. I got it working, without changing the standard library, so I wanted to explain what I did here.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2012-05-29 12:09:16 +0000 +0000'>May 29, 2012</span>&nbsp;·&nbsp;5 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Zero Downtime upgrades of TCP servers in Go" href="https://blog.nella.org/2012/05/29/zero-downtime-upgrades-of-tcp-servers-in-go/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Testing Go&#39;s HTTP server for CVE-2011-3192 vulnerability
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>The recent DoS attack on Apache is caused by sending in a malformed Range header. I decided to send the same header into Go’s range header parser and see what happened. It passed with flying colors, giving the “invalid range” error, which would result in the Go webserver sending back HTTP response code 416 to the HTTP client.
+I didn’t test this under load (which is part of what the DoS was doing), but my quick reading of parseRange leads me to believe that the only effect of sending Range headers in like this is that garbage is created under control of the attacker (for example, due to strings.Split(s[len(b):], “,”)). Of course, that’s bad and should be limited. However, this risk is no greater than other places in the server. For example an attacker could send an unlimited number of headers, or headers of unlimited length. This is already mentioned in the net/textproto package’s reader.go.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2011-09-15 07:53:45 +0000 +0000'>September 15, 2011</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Testing Go&#39;s HTTP server for CVE-2011-3192 vulnerability" href="https://blog.nella.org/2011/09/15/testing-gos-http-server-for-cve-2011-3192-vulnerability/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">A trip down the (split) rabbithole
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Note: This post is out of date, and will become increasingly out of date when Go’s new contiguous stacks are implemented. I’m leaving it here because it is still interesting, even if out of date.
+Go uses split stacks (also called segmented stacks in the literature) in order to allow thousands of stacks in the space that would normally be taken by hundreds of C-style contiguous stacks. There’s a discussion of how to add split stacks to GCC here. Note: it was written by the author of gccgo, around the time he started porting Go to Gcc, so it’s clear that he’s adding split stacks to Gcc to help Go. But if it’s helpful to C programmers as well, then so much the better!
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2011-02-15 11:02:24 +0000 +0000'>February 15, 2011</span>&nbsp;·&nbsp;11 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to A trip down the (split) rabbithole" href="https://blog.nella.org/2011/02/15/a-trip-down-the-split-rabbithole/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">How to control your HTTP transactions in Go
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>The Go http pacakge has http.Get and http.Post, which make it easy to do GET and POST operations. They are meant for client use. They implement things from the point of view of a naïve client, one that just wants to give a URL and get back the results. They don’t want to chase redirects, they don’t want to set their headers specially, they just want to, in one line, get the results.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2011-02-08 13:49:33 +0000 +0000'>February 8, 2011</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to How to control your HTTP transactions in Go" href="https://blog.nella.org/2011/02/08/how-to-control-your-http-transactions-in-go/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">A rate-limiting HTTP proxy in Go
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Hello Go-fans. Missed a week due to a nice little ski vacation, but I promise I was dreaming of Go while riding the ski lifts, so I’ve got something interesting to share with you this week.
+I’ve worked in Africa and Indonesia in the past. There, I saw first-hand the possibilities of the Internet, but also the difficulties of using it in remote areas, over slow links, etc. I came up with ideas years ago for what I’d like in a proxy in the field that would make the limited bandwidth on a satellite connection go further. I’ve never had a chance to implement it until now, because hacking on Squid or other proxies just involved too much C hacking and core dumping to suit my patience, especially for a prototype to test ideas on. But Go, on the other hand; it’s just made for playing with this kind of thing!
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2011-02-07 21:27:25 +0000 +0000'>February 7, 2011</span>&nbsp;·&nbsp;7 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to A rate-limiting HTTP proxy in Go" href="https://blog.nella.org/2011/02/07/a-rate-limiting-http-proxy-in-go/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Gobs on the wire
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>This week, I want to talk about how to use Go to write a client/server system with both synchronous requests and asynchronous event notifications.
+To help learn Go, I wrote a clone of the Conserver console server. Now, of course, the world didn’t need another console server, but it turned out to be an interesting experiment, because what a console server does is well suited to the tools Go gives a programmer. A console server’s job is to gather the output from one or more serial cables (or, when there’s a terminal server in the mix, one or more TCP connections implementing the Rtelnet “protocol”). It logs that output to files, and makes the output available in realtime to zero or more watchers. It allows one and only one of the watchers to be read-write, to actually control the device.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2011-01-17 18:24:54 +0000 +0000'>January 17, 2011</span>&nbsp;·&nbsp;9 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Gobs on the wire" href="https://blog.nella.org/2011/01/17/gobs-on-the-wire/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">The impatient producer
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Last week I showed how a channel could link a producer and a consumer, and I idly speculated on how you’d set the depth of the queue, relative to the rate and variability of the producer and the consumer’s need for new input.
+This weekend, I got to thinking about my next interesting Go project. It will be an HTTP proxy that can do some nifty tricks to offload a slow Internet link. One of the features I thought I might add would be something to send all the new HTML it sees through a secondary processing system in order to find extra assets it might want to cache. This is a case of a producer that wants to act totally independently of the consumer. If the secondary processing goroutine is slow, or hung inserting something into a database, or whatever, the producer (the HTTP reply) can’t hang – he needs to reply to the client.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2011-01-11 04:17:52 +0000 +0000'>January 11, 2011</span>&nbsp;·&nbsp;5 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to The impatient producer" href="https://blog.nella.org/2011/01/11/the-impatient-producer/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Using a channel as a queue
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>I try to write a Go article every Monday, but the holiday season has disrupted me a bit. So here’s a little something I dug out of my stocking to get things going again.
+I thought an interesting way to play with the exp/draw package, the http client, and the image decoder would be a program to animate the tiles from Google Maps, showing the world scrolling by, as though you were in an airplane looking straight down and flying in a straight line. It came to me in one of those flying dreams… (not really).
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2011-01-03 15:10:23 +0000 +0000'>January 3, 2011</span>&nbsp;·&nbsp;6 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Using a channel as a queue" href="https://blog.nella.org/2011/01/03/using-a-channel-as-a-queue/"></a>
+</article>
+<footer class="page-footer">
+  <nav class="pagination">
+    <a class="prev" href="https://blog.nella.org/category/go/page/2/">
+      «&nbsp;Prev&nbsp;
+    </a>
+    <a class="next" href="https://blog.nella.org/category/go/page/4/">Next&nbsp;&nbsp;»
+    </a>
+  </nav>
+</footer>
+    </main>
+    
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+</body>
+
+</html>

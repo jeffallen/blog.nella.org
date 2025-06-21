@@ -1,0 +1,559 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Go on jra&#39;s thoughts</title>
+    <link>https://blog.nella.org/category/go/</link>
+    <description>Recent content in Go on jra&#39;s thoughts</description>
+    <generator>Hugo -- 0.147.8</generator>
+    <language>en-US</language>
+    <lastBuildDate>Mon, 24 Jul 2017 13:30:39 +0000</lastBuildDate>
+    <atom:link href="https://blog.nella.org/category/go/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Protecting private keys in Go</title>
+      <link>https://blog.nella.org/2017/07/24/protecting-private-keys-in-go/</link>
+      <pubDate>Mon, 24 Jul 2017 13:30:39 +0000</pubDate>
+       <guid isPermaLink="false">/?p=1273</guid> 
+      <description>&lt;p&gt;Today I was looking at Upspin and thinking about private keys. I asked myself, &amp;ldquo;what would it take to make sure that there was one single copy of the private key in RAM, and that Go and the OS worked together to make sure it never went onto disk?&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;(Some other people have &lt;a href=&#34;https://www.reddit.com/r/golang/comments/2oc9oz/securely_erasing_crypto_keys/&#34;&gt;talked&lt;/a&gt; about &lt;a href=&#34;https://www.securecoding.cert.org/confluence/display/c/MEM06-C.+Ensure+that+sensitive+data+is+not+written+out+to+disk&#34;&gt;this&lt;/a&gt; too.)&lt;/p&gt;
+&lt;p&gt;It turns out the answer to that question is much harder than expected, but doable and I&amp;rsquo;ll try to do it.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Job Searching</title>
+      <link>https://blog.nella.org/2017/06/15/job-searching/</link>
+      <pubDate>Thu, 15 Jun 2017 08:09:01 +0000</pubDate>
+       <guid isPermaLink="false">/?p=1244</guid> 
+      <description>&lt;p&gt;I&amp;rsquo;m looking for a job that will help me reduce my commute, and get the chance to touch new fascinating things. Here&amp;rsquo;s a post from last time I was looking for a job, which &lt;a href=&#34;https://blog.nella.org/git-log-grep-resume/&#34;&gt;shows some work samples I am proud of&lt;/a&gt;. If any of my readers can hook me up with interesting job postings, I&amp;rsquo;d be grateful.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Goman numerals</title>
+      <link>https://blog.nella.org/2017/04/11/1237-2/</link>
+      <pubDate>Tue, 11 Apr 2017 13:35:19 +0000</pubDate>
+       <guid isPermaLink="false">/?p=1237</guid> 
+      <description>&lt;p&gt;I made a &lt;a href=&#34;https://play.golang.org/p/BOmB7o-6Ms&#34;&gt;roman numeral encoder in Go&lt;/a&gt;. Nifty.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>httptrace, a new Go debugging tool</title>
+      <link>https://blog.nella.org/2016/07/01/httptrace-a-new-go-debugging-tool/</link>
+      <pubDate>Fri, 01 Jul 2016 09:39:52 +0000</pubDate>
+       <guid isPermaLink="false">/?p=1211</guid> 
+      <description>&lt;p&gt;Today I was investigating why HTTP redirects resulted in more persistent connections staying open than I was expecting. I found myself digging around deep inside net/http/transport.go and I noticed the new &lt;a href=&#34;https://tip.golang.org/pkg/net/http/httptrace/&#34;&gt;net/http/httptrace&lt;/a&gt; package. It is new in Go 1.7, which is currently in beta.&lt;/p&gt;
+&lt;p&gt;net/http/httptrace is lightly documented, and because it is new, there are no examples to look at. So I decided to share what I came up with here.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Interview Questions I Hope I Get</title>
+      <link>https://blog.nella.org/2016/05/31/interview-questions-i-hope-i-get/</link>
+      <pubDate>Tue, 31 May 2016 11:11:25 +0000</pubDate>
+       <guid isPermaLink="false">/?p=1200</guid> 
+      <description>&lt;p&gt;I have an interview coming up, and so my &amp;ldquo;keep in shape hacking time&amp;rdquo; has been recently devoted to interview preparation. I thought I would make a post about what&amp;rsquo;s in my head, both as a way to solidify it (no better way to learn something than by teaching it) and in case this interview goes bad, so that my next prospective employer can see what I&amp;rsquo;m thinking about.&lt;/p&gt;
+&lt;p&gt;If you, my current prospective employer are reading this, would you please &lt;strong&gt;not&lt;/strong&gt; take advantage of this by removing these questions from your list? Come on guys, give me a break. If I&amp;rsquo;m going to be transparent in my thought processes, the least you can do is throw me a bone and ask at least &lt;strong&gt;one&lt;/strong&gt; of these in person!&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>git log --grep &#34;Résumé&#34;</title>
+      <link>https://blog.nella.org/2016/03/10/git-log-grep-resume/</link>
+      <pubDate>Thu, 10 Mar 2016 06:56:07 +0000</pubDate>
+       <guid isPermaLink="false">/?p=1190</guid> 
+      <description>&lt;p&gt;(This is an old post, which is missing years and years of interesting commits from my work at &lt;a href=&#34;https://github.com/dedis/&#34;&gt;the DEDIS lab at EPFL&lt;/a&gt; and &lt;a href=&#34;https://pieaeronefs.ch&#34;&gt;Pie Aéronefs.&lt;/a&gt; But it is still a good representation of what I can do for future clients and future team mates.)&lt;/p&gt;
+&lt;p&gt;For a while now, it&amp;rsquo;s become clear that a useful and important piece of data about how a future colleague might work out is their open source contributions. While the conditions of open source work are often somewhat different than paid work, a person&amp;rsquo;s manner of expressing themselves (both interpersonally, on issue trackers for example and in code) is likely to tell you more about their personality than you can learn in the fake environment of an interview.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Seeking around in an HTTP object</title>
+      <link>https://blog.nella.org/2016/01/17/seeking-http/</link>
+      <pubDate>Sun, 17 Jan 2016 08:11:45 +0000</pubDate>
+       <guid isPermaLink="false">/?p=1180</guid> 
+      <description>&lt;p&gt;Imagine there&amp;rsquo;s a giant ZIP file on a HTTP server, and you want to know what&amp;rsquo;s inside it. You don&amp;rsquo;t know if it&amp;rsquo;s got what you are looking for, and you don&amp;rsquo;t want to download the whole thing. Is it possible to do something like &amp;ldquo;unzip -l &lt;a href=&#34;https://example.com/giant.zip%22&#34;&gt;https://example.com/giant.zip&amp;quot;&lt;/a&gt;?&lt;/p&gt;
+&lt;p&gt;This is not a theoretical problem just to demonstrate something in Go. In fact, I wasn&amp;rsquo;t looking to write an article at all, except that I wanted to know the structure of the &lt;a href=&#34;https://bulkdata.uspto.gov/data/patent/officialgazette/2017/&#34;&gt;bulk patent downloads from the US Patent and Trademark Office (USPTO)&lt;/a&gt; from those ZIP files. Or, I thought, how cool would it be to be able to fetch &lt;a href=&#34;https://bulkdata.uspto.gov/data/patent/grant/multipagepdf/1790_1999/&#34;&gt;individual images of some of the patents issued in 1790&lt;/a&gt; out of these tarfiles?&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Dynamic DNS circa 2016</title>
+      <link>https://blog.nella.org/2016/01/15/dynamic-dns-circa-2016/</link>
+      <pubDate>Fri, 15 Jan 2016 16:00:20 +0000</pubDate>
+       <guid isPermaLink="false">/?p=1178</guid> 
+      <description>&lt;p&gt;In the old days, if you had an ISP that changed your IP address all the time but you wanted to run a server, you used dynamic DNS, i.e. a hacky script talking to a hacky API on an hacky DNS provider.&lt;/p&gt;
+&lt;p&gt;These days, if you bring up a cloud server from time to time to work, it is likely to get a different IP address. But you might want a DNS record pointing at it so that it is convenient to talk to.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>The most important thing when go-fuzzing</title>
+      <link>https://blog.nella.org/2016/01/09/the-most-important-thing-when-go-fuzzing/</link>
+      <pubDate>Sat, 09 Jan 2016 15:00:42 +0000</pubDate>
+       <guid isPermaLink="false">/?p=1175</guid> 
+      <description>&lt;p&gt;The most important thing to know, when you are using go-fuzz, is that the cover metric should be increasing.&lt;/p&gt;
+&lt;p&gt;I didn&amp;rsquo;t know that and I wasted one 12 hour run of fuzzing because my fuzzing function was misbehaving in a way that made it return the same useless error for every input no matter what. That meant that no matter what go-fuzz mutated in the input, it could not find a way to explore more code, and could not find any interesting bugs. It was trying to tell me this by not incrementing the cover metric it was reporting.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Doing it the hard way</title>
+      <link>https://blog.nella.org/2015/04/24/doing-it-the-hard-way/</link>
+      <pubDate>Fri, 24 Apr 2015 09:21:07 +0000</pubDate>
+       <guid isPermaLink="false">/?p=1136</guid> 
+      <description>&lt;p&gt;In my &lt;a href=&#34;https://blog.nella.org/golang-challenge-2-comments/&#34;&gt;last post&lt;/a&gt; I offered to point out some things in Golang Challenge #2 submissions that struck me as &amp;ldquo;worthy of receiving a (polite) rebuke in code review&amp;rdquo;, otherwise known as WTFs.&lt;/p&gt;
+&lt;p&gt;This is opt-in abuse. I don&amp;rsquo;t mind abusing my colleagues, when I know I can take them out for lunch later and buy them a beer. Hassling random Golang Challenge entrants is not my style. But some have decided they are up for it, even if I&amp;rsquo;m remote and can&amp;rsquo;t buy them a beer afterwards.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Golang Challenge 2 comments</title>
+      <link>https://blog.nella.org/2015/04/23/golang-challenge-2-comments/</link>
+      <pubDate>Thu, 23 Apr 2015 14:44:32 +0000</pubDate>
+       <guid isPermaLink="false">/?p=1133</guid> 
+      <description>&lt;p&gt;I&amp;rsquo;ve just finished evaluating 40 of the 105 entries to the &lt;a href=&#34;http://golang-challenge.com/go-challenge2/&#34;&gt;Golang Challenge #2&lt;/a&gt;. The organizer, &lt;a href=&#34;https://twitter.com/indianguru&#34;&gt;Satish&lt;/a&gt;, asked me to write up my thoughts.&lt;/p&gt;
+&lt;p&gt;The main similarity I noticed in the entries was not enough testing. The vast majority of the entries used the tests provided in with the challenge unmodified. Taking the given tests without thinking critically about them lead people to make a number of critical mistakes, over and over again. The majority of the entries I graded passed the tests, but would not have stood up to production use. Of the 40 I graded, only 2 or 3 would have received a &amp;ldquo;ship it&amp;rdquo; from me in my day job. Those were (not by chance) the ones with extra tests beyond the ones provided in the challenge.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Go Challenge 2 is live!</title>
+      <link>https://blog.nella.org/2015/03/31/go-challenge-2-is-live/</link>
+      <pubDate>Tue, 31 Mar 2015 22:49:08 +0000</pubDate>
+       <guid isPermaLink="false">/?p=1129</guid> 
+      <description>&lt;p&gt;The &lt;a href=&#34;http://golang-challenge.com/go-challenge2/&#34; title=&#34;Go Challenge&#34;&gt;Go Challenge&lt;/a&gt; for April is now live!&lt;/p&gt;
+&lt;p&gt;As an evaluator, I&amp;rsquo;ve already solved it. It was fun, and just the right size. Go try it, you&amp;rsquo;ll have fun!&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Building Go 1.4 when the linker doesn&#39;t know about build-id</title>
+      <link>https://blog.nella.org/2015/03/19/building-go-1-4-when-the-linker-doesnt-know-about-build-id/</link>
+      <pubDate>Thu, 19 Mar 2015 09:52:39 +0000</pubDate>
+       <guid isPermaLink="false">/?p=1122</guid> 
+      <description>&lt;p&gt;Today at work, on a Redhat 5.5 machine, I tried to build Go 1.4.&lt;/p&gt;
+&lt;p&gt;This happened:&lt;/p&gt;
+&lt;p&gt;`
+$ cd go1.4/src
+$ ./all.bash
+&amp;hellip;snip&amp;hellip;&lt;/p&gt;
+&lt;h1 id=&#34;runtimecgo&#34;&gt;runtime/cgo&lt;/h1&gt;
+&lt;p&gt;/usr/bin/ld: unrecognized option &amp;lsquo;&amp;ndash;build-id=none&amp;rsquo;
+/usr/bin/ld: use the &amp;ndash;help option for usage information
+collect2: ld returned 1 exit status
+`&lt;/p&gt;
+&lt;p&gt;The solution is to retry without the &amp;ldquo;&amp;ndash;build-id=none&amp;rdquo; option:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-gdscript3&#34; data-lang=&#34;gdscript3&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;diff &lt;span style=&#34;color:#f92672&#34;&gt;--&lt;/span&gt;git a&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;src&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;cmd&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;go&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;build&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;go b&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;src&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;cmd&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;go&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;build&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;go
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;index ad03239&lt;span style=&#34;color:#f92672&#34;&gt;..&lt;/span&gt;ca45217 &lt;span style=&#34;color:#ae81ff&#34;&gt;100644&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;---&lt;/span&gt; a&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;src&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;cmd&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;go&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;build&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;go
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;+++&lt;/span&gt; b&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;src&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;cmd&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;go&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;build&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;go
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;@@&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;2436&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;13&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;2436&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;21&lt;/span&gt; &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;@@&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt; (b &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;builder) cgo(p &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;Package, cgoExe, obj string, pcCFLAGS, pcLDFLAGS, cgofi
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; 	&lt;span style=&#34;color:#f92672&#34;&gt;//&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;--&lt;/span&gt;build&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;id&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;none&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;  So that is what we &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt;, but only on
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; 	&lt;span style=&#34;color:#f92672&#34;&gt;//&lt;/span&gt; systems likely to support it, which is to say, systems that
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; 	&lt;span style=&#34;color:#f92672&#34;&gt;//&lt;/span&gt; normally use gold &lt;span style=&#34;color:#f92672&#34;&gt;or&lt;/span&gt; the GNU linker&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;	retryWithoutBuildId :&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; false
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; 	&lt;span style=&#34;color:#66d9ef&#34;&gt;switch&lt;/span&gt; goos {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; 	&lt;span style=&#34;color:#66d9ef&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;android&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;dragonfly&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;linux&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;netbsd&amp;#34;&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; 		ldflags &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; append(ldflags, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;-Wl,--build-id=none&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;		retryWithoutBuildId &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; true
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; 	}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; 	&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; err :&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; b&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;gccld(p, ofile, ldflags, gccObjs); err &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; nil {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;		&lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; nil, nil, err
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;		&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; retryWithoutBuildId {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;			ldflags &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; ldflags[&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;:len(ldflags)&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;			err &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; b&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;gccld(p, ofile, ldflags, gccObjs)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;		}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;		&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; err &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; nil {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;			&lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; nil, nil, err
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;		}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; 	}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; 	&lt;span style=&#34;color:#f92672&#34;&gt;//&lt;/span&gt; NOTE(rsc): The importObj is a &lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;c&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;6&lt;/span&gt;c&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;8&lt;/span&gt;c object &lt;span style=&#34;color:#f92672&#34;&gt;and&lt;/span&gt; on Windows
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Just in case someone else is looking for it&amp;hellip; :)&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Go will make you a better programmer</title>
+      <link>https://blog.nella.org/2015/03/12/go-will-make-you-a-better-programmer/</link>
+      <pubDate>Thu, 12 Mar 2015 17:03:52 +0000</pubDate>
+       <guid isPermaLink="false">/?p=1119</guid> 
+      <description>&lt;p&gt;The last line of &lt;a href=&#34;http://dave.cheney.net/2015/03/08/simplicity-and-collaboration&#34;&gt;Dave Cheny&amp;rsquo;s Gophercon 2015 India keynote&lt;/a&gt; is the best: &amp;ldquo;Go will make you a better programmer.&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;It&amp;rsquo;s true. When I am programming Go, I never think, &amp;ldquo;OK, is this an OK shortcut to take here? Is this a play context? Is this a work context, but I can push off bounds checking on some other layer? Is this just a little local server, and I don&amp;rsquo;t care about hackers?&amp;rdquo;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>A Quick Go hack: lines-per-second</title>
+      <link>https://blog.nella.org/2015/03/04/quick-go-hack-lines-per-second/</link>
+      <pubDate>Wed, 04 Mar 2015 22:18:24 +0000</pubDate>
+       <guid isPermaLink="false">/?p=1115</guid> 
+      <description>&lt;p&gt;Today I wanted to compare how fast two builds were on two different machines. As a rough estimate, I just wanted to see how many lines per second were going into the log file. This is what I came up with:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;package&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; (
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;bufio&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;fmt&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;os&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;time&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#a6e22e&#34;&gt;scn&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;bufio&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;NewScanner&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;os&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Stdin&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#a6e22e&#34;&gt;lines&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;go&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt;() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                        &lt;span style=&#34;color:#a6e22e&#34;&gt;fmt&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Fprintf&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;os&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Stderr&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;%v lps\n&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;lines&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                        &lt;span style=&#34;color:#a6e22e&#34;&gt;lines&lt;/span&gt; = &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                        &lt;span style=&#34;color:#a6e22e&#34;&gt;time&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Sleep&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;time&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Second&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        }()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;scn&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Scan&lt;/span&gt;() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#a6e22e&#34;&gt;lines&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;This is a quick hack. It&amp;rsquo;s not production quality, because there is a data race on lines. I think if I had to fix that race up, I&amp;rsquo;d choose to use sync/atomic&amp;rsquo;s ops. This because I&amp;rsquo;d only need to hit the two places lines is touched concurrently. A channel-based solution would be bigger and messier, not in tune with the minimal nature of this little program.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Golang on the Geode processor</title>
+      <link>https://blog.nella.org/2015/03/02/golang-on-the-geode-processor/</link>
+      <pubDate>Mon, 02 Mar 2015 15:39:45 +0000</pubDate>
+       <guid isPermaLink="false">/?p=1110</guid> 
+      <description>&lt;p&gt;If you are trying to use Golang on a PC-Engines Alix board, you need to be careful that all the Go code you are using is compiled while the GO386 environment variable is set to 387. The Geode processor does not support the SSE instructions.&lt;/p&gt;
+&lt;p&gt;If you have Linux directly on the Alix, you&amp;rsquo;d not run into this because if GO386 is not set, then the compiler auto-detects the right thing. But if you are, for example, running OpenWRT on the device, and you are using cross-compilation to build on another device, you might run into this if some of your Go code (for example, the std lib) was compiled without GO386.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Type safety saves the day again</title>
+      <link>https://blog.nella.org/2015/02/16/type-safety-saves-the-day-again/</link>
+      <pubDate>Mon, 16 Feb 2015 15:07:59 +0000</pubDate>
+       <guid isPermaLink="false">/?p=1102</guid> 
+      <description>&lt;p&gt;Recently, I was writing some code to check the SHA256 of a buffer. Simple, right? All you have to do is take the hash you have, get the hash of the data, and compare them. But then you think, &amp;ldquo;oh, what a drag, I gotta compare two []byte values for equality, and == doesn&amp;rsquo;t work on them&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;And then you think, &amp;ldquo;oh, I&amp;rsquo;ll use reflection!&amp;rdquo; And now you have &lt;a href=&#34;http://regex.info/blog/2006-09-15/247&#34;&gt;two problems&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Moonrise</title>
+      <link>https://blog.nella.org/2014/04/15/moonrise-2/</link>
+      <pubDate>Tue, 15 Apr 2014 22:25:08 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=1062</guid> 
+      <description>&lt;p&gt;[video width=&amp;ldquo;1920&amp;rdquo; height=&amp;ldquo;1080&amp;rdquo; mp4=&amp;quot;//nella.org/maltournee/2014-04-15-21.mp4&amp;quot;][/video]&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Moonrise</title>
+      <link>https://blog.nella.org/2014/03/18/moonrise/</link>
+      <pubDate>Tue, 18 Mar 2014 23:10:39 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=1026</guid> 
+      <description>&lt;p&gt;My time-lapse camera in the attic is still working, though I resorted to adding an auto reboot once a week, because the Raspberry Pi is not acting too stable. And even then, sometimes it hangs. I blame the power supply. Because it&amp;rsquo;s always the power supply, right?&lt;/p&gt;
+&lt;p&gt;Anyway watching the sun&amp;rsquo;s track northward as spring advances has given me a much better instinctive feel for celestial mechanics. And that made me pay closer attention to the moon rise last month. After 40 years on this planet I just realized that the moon, being in the same orbital plane as the sun and earth, traces the same track as the sun. Whoa. That means my attic window is perfectly oriented to catch a nice time-lapse of the moonrise!&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Live from Mont-la-ville</title>
+      <link>https://blog.nella.org/2014/02/10/live-from-mont-la-ville/</link>
+      <pubDate>Mon, 10 Feb 2014 21:14:01 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=996</guid> 
+      <description>&lt;video width=100% controls autoplay&gt;
+    &lt;source src=&#34;https://blog.nella.org/wp-content/uploads/2014/02/2014-02-11-08.mp4&#34; type=&#34;video/mp4&#34;&gt;
+    Your browser does not support the video tag.  
+&lt;/video&gt;
+
+&lt;p&gt;The last few days I&amp;rsquo;ve been working on a new home hacking project. The eventual plan is to create a panoramic time-lapse of sunrise as seen from my house each morning. We&amp;rsquo;ve got a wonderful view, and recording some of those beautiful morning colors as the sun comes up over the Alps should make them easier to appreciate &amp;ndash; without setting my alarm for 6 AM!&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Taking an MQTT server out for a few holes on the code golf course</title>
+      <link>https://blog.nella.org/2013/12/05/mqtt-code-golf/</link>
+      <pubDate>Thu, 05 Dec 2013 14:16:00 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=982</guid> 
+      <description>&lt;p&gt;A while ago at work, I needed to learn a little about MQTT. After reading the spec and finding &lt;a href=&#34;http://godoc.org/github.com/huin/mqtt&#34;&gt;this package&lt;/a&gt; that handles reading and writing the messages themselves, I decided to write a server.&lt;/p&gt;
+&lt;p&gt;The result is here: &lt;a href=&#34;https://github.com/jeffallen/mqtt&#34;&gt;https://github.com/jeffallen/mqtt&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;After I finished, I wanted to know if my server was comparable to Mosquitto, so I wrote some load testing tools. I found that my Go server was generally comparable to Mosquitto, in that it had the same order of magnitude for transaction rate and latency (but it was strictly slower than Mosquitto; there is a cost to pay for the benefits Go gives you). As usual, Go programs compare quite favorably to C programs in terms of memory safety, overall length, and readability. It is also useful to consider that my implementation took only a couple of days to get finished. A C program with equivalent safety, correctness, and speed would take much longer to write. I&amp;rsquo;ve written them, I know.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Qz for Mobile Phones</title>
+      <link>https://blog.nella.org/2013/06/14/qz-for-mobile-phones/</link>
+      <pubDate>Fri, 14 Jun 2013 12:43:48 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=953</guid> 
+      <description>&lt;p&gt;I love &lt;a href=&#34;http://qz.com&#34;&gt;Quartz&lt;/a&gt;. however, I find that the best time/place for me to read it is on the train during my commute. And Quartz&amp;rsquo;s overly clever and overly dynamic website hates my phone&amp;rsquo;s browser. So I made &lt;a href=&#34;http://mobile-qz.appspot.com/&#34;&gt;Mobile Quartz&lt;/a&gt; to help me read it. The front page has the current top articles from Quartz. Click the links to see the article.&lt;/p&gt;
+&lt;p&gt;I used this as a chance to write some Go on Google Appspot code, and it was really a pleasure.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Zero Downtime upgrades of TCP servers in Go</title>
+      <link>https://blog.nella.org/2012/05/29/zero-downtime-upgrades-of-tcp-servers-in-go/</link>
+      <pubDate>Tue, 29 May 2012 12:09:16 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=879</guid> 
+      <description>&lt;p&gt;A recent post on the golang-nuts mailing list mentioned that Nginx can upgrade on the fly without ever stopping listening to it&amp;rsquo;s listen socket. The trick is to unset close-on-exec on the listen socket, then fork/exec a new copy of the server (on the upgraded binary) with an argument to tell it to use the inherited file descriptor instead of calling socket() and listen(s).&lt;/p&gt;
+&lt;p&gt;I wanted to see if I could achieve the same thing with Go, and what changes would be necessary to the standard libraries to make this possible. I got it working, without changing the standard library, so I wanted to explain what I did here.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Testing Go&#39;s HTTP server for CVE-2011-3192 vulnerability</title>
+      <link>https://blog.nella.org/2011/09/15/testing-gos-http-server-for-cve-2011-3192-vulnerability/</link>
+      <pubDate>Thu, 15 Sep 2011 07:53:45 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=868</guid> 
+      <description>&lt;p&gt;The recent &lt;a href=&#34;http://lists.grok.org.uk/pipermail/full-disclosure/attachments/20110820/848b4dca/attachment.obj&#34;&gt;DoS attack on Apache&lt;/a&gt; is caused by sending in a malformed Range header. I decided to send the same header into Go&amp;rsquo;s range header parser and see what happened. It passed with flying colors, giving the &amp;ldquo;invalid range&amp;rdquo; error, which would result in the Go webserver sending back HTTP response code 416 to the HTTP client.&lt;/p&gt;
+&lt;p&gt;I didn&amp;rsquo;t test this under load (which is part of what the DoS was doing), but my quick reading of parseRange leads me to believe that the only effect of sending Range headers in like this is that garbage is created under control of the attacker (for example, due to strings.Split(s[len(b):], &amp;ldquo;,&amp;rdquo;)). Of course, that&amp;rsquo;s bad and should be limited. However, this risk is no greater than other places in the server. For example an attacker could send an unlimited number of headers, or headers of unlimited length. This is already mentioned in the net/textproto package&amp;rsquo;s &lt;a href=&#34;http://golang.org/src/pkg/net/textproto/reader.go#L16&#34;&gt;reader.go&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>A trip down the (split) rabbithole</title>
+      <link>https://blog.nella.org/2011/02/15/a-trip-down-the-split-rabbithole/</link>
+      <pubDate>Tue, 15 Feb 2011 11:02:24 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=849</guid> 
+      <description>&lt;p&gt;&lt;em&gt;Note:&lt;/em&gt; This post is out of date, and will become increasingly out of date when Go&amp;rsquo;s new contiguous stacks are implemented. I&amp;rsquo;m leaving it here because it is still interesting, even if out of date.&lt;/p&gt;
+&lt;p&gt;Go uses split stacks (also called segmented stacks in the literature) in order to allow thousands of stacks in the space that would normally be taken by hundreds of C-style contiguous stacks. There&amp;rsquo;s a discussion of how to add split stacks to GCC &lt;a href=&#34;http://gcc.gnu.org/wiki/SplitStacks&#34;&gt;here&lt;/a&gt;. Note: it was written by the author of gccgo, around the time he started porting Go to Gcc, so it&amp;rsquo;s clear that he&amp;rsquo;s adding split stacks to Gcc to help Go. But if it&amp;rsquo;s helpful to C programmers as well, then so much the better!&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>How to control your HTTP transactions in Go</title>
+      <link>https://blog.nella.org/2011/02/08/how-to-control-your-http-transactions-in-go/</link>
+      <pubDate>Tue, 08 Feb 2011 13:49:33 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=847</guid> 
+      <description>&lt;p&gt;The Go http pacakge has http.Get and http.Post, which make it easy to do GET and POST operations. They are meant for client use. They implement things from the point of view of a naïve client, one that just wants to give a URL and get back the results. They don&amp;rsquo;t want to chase redirects, they don&amp;rsquo;t want to set their headers specially, they just want to, in one line, get the results.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>A rate-limiting HTTP proxy in Go</title>
+      <link>https://blog.nella.org/2011/02/07/a-rate-limiting-http-proxy-in-go/</link>
+      <pubDate>Mon, 07 Feb 2011 21:27:25 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=833</guid> 
+      <description>&lt;p&gt;Hello Go-fans. Missed a week due to a nice little ski vacation, but I promise I was dreaming of Go while riding the ski lifts, so I&amp;rsquo;ve got something interesting to share with you this week.&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;ve worked in &lt;a href=&#34;https://blog.nella.org/?cat=12&#34;&gt;Africa&lt;/a&gt; and Indonesia in the past. There, I saw first-hand the possibilities of the Internet, but also the &lt;a href=&#34;http://aidworkerdaily.com/2009/08/12/an-open-letter-to-the-humanitarian-technology-community/&#34;&gt;difficulties of using it in remote areas, over slow links, etc&lt;/a&gt;. I came up with ideas years ago for what I&amp;rsquo;d like in a proxy in the field that would make the limited &lt;a href=&#34;http://picasaweb.google.com/jeff.allen/ITNextToTheBeneficiaries#5249529028869147570&#34;&gt;bandwidth on a satellite connection&lt;/a&gt; go further. I&amp;rsquo;ve never had a chance to implement it until now, because hacking on Squid or other proxies just involved too much C hacking and core dumping to suit my patience, especially for a prototype to test ideas on. But Go, on the other hand; it&amp;rsquo;s just made for playing with this kind of thing!&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Gobs on the wire</title>
+      <link>https://blog.nella.org/2011/01/17/gobs-on-the-wire/</link>
+      <pubDate>Mon, 17 Jan 2011 18:24:54 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=828</guid> 
+      <description>&lt;p&gt;This week, I want to talk about how to use Go to write a client/server system with both synchronous requests and asynchronous event notifications.&lt;/p&gt;
+&lt;p&gt;To help learn Go, I wrote a clone of the &lt;a href=&#34;http://conserver.com&#34;&gt;Conserver console server&lt;/a&gt;. Now, of course, the world didn&amp;rsquo;t need another console server, but it turned out to be an interesting experiment, because what a console server does is well suited to the tools Go gives a programmer. A console server&amp;rsquo;s job is to gather the output from one or more serial cables (or, when there&amp;rsquo;s a terminal server in the mix, one or more TCP connections implementing the Rtelnet &amp;ldquo;protocol&amp;rdquo;). It logs that output to files, and makes the output available in realtime to zero or more watchers. It allows one and only one of the watchers to be read-write, to actually control the device.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>The impatient producer</title>
+      <link>https://blog.nella.org/2011/01/11/the-impatient-producer/</link>
+      <pubDate>Tue, 11 Jan 2011 04:17:52 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=825</guid> 
+      <description>&lt;p&gt;Last week I showed how a channel could link a producer and a consumer, and I idly speculated on how you&amp;rsquo;d set the depth of the queue, relative to the rate and variability of the producer and the consumer&amp;rsquo;s need for new input.&lt;/p&gt;
+&lt;p&gt;This weekend, I got to thinking about my next interesting Go project. It will be an HTTP proxy that can do some nifty tricks to offload a slow Internet link. One of the features I thought I might add would be something to send all the new HTML it sees through a secondary processing system in order to find extra assets it might want to cache. This is a case of a producer that wants to act totally independently of the consumer. If the secondary processing goroutine is slow, or hung inserting something into a database, or whatever, the producer (the HTTP reply) can&amp;rsquo;t hang &amp;ndash; he needs to reply to the client.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Using a channel as a queue</title>
+      <link>https://blog.nella.org/2011/01/03/using-a-channel-as-a-queue/</link>
+      <pubDate>Mon, 03 Jan 2011 15:10:23 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=816</guid> 
+      <description>&lt;p&gt;I try to write a Go article every Monday, but the holiday season has disrupted me a bit. So here&amp;rsquo;s a little something I dug out of my stocking to get things going again.&lt;/p&gt;
+&lt;p&gt;I thought an interesting way to play with the exp/draw package, the http client, and the image decoder would be a program to animate the tiles from Google Maps, showing the world scrolling by, as though you were in an airplane looking straight down and flying in a straight line. It came to me in one of those flying dreams&amp;hellip; (not really).&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>A simpler way to embed data</title>
+      <link>https://blog.nella.org/2010/12/17/a-simpler-way-to-embed-data/</link>
+      <pubDate>Fri, 17 Dec 2010 16:23:56 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=810</guid> 
+      <description>&lt;p&gt;In my post about how to efficiently put data into a Go binary, I mentioned that strings are immutable, and can be accessed without causing the Go runtime to copy them. This turns out to be the key to a simpler way to achieve what I wanted to do.&lt;/p&gt;
+&lt;p&gt;By simpler I mean, &amp;ldquo;no cgo&amp;rdquo;. That&amp;rsquo;s a nice simplification, because up until recently, your final static binary image linked to the cgo code dynamically, and that made using my technique impossible in the context of the Tiny runtime, where there is no dynamic linker. Recently cgo has changed, but at the same time, I&amp;rsquo;ve discovered how to use native strings to do what I want, so let&amp;rsquo;s see how it works.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>RTM&#39;s puzzle</title>
+      <link>https://blog.nella.org/2010/12/17/rtms-puzzle/</link>
+      <pubDate>Fri, 17 Dec 2010 01:16:25 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=804</guid> 
+      <description>&lt;p&gt;Here is a little program to that implements &lt;a href=&#34;http://www.ocf.berkeley.edu/~stoll/reference.html&#34;&gt;RTM&amp;rsquo;s series for Cliff Stoll&lt;/a&gt;.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;package&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;fmt&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;count&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;s&lt;/span&gt; []&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;) &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;i&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;x&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;s&lt;/span&gt;[&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; ; &lt;span style=&#34;color:#a6e22e&#34;&gt;i&lt;/span&gt; &amp;lt; len(&lt;span style=&#34;color:#a6e22e&#34;&gt;s&lt;/span&gt;); &lt;span style=&#34;color:#a6e22e&#34;&gt;i&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;s&lt;/span&gt;[&lt;span style=&#34;color:#a6e22e&#34;&gt;i&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;x&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#66d9ef&#34;&gt;break&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;i&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;next&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;s&lt;/span&gt; []&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;) []&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;res&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; []&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;{}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; len(&lt;span style=&#34;color:#a6e22e&#34;&gt;s&lt;/span&gt;) &amp;gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;n&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;count&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;s&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;res&lt;/span&gt; = append(&lt;span style=&#34;color:#a6e22e&#34;&gt;res&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;n&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;s&lt;/span&gt;[&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;])
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;n&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; len(&lt;span style=&#34;color:#a6e22e&#34;&gt;s&lt;/span&gt;) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#66d9ef&#34;&gt;break&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;s&lt;/span&gt; = &lt;span style=&#34;color:#a6e22e&#34;&gt;s&lt;/span&gt;[&lt;span style=&#34;color:#a6e22e&#34;&gt;n&lt;/span&gt;:]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;res&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt; max(&lt;span style=&#34;color:#a6e22e&#34;&gt;s&lt;/span&gt; []&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;) (&lt;span style=&#34;color:#a6e22e&#34;&gt;m&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;_&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;x&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;range&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;s&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;x&lt;/span&gt; &amp;gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;m&lt;/span&gt; { &lt;span style=&#34;color:#a6e22e&#34;&gt;m&lt;/span&gt; = &lt;span style=&#34;color:#a6e22e&#34;&gt;x&lt;/span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;s&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; []&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;{&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;i&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;; &lt;span style=&#34;color:#a6e22e&#34;&gt;i&lt;/span&gt; &amp;lt; &lt;span style=&#34;color:#ae81ff&#34;&gt;200&lt;/span&gt;; &lt;span style=&#34;color:#a6e22e&#34;&gt;i&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;s&lt;/span&gt; = &lt;span style=&#34;color:#a6e22e&#34;&gt;next&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;s&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;fmt&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Println&lt;/span&gt;(len(&lt;span style=&#34;color:#a6e22e&#34;&gt;s&lt;/span&gt;), max(&lt;span style=&#34;color:#a6e22e&#34;&gt;s&lt;/span&gt;))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    <item>
+      <title>Where is bytes.NewReaderAt?</title>
+      <link>https://blog.nella.org/2010/12/13/where-is-bytesnewreaderat/</link>
+      <pubDate>Mon, 13 Dec 2010 15:37:15 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=800</guid> 
+      <description>&lt;p&gt;I have a nice source of []byte slices (see last post), and now I&amp;rsquo;d like to do something with them that resembles a filesystem. I was planning on just using a map from name to file contents, which would work ok. But then I remembered seeing the archive/zip package, and I thought how much cooler it would be to just make my prototype filesystem, zip it up, put the zip file into my Go program (see last post) and then access the filesystem via the archive/zip package later.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Fat Constants, Thin Constants</title>
+      <link>https://blog.nella.org/2010/12/13/fat-constants-thin-constants/</link>
+      <pubDate>Mon, 13 Dec 2010 15:23:33 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=793</guid> 
+      <description>&lt;p&gt;I play from time to time with &lt;a href=&#34;http://code.google.com/p/tinygo/&#34;&gt;a patch for Go that makes the Tiny runtime more capable&lt;/a&gt;. My current goal is to get a new backend for exp/draw working which writes to the SVGA screen. It would be cool to be able to decode the Go mascot and have him flying around the screen or something.&lt;/p&gt;
+&lt;p&gt;In the Tiny runtime, there&amp;rsquo;s no OS, so there&amp;rsquo;s no disk drivers, so there&amp;rsquo;s no filesystem, so there&amp;rsquo;s no files. Which makes decoding a PNG and showing it kind of hard. But if the program carries along the data with it, in the form of a []byte, then you could use bytes.NewReader to turn it into an io.Reader and then pass it to image/png.Decode. So that&amp;rsquo;s what I set out to do.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Passing function pointers through channels in Go</title>
+      <link>https://blog.nella.org/2010/12/03/passing-function-pointers-through-channels-in-go/</link>
+      <pubDate>Fri, 03 Dec 2010 09:55:23 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=789</guid> 
+      <description>&lt;p&gt;Is is possible? Of course!&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-gdscript3&#34; data-lang=&#34;gdscript3&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;package main
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt; add(x, y &lt;span style=&#34;color:#a6e22e&#34;&gt;int&lt;/span&gt;) &lt;span style=&#34;color:#a6e22e&#34;&gt;int&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; x &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; y
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt; mul(x, y &lt;span style=&#34;color:#a6e22e&#34;&gt;int&lt;/span&gt;) &lt;span style=&#34;color:#a6e22e&#34;&gt;int&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; x &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; y
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt; runner(ch chan &lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;int&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;int&lt;/span&gt;)(&lt;span style=&#34;color:#a6e22e&#34;&gt;int&lt;/span&gt;)) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; f :&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; range ch {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		println(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;f(1, 2) = &amp;#34;&lt;/span&gt;, f(&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt; main() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	ch :&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; make(chan &lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;int&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;int&lt;/span&gt;)(&lt;span style=&#34;color:#a6e22e&#34;&gt;int&lt;/span&gt;))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	go runner(ch)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	ch &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt; add
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	ch &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt; mul
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	ch &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt; add
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	close(ch)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Is it useful? Probably, but this demo doesn&amp;rsquo;t show how yet&amp;hellip; have to think about what patterns this makes possible.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Where&#39;s all the magic? In the linker...</title>
+      <link>https://blog.nella.org/2010/11/15/wheres-all-the-magic-in-the-linker/</link>
+      <pubDate>Mon, 15 Nov 2010 22:06:13 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=784</guid> 
+      <description>&lt;p&gt;I have been trying to make a post per week about Go, but that requires learning something interesting during the week. I&amp;rsquo;m currently cycling between several little Go toys as I get the time. One is to make Go on raw hardware more useful/interesting. Another is a clone of the console server from conserver.com written in Go. Neither one of those little projects is at a point where I can really explain much about it, but not for want of trying&amp;hellip; This week my Go console server project taught me that netchan cannot send channels (OK, I wasn&amp;rsquo;t really shocked at this, but I was hoping that it might work), and so I&amp;rsquo;ll need to make my own protocol, and include some proxy channel reader/writers at each end of the TCP connection to send the data into the channel like I want. On the raw-hardware side, I got stuck on code that ends up incorrect once it ends up in the ELF file. Go figure.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Who said life is fair? The Go scheduler certainly didn&#39;t...</title>
+      <link>https://blog.nella.org/2010/11/08/who-said-life-is-fair-the-go-scheduler-certainly-didnt/</link>
+      <pubDate>Mon, 08 Nov 2010 08:35:27 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=774</guid> 
+      <description>&lt;p&gt;In my last post, I showed a program that had a strange behavior that caught my eye. I was trying to look at how Go handles shared access to globals, but the program also had the unintended effect of measuring the &amp;ldquo;fairness&amp;rdquo; of the Go scheduler. Here&amp;rsquo;s the program again, for context:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;package&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;runtime&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;x&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ch&lt;/span&gt; = make(&lt;span style=&#34;color:#66d9ef&#34;&gt;chan&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;bool&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;f&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;inc&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		println(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;f: &amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;inc&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&lt;span style=&#34;color:#a6e22e&#34;&gt;x&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;inc&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&lt;span style=&#34;color:#a6e22e&#34;&gt;ch&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;go&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;f&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;go&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;f&lt;/span&gt;(&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#a6e22e&#34;&gt;runtime&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Gosched&lt;/span&gt;()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&lt;span style=&#34;color:#a6e22e&#34;&gt;_&lt;/span&gt; = &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ch&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&lt;span style=&#34;color:#a6e22e&#34;&gt;_&lt;/span&gt; = &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ch&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		println(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;main sees x = &amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;x&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;When you run this with GOMAXPROCS=3, and you are on a machine with at least three cores, you get precisely what you&amp;rsquo;d expect: three system threads, each one running one goroutine, and total fairness: f(1) happens once for every f(-1), and the long-run value of x is around 0, but sometimes higher or lower.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>What&#39;s happening here? And when?</title>
+      <link>https://blog.nella.org/2010/11/01/whats-happening-here-and-when/</link>
+      <pubDate>Mon, 01 Nov 2010 07:25:45 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=769</guid> 
+      <description>&lt;p&gt;A while ago, I &lt;a href=&#34;http://groups.google.com/group/golang-nuts/browse_thread/thread/4f27c88adbf3a10b/88d8a6beea206f62&#34;&gt;posted&lt;/a&gt; to the Go users list about what seemed like a problem in how Go was choosing registers versus global variables. Roger&amp;rsquo;s answer was &amp;ldquo;go &lt;a href=&#34;http://golang.org/doc/go_mem.html&#34;&gt;RTFM&lt;/a&gt;&amp;rdquo;, which was precisely the right thing to do. However, it took reading it twice (I&amp;rsquo;d read it before) and some hard pondering to connect what I was reading to what I was seeing.&lt;/p&gt;
+&lt;p&gt;In order to save you, the reader, from the same experience, here&amp;rsquo;s a more detailed explanation of how &amp;ldquo;happens before&amp;rdquo; applies to programs where coroutines are writing to and reading from globals. &lt;strong&gt;Disclaimer:&lt;/strong&gt; You really shouldn&amp;rsquo;t be doing this. In Go, you &amp;ldquo;share memory by communicating, not communicate by sharing memory&amp;rdquo;. Asking questions about &amp;ldquo;what happens when two coroutines write to a global?&amp;rdquo; means you are already thinking about communicating by sharing, and you are in for a world of hurt. But in this case, I was exploring the concurrency model in coroutines in the absence of calls into the runtime (i.e. cooperative or not?) and so I wanted to avoid channels.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Go Fun - the cost of threads</title>
+      <link>https://blog.nella.org/2010/10/12/go-fun-the-cost-of-threads/</link>
+      <pubDate>Tue, 12 Oct 2010 06:52:39 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=757</guid> 
+      <description>&lt;p&gt;Here&amp;rsquo;s a little program I wrote in Go. In it, I wanted to explore how it might work to create a giant &amp;ldquo;onion&amp;rdquo; of threads, passing messages in towards the center, where they would be reflected and sent back out. Why? Just for fun, to solidify my grasp on the syntax, to see what would happen.&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s my program:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;package&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; (
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;fmt&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;time&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;make2&lt;/span&gt;() (&lt;span style=&#34;color:#66d9ef&#34;&gt;chan&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;chan&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; make(&lt;span style=&#34;color:#66d9ef&#34;&gt;chan&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;), make(&lt;span style=&#34;color:#66d9ef&#34;&gt;chan&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;makeAndEcho&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;ct&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;in&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;out&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;chan&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;in2&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;out2&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;chan&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt; () {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; !&lt;span style=&#34;color:#a6e22e&#34;&gt;closed&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;in&lt;/span&gt;) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#a6e22e&#34;&gt;x&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;in&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#a6e22e&#34;&gt;out&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;x&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;pass&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt; () {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; !&lt;span style=&#34;color:#a6e22e&#34;&gt;closed&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;in&lt;/span&gt;) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#66d9ef&#34;&gt;select&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#66d9ef&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;x&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;in&lt;/span&gt;: {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#a6e22e&#34;&gt;in2&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;x&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#66d9ef&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;x&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;out2&lt;/span&gt;: {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#a6e22e&#34;&gt;out&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;x&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;ct&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;go&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;echo&lt;/span&gt;()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  } &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;in2&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;out2&lt;/span&gt; = &lt;span style=&#34;color:#a6e22e&#34;&gt;make2&lt;/span&gt;()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;makeAndEcho&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;ct&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;in2&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;out2&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;go&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;pass&lt;/span&gt;()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;try&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;depth&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;n&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;in&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;out&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;make2&lt;/span&gt;()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;makeAndEcho&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;depth&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;in&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;out&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;before&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;time&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Nanoseconds&lt;/span&gt;()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;i&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;; &lt;span style=&#34;color:#a6e22e&#34;&gt;i&lt;/span&gt; &amp;lt; &lt;span style=&#34;color:#a6e22e&#34;&gt;n&lt;/span&gt;; &lt;span style=&#34;color:#a6e22e&#34;&gt;i&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;_&lt;/span&gt; = &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;out&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  close(&lt;span style=&#34;color:#a6e22e&#34;&gt;in&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;after&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;time&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Nanoseconds&lt;/span&gt;()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;transits&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; int64(&lt;span style=&#34;color:#a6e22e&#34;&gt;n&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;depth&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;fmt&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Printf&lt;/span&gt;(
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;%v round-trips, %v nsec/trip, %v nsec/transit for %v transits\n&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;n&lt;/span&gt;, (&lt;span style=&#34;color:#a6e22e&#34;&gt;after&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;before&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;int64(&lt;span style=&#34;color:#a6e22e&#34;&gt;n&lt;/span&gt;), (&lt;span style=&#34;color:#a6e22e&#34;&gt;after&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;before&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;int64(&lt;span style=&#34;color:#a6e22e&#34;&gt;transits&lt;/span&gt;), &lt;span style=&#34;color:#a6e22e&#34;&gt;transits&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;try&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;10000&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;try&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;100&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;10000&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;ch&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; make(&lt;span style=&#34;color:#66d9ef&#34;&gt;chan&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;before&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;time&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Nanoseconds&lt;/span&gt;()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;i&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;; &lt;span style=&#34;color:#a6e22e&#34;&gt;i&lt;/span&gt; &amp;lt; &lt;span style=&#34;color:#ae81ff&#34;&gt;200000&lt;/span&gt;; &lt;span style=&#34;color:#a6e22e&#34;&gt;i&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;ch&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;i&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          &lt;span style=&#34;color:#a6e22e&#34;&gt;_&lt;/span&gt; = &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ch&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;after&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;time&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Nanoseconds&lt;/span&gt;()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;fmt&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Printf&lt;/span&gt;(
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;no threads: %v nsec/transit for %v transits\n&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    (&lt;span style=&#34;color:#a6e22e&#34;&gt;after&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;before&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;200000&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;200000&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;When you run it, you get this:&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

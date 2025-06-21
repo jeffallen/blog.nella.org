@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>The &lt;xen&gt; of &lt;xslt&gt; | jra&#39;s thoughts</title>
+<meta name="keywords" content="">
+<meta name="description" content="For a project I am doing right now, I descended into DocBook hell. Not completely unscathed, I made it through the learning curve (why don&rsquo;t they call it what it is: The Unfathomable and Horrific Tunnel of Learning) and blinked slowly in the light of day.
+I realized DocBook is nice, but it&rsquo;s not actually what I wanted. Doh.
+What I wanted was a structured way to represent my data, and I want two things to happen to it. Today, I want to publish my data with DocBook. Tomorrow I want someone to be able to suck the brains out of my DocBook document (leaving it to wander the earth as a zombie) and to put them into a wiki so that my project can become a community-maintained database, instead of being a single DocBook-formatted document that lives in my Subversion repository.">
+<meta name="author" content="jra">
+<link rel="canonical" href="https://blog.nella.org/2009/05/23/the-of/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.3beea2776320e39a6c8d0589cd10cf4cbbbe3ca9b6f0363cfeef1417ed39a195.css" integrity="sha256-O&#43;6id2Mg45psjQWJzRDPTLu&#43;PKm28DY8/u8UF&#43;05oZU=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://blog.nella.org/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://blog.nella.org/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://blog.nella.org/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://blog.nella.org/apple-touch-icon.png">
+<link rel="mask-icon" href="https://blog.nella.org/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://blog.nella.org/2009/05/23/the-of/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend&display=swap" rel="stylesheet">
+<meta property="og:url" content="https://blog.nella.org/2009/05/23/the-of/">
+  <meta property="og:site_name" content="jra&#39;s thoughts">
+  <meta property="og:title" content="The of ">
+  <meta property="og:description" content="For a project I am doing right now, I descended into DocBook hell. Not completely unscathed, I made it through the learning curve (why don’t they call it what it is: The Unfathomable and Horrific Tunnel of Learning) and blinked slowly in the light of day.
+I realized DocBook is nice, but it’s not actually what I wanted. Doh.
+What I wanted was a structured way to represent my data, and I want two things to happen to it. Today, I want to publish my data with DocBook. Tomorrow I want someone to be able to suck the brains out of my DocBook document (leaving it to wander the earth as a zombie) and to put them into a wiki so that my project can become a community-maintained database, instead of being a single DocBook-formatted document that lives in my Subversion repository.">
+  <meta property="og:locale" content="en-US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2009-05-23T12:25:11+00:00">
+    <meta property="article:modified_time" content="2009-05-23T12:25:11+00:00">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="The &lt;xen&gt; of &lt;xslt&gt;">
+<meta name="twitter:description" content="For a project I am doing right now, I descended into DocBook hell. Not completely unscathed, I made it through the learning curve (why don&rsquo;t they call it what it is: The Unfathomable and Horrific Tunnel of Learning) and blinked slowly in the light of day.
+I realized DocBook is nice, but it&rsquo;s not actually what I wanted. Doh.
+What I wanted was a structured way to represent my data, and I want two things to happen to it. Today, I want to publish my data with DocBook. Tomorrow I want someone to be able to suck the brains out of my DocBook document (leaving it to wander the earth as a zombie) and to put them into a wiki so that my project can become a community-maintained database, instead of being a single DocBook-formatted document that lives in my Subversion repository.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://blog.nella.org/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "The \u003cxen\u003e of \u003cxslt\u003e",
+      "item": "https://blog.nella.org/2009/05/23/the-of/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "The of ",
+  "name": "The of ",
+  "description": "For a project I am doing right now, I descended into DocBook hell. Not completely unscathed, I made it through the learning curve (why don\u0026rsquo;t they call it what it is: The Unfathomable and Horrific Tunnel of Learning) and blinked slowly in the light of day.\nI realized DocBook is nice, but it\u0026rsquo;s not actually what I wanted. Doh.\nWhat I wanted was a structured way to represent my data, and I want two things to happen to it. Today, I want to publish my data with DocBook. Tomorrow I want someone to be able to suck the brains out of my DocBook document (leaving it to wander the earth as a zombie) and to put them into a wiki so that my project can become a community-maintained database, instead of being a single DocBook-formatted document that lives in my Subversion repository.\n",
+  "keywords": [
+    
+  ],
+  "articleBody": "For a project I am doing right now, I descended into DocBook hell. Not completely unscathed, I made it through the learning curve (why don’t they call it what it is: The Unfathomable and Horrific Tunnel of Learning) and blinked slowly in the light of day.\nI realized DocBook is nice, but it’s not actually what I wanted. Doh.\nWhat I wanted was a structured way to represent my data, and I want two things to happen to it. Today, I want to publish my data with DocBook. Tomorrow I want someone to be able to suck the brains out of my DocBook document (leaving it to wander the earth as a zombie) and to put them into a wiki so that my project can become a community-maintained database, instead of being a single DocBook-formatted document that lives in my Subversion repository.\nThe way to do that is to step back from DocBook as a primary source, and instead generate DocBook from my data. I organize my original data into XML, then reformat it with XSLT from my data structure into DocBook, then DocBook reformats it into XML-FO or HTML, and those become readable documents.\nTo other people contemplating the same idea, I’d say “go for it”. But beware the startup cost is huge. The results are nice. Here are the things you’ll need to learn:\nHow to use your XML editor (Emacs in nXML-mode for me). You cannot just limp along with Notepad or vi. Won’t work, don’t try it. How to write a schema for your new data structure. There are like 12 schema formats to choose from, but I chose Relax NG Compact Syntax because nXML-mode prefers it. Don’t use DTD or else your brain will melt. SGML = Bad. Everything post-SGML = slightly less bad. Farther from SGML is better (thus Relax NG compact = best). How to load your schema into your editor. (Tip: C-C C-S C-F for nXML) XSLT (which is the ugliest, stupidest, most verbose language ever foisted by computer science on users) How to use XInclude to build up XML documents from pieces. Don’t skimp on this. Figure it out and use it, because the alternative is the supreme ugliness that is SGML external entities. Remember: SGML = bad, XML = slightly less bad. How to make your XSLT processor work (and which of the 12 to choose – go with xsltproc, it’s super fast and stable, and doesn’t care which exact point release of Java you have. Remember: C good. Java bad. Write once, test everywhere…) Don’t try to do it without a schema. You need to be 100% sure your data is in the right format before you go too far hacking on the XSLT, or else you’ll get confused and sad. Just suck it up and get the schema right, so that your editor can whack you with a clue-by-four before XSLT starts wasting your time going off into tag soup never-never land.\n",
+  "wordCount" : "494",
+  "inLanguage": "en",
+  "datePublished": "2009-05-23T12:25:11Z",
+  "dateModified": "2009-05-23T12:25:11Z",
+  "author":{
+    "@type": "Person",
+    "name": "jra"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://blog.nella.org/2009/05/23/the-of/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "jra's thoughts",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://blog.nella.org/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://blog.nella.org/" accesskey="h" title="jra&#39;s thoughts (Alt + H)">jra&#39;s thoughts</a>
+            <div class="logo-switches">
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://blog.nella.org/">Home</a>&nbsp;»&nbsp;<a href="https://blog.nella.org/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      The &lt;xen&gt; of &lt;xslt&gt;
+    </h1>
+    <div class="post-meta"><span title='2009-05-23 12:25:11 +0000 +0000'>May 23, 2009</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;jra
+
+</div>
+  </header> 
+  <div class="post-content"><p>For a project I am doing right now, I descended into <a href="/?p=627">DocBook hell</a>. Not completely unscathed, I made it through the learning curve (why don&rsquo;t they call it what it is: The Unfathomable and Horrific Tunnel of Learning) and blinked slowly in the light of day.</p>
+<p>I realized DocBook is nice, but it&rsquo;s not actually what I wanted. Doh.</p>
+<p>What I wanted was a structured way to represent my data, and I want two things to happen to it. Today, I want to publish my data with DocBook. Tomorrow I want someone to be able to suck the brains out of my DocBook document (leaving it to wander the earth as a zombie) and to put them into a wiki so that my project can become a community-maintained database, instead of being a single DocBook-formatted document that lives in my Subversion repository.</p>
+<p>The way to do that is to step back from DocBook as a primary source, and instead generate DocBook from my data. I organize my original data into XML, then reformat it with XSLT from my data structure into DocBook, then DocBook reformats it into XML-FO or HTML, and those become readable documents.</p>
+<p>To other people contemplating the same idea, I&rsquo;d say &ldquo;go for it&rdquo;. But beware the startup cost is huge. The results are nice. Here are the things you&rsquo;ll need to learn:</p>
+<ul>
+<li>How to use your XML editor (Emacs in nXML-mode for me). You cannot just limp along with Notepad or vi. Won&rsquo;t work, don&rsquo;t try it.</li>
+<li>How to write a schema for your new data structure. There are like 12 schema formats to choose from, but I chose Relax NG Compact Syntax because nXML-mode prefers it. Don&rsquo;t use DTD or else your brain will melt. SGML = Bad. Everything post-SGML = slightly less bad. Farther from SGML is better (thus Relax NG compact = best).</li>
+<li>How to load your schema into your editor. (Tip: C-C C-S C-F for nXML)</li>
+<li>XSLT (which is the ugliest, stupidest, most verbose language ever foisted by computer science on users)</li>
+<li>How to use XInclude to build up XML documents from pieces. Don&rsquo;t skimp on this. Figure it out and use it, because the alternative is the supreme ugliness that is SGML external entities. Remember: SGML = bad, XML = slightly less bad.</li>
+<li>How to make your XSLT processor work (and which of the 12 to choose &ndash; go with xsltproc, it&rsquo;s super fast and stable, and doesn&rsquo;t care which exact point release of Java you have. Remember: C good. Java bad. Write once, test everywhere&hellip;)</li>
+</ul>
+<p>Don&rsquo;t try to do it without a schema. You need to be 100% sure your data is in the right format before you go too far hacking on the XSLT, or else you&rsquo;ll get confused and sad. Just suck it up and get the schema right, so that your editor can whack you with a clue-by-four before XSLT starts wasting your time going off into tag soup never-never land.</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+
+<ul class="share-buttons">
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share The of  on linkedin"
+            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.nella.org%2f2009%2f05%2f23%2fthe-of%2f&amp;title=The%20%3cxen%3e%20of%20%3cxslt%3e&amp;summary=The%20%3cxen%3e%20of%20%3cxslt%3e&amp;source=https%3a%2f%2fblog.nella.org%2f2009%2f05%2f23%2fthe-of%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share The of  on ycombinator"
+            href="https://news.ycombinator.com/submitlink?t=The%20%3cxen%3e%20of%20%3cxslt%3e&u=https%3a%2f%2fblog.nella.org%2f2009%2f05%2f23%2fthe-of%2f">
+            <svg version="1.1" xml:space="preserve" width="30px" height="30px" viewBox="0 0 512 512" fill="currentColor"
+                xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
+                <path
+                    d="M449.446 0C483.971 0 512 28.03 512 62.554L512 449.446C512 483.97 483.97 512 449.446 512L62.554 512C28.03 512 0 483.97 0 449.446L0 62.554C0 28.03 28.029 0 62.554 0L449.446 0ZM183.8767 87.9921H121.8427L230.6673 292.4508V424.0079H281.3328V292.4508L390.1575 87.9921H328.1233L256 238.2489z" />
+            </svg>
+        </a>
+    </li>
+</ul>
+
+  </footer>
+</article>
+    </main>
+    
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

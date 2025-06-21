@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>A rate-limiting HTTP proxy in Go | jra&#39;s thoughts</title>
+<meta name="keywords" content="">
+<meta name="description" content="Hello Go-fans. Missed a week due to a nice little ski vacation, but I promise I was dreaming of Go while riding the ski lifts, so I&rsquo;ve got something interesting to share with you this week.
+I&rsquo;ve worked in Africa and Indonesia in the past. There, I saw first-hand the possibilities of the Internet, but also the difficulties of using it in remote areas, over slow links, etc. I came up with ideas years ago for what I&rsquo;d like in a proxy in the field that would make the limited bandwidth on a satellite connection go further. I&rsquo;ve never had a chance to implement it until now, because hacking on Squid or other proxies just involved too much C hacking and core dumping to suit my patience, especially for a prototype to test ideas on. But Go, on the other hand; it&rsquo;s just made for playing with this kind of thing!">
+<meta name="author" content="jra">
+<link rel="canonical" href="https://blog.nella.org/2011/02/07/a-rate-limiting-http-proxy-in-go/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.3beea2776320e39a6c8d0589cd10cf4cbbbe3ca9b6f0363cfeef1417ed39a195.css" integrity="sha256-O&#43;6id2Mg45psjQWJzRDPTLu&#43;PKm28DY8/u8UF&#43;05oZU=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://blog.nella.org/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://blog.nella.org/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://blog.nella.org/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://blog.nella.org/apple-touch-icon.png">
+<link rel="mask-icon" href="https://blog.nella.org/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://blog.nella.org/2011/02/07/a-rate-limiting-http-proxy-in-go/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend&display=swap" rel="stylesheet">
+<meta property="og:url" content="https://blog.nella.org/2011/02/07/a-rate-limiting-http-proxy-in-go/">
+  <meta property="og:site_name" content="jra&#39;s thoughts">
+  <meta property="og:title" content="A rate-limiting HTTP proxy in Go">
+  <meta property="og:description" content="Hello Go-fans. Missed a week due to a nice little ski vacation, but I promise I was dreaming of Go while riding the ski lifts, so I’ve got something interesting to share with you this week.
+I’ve worked in Africa and Indonesia in the past. There, I saw first-hand the possibilities of the Internet, but also the difficulties of using it in remote areas, over slow links, etc. I came up with ideas years ago for what I’d like in a proxy in the field that would make the limited bandwidth on a satellite connection go further. I’ve never had a chance to implement it until now, because hacking on Squid or other proxies just involved too much C hacking and core dumping to suit my patience, especially for a prototype to test ideas on. But Go, on the other hand; it’s just made for playing with this kind of thing!">
+  <meta property="og:locale" content="en-US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2011-02-07T21:27:25+00:00">
+    <meta property="article:modified_time" content="2011-02-07T21:27:25+00:00">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="A rate-limiting HTTP proxy in Go">
+<meta name="twitter:description" content="Hello Go-fans. Missed a week due to a nice little ski vacation, but I promise I was dreaming of Go while riding the ski lifts, so I&rsquo;ve got something interesting to share with you this week.
+I&rsquo;ve worked in Africa and Indonesia in the past. There, I saw first-hand the possibilities of the Internet, but also the difficulties of using it in remote areas, over slow links, etc. I came up with ideas years ago for what I&rsquo;d like in a proxy in the field that would make the limited bandwidth on a satellite connection go further. I&rsquo;ve never had a chance to implement it until now, because hacking on Squid or other proxies just involved too much C hacking and core dumping to suit my patience, especially for a prototype to test ideas on. But Go, on the other hand; it&rsquo;s just made for playing with this kind of thing!">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://blog.nella.org/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "A rate-limiting HTTP proxy in Go",
+      "item": "https://blog.nella.org/2011/02/07/a-rate-limiting-http-proxy-in-go/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "A rate-limiting HTTP proxy in Go",
+  "name": "A rate-limiting HTTP proxy in Go",
+  "description": "Hello Go-fans. Missed a week due to a nice little ski vacation, but I promise I was dreaming of Go while riding the ski lifts, so I\u0026rsquo;ve got something interesting to share with you this week.\nI\u0026rsquo;ve worked in Africa and Indonesia in the past. There, I saw first-hand the possibilities of the Internet, but also the difficulties of using it in remote areas, over slow links, etc. I came up with ideas years ago for what I\u0026rsquo;d like in a proxy in the field that would make the limited bandwidth on a satellite connection go further. I\u0026rsquo;ve never had a chance to implement it until now, because hacking on Squid or other proxies just involved too much C hacking and core dumping to suit my patience, especially for a prototype to test ideas on. But Go, on the other hand; it\u0026rsquo;s just made for playing with this kind of thing!\n",
+  "keywords": [
+    
+  ],
+  "articleBody": "Hello Go-fans. Missed a week due to a nice little ski vacation, but I promise I was dreaming of Go while riding the ski lifts, so I’ve got something interesting to share with you this week.\nI’ve worked in Africa and Indonesia in the past. There, I saw first-hand the possibilities of the Internet, but also the difficulties of using it in remote areas, over slow links, etc. I came up with ideas years ago for what I’d like in a proxy in the field that would make the limited bandwidth on a satellite connection go further. I’ve never had a chance to implement it until now, because hacking on Squid or other proxies just involved too much C hacking and core dumping to suit my patience, especially for a prototype to test ideas on. But Go, on the other hand; it’s just made for playing with this kind of thing!\nSo today what I have to show you is an HTTP proxy that simulates what happens when all the requests are squeezed through a tiny little channel. It does not simulate things down to the TCP level (i.e. congestion detection and backoff); nor does it simulate the long round-trip times that make satellite connections difficult to optimize. But it simulates low bandwidth, and when I later add features related to semi-offline use, it will help me show the benefits of them better, I think.\nThe HTTP package in Go seems to be a just a web client and a web server. The tutorials show how to use it for both. Making a server is easy: you call http.ListenAndServe(\":1234\", nil) and you end up with a web server on port 1234. But did you ever wonder what that extra argument is for? The nil at the end? It’s the secret to how to make a proxy, and it’s the first stop on our journey.\nhttp.Handler\nThe second argument is an http.Handler. When you set it to nil, the http package provides a default, called http.ServeMux. It is designed to let you register callbacks for various sub-URLs inside one server. There’s also the http.FileServer handler, which finds files on disk matching the URL, and serves them up.\nThe trick to writing an HTTP proxy with the Go http package is to make your own http.Handler. Here’s something like what my first shot at it was:\ntype Proxy struct { } func NewProxy() *Proxy { return \u0026Proxy{} } func (p *Proxy) ServeHTTP(wr http.ResponseWriter, r *http.Request) { var resp *http.Response var err os.Error switch r.Method { default: { log.Print(\"Cannot handle method \", r.Method) http.Error(wr, \"501 I only handle GET and POST\", http.StatusNotImplemented) return } case \"GET\": { log.Printf(\"getting %v\", r.RawURL) resp, _, err = http.Get(r.RawURL) } case \"POST\": { resp, err = http.Post(r.RawURL, r.Header[\"Content-Type\"], r.Body) r.Body.Close() } } // combined for GET/POST if err != nil { http.Error(wr, err.String(), http.StatusInternalServerError) loghit(r, http.StatusInternalServerError, false) return } wr.SetHeader(\"Content-Type\", resp.Header[\"Content-Type\"]) wr.WriteHeader(resp.StatusCode) io.Copy(wr, resp.Body) resp.Body.Close() loghit(r, resp.StatusCode, false) } And I use it like this:\nfunc main() { proxy := NewProxy() err := http.ListenAndServe(\":12345\", proxy) if err != nil { log.Exit(\"ListenAndServe: \", err.String()) } } Note that my new type, Proxy, doesn’t have anything in it. Though it might pick up more stuff later, for now, it’s job is to have the ServeHTTP method attached to it, so that *Proxy can satisfy the http.Handler interface. The real proxy behavior happens in ServeHTTP, where we turn incoming GETs and POSTs into outgoing GETs and POSTs, then arrange that the answers from the origin server go back to the requester. The key line that does that is io.Copy, where we copy the bytes arriving on the response from the origin server onto the request that came from the HTTP client (i.e. the web browser configured with localhost:12345 as it’s proxy server).\nNow, it doesn’t take a rocket scientist to see that we can implement a caching proxy by looking at the request arriving in the http.Request, and either take something off of disk or get something from the network to fill in the http.ResponseWriter. That’s one direction we can expand this proxy, and I hope to do that in coming weeks, to implement a proxy that can use packages of offline content to dramatically reduce the amount of network traffic.\nIt does, however, take a rocket scientist to get HTTP proxying and caching right. For caching, there are several headers that have to be parsed and consulted, including Expires, E-tag, Cache-control and If-modified-since. Even getting proxying right, without caching is not so easy. To get anything working at all, the code above had to copy across the Content-Type header. But by not copying headers from the client inbound to the proxy, and by not copying all the headers back from the origin server, we are breaking cookies and HTTP redirect.\nIn fact, this issue of broken redirects lead me on a big side-trip where I learned more about the http package, and improved the proxy. I’ll write about that in a second post, so that we can keep going here to the next interesting thing.\nYou can see the source to the proxy here, but beware, ServeHTTP has morphed quite a bit from the super-simple GET/POST thing above. But you’ll have to read the next article to find out why.\nlinkio\nThe next thing I have to show you, the reader, is something called linkio. This is a package I wrote which wraps an io.Reader so that when you read from it, you get the bytes back at the same speed they would arrive if they were coming over a fixed capacity link to you, sharing bandwidth with all the other traffic on the link.\nlinkio shows two interesting Go design patterns. First, it is a wrapper for the io.Reader interface. The constructor takes an io.Reader as input, then stores it away, along with some other information. The object returned by the constructor satisfies io.Reader, so it can be plugged in exactly where the previous io.Reader was. Take a look at the code that needs to change to make use of linkio:\nimport ( ... \"jra-go.googlecode.com/hg/linkio\" ) var gLink *linkio.Link func init() { gLink = linkio.NewLink(56 /* kbps */) } ... // then in ServeHttp, change this: io.Copy(wr, resp.Body) // to this: io.Copy(wr, gLink.NewLinkReader(resp.Body)) Note how the real change in the program is one line! That’s because all the timing stuff, and the way to multiplex all the transactions onto a single link is put inside of linkio, and the goroutine launched inside the NewLink constructor.\nThe second interesting thing is that linkio uses a buffered channel to simulate the link itself. Each LinkReader wants to release it’s data in dribs and drabs to the reader, according to the current shared state of the link. The defining characteristic of a link is that it can send data for only one stream at a time (when we zoom in the the level of individual packets, anyway). So we simulate it with a goroutine that loops on the input channel (representing the interleaved flow of packets) and sleeps according to how long each packet would occupy the link in real life. If the link is unoccupied, then the loop gets blocked on the channel read. Once a simulated packet arrives (called a linkRequest in the code), the loop then becomes blocked on the sleep. When the sleep is done, the link goroutine needs to tell the stream that requested that this packet be simulated that the sleep is done. It does that by sending a bool on the channel that arrived with the simulated packet. (This pattern of sending a channel with a request to another goroutine is the Go idiom for asynchronous notification. A very useful trick: learn it!)\nThis scheme only works if the LinkReaders let loose their data a little at a time. If one sent in a simulated packet that was 10 megabytes, it would ruin the effect. That one “packet” would hog the link to the exclusion of all others, making that one stream perceive a bit rate of 100% of the link, instead of it’s equal share. The place where the LinkReaders enforce this fairness is in func (* linkio.LinkReader)Read. The prototype is Read([]byte) n int, os.Error err. When len(buf) is 1000, there’s no requirement to actually return 1000 bytes. You can return any number of bytes less than or equal to cap(buf), using n to tell the caller how many of the bytes in buf are valid, new bytes that they should read.\nSo, there you have it. A nice little example of a multi-threaded, rate-limiting HTTP proxy in Go. Stay tuned to the next article, where I explain why http.Get and http.Post are not really what you want in an HTTP proxy, and how to get what you DO want from the http package.\n",
+  "wordCount" : "1471",
+  "inLanguage": "en",
+  "datePublished": "2011-02-07T21:27:25Z",
+  "dateModified": "2011-02-07T21:27:25Z",
+  "author":{
+    "@type": "Person",
+    "name": "jra"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://blog.nella.org/2011/02/07/a-rate-limiting-http-proxy-in-go/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "jra's thoughts",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://blog.nella.org/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://blog.nella.org/" accesskey="h" title="jra&#39;s thoughts (Alt + H)">jra&#39;s thoughts</a>
+            <div class="logo-switches">
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://blog.nella.org/">Home</a>&nbsp;»&nbsp;<a href="https://blog.nella.org/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      A rate-limiting HTTP proxy in Go
+    </h1>
+    <div class="post-meta"><span title='2011-02-07 21:27:25 +0000 +0000'>February 7, 2011</span>&nbsp;·&nbsp;7 min&nbsp;·&nbsp;jra
+
+</div>
+  </header> 
+  <div class="post-content"><p>Hello Go-fans. Missed a week due to a nice little ski vacation, but I promise I was dreaming of Go while riding the ski lifts, so I&rsquo;ve got something interesting to share with you this week.</p>
+<p>I&rsquo;ve worked in <a href="/?cat=12">Africa</a> and Indonesia in the past. There, I saw first-hand the possibilities of the Internet, but also the <a href="http://aidworkerdaily.com/2009/08/12/an-open-letter-to-the-humanitarian-technology-community/">difficulties of using it in remote areas, over slow links, etc</a>. I came up with ideas years ago for what I&rsquo;d like in a proxy in the field that would make the limited <a href="http://picasaweb.google.com/jeff.allen/ITNextToTheBeneficiaries#5249529028869147570">bandwidth on a satellite connection</a> go further. I&rsquo;ve never had a chance to implement it until now, because hacking on Squid or other proxies just involved too much C hacking and core dumping to suit my patience, especially for a prototype to test ideas on. But Go, on the other hand; it&rsquo;s just made for playing with this kind of thing!</p>
+<p>So today what I have to show you is an HTTP proxy that simulates what happens when all the requests are squeezed through a tiny little channel. It does not simulate things down to the TCP level (i.e. congestion detection and backoff); nor does it simulate the long round-trip times that make satellite connections difficult to optimize. But it simulates low bandwidth, and when I later add features related to semi-offline use, it will help me show the benefits of them better, I think.</p>
+<p>The HTTP package in Go seems to be a just a web client and a web server. The tutorials show how to use it for both. Making a server is easy: you call http.ListenAndServe(&quot;:1234&quot;, nil) and you end up with a web server on port 1234. But did you ever wonder what that extra argument is for? The nil at the end? It&rsquo;s the secret to how to make a proxy, and it&rsquo;s the first stop on our journey.</p>
+<p><strong>http.Handler</strong></p>
+<p>The second argument is an http.Handler. When you set it to nil, the http package provides a default, called <a href="http://golang.org/pkg/http/#ServeMux">http.ServeMux</a>. It is designed to let you register callbacks for various sub-URLs inside one server. There&rsquo;s also the http.FileServer handler, which finds files on disk matching the URL, and serves them up.</p>
+<p>The trick to writing an HTTP proxy with the Go http package is to make your own <a href="http://golang.org/pkg/http/#Handler">http.Handler</a>. Here&rsquo;s something like what my first shot at it was:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>type Proxy struct {
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> NewProxy() <span style="color:#f92672">*</span>Proxy { <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span>Proxy{} }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (p <span style="color:#f92672">*</span>Proxy) ServeHTTP(wr http<span style="color:#f92672">.</span>ResponseWriter, r <span style="color:#f92672">*</span>http<span style="color:#f92672">.</span>Request) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">var</span> resp <span style="color:#f92672">*</span>http<span style="color:#f92672">.</span>Response
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">var</span> err os<span style="color:#f92672">.</span>Error
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">switch</span> r<span style="color:#f92672">.</span>Method {
+</span></span><span style="display:flex;"><span>  default: {
+</span></span><span style="display:flex;"><span>    log<span style="color:#f92672">.</span>Print(<span style="color:#e6db74">&#34;Cannot handle method &#34;</span>, r<span style="color:#f92672">.</span>Method)
+</span></span><span style="display:flex;"><span>    http<span style="color:#f92672">.</span>Error(wr, <span style="color:#e6db74">&#34;501 I only handle GET and POST&#34;</span>, http<span style="color:#f92672">.</span>StatusNotImplemented)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;GET&#34;</span>: {
+</span></span><span style="display:flex;"><span>    log<span style="color:#f92672">.</span>Printf(<span style="color:#e6db74">&#34;getting %v&#34;</span>, r<span style="color:#f92672">.</span>RawURL)
+</span></span><span style="display:flex;"><span>    resp, _, err <span style="color:#f92672">=</span> http<span style="color:#f92672">.</span>Get(r<span style="color:#f92672">.</span>RawURL)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;POST&#34;</span>: {
+</span></span><span style="display:flex;"><span>    resp, err <span style="color:#f92672">=</span> http<span style="color:#f92672">.</span>Post(r<span style="color:#f92672">.</span>RawURL, r<span style="color:#f92672">.</span>Header[<span style="color:#e6db74">&#34;Content-Type&#34;</span>], r<span style="color:#f92672">.</span>Body)
+</span></span><span style="display:flex;"><span>    r<span style="color:#f92672">.</span>Body<span style="color:#f92672">.</span>Close()
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">//</span> combined <span style="color:#66d9ef">for</span> GET<span style="color:#f92672">/</span>POST
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> err <span style="color:#f92672">!=</span> nil {
+</span></span><span style="display:flex;"><span>    http<span style="color:#f92672">.</span>Error(wr, err<span style="color:#f92672">.</span>String(), http<span style="color:#f92672">.</span>StatusInternalServerError)
+</span></span><span style="display:flex;"><span>    loghit(r, http<span style="color:#f92672">.</span>StatusInternalServerError, false)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  wr<span style="color:#f92672">.</span>SetHeader(<span style="color:#e6db74">&#34;Content-Type&#34;</span>, resp<span style="color:#f92672">.</span>Header[<span style="color:#e6db74">&#34;Content-Type&#34;</span>])
+</span></span><span style="display:flex;"><span>  wr<span style="color:#f92672">.</span>WriteHeader(resp<span style="color:#f92672">.</span>StatusCode)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  io<span style="color:#f92672">.</span>Copy(wr, resp<span style="color:#f92672">.</span>Body)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  resp<span style="color:#f92672">.</span>Body<span style="color:#f92672">.</span>Close()
+</span></span><span style="display:flex;"><span>  loghit(r, resp<span style="color:#f92672">.</span>StatusCode, false)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>And I use it like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> main() {
+</span></span><span style="display:flex;"><span>  proxy :<span style="color:#f92672">=</span> NewProxy()
+</span></span><span style="display:flex;"><span>  err :<span style="color:#f92672">=</span> http<span style="color:#f92672">.</span>ListenAndServe(<span style="color:#e6db74">&#34;:12345&#34;</span>, proxy)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> err <span style="color:#f92672">!=</span> nil {
+</span></span><span style="display:flex;"><span>    log<span style="color:#f92672">.</span>Exit(<span style="color:#e6db74">&#34;ListenAndServe: &#34;</span>, err<span style="color:#f92672">.</span>String())
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Note that my new type, Proxy, doesn&rsquo;t have anything in it. Though it might pick up more stuff later, for now, it&rsquo;s job is to have the ServeHTTP method attached to it, so that *Proxy can satisfy the http.Handler interface. The real proxy behavior happens in ServeHTTP, where we turn incoming GETs and POSTs into outgoing GETs and POSTs, then arrange that the answers from the origin server go back to the requester. The key line that does that is io.Copy, where we copy the bytes arriving on the response from the origin server onto the request that came from the HTTP client (i.e. the web browser configured with localhost:12345 as it&rsquo;s proxy server).</p>
+<p>Now, it doesn&rsquo;t take a rocket scientist to see that we can implement a caching proxy by looking at the request arriving in the http.Request, and either take something off of disk or get something from the network to fill in the http.ResponseWriter. That&rsquo;s one direction we can expand this proxy, and I hope to do that in coming weeks, to implement a proxy that can use packages of offline content to dramatically reduce the amount of network traffic.</p>
+<p>It does, however, take a rocket scientist to get HTTP proxying and caching right. For caching, there are several headers that have to be parsed and consulted, including Expires, E-tag, Cache-control and If-modified-since. Even getting proxying right, without caching is not so easy. To get anything working at all, the code above had to copy across the Content-Type header. But by not copying headers from the client inbound to the proxy, and by not copying all the headers back from the origin server, we are breaking cookies and HTTP redirect.</p>
+<p>In fact, this issue of broken redirects lead me on a big side-trip where I learned more about the http package, and improved the proxy. I&rsquo;ll write about that in a second post, so that we can keep going here to the next interesting thing.</p>
+<p>You can see the source to the proxy <a href="http://code.google.com/p/jra-go/source/browse/cmd/prox/prox.go">here</a>, but beware, ServeHTTP has morphed quite a bit from the super-simple GET/POST thing above. But you&rsquo;ll have to read the next article to find out why.</p>
+<p><strong>linkio</strong></p>
+<p>The next thing I have to show you, the reader, is something called <a href="http://code.google.com/p/jra-go/source/browse/#hg%2Flinkio">linkio</a>. This is a package I wrote which wraps an io.Reader so that when you read from it, you get the bytes back at the same speed they would arrive if they were coming over a fixed capacity link to you, sharing bandwidth with all the other traffic on the link.</p>
+<p>linkio shows two interesting Go design patterns. First, it is a wrapper for the io.Reader interface. The constructor takes an io.Reader as input, then stores it away, along with some other information. The object returned by the constructor satisfies io.Reader, so it can be plugged in <strong>exactly where</strong> the previous io.Reader was. Take a look at the code that needs to change to make use of linkio:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>import (
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;jra-go.googlecode.com/hg/linkio&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> gLink <span style="color:#f92672">*</span>linkio<span style="color:#f92672">.</span>Link
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> init() {
+</span></span><span style="display:flex;"><span>  gLink <span style="color:#f92672">=</span> linkio<span style="color:#f92672">.</span>NewLink(<span style="color:#ae81ff">56</span> <span style="color:#f92672">/*</span> kbps <span style="color:#f92672">*/</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">//</span> then <span style="color:#f92672">in</span> ServeHttp, change this:
+</span></span><span style="display:flex;"><span>  io<span style="color:#f92672">.</span>Copy(wr, resp<span style="color:#f92672">.</span>Body)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">//</span> to this:
+</span></span><span style="display:flex;"><span>  io<span style="color:#f92672">.</span>Copy(wr, gLink<span style="color:#f92672">.</span>NewLinkReader(resp<span style="color:#f92672">.</span>Body))
+</span></span></code></pre></div><p>Note how the real change in the program is <strong>one line</strong>! That&rsquo;s because all the timing stuff, and the way to multiplex all the transactions onto a single link is put inside of linkio, and the goroutine launched inside the NewLink constructor.</p>
+<p>The second interesting thing is that linkio uses a buffered channel to simulate the link itself. Each LinkReader wants to release it&rsquo;s data in dribs and drabs to the reader, according to the current shared state of the link. The defining characteristic of a link is that it can send data for only one stream at a time (when we zoom in the the level of individual packets, anyway). So we simulate it with a goroutine that loops on the input channel (representing the interleaved flow of packets) and sleeps according to how long each packet would occupy the link in real life. If the link is unoccupied, then the loop gets blocked on the channel read. Once a simulated packet arrives (called a linkRequest in the code), the loop then becomes blocked on the sleep. When the sleep is done, the link goroutine needs to tell the stream that requested that this packet be simulated that the sleep is done. It does that by sending a bool on the channel that arrived with the simulated packet. (This pattern of sending a channel with a request to another goroutine is the Go idiom for asynchronous notification. A very useful trick: learn it!)</p>
+<p>This scheme only works if the LinkReaders let loose their data a little at a time. If one sent in a simulated packet that was 10 megabytes, it would ruin the effect. That one &ldquo;packet&rdquo; would hog the link to the exclusion of all others, making that one stream perceive a bit rate of 100% of the link, instead of it&rsquo;s equal share. The place where the LinkReaders enforce this fairness is in func (* linkio.LinkReader)Read. The prototype is <code>Read([]byte) n int, os.Error err</code>. When len(buf) is 1000, there&rsquo;s no requirement to actually return 1000 bytes. You can return any number of bytes less than or equal to cap(buf), using n to tell the caller how many of the bytes in buf are valid, new bytes that they should read.</p>
+<p>So, there you have it. A nice little example of a multi-threaded, rate-limiting HTTP proxy in Go. Stay tuned to the next article, where I explain why http.Get and http.Post are not really what you want in an HTTP proxy, and how to get what you <strong>DO</strong> want from the http package.</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+
+<ul class="share-buttons">
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share A rate-limiting HTTP proxy in Go on linkedin"
+            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.nella.org%2f2011%2f02%2f07%2fa-rate-limiting-http-proxy-in-go%2f&amp;title=A%20rate-limiting%20HTTP%20proxy%20in%20Go&amp;summary=A%20rate-limiting%20HTTP%20proxy%20in%20Go&amp;source=https%3a%2f%2fblog.nella.org%2f2011%2f02%2f07%2fa-rate-limiting-http-proxy-in-go%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share A rate-limiting HTTP proxy in Go on ycombinator"
+            href="https://news.ycombinator.com/submitlink?t=A%20rate-limiting%20HTTP%20proxy%20in%20Go&u=https%3a%2f%2fblog.nella.org%2f2011%2f02%2f07%2fa-rate-limiting-http-proxy-in-go%2f">
+            <svg version="1.1" xml:space="preserve" width="30px" height="30px" viewBox="0 0 512 512" fill="currentColor"
+                xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
+                <path
+                    d="M449.446 0C483.971 0 512 28.03 512 62.554L512 449.446C512 483.97 483.97 512 449.446 512L62.554 512C28.03 512 0 483.97 0 449.446L0 62.554C0 28.03 28.029 0 62.554 0L449.446 0ZM183.8767 87.9921H121.8427L230.6673 292.4508V424.0079H281.3328V292.4508L390.1575 87.9921H328.1233L256 238.2489z" />
+            </svg>
+        </a>
+    </li>
+</ul>
+
+  </footer>
+</article>
+    </main>
+    
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

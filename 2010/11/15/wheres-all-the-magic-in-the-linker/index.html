@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Where&#39;s all the magic? In the linker... | jra&#39;s thoughts</title>
+<meta name="keywords" content="">
+<meta name="description" content="I have been trying to make a post per week about Go, but that requires learning something interesting during the week. I&rsquo;m currently cycling between several little Go toys as I get the time. One is to make Go on raw hardware more useful/interesting. Another is a clone of the console server from conserver.com written in Go. Neither one of those little projects is at a point where I can really explain much about it, but not for want of trying&hellip; This week my Go console server project taught me that netchan cannot send channels (OK, I wasn&rsquo;t really shocked at this, but I was hoping that it might work), and so I&rsquo;ll need to make my own protocol, and include some proxy channel reader/writers at each end of the TCP connection to send the data into the channel like I want. On the raw-hardware side, I got stuck on code that ends up incorrect once it ends up in the ELF file. Go figure.">
+<meta name="author" content="jra">
+<link rel="canonical" href="https://blog.nella.org/2010/11/15/wheres-all-the-magic-in-the-linker/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.3beea2776320e39a6c8d0589cd10cf4cbbbe3ca9b6f0363cfeef1417ed39a195.css" integrity="sha256-O&#43;6id2Mg45psjQWJzRDPTLu&#43;PKm28DY8/u8UF&#43;05oZU=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://blog.nella.org/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://blog.nella.org/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://blog.nella.org/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://blog.nella.org/apple-touch-icon.png">
+<link rel="mask-icon" href="https://blog.nella.org/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://blog.nella.org/2010/11/15/wheres-all-the-magic-in-the-linker/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend&display=swap" rel="stylesheet">
+<meta property="og:url" content="https://blog.nella.org/2010/11/15/wheres-all-the-magic-in-the-linker/">
+  <meta property="og:site_name" content="jra&#39;s thoughts">
+  <meta property="og:title" content="Where&#39;s all the magic? In the linker...">
+  <meta property="og:description" content="I have been trying to make a post per week about Go, but that requires learning something interesting during the week. I’m currently cycling between several little Go toys as I get the time. One is to make Go on raw hardware more useful/interesting. Another is a clone of the console server from conserver.com written in Go. Neither one of those little projects is at a point where I can really explain much about it, but not for want of trying… This week my Go console server project taught me that netchan cannot send channels (OK, I wasn’t really shocked at this, but I was hoping that it might work), and so I’ll need to make my own protocol, and include some proxy channel reader/writers at each end of the TCP connection to send the data into the channel like I want. On the raw-hardware side, I got stuck on code that ends up incorrect once it ends up in the ELF file. Go figure.">
+  <meta property="og:locale" content="en-US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2010-11-15T22:06:13+00:00">
+    <meta property="article:modified_time" content="2010-11-15T22:06:13+00:00">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Where&#39;s all the magic? In the linker...">
+<meta name="twitter:description" content="I have been trying to make a post per week about Go, but that requires learning something interesting during the week. I&rsquo;m currently cycling between several little Go toys as I get the time. One is to make Go on raw hardware more useful/interesting. Another is a clone of the console server from conserver.com written in Go. Neither one of those little projects is at a point where I can really explain much about it, but not for want of trying&hellip; This week my Go console server project taught me that netchan cannot send channels (OK, I wasn&rsquo;t really shocked at this, but I was hoping that it might work), and so I&rsquo;ll need to make my own protocol, and include some proxy channel reader/writers at each end of the TCP connection to send the data into the channel like I want. On the raw-hardware side, I got stuck on code that ends up incorrect once it ends up in the ELF file. Go figure.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://blog.nella.org/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Where's all the magic? In the linker...",
+      "item": "https://blog.nella.org/2010/11/15/wheres-all-the-magic-in-the-linker/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Where's all the magic? In the linker...",
+  "name": "Where\u0027s all the magic? In the linker...",
+  "description": "I have been trying to make a post per week about Go, but that requires learning something interesting during the week. I\u0026rsquo;m currently cycling between several little Go toys as I get the time. One is to make Go on raw hardware more useful/interesting. Another is a clone of the console server from conserver.com written in Go. Neither one of those little projects is at a point where I can really explain much about it, but not for want of trying\u0026hellip; This week my Go console server project taught me that netchan cannot send channels (OK, I wasn\u0026rsquo;t really shocked at this, but I was hoping that it might work), and so I\u0026rsquo;ll need to make my own protocol, and include some proxy channel reader/writers at each end of the TCP connection to send the data into the channel like I want. On the raw-hardware side, I got stuck on code that ends up incorrect once it ends up in the ELF file. Go figure.\n",
+  "keywords": [
+    
+  ],
+  "articleBody": "I have been trying to make a post per week about Go, but that requires learning something interesting during the week. I’m currently cycling between several little Go toys as I get the time. One is to make Go on raw hardware more useful/interesting. Another is a clone of the console server from conserver.com written in Go. Neither one of those little projects is at a point where I can really explain much about it, but not for want of trying… This week my Go console server project taught me that netchan cannot send channels (OK, I wasn’t really shocked at this, but I was hoping that it might work), and so I’ll need to make my own protocol, and include some proxy channel reader/writers at each end of the TCP connection to send the data into the channel like I want. On the raw-hardware side, I got stuck on code that ends up incorrect once it ends up in the ELF file. Go figure.\nSo though I don’t have the final answer yet, even what I know so far is at least a bit interesting, and that will be the topic of this week’s post. (Hopefully next week’s will be “I GOT IT! Here’s the solution…”. but don’t hold your breath.)\nWhen you set GOOS to “tiny”, and then rebuild the runtime, you get a runtime system that knows how to run Go code on raw hardware with no underlying OS (see $GOROOT/src/pkg/runtime/tiny/README for some more info). Of course, if you try to compile something that reads a file, it will fail: there’s no kernel, let alone a filesystem. But you can write to the screen, which is nifty. I though it would be cool to add some more stuff to Go’s tiny runtime, for example a way to receive hardware interrupts over a channel. What’s really interesting about Go on raw hardware is that Go already provides a few of the things you need to write an OS (threads, scheduling, bounded arrays – a form of memory protection). I’m not proposing to write “the Go OS”. But I think it would be interesting to be able to run some kinds of servers on raw hardware; if you don’t need/want an OS under you, why should you have to have one?\nSo far, I’ve got a whole heap of code to compile when GOOS=tiny, including exp/draw and all its dependencies. My current goal is to put a white rectangle onto the VGA screen using exp/draw and a new backend that I’m calling exp/draw/svga.go. But something is going wrong, I’m getting a page fault from running off into bad memory. To debug that, it’s time to set up proper trap handlers. A nifty way to do that, borrowed from Plan 9, looks like this:\nTEXT intr0(SB),7,$0 PUSHL $0 PUSHL $0 JMP intrcommon TEXT intr1(SB),7,$0 PUSHL $0 PUSHL $1 JMP intrcommon ... intrcommon: PUSHL DS PUSHL ES PUSHL FS PUSHL GS PUSHAL ... IRETL What, you don’t know assembly? Please, I think you can figure out what’s happening here, but I’ll help anyway. For each type of interrupt, we emit a bit of code that sets up the stack right, then uses a common piece of code. This is something you can do in assembly that you can’t do in Go: jumping from inside of one routine to a label inside of another one. Also, you can’t futz with specific registers and the hardware stack, which is what you have to do in an interrupt service routine, and which explains why this code is assembler and not Go code.\nWhen you run this code in Bochs and single step it, you find out what’s actually running on the processor is something more like this:\nTEXT intr0(SB),7,$0 PUSHL $0 PUSHL $0 PUSHL DS PUSHL ES PUSHL FS PUSHL GS PUSHAL ... (rest of intrcommon here) ... IRETL TEXT intr1(SB),7,$0 PUSHL $0 PUSHL $1 ... loop: JMP loop Thus if you happen to hit interrupt 0, things work ok. But if you happen to hit interrupt 1, you are stuck in endless loop hell.\nIt seemed to me like 8a was incorrectly compiling this. So I added a bunch of debugging code to it, and I convinced myself that it was working right. One problem is that there is no debugging flag to help you understand the output .8 file you get after doing “8a test.s”. If 8a is not compiling it wrong, who else could be? Well, my interrupt service routines had to make it through one other piece of code before getting on the raw hardware: 8l. The problem must be in there, but I haven’t found it yet.\nThere’s way more than my bug in 8l, however. This is really where a lot of the magic of the Go system come from. It implements the split stacks Go uses to support thousands of threads. It also implements dependency tracking, so that the right object files are pulled in to satisfy all the imports. In contrast, the C linker is traditionally implemented as a rather stupid thing that just gathers .o files together. One thing you find in libraries meant for wide reuse is that all the functions are in their own file, because cc and ld are not smart enough to exclude unneeded code from the final binary except on the level of the .o file. But not all linkers are stupid: The GNU tool chain is smarter than this, at least on some platforms. Take a look at ld-s -gc-sections options if you are interested. And this article in MSDN talks about how .NET uses link time code generation for some optimizations.\nI’ve confirmed that the instruction stream is coming into 8l correctly. The undocumented “-W” flag tells 8l to show you the contents of every .8 file it is reading. Take this little sample .s file:\nTEXT foo1(SB), 7, $0 NOP JMP bar TEXT foo2(SB), 7, $0 NOP bar: NOP RET Compile it with “8a test.s”, then look at it using “8l -W test.8”:\nANAME / ANAME home ANAME jra ANAME go ANAME src ANAME cmd ANAME 8a ANAME foo.s (1) HISTORY , (9) HISTORY , ANAME foo1 (1) TEXT foo1+0(SB),7,$0-0 (2) NOP , ANAME bar (3) JMP ,5(PC) ANAME foo2 (4) TEXT foo2+0(SB),7,$0-0 (5) NOP , (7) NOP , (8) RET , (8) END , ... and then 1000's of lines of dumps from other files here... The output from -W shows that test.8 knows it is supposed to be jumping up into the next routine. My current guess at what’s happening is that 8l processes things one function at a time, never expecting dependencies between functions like this (since it is most definitely not something it should expect to be coming from 8g).\nBonus trivia nugget: The Go system defines a set of flags on functions that lets 8g and 8a communicate with 8l and tell it what to do. If a routine cannot, or should not check the stack size, then it needs to use a text line with 7 in it. If you leave out the 7, 8l will add in the stack checking code (which would be an extremely crash-worthy idea in an ISR, don’t you think?). We’ll talk more about stack checking one week when I dig into how split stacks work. For now, you can read Ian’s article on them.\n",
+  "wordCount" : "1229",
+  "inLanguage": "en",
+  "datePublished": "2010-11-15T22:06:13Z",
+  "dateModified": "2010-11-15T22:06:13Z",
+  "author":{
+    "@type": "Person",
+    "name": "jra"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://blog.nella.org/2010/11/15/wheres-all-the-magic-in-the-linker/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "jra's thoughts",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://blog.nella.org/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://blog.nella.org/" accesskey="h" title="jra&#39;s thoughts (Alt + H)">jra&#39;s thoughts</a>
+            <div class="logo-switches">
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://blog.nella.org/">Home</a>&nbsp;»&nbsp;<a href="https://blog.nella.org/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      Where&#39;s all the magic? In the linker...
+    </h1>
+    <div class="post-meta"><span title='2010-11-15 22:06:13 +0000 +0000'>November 15, 2010</span>&nbsp;·&nbsp;6 min&nbsp;·&nbsp;jra
+
+</div>
+  </header> 
+  <div class="post-content"><p>I have been trying to make a post per week about Go, but that requires learning something interesting during the week. I&rsquo;m currently cycling between several little Go toys as I get the time. One is to make Go on raw hardware more useful/interesting. Another is a clone of the console server from conserver.com written in Go. Neither one of those little projects is at a point where I can really explain much about it, but not for want of trying&hellip; This week my Go console server project taught me that netchan cannot send channels (OK, I wasn&rsquo;t really shocked at this, but I was hoping that it might work), and so I&rsquo;ll need to make my own protocol, and include some proxy channel reader/writers at each end of the TCP connection to send the data into the channel like I want. On the raw-hardware side, I got stuck on code that ends up incorrect once it ends up in the ELF file. Go figure.</p>
+<p>So though I don&rsquo;t have the final answer yet, even what I know so far is at least a bit interesting, and that will be the topic of this week&rsquo;s post. (Hopefully next week&rsquo;s will be &ldquo;I GOT IT! Here&rsquo;s the solution&hellip;&rdquo;. but don&rsquo;t hold your breath.)</p>
+<p>When you set GOOS to &ldquo;tiny&rdquo;, and then rebuild the runtime, you get a runtime system that knows how to run Go code on raw hardware with no underlying OS (see $GOROOT/src/pkg/runtime/tiny/README for some more info). Of course, if you try to compile something that reads a file, it will fail: there&rsquo;s no kernel, let alone a filesystem. But you can write to the screen, which is nifty. I though it would be cool to add some more stuff to Go&rsquo;s tiny runtime, for example a way to receive hardware interrupts over a channel. What&rsquo;s really interesting about Go on raw hardware is that Go already provides a few of the things you need to write an OS (threads, scheduling, bounded arrays &ndash; a form of memory protection). I&rsquo;m not proposing to write &ldquo;the Go OS&rdquo;. But I think it would be interesting to be able to run some kinds of servers on raw hardware; if you don&rsquo;t need/want an OS under you, why should you have to have one?</p>
+<p>So far, I&rsquo;ve got a whole heap of code to compile when GOOS=tiny, including exp/draw and all its dependencies. My current goal is to put a white rectangle onto the VGA screen using exp/draw and a new backend that I&rsquo;m calling exp/draw/svga.go. But something is going wrong, I&rsquo;m getting a page fault from running off into bad memory. To debug that, it&rsquo;s time to set up proper trap handlers. A nifty way to do that, borrowed from Plan 9, looks like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>TEXT  intr0(SB),7,$0
+</span></span><span style="display:flex;"><span>  PUSHL $0
+</span></span><span style="display:flex;"><span>  PUSHL $0
+</span></span><span style="display:flex;"><span>  JMP intrcommon
+</span></span><span style="display:flex;"><span>TEXT  intr1(SB),7,$0
+</span></span><span style="display:flex;"><span>  PUSHL $0
+</span></span><span style="display:flex;"><span>  PUSHL $1
+</span></span><span style="display:flex;"><span>  JMP intrcommon
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>intrcommon:
+</span></span><span style="display:flex;"><span>  PUSHL DS
+</span></span><span style="display:flex;"><span>  PUSHL ES
+</span></span><span style="display:flex;"><span>  PUSHL FS
+</span></span><span style="display:flex;"><span>  PUSHL GS
+</span></span><span style="display:flex;"><span>  PUSHAL
+</span></span><span style="display:flex;"><span>  ...
+</span></span><span style="display:flex;"><span>  IRETL
+</span></span></code></pre></div><p>What, you don&rsquo;t know assembly? Please, I think you can figure out what&rsquo;s happening here, but I&rsquo;ll help anyway. For each type of interrupt, we emit a bit of code that sets up the stack right, then uses a common piece of code. This is something you can do in assembly that you can&rsquo;t do in Go: jumping from inside of one routine to a label inside of another one. Also, you can&rsquo;t futz with specific registers and the hardware stack, which is what you <strong>have</strong> to do in an interrupt service routine, and which explains why this code is assembler and not Go code.</p>
+<p>When you run this code in Bochs and single step it, you find out what&rsquo;s actually running on the processor is something more like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>TEXT  intr0(SB),7,$0
+</span></span><span style="display:flex;"><span>  PUSHL $0
+</span></span><span style="display:flex;"><span>  PUSHL $0
+</span></span><span style="display:flex;"><span>  PUSHL DS
+</span></span><span style="display:flex;"><span>  PUSHL ES
+</span></span><span style="display:flex;"><span>  PUSHL FS
+</span></span><span style="display:flex;"><span>  PUSHL GS
+</span></span><span style="display:flex;"><span>  PUSHAL
+</span></span><span style="display:flex;"><span>  ... (rest of intrcommon here) ...
+</span></span><span style="display:flex;"><span>  IRETL
+</span></span><span style="display:flex;"><span>TEXT  intr1(SB),7,$0
+</span></span><span style="display:flex;"><span>  PUSHL $0
+</span></span><span style="display:flex;"><span>  PUSHL $1
+</span></span><span style="display:flex;"><span>  ...
+</span></span><span style="display:flex;"><span> loop:
+</span></span><span style="display:flex;"><span>  JMP loop
+</span></span></code></pre></div><p>Thus if you happen to hit interrupt 0, things work ok. But if you happen to hit interrupt 1, you are stuck in endless loop hell.</p>
+<p>It seemed to me like 8a was incorrectly compiling this. So I added a bunch of debugging code to it, and I convinced myself that it was working right. One problem is that there is no debugging flag to help you understand the output .8 file you get after doing &ldquo;8a test.s&rdquo;. If 8a is not compiling it wrong, who else could be? Well, my interrupt service routines had to make it through one other piece of code before getting on the raw hardware: 8l. The problem must be in there, but I haven&rsquo;t found it yet.</p>
+<p>There&rsquo;s way more than my bug in 8l, however. This is really where a lot of the magic of the Go system come from. It implements the split stacks Go uses to support thousands of threads. It also implements dependency tracking, so that the right object files are pulled in to satisfy all the imports. In contrast, the C linker is traditionally implemented as a rather stupid thing that just gathers .o files together. One thing you find in libraries meant for wide reuse is that all the functions are in their own file, because cc and ld are not smart enough to exclude unneeded code from the final binary except on the level of the .o file. But not all linkers are stupid: The GNU tool chain is smarter than this, at least on some platforms. Take a look at ld-s -gc-sections options if you are interested. And <a href="http://msdn.microsoft.com/en-us/magazine/cc301698.aspx">this article</a> in MSDN talks about how .NET uses link time code generation for some optimizations.</p>
+<p>I&rsquo;ve confirmed that the instruction stream is coming <strong>into</strong> 8l correctly. The undocumented &ldquo;-W&rdquo; flag tells 8l to show you the contents of every .8 file it is reading. Take this little sample .s file:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>TEXT foo1(SB), 7, $0
+</span></span><span style="display:flex;"><span>	NOP
+</span></span><span style="display:flex;"><span>	JMP bar
+</span></span><span style="display:flex;"><span>TEXT foo2(SB), 7, $0
+</span></span><span style="display:flex;"><span>	NOP
+</span></span><span style="display:flex;"><span>bar:
+</span></span><span style="display:flex;"><span>	NOP
+</span></span><span style="display:flex;"><span>	RET
+</span></span></code></pre></div><p>Compile it with &ldquo;8a test.s&rdquo;, then look at it using &ldquo;8l -W test.8&rdquo;:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>        ANAME   /
+</span></span><span style="display:flex;"><span>        ANAME   home
+</span></span><span style="display:flex;"><span>        ANAME   jra
+</span></span><span style="display:flex;"><span>        ANAME   go
+</span></span><span style="display:flex;"><span>        ANAME   src
+</span></span><span style="display:flex;"><span>        ANAME   cmd
+</span></span><span style="display:flex;"><span>        ANAME   8a
+</span></span><span style="display:flex;"><span>        ANAME   foo.s
+</span></span><span style="display:flex;"><span>(1)     HISTORY ,
+</span></span><span style="display:flex;"><span>(9)     HISTORY ,
+</span></span><span style="display:flex;"><span>        ANAME   foo1
+</span></span><span style="display:flex;"><span>(1)     TEXT    foo1+0(SB),7,$0-0
+</span></span><span style="display:flex;"><span>(2)     NOP     ,
+</span></span><span style="display:flex;"><span>        ANAME   bar
+</span></span><span style="display:flex;"><span>(3)     JMP     ,5(PC)
+</span></span><span style="display:flex;"><span>        ANAME   foo2
+</span></span><span style="display:flex;"><span>(4)     TEXT    foo2+0(SB),7,$0-0
+</span></span><span style="display:flex;"><span>(5)     NOP     ,
+</span></span><span style="display:flex;"><span>(7)     NOP     ,
+</span></span><span style="display:flex;"><span>(8)     RET     ,
+</span></span><span style="display:flex;"><span>(8)     END     ,
+</span></span><span style="display:flex;"><span>... and then 1000&#39;s of lines of dumps from other files here...
+</span></span></code></pre></div><p>The output from -W shows that test.8 knows it is supposed to be jumping up into the next routine. My current guess at what&rsquo;s happening is that 8l processes things one function at a time, never expecting dependencies between functions like this (since it is most definitely not something it should expect to be coming from 8g).</p>
+<p>Bonus trivia nugget: The Go system defines a set of flags on functions that lets 8g and 8a communicate with 8l and tell it what to do. If a routine cannot, or should not check the stack size, then it needs to use a text line with 7 in it. If you leave out the 7, 8l will add in the stack checking code (which would be an extremely crash-worthy idea in an ISR, don&rsquo;t you think?). We&rsquo;ll talk more about stack checking one week when I dig into how split stacks work. For now, you can read <a href="http://gcc.gnu.org/wiki/SplitStacks">Ian&rsquo;s article</a> on them.</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+
+<ul class="share-buttons">
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Where&#39;s all the magic? In the linker... on linkedin"
+            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.nella.org%2f2010%2f11%2f15%2fwheres-all-the-magic-in-the-linker%2f&amp;title=Where%27s%20all%20the%20magic%3f%20In%20the%20linker...&amp;summary=Where%27s%20all%20the%20magic%3f%20In%20the%20linker...&amp;source=https%3a%2f%2fblog.nella.org%2f2010%2f11%2f15%2fwheres-all-the-magic-in-the-linker%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Where&#39;s all the magic? In the linker... on ycombinator"
+            href="https://news.ycombinator.com/submitlink?t=Where%27s%20all%20the%20magic%3f%20In%20the%20linker...&u=https%3a%2f%2fblog.nella.org%2f2010%2f11%2f15%2fwheres-all-the-magic-in-the-linker%2f">
+            <svg version="1.1" xml:space="preserve" width="30px" height="30px" viewBox="0 0 512 512" fill="currentColor"
+                xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
+                <path
+                    d="M449.446 0C483.971 0 512 28.03 512 62.554L512 449.446C512 483.97 483.97 512 449.446 512L62.554 512C28.03 512 0 483.97 0 449.446L0 62.554C0 28.03 28.029 0 62.554 0L449.446 0ZM183.8767 87.9921H121.8427L230.6673 292.4508V424.0079H281.3328V292.4508L390.1575 87.9921H328.1233L256 238.2489z" />
+            </svg>
+        </a>
+    </li>
+</ul>
+
+  </footer>
+</article>
+    </main>
+    
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

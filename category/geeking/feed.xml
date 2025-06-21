@@ -1,0 +1,1424 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Geeking on jra&#39;s thoughts</title>
+    <link>https://blog.nella.org/category/geeking/</link>
+    <description>Recent content in Geeking on jra&#39;s thoughts</description>
+    <generator>Hugo -- 0.147.8</generator>
+    <language>en-US</language>
+    <lastBuildDate>Mon, 13 Sep 2021 09:19:11 +0000</lastBuildDate>
+    <atom:link href="https://blog.nella.org/category/geeking/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>I&#39;m still here...</title>
+      <link>https://blog.nella.org/2021/09/13/im-still-here-2/</link>
+      <pubDate>Mon, 13 Sep 2021 09:19:11 +0000</pubDate>
+       <guid isPermaLink="false">/?p=1323</guid> 
+      <description>&lt;p&gt;While I was working for the DEDIS lab at EPFL, I was not writing here.&lt;/p&gt;
+&lt;p&gt;Now I&amp;rsquo;m a dad at home, at least until my youngest starts school in a year, and so I&amp;rsquo;m still not writing here.&lt;/p&gt;
+&lt;p&gt;I work at Pie Aéronefs, where I do various kinds of open source work, most of it on GitHub.&lt;/p&gt;
+&lt;p&gt;When I&amp;rsquo;ve got my head fully back into the kinds of things I like to write about here, I&amp;rsquo;ll write again.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Protecting private keys in Go</title>
+      <link>https://blog.nella.org/2017/07/24/protecting-private-keys-in-go/</link>
+      <pubDate>Mon, 24 Jul 2017 13:30:39 +0000</pubDate>
+       <guid isPermaLink="false">/?p=1273</guid> 
+      <description>&lt;p&gt;Today I was looking at Upspin and thinking about private keys. I asked myself, &amp;ldquo;what would it take to make sure that there was one single copy of the private key in RAM, and that Go and the OS worked together to make sure it never went onto disk?&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;(Some other people have &lt;a href=&#34;https://www.reddit.com/r/golang/comments/2oc9oz/securely_erasing_crypto_keys/&#34;&gt;talked&lt;/a&gt; about &lt;a href=&#34;https://www.securecoding.cert.org/confluence/display/c/MEM06-C.+Ensure+that+sensitive+data+is+not+written+out+to+disk&#34;&gt;this&lt;/a&gt; too.)&lt;/p&gt;
+&lt;p&gt;It turns out the answer to that question is much harder than expected, but doable and I&amp;rsquo;ll try to do it.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>My first ever Rust program!</title>
+      <link>https://blog.nella.org/2017/07/21/my-first-ever-rust-program/</link>
+      <pubDate>Fri, 21 Jul 2017 11:56:26 +0000</pubDate>
+       <guid isPermaLink="false">/?p=1267</guid> 
+      <description>&lt;p&gt;Here, for posterity, is my first ever Rust program. It checks the key log on the &lt;a href=&#34;https://upspin.io/&#34;&gt;Upspin&lt;/a&gt; Key Server.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-rust&#34; data-lang=&#34;rust&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;extern&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;crate&lt;/span&gt; sha2;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;extern&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;crate&lt;/span&gt; reqwest;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;use&lt;/span&gt; std::io::Read;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;use&lt;/span&gt; sha2::{Sha256, Digest};
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;fn&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;mut&lt;/span&gt; resp &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;match&lt;/span&gt; reqwest::get(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;https://key.upspin.io/log&amp;#34;&lt;/span&gt;) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Ok(resp) &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; resp,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Err(e) &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;panic!&lt;/span&gt;(e),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    };
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;assert!&lt;/span&gt;(resp.status().is_success());
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;mut&lt;/span&gt; content &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; String::new();
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;match&lt;/span&gt; resp.read_to_string(&lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;mut&lt;/span&gt; content) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Ok(_) &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; {}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Err(e) &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;panic!&lt;/span&gt;(e),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;mut&lt;/span&gt; hasher &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Sha256::default();
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;mut&lt;/span&gt; ct &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;mut&lt;/span&gt; last_hash &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;.to_string();
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; line &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt; content.lines() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; line.starts_with(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;SHA256:&amp;#34;&lt;/span&gt;) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;mut&lt;/span&gt; fields &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; line.split(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;:&amp;#34;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#75715e&#34;&gt;// skip first token
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;match&lt;/span&gt; fields.next() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                Some(_) &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; {}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                _ &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                    &lt;span style=&#34;color:#a6e22e&#34;&gt;println!&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Bad SHA256 line: &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;{}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;, line);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                    &lt;span style=&#34;color:#66d9ef&#34;&gt;continue&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            };
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            last_hash &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; fields.next().unwrap().to_string();
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; expected &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; string_to_u8_array(&lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;last_hash);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; output &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; hasher.result();
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#a6e22e&#34;&gt;assert_eq!&lt;/span&gt;(output.as_slice(), expected.as_slice());
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        } &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            hasher &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Sha256::default();
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            hasher.input(line.as_bytes());
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; newline &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;.as_bytes();
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            hasher.input(newline);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; last_hash &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                hasher.input(last_hash.as_bytes());
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        ct &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#a6e22e&#34;&gt;println!&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Line &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;{}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;, ct);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;use&lt;/span&gt; std::&lt;span style=&#34;color:#66d9ef&#34;&gt;u8&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;fn&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;string_to_u8_array&lt;/span&gt;(hex: &lt;span style=&#34;color:#66d9ef&#34;&gt;&amp;amp;&lt;/span&gt;String) -&amp;gt; Vec {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;// Make vector of bytes from octets
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;mut&lt;/span&gt; bytes &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Vec::new();
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;..&lt;/span&gt;(hex.len() &lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; res &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;u8&lt;/span&gt;::from_str_radix(&lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;hex[&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; i&lt;span style=&#34;color:#f92672&#34;&gt;..&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;], &lt;span style=&#34;color:#ae81ff&#34;&gt;16&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;match&lt;/span&gt; res {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            Ok(v) &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; bytes.push(v),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            Err(e) &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#a6e22e&#34;&gt;println!&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Problem with hex: &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;{}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;, e);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; bytes;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        };
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; bytes;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;I found myself sprinkling mut&amp;rsquo;s and unpack()&amp;rsquo;s here and there like the mutation unpacking fairy, hoping something would work. I don&amp;rsquo;t think that how you are supposed to do it, but we&amp;rsquo;ll see.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Read it and weep</title>
+      <link>https://blog.nella.org/2017/07/21/read-it-and-weep/</link>
+      <pubDate>Fri, 21 Jul 2017 09:56:53 +0000</pubDate>
+       <guid isPermaLink="false">/?p=1262</guid> 
+      <description>&lt;p&gt;I searched for &amp;ldquo;how do I make an HTTP request in Rust?&amp;rdquo;. I&amp;rsquo;m a newbie, we do things like that. Don&amp;rsquo;t judge.&lt;/p&gt;
+&lt;p&gt;I found &lt;a href=&#34;https://stackoverflow.com/questions/14154753/how-do-i-make-an-http-request-from-rust&#34;&gt;this&lt;/a&gt;. I still don&amp;rsquo;t know how, because the answer marked correct refers to a library that a comment from 2016 informs me is no longer supported. There&amp;rsquo;s also a helpful comment pointing me at cURL, which is written in C, which is the opposite of safe.&lt;/p&gt;
+&lt;p&gt;It does appear that the right answer, in 2017, is &lt;a href=&#34;https://hyper.rs/&#34;&gt;hyper&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>A Go programmer continues to learn Rust</title>
+      <link>https://blog.nella.org/2017/07/18/a-go-programmer-continues-to-learn-rust/</link>
+      <pubDate>Tue, 18 Jul 2017 12:31:05 +0000</pubDate>
+       <guid isPermaLink="false">/?p=1256</guid> 
+      <description>&lt;p&gt;I went looking for the equivalent of goimports and didn&amp;rsquo;t find it. Sad.&lt;/p&gt;
+&lt;p&gt;I wanted to use std::fmt to do the same thing as sprintf or fmt.Sprintf. I got stuck on &amp;ldquo;expected &amp;amp;str, found struct `std::string::String`&amp;rdquo;. I found a &lt;a href=&#34;http://hermanradtke.com/2015/05/03/string-vs-str-in-rust-functions.html&#34;&gt;blog posting&lt;/a&gt; trying to explain it but I don&amp;rsquo;t understand enough yet to understand it. What I do understand is that it is highly suspicious that a language has two incompatible types for string. WTF, Rust? I&amp;rsquo;m trying to write a program here and you want me to sprinkle magic to_string()s in it? How about you STFU and let me be a human, and you be the computer doing the boring crap for me?&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>A Go programmer&#39;s first day with Rust</title>
+      <link>https://blog.nella.org/2017/07/17/a-go-programmers-first-day-with-rust/</link>
+      <pubDate>Mon, 17 Jul 2017 15:34:28 +0000</pubDate>
+       <guid isPermaLink="false">/?p=1254</guid> 
+      <description>&lt;p&gt;Where is the tutorial? The first Google hit gives a redirect to a page explaining that I should read the book. The first page of the book explains that I should read the Second Edition unless I want to go deep, then I should later read the First Edition also (and presumably ignore the things that had been changed later in the Second Edition?)&lt;/p&gt;
+&lt;p&gt;OK, let&amp;rsquo;s do this thing! Get rust-mode installed in Emacs, and get it to call rustfmt on save, because Go taught me that the tab button is from 1960 and I don&amp;rsquo;t use it anymore.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>bzr is the Windows of VCS</title>
+      <link>https://blog.nella.org/2017/07/13/bzr-is-the-windows-of-vcs/</link>
+      <pubDate>Thu, 13 Jul 2017 13:37:13 +0000</pubDate>
+       <guid isPermaLink="false">/?p=1251</guid> 
+      <description>&lt;p&gt;That is all.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Python keyword &#34;finally&#34; trumps &#34;return&#34;</title>
+      <link>https://blog.nella.org/2017/07/10/python-keyword-finally-trumps-return/</link>
+      <pubDate>Mon, 10 Jul 2017 11:00:01 +0000</pubDate>
+       <guid isPermaLink="false">/?p=1248</guid> 
+      <description>&lt;p&gt;Here is a piece of Python that I did not expect to surprise me:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;a&lt;/span&gt;():
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;try&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#66d9ef&#34;&gt;raise&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;except&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                print &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;exception!&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;finally&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;print a()
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;In both Python 2.7 and Python 3, that prints:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;exception!
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;3
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;It seems that in Python, return is just a casual suggestion to the interpreter, and finally gets to decide, &amp;ldquo;Nope! Your return is canceled and I will do my return instead!&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;Now, to be fair, in Go a defer can change the return value of a function as well. But the defer keyword literally does what it says on the tin, it &lt;em&gt;defers&lt;/em&gt; some work until &lt;strong&gt;after the return&lt;/strong&gt;, so you can reason about why it might be changing the return value.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Job Searching</title>
+      <link>https://blog.nella.org/2017/06/15/job-searching/</link>
+      <pubDate>Thu, 15 Jun 2017 08:09:01 +0000</pubDate>
+       <guid isPermaLink="false">/?p=1244</guid> 
+      <description>&lt;p&gt;I&amp;rsquo;m looking for a job that will help me reduce my commute, and get the chance to touch new fascinating things. Here&amp;rsquo;s a post from last time I was looking for a job, which &lt;a href=&#34;https://blog.nella.org/git-log-grep-resume/&#34;&gt;shows some work samples I am proud of&lt;/a&gt;. If any of my readers can hook me up with interesting job postings, I&amp;rsquo;d be grateful.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>&#34;ssh server mkdir&#34; on Windows</title>
+      <link>https://blog.nella.org/2017/04/12/ssh-server-mkdir-on-windows/</link>
+      <pubDate>Wed, 12 Apr 2017 08:33:16 +0000</pubDate>
+       <guid isPermaLink="false">/?p=1241</guid> 
+      <description>&lt;p&gt;How to use WinRM to connect from Linux to Windows and &lt;a href=&#34;https://blogs.technet.microsoft.com/heyscriptingguy/2015/10/27/using-winrm-on-linux/&#34;&gt;make a directory&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Warning, may make your eyes bleed!&lt;/p&gt;
+&lt;p&gt;In fact, the WinRM stuff is not completely insane, but the PowerShell syntax the guy chose for how to make a directory is pretty ridiculous.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>The SRE book</title>
+      <link>https://blog.nella.org/2016/06/14/the-sre-book/</link>
+      <pubDate>Tue, 14 Jun 2016 09:11:01 +0000</pubDate>
+       <guid isPermaLink="false">/?p=1209</guid> 
+      <description>&lt;p&gt;I &lt;a href=&#34;https://youtu.be/UKPbLsRdwAg?t=23m28s&#34;&gt;gave a Lightning Talk&lt;/a&gt; at SREcon16 and I was lucky enough to win the SRE book from Google while I was there.&lt;/p&gt;
+&lt;p&gt;Here are some notes of things I was thinking while reading it.&lt;/p&gt;
+&lt;p&gt;First, this is a phenomenal piece of work, that really marks a special point in time: the dawn of the possibility of wide adoption of SRE principles. I say, &amp;ldquo;possibility&amp;rdquo; because after getting exposed to the deepest details of what makes SRE work, I think that there are lots of organizations that won&amp;rsquo;t be willing or able to make it work.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>A Kafkaesque Experiment</title>
+      <link>https://blog.nella.org/2016/06/08/a-kafkaesque-experiment/</link>
+      <pubDate>Wed, 08 Jun 2016 03:57:26 +0000</pubDate>
+       <guid isPermaLink="false">/?p=1204</guid> 
+      <description>&lt;p&gt;As part of my interview prep, last night I challenged myself to do the following:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Make a Kubernetes cluster (on Google Cloud Platform)&lt;/li&gt;
+&lt;li&gt;&amp;hellip;running Dockerized Zookeeper (1) and Kafka (2)&lt;/li&gt;
+&lt;li&gt;&amp;hellip;with Kafka reporting stats into Datadog&lt;/li&gt;
+&lt;li&gt;Send in synthetic load from a bunch of Go programs moving messages around on Kafka&lt;/li&gt;
+&lt;li&gt;Then run an experiment to kill the Kafka master and watch how the throughput/latencies change.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Since thats a lot of that stuff I&amp;rsquo;ve never touched before (though I&amp;rsquo;ve read up on it, and it uses all the same general concepts I&amp;rsquo;ve worked with for 15 years) it should not be too surprising that I didn&amp;rsquo;t get it done. Yet.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Interview Questions I Hope I Get</title>
+      <link>https://blog.nella.org/2016/05/31/interview-questions-i-hope-i-get/</link>
+      <pubDate>Tue, 31 May 2016 11:11:25 +0000</pubDate>
+       <guid isPermaLink="false">/?p=1200</guid> 
+      <description>&lt;p&gt;I have an interview coming up, and so my &amp;ldquo;keep in shape hacking time&amp;rdquo; has been recently devoted to interview preparation. I thought I would make a post about what&amp;rsquo;s in my head, both as a way to solidify it (no better way to learn something than by teaching it) and in case this interview goes bad, so that my next prospective employer can see what I&amp;rsquo;m thinking about.&lt;/p&gt;
+&lt;p&gt;If you, my current prospective employer are reading this, would you please &lt;strong&gt;not&lt;/strong&gt; take advantage of this by removing these questions from your list? Come on guys, give me a break. If I&amp;rsquo;m going to be transparent in my thought processes, the least you can do is throw me a bone and ask at least &lt;strong&gt;one&lt;/strong&gt; of these in person!&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>git log --grep &#34;Résumé&#34;</title>
+      <link>https://blog.nella.org/2016/03/10/git-log-grep-resume/</link>
+      <pubDate>Thu, 10 Mar 2016 06:56:07 +0000</pubDate>
+       <guid isPermaLink="false">/?p=1190</guid> 
+      <description>&lt;p&gt;(This is an old post, which is missing years and years of interesting commits from my work at &lt;a href=&#34;https://github.com/dedis/&#34;&gt;the DEDIS lab at EPFL&lt;/a&gt; and &lt;a href=&#34;https://pieaeronefs.ch&#34;&gt;Pie Aéronefs.&lt;/a&gt; But it is still a good representation of what I can do for future clients and future team mates.)&lt;/p&gt;
+&lt;p&gt;For a while now, it&amp;rsquo;s become clear that a useful and important piece of data about how a future colleague might work out is their open source contributions. While the conditions of open source work are often somewhat different than paid work, a person&amp;rsquo;s manner of expressing themselves (both interpersonally, on issue trackers for example and in code) is likely to tell you more about their personality than you can learn in the fake environment of an interview.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>I&#39;m speaking at SREcon16</title>
+      <link>https://blog.nella.org/2016/03/09/im-speaking-at-srecon16/</link>
+      <pubDate>Wed, 09 Mar 2016 17:26:20 +0000</pubDate>
+       <guid isPermaLink="false">/?p=1188</guid> 
+      <description>&lt;p&gt;I&amp;rsquo;ve just been informed that my proposal for a Lightning Talk on HTTP/2 has been accepted for SREcon16 in San Jose, CA on April 7th and 8th.&lt;/p&gt;
+&lt;p&gt;Come meet me!&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.usenix.org/conference/srecon16&#34;&gt;&lt;img alt=&#34;SREcon advertisement&#34; loading=&#34;lazy&#34; src=&#34;https://www.usenix.org/sites/default/files/conference-files/srecon16_button_180.png&#34;&gt;&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Dynamic DNS circa 2016</title>
+      <link>https://blog.nella.org/2016/01/15/dynamic-dns-circa-2016/</link>
+      <pubDate>Fri, 15 Jan 2016 16:00:20 +0000</pubDate>
+       <guid isPermaLink="false">/?p=1178</guid> 
+      <description>&lt;p&gt;In the old days, if you had an ISP that changed your IP address all the time but you wanted to run a server, you used dynamic DNS, i.e. a hacky script talking to a hacky API on an hacky DNS provider.&lt;/p&gt;
+&lt;p&gt;These days, if you bring up a cloud server from time to time to work, it is likely to get a different IP address. But you might want a DNS record pointing at it so that it is convenient to talk to.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Learning Swift, sans Xcode</title>
+      <link>https://blog.nella.org/2016/01/04/learning-swift-sans-xcode/</link>
+      <pubDate>Mon, 04 Jan 2016 15:01:38 +0000</pubDate>
+       <guid isPermaLink="false">/?p=1172</guid> 
+      <description>&lt;p&gt;Say you are learning Swift. And like a good fanboi, the first thing you do is update to the latest and greatest because that&amp;rsquo;s like what you do when you are a nerd.&lt;/p&gt;
+&lt;p&gt;But you live in Osh, Kyrgyzstan. You have bitchin&amp;rsquo; FTTH from Unilink, but access outside of Kyrgyzstan is still limited by the great firewall that Putin has put up in Moscow or whatever. I don&amp;rsquo;t know, but it&amp;rsquo;s slow as hell.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Strictly HTTPS!</title>
+      <link>https://blog.nella.org/2015/12/12/strictly-https/</link>
+      <pubDate>Sat, 12 Dec 2015 11:52:50 +0000</pubDate>
+       <guid isPermaLink="false">/?p=1169</guid> 
+      <description>&lt;p&gt;Today I added this to the .htaccess files on my sites ( &lt;a href=&#34;https://nella.org&#34;&gt;nella.org&lt;/a&gt; and &lt;a href=&#34;https://blog.nella.org/&#34;&gt;blog.nella.org&lt;/a&gt;) in order to make them HTTPS only:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Header set Strict-Transport-Security &amp;#34;max-age=31536000&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;You should too!&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>HTTP/2: Thanks Cloudflare and Go!</title>
+      <link>https://blog.nella.org/2015/12/04/http2-thanks-cloudflare-and-go/</link>
+      <pubDate>Fri, 04 Dec 2015 06:01:13 +0000</pubDate>
+       <guid isPermaLink="false">/?p=1167</guid> 
+      <description>&lt;p&gt;Look what happened today:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;2015/12/04 11:38:07 fetching https://nella.org 2015/12/04 11:38:08 {200 OK 200 HTTP/2.0 2 0 map[Server:[cloudflare-nginx] Date:[Fri, 04 Dec 2015 05:38:08 GMT] Content-Type:[text/html] Set-Cookie:[__cfduid=d3a3ea49ee46eb6a6803e2eb7f597e26e1449207488; expires=Sat, 03-Dec-16 05:38:08 GMT; path=/; domain=.nella.org; HttpOnly] Vary:[Accept-Encoding] Cf-Ray:[24f529d18893372c-ARN]] 0xc8203bbf60 -1 [] false map[] 0xc8200be000 0xc8206cc420} &lt;/code&gt;&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;Thank you &lt;a href=&#34;https://golang.org&#34;&gt;Go 1.6&lt;/a&gt; and &lt;a href=&#34;https://cloudflare.com&#34;&gt;Cloudflare&lt;/a&gt;. You guys are bringing my website into the bright future of 2016 with no help at all from me. :)&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Industrial-scale power storage and waste heat</title>
+      <link>https://blog.nella.org/2015/07/31/industrial-scale-power-storage-and-waste-heat/</link>
+      <pubDate>Fri, 31 Jul 2015 09:38:45 +0000</pubDate>
+       <guid isPermaLink="false">/?p=1165</guid> 
+      <description>&lt;p&gt;There will, eventually, be a &lt;a href=&#34;http://www.energienaturelle.ch/&#34;&gt;giant wind farm above my house&lt;/a&gt;. I say eventually because though Switzerland is not immune from NIMBYism, our court system deals efficiently enough with &lt;a href=&#34;http://paysage-libre-vd.ch/&#34;&gt;oppositions&lt;/a&gt; so that if something is allowed by law (zoning laws, eco-protection laws, etc) then it does go through. The opposition (and there&amp;rsquo;s always opposition) does a few court challenges, it goes up a couple layers, sometimes to the supreme court, and the court rather quickly says, &amp;ldquo;It&amp;rsquo;s legal, shut up. If you don&amp;rsquo;t like it, change the laws, don&amp;rsquo;t come begging us to do so.&amp;rdquo;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Hacking cars and fixing them</title>
+      <link>https://blog.nella.org/2015/07/24/hacking-cars/</link>
+      <pubDate>Fri, 24 Jul 2015 11:52:18 +0000</pubDate>
+       <guid isPermaLink="false">/?p=1159</guid> 
+      <description>&lt;p&gt;A few years ago, I read an academic paper on how to hack cars. Today news came out that what was previously demonstrated via direct access is &lt;a href=&#34;http://www.wired.com/2015/07/hackers-remotely-kill-jeep-highway/&#34;&gt;also possible over the air&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I thought it would be fun to look at the firmware update file that fixes this, to see what format it is in, what&amp;rsquo;s in it, etc. To get an update for 2014 Jeep Cherokees, you need a VIN. It turns out a used car sales website posted the VINs of their inventory on their website, so I found one: 1C4PJMDB6EW255433&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>The &#34;Listen Up&#34; Pledge</title>
+      <link>https://blog.nella.org/2015/06/17/the-listen-up-pledge/</link>
+      <pubDate>Wed, 17 Jun 2015 07:02:47 +0000</pubDate>
+       <guid isPermaLink="false">/?p=1155</guid> 
+      <description>&lt;p&gt;Thanks, Dave, for &lt;a href=&#34;http://dave.cheney.net/2015/06/13/listen-up&#34;&gt;speaking up for what&amp;rsquo;s right&lt;/a&gt;. I&amp;rsquo;m with you, buddy. I also find harassment offensive, and I pledge to do the same as you.&lt;/p&gt;
+&lt;p&gt;We need to draw a line in the sand, and organize ourselves so that healthy, respectful teams are on one side of it, and trolls are on the other side of it.&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;m so thankful that &lt;a href=&#34;https://www.linkedin.com/pub/massimo-lucchina/0/37/221&#34;&gt;my boss&lt;/a&gt; has created a respectful, mixed workplace.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Building Go 1.4 when the linker doesn&#39;t know about build-id</title>
+      <link>https://blog.nella.org/2015/03/19/building-go-1-4-when-the-linker-doesnt-know-about-build-id/</link>
+      <pubDate>Thu, 19 Mar 2015 09:52:39 +0000</pubDate>
+       <guid isPermaLink="false">/?p=1122</guid> 
+      <description>&lt;p&gt;Today at work, on a Redhat 5.5 machine, I tried to build Go 1.4.&lt;/p&gt;
+&lt;p&gt;This happened:&lt;/p&gt;
+&lt;p&gt;`
+$ cd go1.4/src
+$ ./all.bash
+&amp;hellip;snip&amp;hellip;&lt;/p&gt;
+&lt;h1 id=&#34;runtimecgo&#34;&gt;runtime/cgo&lt;/h1&gt;
+&lt;p&gt;/usr/bin/ld: unrecognized option &amp;lsquo;&amp;ndash;build-id=none&amp;rsquo;
+/usr/bin/ld: use the &amp;ndash;help option for usage information
+collect2: ld returned 1 exit status
+`&lt;/p&gt;
+&lt;p&gt;The solution is to retry without the &amp;ldquo;&amp;ndash;build-id=none&amp;rdquo; option:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-gdscript3&#34; data-lang=&#34;gdscript3&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;diff &lt;span style=&#34;color:#f92672&#34;&gt;--&lt;/span&gt;git a&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;src&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;cmd&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;go&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;build&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;go b&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;src&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;cmd&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;go&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;build&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;go
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;index ad03239&lt;span style=&#34;color:#f92672&#34;&gt;..&lt;/span&gt;ca45217 &lt;span style=&#34;color:#ae81ff&#34;&gt;100644&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;---&lt;/span&gt; a&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;src&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;cmd&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;go&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;build&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;go
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;+++&lt;/span&gt; b&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;src&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;cmd&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;go&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;build&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;go
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;@@&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;2436&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;13&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;2436&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;21&lt;/span&gt; &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;@@&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt; (b &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;builder) cgo(p &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;Package, cgoExe, obj string, pcCFLAGS, pcLDFLAGS, cgofi
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; 	&lt;span style=&#34;color:#f92672&#34;&gt;//&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;--&lt;/span&gt;build&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;id&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;none&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;  So that is what we &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt;, but only on
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; 	&lt;span style=&#34;color:#f92672&#34;&gt;//&lt;/span&gt; systems likely to support it, which is to say, systems that
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; 	&lt;span style=&#34;color:#f92672&#34;&gt;//&lt;/span&gt; normally use gold &lt;span style=&#34;color:#f92672&#34;&gt;or&lt;/span&gt; the GNU linker&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;	retryWithoutBuildId :&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; false
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; 	&lt;span style=&#34;color:#66d9ef&#34;&gt;switch&lt;/span&gt; goos {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; 	&lt;span style=&#34;color:#66d9ef&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;android&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;dragonfly&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;linux&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;netbsd&amp;#34;&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; 		ldflags &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; append(ldflags, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;-Wl,--build-id=none&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;		retryWithoutBuildId &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; true
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; 	}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; 	&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; err :&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; b&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;gccld(p, ofile, ldflags, gccObjs); err &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; nil {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;		&lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; nil, nil, err
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;		&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; retryWithoutBuildId {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;			ldflags &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; ldflags[&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;:len(ldflags)&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;			err &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; b&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;gccld(p, ofile, ldflags, gccObjs)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;		}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;		&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; err &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; nil {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;			&lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; nil, nil, err
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;		}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; 	}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; 	&lt;span style=&#34;color:#f92672&#34;&gt;//&lt;/span&gt; NOTE(rsc): The importObj is a &lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;c&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;6&lt;/span&gt;c&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;8&lt;/span&gt;c object &lt;span style=&#34;color:#f92672&#34;&gt;and&lt;/span&gt; on Windows
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Just in case someone else is looking for it&amp;hellip; :)&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>AR.Drone 2 camera access</title>
+      <link>https://blog.nella.org/2014/10/14/ar-drone-2-camera-access/</link>
+      <pubDate>Tue, 14 Oct 2014 23:26:53 +0000</pubDate>
+       <guid isPermaLink="false">/?p=1092</guid> 
+      <description>&lt;p&gt;There is lots of information out on the net about how to access the camera in the AR.Drone, but it is all for the original model.&lt;/p&gt;
+&lt;p&gt;In the AR.Drone 2, the cameras have been replaced and upgraded. So settings for v4l that worked to get data out of the camera need to be updated as well.&lt;/p&gt;
+&lt;p&gt;The front camera is on /dev/video1. If you are talking to V4L directly via ioctls and all that jazz, you need to request format V4L2_PIX_FMT_UYVY, width 1280 and height 720. UYVY format uses 2 bytes per pixel, so a full image is 1843200 bytes. fwrite those bytes from the mmap buffer into a file.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Dual scheme URLs</title>
+      <link>https://blog.nella.org/2014/10/06/dual-scheme-urls/</link>
+      <pubDate>Mon, 06 Oct 2014 23:41:42 +0000</pubDate>
+       <guid isPermaLink="false">/?p=1088</guid> 
+      <description>&lt;p&gt;I just made this blog HTTP and HTTPS, &lt;a href=&#34;https://blog.nella.org/cloudflare-https-rockssucks/&#34;&gt;thanks to Cloudflare&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;But that made me realize that lots and lots of internal links in the HTML output of my Wordpress point back to the HTTP version of the site.&lt;/p&gt;
+&lt;p&gt;Part of the solution to this is to install the HTTP plugin in Wordpress which fixes some of the mess. But some of the URLs in my posts need to be fixed too.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Cloudflare Universal SSL totally, completely rocks</title>
+      <link>https://blog.nella.org/2014/10/06/cloudflare-https-rockssucks/</link>
+      <pubDate>Mon, 06 Oct 2014 22:26:20 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=1081</guid> 
+      <description>&lt;p&gt;&lt;a href=&#34;https://cloudflare.com/&#34;&gt;Cloudflare&lt;/a&gt; was already my favorite non-Google internet company because I&amp;rsquo;m a Golang fan boi and Cloudflare is vocal about their love of Go.&lt;/p&gt;
+&lt;p&gt;So when I heard that Cloudflare was willing to help me, &lt;strong&gt;for free&lt;/strong&gt;, &lt;a href=&#34;https://blog.cloudflare.com/introducing-universal-ssl/&#34;&gt;put SSL on my website&lt;/a&gt;(which I&amp;rsquo;ve been meaning to do since like forever), I was ready to go for it.&lt;/p&gt;
+&lt;p&gt;First the rocks. Well, it&amp;rsquo;s free, for little dinky domains like mine. And that&amp;rsquo;s a hell of a great way to teach techies like me how their system works. I&amp;rsquo;d happily sell it to a client who asked me about it. The signup process is fast and easy and interesting. And it works: &lt;a href=&#34;https://nella.org/&#34;&gt;nella.org via SSL&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Unzip -c is a thing, and it&#39;s good (as long as you use -q too)</title>
+      <link>https://blog.nella.org/2014/10/06/unzip-c/</link>
+      <pubDate>Mon, 06 Oct 2014 22:11:52 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=1078</guid> 
+      <description>&lt;p&gt;I just fetched a Raspian disk image via bitorrent. It is a .zip instead of the .gz I would have chosen myself.&lt;/p&gt;
+&lt;p&gt;If you have a .zip and you don&amp;rsquo;t want to do a temporary uncompress of it to get the .img to use with dd, you can use &amp;ldquo;unzip -q -c foo.zip&amp;rdquo; to get the contents of the zip file sprayed onto stdout. Then you can pipe it into dd.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Strange characters in IP addresses</title>
+      <link>https://blog.nella.org/2014/09/24/strange-characters-in-ip-addresses/</link>
+      <pubDate>Wed, 24 Sep 2014 08:50:10 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=1074</guid> 
+      <description>&lt;p&gt;A long time ago, I worked for WebTV. The part of WebTV doing filtering for parental control was comparing IP addresses as strings. I managed to evade the parental controls when I noticed that the IP address parser was using an atoi that treated leading 0&amp;rsquo;s as octal and leading 0x&amp;rsquo;s as hex. By converting the octets of one of the blocked IP addresses into octal, I tricked the blacklist checker into letting me access the naughty bits.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Dell and the NSA</title>
+      <link>https://blog.nella.org/2014/08/27/dell-and-the-nsa/</link>
+      <pubDate>Wed, 27 Aug 2014 13:30:15 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=1072</guid> 
+      <description>&lt;p&gt;While I was reading this blog about &lt;a href=&#34;http://resources.infosecinstitute.com/nsa-bios-backdoor-god-mode-malware-deitybounce/&#34;&gt;how NSA&amp;rsquo;s bad-BIOS malware probably works&lt;/a&gt;, I was struck by a &amp;ldquo;coincidence&amp;rdquo;: Dell does significant amount of government contracting work. In fact, Ed Snowden worked for Dell at one point. NSA&amp;rsquo;s bad-BIOS targets the RAID cards in Dell servers.&lt;/p&gt;
+&lt;p&gt;Now, Dell servers are widely deployed. I&amp;rsquo;ve used them in several jobs, for example. So it&amp;rsquo;s not unreasonable that NSA would target them, to get the best bang for the buck. But it also seems possible that in order to achieve the things Dell&amp;rsquo;s executives promised to NSA executives in fancy sales calls, some Dell engineers would find themselves using what they know about Dell servers to write bad-BIOS malware to attack those very servers.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Medium, what&#39;s up with comments?</title>
+      <link>https://blog.nella.org/2014/08/19/medium-whats-up-with-comments/</link>
+      <pubDate>Tue, 19 Aug 2014 07:46:35 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=1067</guid> 
+      <description>&lt;p&gt;Medium.com, why do you require me to use Twitter or Facebook to comment? With all your respect for language, ideas, and design, is it really possible that you think people who choose not to use either of those services don&amp;rsquo;t have anything useful or interesting to add to your conversations?&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Moonrise</title>
+      <link>https://blog.nella.org/2014/04/15/moonrise-2/</link>
+      <pubDate>Tue, 15 Apr 2014 22:25:08 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=1062</guid> 
+      <description>&lt;p&gt;[video width=&amp;ldquo;1920&amp;rdquo; height=&amp;ldquo;1080&amp;rdquo; mp4=&amp;quot;//nella.org/maltournee/2014-04-15-21.mp4&amp;quot;][/video]&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Moonrise</title>
+      <link>https://blog.nella.org/2014/03/18/moonrise/</link>
+      <pubDate>Tue, 18 Mar 2014 23:10:39 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=1026</guid> 
+      <description>&lt;p&gt;My time-lapse camera in the attic is still working, though I resorted to adding an auto reboot once a week, because the Raspberry Pi is not acting too stable. And even then, sometimes it hangs. I blame the power supply. Because it&amp;rsquo;s always the power supply, right?&lt;/p&gt;
+&lt;p&gt;Anyway watching the sun&amp;rsquo;s track northward as spring advances has given me a much better instinctive feel for celestial mechanics. And that made me pay closer attention to the moon rise last month. After 40 years on this planet I just realized that the moon, being in the same orbital plane as the sun and earth, traces the same track as the sun. Whoa. That means my attic window is perfectly oriented to catch a nice time-lapse of the moonrise!&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Here&#39;s a nickle kid, get yourself a better TTY</title>
+      <link>https://blog.nella.org/2014/02/12/heres-a-nickle-kid/</link>
+      <pubDate>Wed, 12 Feb 2014 04:37:03 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=1016</guid> 
+      <description>&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://blog.nella.org/wp-content/uploads/2014/02/240803829_9212773615_o.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;You know you&amp;rsquo;ve been doing this too long when nothing in an article &lt;a href=&#34;http://www.linusakesson.net/programming/tty/&#34;&gt;like this&lt;/a&gt; is new to you.&lt;/p&gt;
+&lt;p&gt;The first TTY I ever saw and (maybe) used was a TI, like &lt;a href=&#34;https://web.archive.org/www.computerhistory.org/collections/catalog/X1612.99&#34;&gt;this one&lt;/a&gt;. The librarian at my junior high borrowed it and used it to connect into Lexis-Nexis or something.&lt;/p&gt;
+&lt;p&gt;But the funny thing is, even in the late 80&amp;rsquo;s this was out of style. PCs were taking over and so I didn&amp;rsquo;t see a TTY again until university. There I saw plenty of DEC VT-100&amp;rsquo;s. And jarthur.cs.hmc.edu, our giant multi-processing machine from Sequent had an honest-to-god paper TTY attached to its /dev/console port. The sysadmins liked it that way so that they could see dumps on paper in the morning if the machine crashed at night. I learned about fsck that way, by watching one of them coax the filesystem back to health. (By the way, fsck is for babies. Real men fix filesystems with fsdb. Look it up.)&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>IPv6 in Mont-la-ville!</title>
+      <link>https://blog.nella.org/2014/02/10/ipv6-in-mont-la-ville/</link>
+      <pubDate>Mon, 10 Feb 2014 21:32:10 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=1001</guid> 
+      <description>&lt;p&gt;When I got my Raspberry Pi up and running, I reactivated my AICCU tunnel to Sixxs.net. But then I remembered that two years ago when I last touched IPv6, Swisscom was running a beta test to do IPv6 in the home.&lt;/p&gt;
+&lt;p&gt;So today I went looking to see if the test still existed and if I could join it. Why? Well, to be honest, it never even occurred to me that IPv6 to the home was in production. The lack of IPv6 uptake has become one of those &amp;ldquo;so sad it&amp;rsquo;s funny&amp;rdquo; things in our industry. But guess what?&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Live from Mont-la-ville</title>
+      <link>https://blog.nella.org/2014/02/10/live-from-mont-la-ville/</link>
+      <pubDate>Mon, 10 Feb 2014 21:14:01 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=996</guid> 
+      <description>&lt;video width=100% controls autoplay&gt;
+    &lt;source src=&#34;https://blog.nella.org/wp-content/uploads/2014/02/2014-02-11-08.mp4&#34; type=&#34;video/mp4&#34;&gt;
+    Your browser does not support the video tag.  
+&lt;/video&gt;
+
+&lt;p&gt;The last few days I&amp;rsquo;ve been working on a new home hacking project. The eventual plan is to create a panoramic time-lapse of sunrise as seen from my house each morning. We&amp;rsquo;ve got a wonderful view, and recording some of those beautiful morning colors as the sun comes up over the Alps should make them easier to appreciate &amp;ndash; without setting my alarm for 6 AM!&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>How to get started blogging</title>
+      <link>https://blog.nella.org/2014/01/16/how-to-get-started-blogging/</link>
+      <pubDate>Thu, 16 Jan 2014 21:27:33 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=992</guid> 
+      <description>&lt;p&gt;The first step is to think of a really good name. Like &lt;a href=&#34;http://apertura.nella.org/&#34;&gt;Apertura&lt;/a&gt;!&lt;/p&gt;
+&lt;p&gt;Then have your hubbie set up your blog.&lt;/p&gt;
+&lt;p&gt;Then write stuff!&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Qz for Mobile Phones</title>
+      <link>https://blog.nella.org/2013/06/14/qz-for-mobile-phones/</link>
+      <pubDate>Fri, 14 Jun 2013 12:43:48 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=953</guid> 
+      <description>&lt;p&gt;I love &lt;a href=&#34;http://qz.com&#34;&gt;Quartz&lt;/a&gt;. however, I find that the best time/place for me to read it is on the train during my commute. And Quartz&amp;rsquo;s overly clever and overly dynamic website hates my phone&amp;rsquo;s browser. So I made &lt;a href=&#34;http://mobile-qz.appspot.com/&#34;&gt;Mobile Quartz&lt;/a&gt; to help me read it. The front page has the current top articles from Quartz. Click the links to see the article.&lt;/p&gt;
+&lt;p&gt;I used this as a chance to write some Go on Google Appspot code, and it was really a pleasure.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Making a time-lapse in Debian</title>
+      <link>https://blog.nella.org/2013/05/06/making-a-time-lapse-in-debian/</link>
+      <pubDate>Mon, 06 May 2013 20:33:33 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=945</guid> 
+      <description>&lt;p&gt;Make a script like this called &amp;ldquo;save&amp;rdquo;. Make it executable.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;#!/bin/sh ct=0 if [ -f &amp;quot;ct&amp;quot; ]; then ct=`cat ct` fi ct=`expr $ct + 1` mv snap.jpg snap-$ct.jpg echo $ct &amp;gt; ct &lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Run &amp;ldquo;uvccapture -x648 -y480 -c./save -t20&amp;rdquo; to take a photo every 20 seconds.&lt;/p&gt;
+&lt;p&gt;Then you can use a script like this to continually re-encode it and send it to your webserver:
+&lt;code&gt;#!/bin/sh while true do rm out.mpg cat snap-*.jpg | ./ffmpeg -f image2pipe -r 1 -r 20 -vcodec mjpeg -i - out.mpg scp out.mpg jeff_allen@nella.org:nella.org/jra/geek/3d done&lt;/code&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>What I want: a Chrome plugin to report spelling errors</title>
+      <link>https://blog.nella.org/2012/12/07/what-i-want-a-chrome-plugin-to-report-spelling-errors/</link>
+      <pubDate>Fri, 07 Dec 2012 10:10:22 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=936</guid> 
+      <description>&lt;p&gt;Here&amp;rsquo;s what I want to do:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;See an error on a web page&lt;/li&gt;
+&lt;li&gt;Select it and right click&lt;/li&gt;
+&lt;li&gt;In the popup, choose &amp;ldquo;report a spelling error&amp;rdquo;.&lt;/li&gt;
+&lt;li&gt;Have a box come up with three fields and a pair of ok/cancel buttons. The three fields are
+&amp;ldquo;change from&amp;rdquo;, &amp;ldquo;change to&amp;rdquo;, and Twitter id. The &amp;ldquo;change from&amp;rdquo; and Twitter id are auto-populated. The &amp;ldquo;change to&amp;rdquo; could be auto-populated using a web service that suggests spelling corrections.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;When I click on &amp;ldquo;OK&amp;rdquo;, it sends a Tweet announcing to the world that:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Sugru</title>
+      <link>https://blog.nella.org/2012/10/10/sugru/</link>
+      <pubDate>Wed, 10 Oct 2012 16:36:14 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=905</guid> 
+      <description>&lt;p&gt;I had a great first Sugru experience! I scratched my finger on the way to work on my unicycle. I thought, dammit, I&amp;rsquo;m gonna fix that! So I bought some from my phone on the train. Cool!&lt;/p&gt;
+&lt;p&gt;A few days later, it arrived in the post. I was having a hard time explaining why I was so excited about it to my wife. So I sat down, cut open my first packet and started fixing. My wife got interested, fast! She asked, would this stick to the door handle to make a bumper? I said, go try! And off she ran with my Sugru, leaving me grinning and cutting open a new packet&amp;hellip;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>I love my Chumby</title>
+      <link>https://blog.nella.org/2011/04/20/i-love-my-chumby/</link>
+      <pubDate>Wed, 20 Apr 2011 20:45:03 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=863</guid> 
+      <description>&lt;p&gt;I have been wanting a digital photo frame for a while, so I could see the same pictures I send to the other digital frames in my family. I post pictures of Elio to Picasaweb, and my family sees them via Toshiba digitical frames with built-in wireless and FrameChannel clients.&lt;/p&gt;
+&lt;p&gt;Here in Switzerland, the digital frames with wireless are super expensive, and don&amp;rsquo;t even have FrameChannel. Separately, I&amp;rsquo;ve always liked the Chumby, but considered it&amp;rsquo;s puny screen kind of pointless. I mean, what&amp;rsquo;s the point of a Linux machine with a 3 inch screen? If it&amp;rsquo;s not a phone, I mean. So when I saw the review of the new Chumby 8, I found the solution to my problem!&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>No IPv6 from CityCable of Lausanne</title>
+      <link>https://blog.nella.org/2011/04/03/no-ipv6-from-citycable-of-lausanne/</link>
+      <pubDate>Sun, 03 Apr 2011 21:47:02 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=861</guid> 
+      <description>&lt;p&gt;My home ISP is CityCable of Lausanne. While I have nothing bad to say about their IPv4 offering (fair price, good service, no noticable speed problems) I&amp;rsquo;ve got nothing good to say about their IPv6 service&amp;hellip; because they don&amp;rsquo;t support it yet.&lt;/p&gt;
+&lt;p&gt;Shame on you CityCable. You should support IPv6: it&amp;rsquo;s not so hard, and it&amp;rsquo;s important to help your customers move forward, at least those of us who want to learn about native IPv6 connectivity before it becomes an emergency. Also, as a not-for-profit service of the city of Lausanne, it&amp;rsquo;s not like you can argue &amp;ldquo;there&amp;rsquo;s no business in it for us&amp;rdquo;. Part of your job is to enrich the city; that means leading instead of following on technology! Too bad you missed this chance.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Now with IPv6!</title>
+      <link>https://blog.nella.org/2011/03/26/now-with-ipv6/</link>
+      <pubDate>Sat, 26 Mar 2011 13:22:34 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=858</guid> 
+      <description>&lt;p&gt;I have been learning about IPv6 for work, and getting it turned on for home and for my server at nella.org. It&amp;rsquo;s been interesting, and a bit depressing just how hard it is to get people to do something that&amp;rsquo;s so easy&amp;hellip;&lt;/p&gt;
+&lt;p&gt;Anyway, if your web browser is on IPv6, you&amp;rsquo;ll get a nifty ribbon on the upper right of the page of &lt;a href=&#34;http://nella.org/&#34;&gt;nella.org&lt;/a&gt;. Go give it a try! But don&amp;rsquo;t complain if you don&amp;rsquo;t see anything, it just means you are on IPv4, and that you live in the 20th century&amp;hellip; you probably also have a bad haircut and a skinny leather tie like I was wearing at my 9th grade end of year school dance&amp;hellip;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>The SQL backlash</title>
+      <link>https://blog.nella.org/2009/07/03/the-sql-backlash/</link>
+      <pubDate>Fri, 03 Jul 2009 08:57:03 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=743</guid> 
+      <description>&lt;p&gt;I remember sitting in my databases class years ago and thinking, &amp;ldquo;This can&amp;rsquo;t possibly be the right way to store data.&amp;rdquo; It was a strange class, because it mixed theory and practice in a way that was anathema to the way I think. The theory part bored me to tears, and seemed ludicrously useless (first normal form? third normal form? who cares!). The practice part seemed ridiculously complicated and pointless. Why go to all that effort to write something down? Why not just write it? Yes, yes, I know, ACID and all that. I grudgingly learned it all, and I passed the class. But it never felt right to me. It felt like the students were putting on a performance to satisfy the teacher. It didn&amp;rsquo;t feel like Theory of Computing (i.e. Turing machines, regular expressions, the halting problem, etc), which just Felt Right.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>&lt;nudge&gt; &lt;nudge&gt;, &lt;wink&gt; &lt;wink&gt;</title>
+      <link>https://blog.nella.org/2009/06/30/733/</link>
+      <pubDate>Tue, 30 Jun 2009 13:45:36 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=733</guid> 
+      <description>&lt;p&gt;FOP can get confused and do stupid things. Giving it a nudge in the right direction fixes it. For example, when a table is going to fill the page right up from where it starts to the end of the region available for it, it does ok. But add a footnote onto that table, and the footnote ends up dangling at the top of the next page.&lt;/p&gt;
+&lt;p&gt;I thought a bit about why this is happening, and I thought about what if you added a keep to the footnote, etc. What I ended up wanting to do is to nudge down something higher on the page so that it created a bit of whitespace in a place where the reader wouldn&amp;rsquo;t notice. That made the table not fit, which made the table break, which put the table footnote where I expected it to be, instead of hanging in space.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Dealing with a clogged link</title>
+      <link>https://blog.nella.org/2009/06/30/dealing-with-a-clogged-link/</link>
+      <pubDate>Tue, 30 Jun 2009 11:29:59 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=730</guid> 
+      <description>&lt;p&gt;A friend asked me a question that reminded me of some great resources I want to mention here (in case I ever need to find them again&amp;hellip;)&lt;/p&gt;
+&lt;p&gt;They are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://bwmo.net&#34;&gt;How to Accelerate Your Internet&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://wndw.net&#34;&gt;Wireless Networking in the Developing World&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://wirelessu.org/&#34;&gt;Wireless U&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In my response to my friend, I also touched on something interesting I learned from &lt;a href=&#34;http://cricket.sf.net&#34;&gt;Cricket&lt;/a&gt;, and from years as a consultant. Here&amp;rsquo;s the big lesson:Â &lt;strong&gt;Infrastructure projects don&amp;rsquo;t sell themselves.&lt;/strong&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Disabling hyphenation in DocBook</title>
+      <link>https://blog.nella.org/2009/06/24/disabling-hyphenation-in-docbook/</link>
+      <pubDate>Wed, 24 Jun 2009 18:23:55 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=727</guid> 
+      <description>&lt;p&gt;When you are using the chain &amp;ldquo;DocBook -&amp;gt; FO -&amp;gt; PDF&amp;rdquo;, it is the FO processor that decides on the hyphenation of your words. This is because it knows the lengths of the lines it is making.&lt;/p&gt;
+&lt;p&gt;In FOP, hyphenation can only be turned on and off at the level of &lt;code&gt;&amp;lt;fo:blocks&amp;gt;&lt;/code&gt;. For some dumb reason, DocBook doesn&amp;rsquo;t have a way to turn off hyphenation in one region of the document.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Printing a Blog</title>
+      <link>https://blog.nella.org/2009/06/17/printing-a-blog/</link>
+      <pubDate>Wed, 17 Jun 2009 10:44:27 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=723</guid> 
+      <description>&lt;p&gt;I got interested in applying my new XSLT wizardry to the task of printing an entire blog. Like making every post into a big PDF and sending it off to a print-on-demand service. Digital backups = bad. Paper backups = good.&lt;/p&gt;
+&lt;p&gt;I thought it would be easy, just do &amp;ldquo;Wordpress export&amp;rdquo;, then write the XSLT to turn the export XML file into FO, and process into PDF. Well, it &lt;strong&gt;is&lt;/strong&gt; easy, in principle. But in practice it&amp;rsquo;s not.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Apache FOP and document properties</title>
+      <link>https://blog.nella.org/2009/05/24/apache-fop-and-document-properties/</link>
+      <pubDate>Sun, 24 May 2009 10:31:35 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=696</guid> 
+      <description>&lt;p&gt;I am a little bit obsessive about checking out the document properties in PDF files I read. I can&amp;rsquo;t explain why, but there you have it.&lt;/p&gt;
+&lt;p&gt;I was sad when I noticed the PDF file being emitted by my XML has no document properties. So I figured, no problem, I can just go find the right FO tags, grep for them in the DocBook XSL and reverse engineer what stuff I need to put into my DocBook to get them set right. I figured it would be something obscure like, &lt;author&gt; or something. In fact, DocBook already knows who the author is, in order to format the title page nicely, so no dice there.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>The &lt;xen&gt; of &lt;xslt&gt;</title>
+      <link>https://blog.nella.org/2009/05/23/the-of/</link>
+      <pubDate>Sat, 23 May 2009 12:25:11 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=691</guid> 
+      <description>&lt;p&gt;For a project I am doing right now, I descended into &lt;a href=&#34;https://blog.nella.org/?p=627&#34;&gt;DocBook hell&lt;/a&gt;. Not completely unscathed, I made it through the learning curve (why don&amp;rsquo;t they call it what it is: The Unfathomable and Horrific Tunnel of Learning) and blinked slowly in the light of day.&lt;/p&gt;
+&lt;p&gt;I realized DocBook is nice, but it&amp;rsquo;s not actually what I wanted. Doh.&lt;/p&gt;
+&lt;p&gt;What I wanted was a structured way to represent my data, and I want two things to happen to it. Today, I want to publish my data with DocBook. Tomorrow I want someone to be able to suck the brains out of my DocBook document (leaving it to wander the earth as a zombie) and to put them into a wiki so that my project can become a community-maintained database, instead of being a single DocBook-formatted document that lives in my Subversion repository.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>The IBM Tax</title>
+      <link>https://blog.nella.org/2009/04/24/the-ibm-tax/</link>
+      <pubDate>Fri, 24 Apr 2009 12:18:02 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=648</guid> 
+      <description>&lt;p&gt;The IBM tax laid bare, from a promotional spam Amazon sent me:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The hourly prices for Amazon EC2 running IBM are as follows:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Amazon EC2 running IBM DB2 Express - starting at $0.38/hour&lt;/li&gt;
+&lt;li&gt;Amazon EC2 running IBM DB2 Workgroup - starting at $1.31/hour&lt;/li&gt;
+&lt;li&gt;Amazon EC2 running IBM Informix Dynamic Server Express - starting at $0.38/hour&lt;/li&gt;
+&lt;li&gt;Amazon EC2 running IBM Informix Dynamic Server Workgroup - starting at $1.31/hour&lt;/li&gt;
+&lt;li&gt;Amazon EC2 running IBM WebSphere sMash - starting at $0.50/hour&lt;/li&gt;
+&lt;li&gt;Amazon EC2 running IBM Lotus Web Content Management - starting at $2.48/hour&lt;/li&gt;
+&lt;li&gt;Amazon EC2 running IBM WebSphere Portal Server and IBM Lotus Web Content Management Server - starting at $6.39/hour&lt;/li&gt;
+&lt;/ul&gt;&lt;/blockquote&gt;
+&lt;p&gt;Interesting prices. How could it possibly be that WebSphere + Lotus Web Content Management is worth $6.39 per hour? Who could justify that price? It&amp;rsquo;s really inconceiveable, though I have to admit I don&amp;rsquo;t know enough to judge for sure. My bullshit meter is pegged at 11 though, and it&amp;rsquo;s pretty reliable.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Post to your blog via e-mail</title>
+      <link>https://blog.nella.org/2009/04/10/post-to-your-blog-via-e-mail/</link>
+      <pubDate>Fri, 10 Apr 2009 13:06:16 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=638</guid> 
+      <description>&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;http://posterous.com/getfile/files.posterous.com/jra/UsngH0hCG5zT5DdS4MPivmCXif1wC5mBcfYTrJmI42hgJtS0fNlBwDrKRz5v/posterous_logo1.png&#34;&gt;&lt;a href=&#34;http://posterous.com/&#34;&gt;Posterous&lt;/a&gt; does the heavy lifting. Nifty.&lt;/p&gt;
+&lt;p&gt;You have to give Posterous access to your blog. It would be nice if Wordpress had a delegation feature, where I could make a user with a low privilege level for this.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Made me chuckle</title>
+      <link>https://blog.nella.org/2009/04/10/made-me-chuckle/</link>
+      <pubDate>Fri, 10 Apr 2009 08:18:05 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=634</guid> 
+      <description>&lt;p&gt;I am a Slashdot addict, and one of the reasons are gems &lt;a href=&#34;http://tech.slashdot.org/article.pl?sid=09/04/09/1526254&#34;&gt;like these&lt;/a&gt;. The geek sense of humor is omnipresent:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Police in Norfolk, England already have tracking units, The Automatic Vehicle Location System, installed in their cars that allow a control room to track their exact locations. Later this year a similar system will be attached to individual police radios to allow controllers to monitor the position of every frontline officer &amp;hellip; the system will allow the force to home in on &amp;ldquo;shouts&amp;rdquo; to within yards. The system also lets operators filter a map showing the location of its vehicles and constables to reveal only those with the skills needed for a specific incident, &lt;strong&gt;like the closest officer with silver bullets during a werewolf attack.&lt;/strong&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>My life in DocBook ligature hell</title>
+      <link>https://blog.nella.org/2009/04/09/my-life-in-docbook-ligature-hell/</link>
+      <pubDate>Thu, 09 Apr 2009 00:24:58 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=627</guid> 
+      <description>&lt;p&gt;I am working on a new project. The result will be a document. I want to publish it in several formats, including HTML, PDF, and Word. (Hot tip: if you rename a RTF file to end in DOC, you&amp;rsquo;re done. Don&amp;rsquo;t make DOC files, they suck. Make RTF files, which any editor can read. You just have to trick your users and Word into using RTF&amp;rsquo;s by renaming them.)&lt;/p&gt;
+&lt;p&gt;The accepted standard these days for formatting a document into PDF, RTF and HTML is DocBook. In fact, the modern implementation of DocBook is just &amp;ldquo;XML + XSL (+ FO)&amp;rdquo;. You could do pretty much the same thing with XML and XSL yourself, but then your document would not be compatible with someone else&amp;rsquo;s formatting instructions, and you&amp;rsquo;d be redoing a bunch of work other people already did.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Unlocking the 3Skypephone (AMOI WP-S1, WP-S2 and others)</title>
+      <link>https://blog.nella.org/2009/04/08/unlocking-the-3skypephone-amoi-wp-s1-wp-s2-and-others/</link>
+      <pubDate>Wed, 08 Apr 2009 18:14:02 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=625</guid> 
+      <description>&lt;p&gt;I have a mobile from 3. It has Skype on it. It is the second worst mobile phone I have ever owned. The worst was the Danger Hiptop, a phone with a software bug &lt;em&gt;preventing it from ringing&lt;/em&gt;. (You can&amp;rsquo;t make this stuff up.) The third worst phone I ever used was a Motorola. And while we are on the subject of crappy phones, ZTE makes cheap phones for Africans with prehistoric UI &amp;ndash; but they are learning fast and will come eat Nokia&amp;rsquo;s lunch some day, mark my words. But that all wasn&amp;rsquo;t supposed to be the content of this post&amp;hellip;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Exiting from xsltproc with an error</title>
+      <link>https://blog.nella.org/2009/04/08/exiting-from-xsltproc-with-an-error/</link>
+      <pubDate>Wed, 08 Apr 2009 13:50:47 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=623</guid> 
+      <description>&lt;p&gt;Does anyone out there know why xsltproc and the DocBooc stylesheets are so stuuuupid? When there&amp;rsquo;s a processing error, they just keep going. OK, fine, maybe useful. But then there&amp;rsquo;s no return value to say that there was a problem. The man page for xsltproc says it has return values, but it always returns 0 for me. And I&amp;rsquo;ve found the place in the DocBook stylesheets where the error is emitted. It looks like this:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>My favorite things, all at once!</title>
+      <link>https://blog.nella.org/2009/03/31/my-favorite-things-all-at-once/</link>
+      <pubDate>Tue, 31 Mar 2009 00:07:38 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=608</guid> 
+      <description>&lt;p&gt;Yay for &lt;a href=&#34;http://www.caida.org/~kc/&#34;&gt;old friends&lt;/a&gt;, economics, and technology! All at once!&lt;/p&gt;
+&lt;p&gt;kc wrote a &lt;a href=&#34;http://blog.caida.org/best_available_data/2009/03/29/icannrir-research-agenda-writ-large/&#34;&gt;blog posting with her humble ideas&lt;/a&gt; on how to use IP address space tax. Wait&amp;hellip; there&amp;rsquo;s a tax on address space? Yes, because it has become a scare quantity, because people are too lazy to move to IPv6, IPv4 address space is running out. The best of all bad ideas about what to do about this is to make an open market for address space, as though network addresses were some kind of useful piece of property with any kind of useful value. (BTW: When the present econolypse is over, and the next bubble starts, it will be an IPv4 address space bubble. Mark my words&amp;hellip;) Address space is bits. We can make more bits&amp;hellip; Look! I just made some! But because the value of a network exists in everyone who is using it, not just &lt;strong&gt;your&lt;/strong&gt; implementation of the network, you can&amp;rsquo;t just add bits in your IP stack and get any benefit. So, while bits are free, and address space could conceiveably be free, because we have a network with limited space, we have a scarce asset. And, of course, what do humans do with scarce assets? We make bubbles! Yay for bubbles!&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>You heard it here first, folks...</title>
+      <link>https://blog.nella.org/2009/03/28/you-heard-it-here-first-folks/</link>
+      <pubDate>Sat, 28 Mar 2009 01:20:36 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=601</guid> 
+      <description>&lt;p&gt;More discussion about &lt;a href=&#34;http://hardware.slashdot.org/article.pl?sid=09/03/27/2047236&#34;&gt;marks on hard things&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I suppose I should really get around to figuring out the physics of my modest proposal.&lt;/p&gt;
+&lt;p&gt;The Long Now Foundation&amp;rsquo;s &lt;a href=&#34;http://blog.longnow.org/2009/03/23/rosetta-disk-10-browseable-archive-now-available-online-2/&#34;&gt;Rosetta Project&lt;/a&gt; does something clever, which is to start their disk with big text that swirls into microscopic text. The idea is to tempt the reader to want to keep going, and help him figure out that the next step to read the next scale of text is to go grind himself a lens.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Some pointers to things I&#39;ve recently liked</title>
+      <link>https://blog.nella.org/2009/03/25/some-pointers-to-things-ive-recently-liked/</link>
+      <pubDate>Wed, 25 Mar 2009 02:58:18 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=596</guid> 
+      <description>&lt;p&gt;Here&amp;rsquo;s a random smattering of links to things that I&amp;rsquo;ve recently checked out, and that I really like:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://en.wikipedia.org/wiki/Children_of_Men&#34;&gt;Children of Men&lt;/a&gt;: A well made film about an interesting story in dystopic England (though, to be perfectly honest, it&amp;rsquo;s a bit hard to tell the difference between that England and the one outside my window). I had the &amp;ldquo;last generation&amp;rdquo; story idea last weekend. I sent it to &lt;a href=&#34;http://512words.blogspot.com/&#34;&gt;Curtis&lt;/a&gt;, and he told me about Children of Men. I made the link go to the Wikipedia page and not the IMDB page, as is customary. The Wikipedia article on the movie is really nice, with great director&amp;rsquo;s commentary, as well as other goodies.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://jungledisk.com&#34;&gt;Jungle Disk&lt;/a&gt;: Best solution to off-site backups. You pay USD 20 one time for a nice piece of software, and you have perpetual rights to use it on as many computers as you want (Mac, PC, Linux). It helps you put data into &lt;strong&gt;your&lt;/strong&gt; Amazon S3 account. You pay your bills to Amazon. You own your data, Amazon makes sure you don&amp;rsquo;t lose it (Jungle Disk has published their schema, so even if you decided to throw away their program or they go out of business, your data is still available to you). Key points: Amazon S3 is cheaper than any possible backup medium you could choose in your own house (include amortized hardware costs, energy costs, and the hassle factor &amp;ndash; don&amp;rsquo;t cheat on the hardware, you have to have reliability as high as S3, which means both your hardware cost and your hassle factor will be much higher than you think it is), because you have a direct relationship with Amazon, there&amp;rsquo;s no markup on storage or bandwidth. The price of your backups can only go down relative to the on-line offsite backup market as a whole.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://onlive.com/&#34;&gt;Onlive&lt;/a&gt;: Karl, Cary, and Arnold are finally out of stealth mode! Yay! It seems like &amp;ldquo;Xbox over vnc&amp;rdquo; to me, but what do I know. I never really mastered minesweeper. Just give me a good book&amp;hellip;&lt;/li&gt;
+&lt;li&gt;&amp;hellip;like &lt;a href=&#34;http://en.wikipedia.org/wiki/The_Shadow_of_the_Wind&#34;&gt;The Shadow of the Wind&lt;/a&gt;: A good book. Multiple layers, several stories running at once, from different times, coming at you at once, all set in beautiful and atmospheris Barcelona. Good stuff.&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    <item>
+      <title>Knock it off, you two</title>
+      <link>https://blog.nella.org/2009/03/24/knock-it-off-you-two/</link>
+      <pubDate>Tue, 24 Mar 2009 21:53:08 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=594</guid> 
+      <description>&lt;p&gt;&lt;a href=&#34;http://www.scripting.com/stories/2009/03/22/whatFirefoxShouldDo.html&#34;&gt;You&amp;rsquo;re&lt;/a&gt; &lt;a href=&#34;http://weblogs.mozillazine.org/asa/archives/2009/03/cant_let_dave_d.html&#34;&gt;both&lt;/a&gt; right.&lt;/p&gt;
+&lt;p&gt;But Dave comes off looking more mature, with more useful things to say. Asa, you made yourself look like a prick, and it&amp;rsquo;s too bad, since Mozilla seems to be letting you speak for them.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Something Interesting is Happening</title>
+      <link>https://blog.nella.org/2009/03/23/something-interesting-is-happening/</link>
+      <pubDate>Mon, 23 Mar 2009 11:34:55 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=584</guid> 
+      <description>&lt;p&gt;Take a look at &lt;a href=&#34;http://www.bunniestudios.com/blog/?p=284&#34;&gt;this article&lt;/a&gt; from Bunnie Hwang, reporting on the copycat industries in China.&lt;/p&gt;
+&lt;p&gt;Bunnie&amp;rsquo;s nailed it, there is something interesting and important going on. Writing these guys off as copycats is exactly the wrong read on the situation. These guys are going to be a cornerstone of the foundation that science fiction writers are going to launch themselves from in order to help the rest of us understand what things are going to look like in 30 years.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Comparing Geographical Sizes</title>
+      <link>https://blog.nella.org/2009/03/22/comparing-geographical-sizes/</link>
+      <pubDate>Sun, 22 Mar 2009 21:41:59 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=581</guid> 
+      <description>&lt;p&gt;A long time ago I thought it would be fun to open two windows and see two things on Google Maps next to each other. That way, I could compare the sizes of them. But getting the scale set the same on both maps was not easy. Wouldn&amp;rsquo;t it be neat if the scale of the maps was set to the same?&lt;/p&gt;
+&lt;p&gt;I finally got around to implementing this with Google Maps API:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Phone blogging</title>
+      <link>https://blog.nella.org/2009/03/19/phone-blogging/</link>
+      <pubDate>Thu, 19 Mar 2009 15:56:02 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=580</guid> 
+      <description>&lt;p&gt;Is way too hard. But results in interesting t9 errors, like clogging instead of blogging.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>User Hostile UI</title>
+      <link>https://blog.nella.org/2009/03/16/user-hostile-ui/</link>
+      <pubDate>Mon, 16 Mar 2009 18:24:08 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=578</guid> 
+      <description>&lt;p&gt;I don&amp;rsquo;t really like Facebook, but I have to use it because that&amp;rsquo;s where my friends are. (Well, my fiancÃ©e is there, and she makes my friends for me. So I use it. Begrudgingly.)&lt;/p&gt;
+&lt;p&gt;At first what I didn&amp;rsquo;t like about Facebook was that it is a &lt;a href=&#34;http://www.brainsturbator.com/articles/facebook_the_cia_and_you/&#34;&gt;thinly veilled CIA front&lt;/a&gt;, and even if that weren&amp;rsquo;t true, they are grossly negligent about privacy, meaning that the CIA could get all my data even if Facebook wasn&amp;rsquo;t using &lt;a href=&#34;http://images.google.com/images?hl=en&amp;amp;client=firefox-a&amp;amp;rls=com.ubuntu:en-GB:unofficial&amp;amp;hs=Q5w&amp;amp;ei=25i-SYXLLODDjAfjls2NCA&amp;amp;resnum=1&amp;amp;q=cia+langley&amp;amp;um=1&amp;amp;ie=UTF-8&amp;amp;ei=3Zi-SYinKeLBjAfe6umwCA&amp;amp;sa=X&amp;amp;oi=image_result_group&amp;amp;resnum=4&amp;amp;ct=title&#34;&gt;Langely&lt;/a&gt; for offsite backups. (And they are.)&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>The Gopher-verse, averted</title>
+      <link>https://blog.nella.org/2009/03/14/the-gopher-verse-averted/</link>
+      <pubDate>Sat, 14 Mar 2009 00:46:15 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=574</guid> 
+      <description>&lt;p&gt;&lt;a href=&#34;http://www.newscientist.com/blogs/shortsharpscience/2009/03/how-moores-law-saved-the-web.html&#34;&gt;This&lt;/a&gt; is insane.&lt;/p&gt;
+&lt;p&gt;At the time the web came into being, AOL was already offering a content-driven text and graphics medium. And Microsoft was hard at work making &amp;ldquo;Blackbird&amp;rdquo;, which was a content authoring technology for MSN that never saw the light of day because of HTML. Microsoft ditched it and launched MSN over PPP and HTTP, and embarrassed AOL by showing them the future.&lt;/p&gt;
+&lt;p&gt;Also, network administrators are not technophobic reactionaries. They are professionals with conflicting responsibilities. Like all professionals, they do what they have to do to get the job done. Sometimes it is appropriate to filter something in order to maintain the breathing room for the network to do the job. In the early 90&amp;rsquo;s, filtering technologies certainly existed that could have killed off the web, but there was a critical mass of academic networks, and under-critical-mass of commercial ISPs. The academics were interested in seeing what new things were coming. The commercial ISPs were split between common carriers like UUnet, and walled gardens. As I already mentioned, the walled gardens had their own content technologies and wanted to move past the limitations of Gopher. The common carriers didn&amp;rsquo;t care what went over the network, as long as it drove demand for the network itself.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Couldn&#39;t happen to a nicer guy (or a nicer country)</title>
+      <link>https://blog.nella.org/2009/02/25/couldnt-happen-to-a-nicer-guy-or-a-nicer-country/</link>
+      <pubDate>Wed, 25 Feb 2009 15:06:57 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=556</guid> 
+      <description>&lt;p&gt;&lt;a href=&#34;http://yeswescan.org/&#34;&gt;Carl Malamud + the Government Printing Office&lt;/a&gt; is a match made in heaven.&lt;/p&gt;
+&lt;p&gt;Please, President Obama, make it happen. This guy is one of us, one of the good guys who cares about transparency, about good government, about the freedom to know, to learn, to discuss and to criticize. He&amp;rsquo;s a person who speaks not with words, but with actions. I&amp;rsquo;ve followed his career and his dreams for years, always being pleasantly surprised when something I wanted to know or find had become available to me because of his tireless work.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Silverlight on Linux</title>
+      <link>https://blog.nella.org/2009/02/18/silverlight-on-linux/</link>
+      <pubDate>Wed, 18 Feb 2009 13:10:11 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=553</guid> 
+      <description>&lt;p&gt;Microsoft, what&amp;rsquo;s your problem? Why are you so stupid?&lt;/p&gt;
+&lt;p&gt;My current irritation is with Silverlight. First, it&amp;rsquo;s a redundant technology. Bringing .Net into browsers is not a compelling argument for redoing everything that Adobe Flash already does better than Silverlight. But fine, I&amp;rsquo;m not a shareholder anymore, you can waste their money all you want.&lt;/p&gt;
+&lt;p&gt;I wanted to see how well Moonlight (the Linux version of Silverlight) works. It&amp;rsquo;s partly because I&amp;rsquo;m compelled to poke my nose into the train crash that is Linux + Firefox + plugins + video + audio. It&amp;rsquo;s one of those things&amp;hellip; so horrific, you can&amp;rsquo;t stop watching.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>O&#39;Reilly Ignite, UK North</title>
+      <link>https://blog.nella.org/2009/01/22/oreilly-ignite-uk-north/</link>
+      <pubDate>Thu, 22 Jan 2009 16:03:22 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=520</guid> 
+      <description>&lt;p&gt;Tonight I am giving a talk the Old Broadcasting House at &lt;a href=&#34;http://ignite.oreilly.com/2008/10/ignite-uk-north.html&#34;&gt;O&amp;rsquo;Reilly Ignite, UK North&lt;/a&gt;. &lt;a href=&#34;http://nella.org/jra/geek/ignite/ignite%20uk%20north%20-%20aid%202.0.pdf&#34;&gt;Here&lt;/a&gt; are my slides.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Update:&lt;/strong&gt; There&amp;rsquo;s a &lt;a href=&#34;http://blip.tv/file/1815674&#34;&gt;video here&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Back to school</title>
+      <link>https://blog.nella.org/2009/01/19/back-to-school/</link>
+      <pubDate>Mon, 19 Jan 2009 11:00:37 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=507</guid> 
+      <description>&lt;p&gt;I was sick last week, and in my drug- and virus-induced haze of incoherence, the idea that I should write a Scheme interpreter in assembly language came to mind. I cannot explain from where, but there it was. So I started looking into it, wondering if I still had it in me to dig into a computer problem and get it done. I&amp;rsquo;ve been feeling a bit burned out on different aspects of the IT world, and I was thinking maybe that getting back to the basics of computer science might help. The course that I remember mostly vividly (not fondly: vividly, like in nightmares) was my Programming Languages class, where I wrote a Scheme interpreter in (wait for it, wait for it&amp;hellip;) Scheme. It was hard, really hard. But I was also young and stupid. I don&amp;rsquo;t think it would be so hard now.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Grub 2 and the Law of Software Envelopment</title>
+      <link>https://blog.nella.org/2009/01/12/grub-2-and-the-law-of-software-envelopment/</link>
+      <pubDate>Mon, 12 Jan 2009 17:54:34 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=495</guid> 
+      <description>&lt;p&gt;I was reading a bit about Grub 2&amp;rsquo;s modules, including &lt;a href=&#34;http://grub.enbug.org/gfxterm&#34;&gt;this page&lt;/a&gt; for gfxterm, a reimplementation of VGA console mode for Grub 2 &amp;ndash; VGA console mode isn&amp;rsquo;t good enough because it cannot display Arabic, simplified Chineese, nor Inuit glyphs. And, let&amp;rsquo;s face it, the kinds of Inuits frobbing their boot loaders can&amp;rsquo;t possibly be expected to &lt;strong&gt;only&lt;/strong&gt; get along with Latin-1 characters, right?&lt;/p&gt;
+&lt;p&gt;This reminded me of &lt;a href=&#34;http://www.catb.org/~esr/jargon/html/Z/Zawinskis-Law.html&#34;&gt;Zawinkski&amp;rsquo;s Law of Software Envelopment&lt;/a&gt;:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Long Term Data Storage</title>
+      <link>https://blog.nella.org/2008/12/13/long-term-data-storage/</link>
+      <pubDate>Sat, 13 Dec 2008 17:56:58 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=448</guid> 
+      <description>&lt;p&gt;I was thinking about data archival the other day because &lt;a href=&#34;http://www.sahtp.com/&#34;&gt;David Hagan&lt;/a&gt; was telling me about one time when he spoke to a group of librarians and told them to expect a data gap starting in 1950 and extending until we get serious about data preservation. According to David, the time when we stopped being able to save data was in the 50&amp;rsquo;s because xerography (which is the same as laser-printer technology) came into existence then. All other data archival techniques (magnetic storage on tape or disk, recordable CD&amp;rsquo;s, etc) are inferior to toner pressed onto paper, which is itself inferior to ink soaked into paper fibers. And, come to think of it, ink on paper is inferior to marks on clay tablets &amp;ndash; though ink on paper has proven to be stable enough, since we use knowledge today gleaned from papyrus scrolls from thousands of years ago.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>The Skills Exist, Use Them!</title>
+      <link>https://blog.nella.org/2008/12/01/the-skills-exist-use-them/</link>
+      <pubDate>Mon, 01 Dec 2008 22:51:23 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=443</guid> 
+      <description>&lt;p&gt;One of the headlines that came out of my trip to Freetown was &amp;ldquo;The Skills Exist, Use Them!&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;First, a bit more about what I was doing there. I was on a contract with the Health Metrics Network, which is a project running under the auspices of the World Health Organization, but funded by the Gates Foundation. HMN is supposed to go around building a network, not of routers and switches, but people who understand the challenges of constructing and running health information systems. Those people should be researchers, technologists, and public health people. And those people should be a mix of those &lt;strong&gt;talking&lt;/strong&gt; about it (easy to find in Geneva, they are &lt;em&gt;douze pour une centime&lt;/em&gt;) and those &lt;strong&gt;doing&lt;/strong&gt; it. The latter are a little harder to find&amp;hellip;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Hello, I&#39;m back!</title>
+      <link>https://blog.nella.org/2008/11/27/hello-im-back-2/</link>
+      <pubDate>Thu, 27 Nov 2008 15:26:38 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=438</guid> 
+      <description>&lt;p&gt;I am back from Freetown, freezing in Leeds. I&amp;rsquo;ve spent today trying to get software working including reinstalling Chrome (which started marking all words as misspelled) and Word Press which inexplicably started hanging.&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;ll write a note, maybe this weekend, about what I was doing in Freetown. It was fun, and we got a lot accomplished, so it&amp;rsquo;s a worthwhile story to tell.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Locations Database in Gnome</title>
+      <link>https://blog.nella.org/2008/11/19/locations-database-in-gnome/</link>
+      <pubDate>Wed, 19 Nov 2008 00:59:10 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=434</guid> 
+      <description>&lt;p&gt;There&amp;rsquo;s a nifty feature hidden in Gnome that&amp;rsquo;s interesting to play with. Click on the date in the upper right. You get an applet with a calendar. Below the calendar is &amp;ldquo;Locations&amp;rdquo;, click on that. Nifty little map showing the line where sunset and sunrise are. Click on edit, and you get to add your favorite locations to the map. But not just your favorite timezones, you get to pick from a huge list of geographic places. My hometown, little Roseburg Oregon is in there. African capitals are in there, though sadly Monrovia got missed. And when you add the clocks, you get weather too!&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Hello from Freetown</title>
+      <link>https://blog.nella.org/2008/11/11/hello-from-freetown/</link>
+      <pubDate>Tue, 11 Nov 2008 15:09:28 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=427</guid> 
+      <description>&lt;p&gt;I started a two week trip to Freetown, Sierra Leone yesterday. I am here as an IT consultant for the Health Metrics Network, part of the World Health Organization. We are taking a bunch of random hardware that the government bought with a not-quite-complete architecture and putting in place a foundation for IT services related to the Health Information System. Of course, the HIS relies on lots and lots of low tech forms and paperwork &amp;ldquo;up country&amp;rdquo;, but there&amp;rsquo;s also a need for a datacenter in the capital.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Don&#39;t Bet Against Ethernet</title>
+      <link>https://blog.nella.org/2008/10/21/dont-bet-against-ethernet/</link>
+      <pubDate>Tue, 21 Oct 2008 17:37:18 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=384</guid> 
+      <description>&lt;p&gt;From Slashdot: &lt;a href=&#34;http://tech.slashdot.org/article.pl?sid=08/10/21/152250&#34;&gt;Corporate Data Centers As Ethernet&amp;rsquo;s Next Frontier&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Metcalfe&amp;rsquo;s (apophrycal) Second Law: &lt;a href=&#34;http://www.nemertes.com/columns/10_gigabit_ethernet_could_revolutionize_data_center_networking&#34;&gt;Never Bet Against Ethernet&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&amp;lsquo;Nuff said.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Big Mining Machines</title>
+      <link>https://blog.nella.org/2008/10/20/big-mining-machines/</link>
+      <pubDate>Mon, 20 Oct 2008 12:25:24 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=379</guid> 
+      <description>&lt;p&gt;The Long Now foundation &lt;a href=&#34;http://blog.longnow.org/2008/10/09/our-lust-for-metal-is-great/&#34;&gt;took a field trip&lt;/a&gt; recently. The pictures are cool, as is the irony that they went to a trade show held once every four years. Miners have a time scale closer to the Long Now&amp;rsquo;s.&lt;/p&gt;
+&lt;p&gt;What does it mean that mining is a slowly changing industry? The economics of extractive industries push them that direction (capital investment is only warranted by a positive outlook in the commodity price). But workplace safety, which is a special case of universal human rights, demands that &lt;a href=&#34;http://www.coalminingsafety.org/&#34;&gt;industries take advantage&lt;/a&gt; of the best available technology as fast as possible. This is an interesting story of the tension between capitalism and social welfare. If a mining regulator pushes an industry too much it will give up and move elsewhere. And apparently the mining industry is especially prone to &lt;a href=&#34;http://en.wikipedia.org/wiki/Regulatory_capture&#34;&gt;regulatory capture&lt;/a&gt; an euphemism for corruption I especially like (like as in hate; in newspeak up is down, enslaved is free and corruption is regulatory capture).&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Behind the Scenes of Google Chrome</title>
+      <link>https://blog.nella.org/2008/10/18/behind-the-scenes-of-google-chrome/</link>
+      <pubDate>Sat, 18 Oct 2008 18:02:44 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=376</guid> 
+      <description>&lt;p&gt;Some stuff I discovered playing with Google Chrome:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;View source works on the various &amp;ldquo;internal&amp;rdquo; pages (i.e. the home page, the about:stats page, etc) so you can see how the magic happens&lt;/li&gt;
+&lt;li&gt;Read the comments in the home page to see how absolutely nutso over-the-top the programmer was about load time. He obsesses about the difference between 20ms and 100ms. You go, dude&amp;hellip; make it fast!&lt;/li&gt;
+&lt;li&gt;Also in the home page, you can see that internal UI pages have access to a Javascript object called &amp;ldquo;chrome&amp;rdquo; that tells the page what to put on itself. (Attention bad guys: this is an attack surface. If you can find a way to get a handle to a chrome object, baddness ensues. So, please, don&amp;rsquo;t do that. Thanks.)&lt;/li&gt;
+&lt;li&gt;Embedded images, for example the logo on the home page, use the &amp;ldquo;data:&amp;rdquo; URL scheme to embed the picture&amp;rsquo;s data right into the page. Why? Performance? Or simplification.&lt;/li&gt;
+&lt;li&gt;If view source doesn&amp;rsquo;t work (like in the UI for &amp;ldquo;error 404&amp;rdquo;), then the inspector works, and will show you the source. (What&amp;rsquo;s the point of disabling view source? Setec Astronomy.)&lt;/li&gt;
+&lt;li&gt;In the inspector, you can click on things in the source and change them into input boxes, then you can change the source on the fly, and the results are shown in the page. Cool.&lt;/li&gt;
+&lt;li&gt;In about:stats, you can sort the columns by clicking on them. View source for a really nifty piece of Javascript I might lift and use someplace else myself.&lt;/li&gt;
+&lt;li&gt;About:network is totally cool. Click &amp;ldquo;Start I/O tracking&amp;rdquo; then go to another tab and load something. You get a trace of all the transactions. You can also click &amp;ldquo;Show current I/O status&amp;rdquo; to see which HTTP connections are open.&lt;/li&gt;
+&lt;li&gt;You have to type the about:foo URLs, if you click on them you don&amp;rsquo;t get anything. They are checking the referer.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Props to &lt;a href=&#34;http://stikiflem.wordpress.com/2008/09/04/google-chrome-hacks/&#34;&gt;Stikiflem&lt;/a&gt; and &lt;a href=&#34;http://redneckprogrammer.blogspot.com/2008/09/google-chrome-inspector.html&#34;&gt;Redneck Programmer&lt;/a&gt; who blazed this trail before me.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Better Practices in OpenID</title>
+      <link>https://blog.nella.org/2008/10/11/better-practices-in-openid/</link>
+      <pubDate>Sat, 11 Oct 2008 18:10:55 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=359</guid> 
+      <description>&lt;p&gt;Yahoo published &lt;a href=&#34;http://developer.yahoo.com/openid/bestpractices.html&#34;&gt;some best practices&lt;/a&gt; on OpenID, but I have one they forgot.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://imran.typepad.com/&#34;&gt;Imran&lt;/a&gt; and I were talking at &lt;a href=&#34;http://imran.typepad.com/blog/opencoffee/&#34;&gt;OpenCoffee Leeds&lt;/a&gt; the other day and we independently and together came up with this realization:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;OpenID providers should be required to be OpenID consumers first.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Why? Well, the problem OpenID is trying to solve is &amp;ldquo;too many usernames&amp;rdquo;, which really equates to &amp;ldquo;too many authentication providers&amp;rdquo;. That means that the &lt;strong&gt;last thing&lt;/strong&gt; we need is more stinkin&amp;rsquo; authentication providers. OpenID providers who are not also OpenID consumers, are just &lt;strong&gt;making the problem worse&lt;/strong&gt;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>dnsmasq versus gPXE</title>
+      <link>https://blog.nella.org/2008/10/08/dnsmasq-versus-gpxe/</link>
+      <pubDate>Wed, 08 Oct 2008 16:52:14 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=335</guid> 
+      <description>&lt;p&gt;gPXE and dnsmasq do not get along, beware.&lt;/p&gt;
+&lt;p&gt;gPXE wants to find the boot filename in the dedicated slot in the reply packet. dnsmasq does something clever/stupid (I&amp;rsquo;m not sure which) and puts it someplace else. You have to use the &lt;code&gt;--dhcp-no-override&lt;/code&gt; option to dnsmasq to make gPXE see the filename.&lt;/p&gt;
+&lt;p&gt;I don&amp;rsquo;t have proof, but I suspect this inflexibility in gPXE also makes it incompatible with the DHCP replies sent by qemu&amp;rsquo;s built-in DHCP server.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Let&#39;s Map Africa!</title>
+      <link>https://blog.nella.org/2008/10/03/lets-map-africa/</link>
+      <pubDate>Fri, 03 Oct 2008 15:53:25 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=320</guid> 
+      <description>&lt;p&gt;I found a great post on Google&amp;rsquo;s Africa blog today &lt;a href=&#34;http://google-africa.blogspot.com/2008/10/lets-map-africa.html&#34;&gt;announcing Map Maker&lt;/a&gt;, a wiki-like way of increasing Google Map&amp;rsquo;s coverage of places where there&amp;rsquo;s very little data available for them to start with. As with everything Google, the launch version is a little not-smooth, and it is hard to understand how the moderation feature works. Am I supposed to be able to moderate other people, or is it the invisible Hand Of Google that moderates me? I can&amp;rsquo;t figure that part out yet, but I assume it is community moderation. That&amp;rsquo;s Not Evil, and when I last checked Google was Not Evil&amp;hellip;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>SneakerNet Kiosk</title>
+      <link>https://blog.nella.org/2008/10/02/sneakernet-kiosk/</link>
+      <pubDate>Thu, 02 Oct 2008 09:00:04 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=314</guid> 
+      <description>&lt;p&gt;I was poking around on Kunnafoni to see what they are up to. Check out &lt;a href=&#34;http://lasource.kunnafoni.org/&#34;&gt;la Source&lt;/a&gt; (&amp;ldquo;the spring&amp;rdquo;) a kiosk that makes software and media available for installation onto USB keys.&lt;/p&gt;
+&lt;p&gt;My readers are English speaking, so I will include subtitles for the video here. Adjust your windows so you can see both and click play!&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Hello!&lt;/li&gt;
+&lt;li&gt;Hello, really!&lt;/li&gt;
+&lt;li&gt;How&amp;rsquo;s it going?&lt;/li&gt;
+&lt;li&gt;Fine.&lt;/li&gt;
+&lt;li&gt;I&amp;rsquo;ve come to talk about la Source that I heard about the other day. It&amp;rsquo;s that?&lt;/li&gt;
+&lt;li&gt;Yup.&lt;/li&gt;
+&lt;li&gt;In there I can find programs, books, and videos for my mobile phone and my laptop computer?&lt;/li&gt;
+&lt;li&gt;Yes. (he demos it)&lt;/li&gt;
+&lt;li&gt;Do you have pirate programs in there?&lt;/li&gt;
+&lt;li&gt;No! They are free programs, distributed for free. If you are an IT guy, you can even change them
+yourself.&lt;/li&gt;
+&lt;li&gt;But how do I get the file?&lt;/li&gt;
+&lt;li&gt;You choose ok, you transfer it onto your key, and you give me 100 francs. (20 cents, US)&lt;/li&gt;
+&lt;li&gt;But you said it was free!&lt;/li&gt;
+&lt;li&gt;Right, but I&amp;rsquo;m making it faster and easier for you to download!&lt;/li&gt;
+&lt;li&gt;OK. Can you give me other stuff?&lt;/li&gt;
+&lt;li&gt;In la Source you can also find movies and books (fiction, non-fiction, classics).&lt;/li&gt;
+&lt;li&gt;Thanks Moussa! I will come back and buy something even bigger.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This is what I was talking about on Aid Worker Daily: Open Source lets people adapt software to the circumstances they find in their culture.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Morning Coffee Notes</title>
+      <link>https://blog.nella.org/2008/10/02/morning-coffee-notes/</link>
+      <pubDate>Thu, 02 Oct 2008 08:26:00 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=312</guid> 
+      <description>&lt;p&gt;With apologies to Dave for the title&amp;hellip;&lt;/p&gt;
+&lt;p&gt;This morning I see that Jon over at &lt;a href=&#34;http://AidWorkerDaily.com&#34;&gt;AidWorkerDaily.com&lt;/a&gt; has added his ideas to my article there, and asked me to comment. I did, go read it.&lt;/p&gt;
+&lt;p&gt;While I was researching stuff for my reply, I stumbled across these resources on African IT that I&amp;rsquo;m going to start following:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://appfrica.net/blog/&#34;&gt;Appfrica&lt;/a&gt;: African IT, Industry News and Culture&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://google-africa.blogspot.com/&#34;&gt;Google Africa&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    <item>
+      <title>The real reason for Google Books</title>
+      <link>https://blog.nella.org/2008/10/01/the-real-reason-for-google-books/</link>
+      <pubDate>Wed, 01 Oct 2008 09:15:32 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=306</guid> 
+      <description>&lt;p&gt;I was reading about &lt;a href=&#34;http://vdash.org/&#34;&gt;vdash&lt;/a&gt; and inside the presentation, I found this interesting quote:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&amp;ldquo;We are not scanning all those books to be read by people,&amp;rdquo; explained one of my hosts after my talk (at Google). &amp;ldquo;We are scanning them to be read by an AI.&amp;rdquo;&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;That came from George Dyson, in &lt;a href=&#34;http://www.edge.org/3rd_culture/dyson05/dyson05_index.html&#34;&gt;this article&lt;/a&gt; on Edge. And as always with Edge, if you read on through the piece to the end, there&amp;rsquo;s some big ideas. Smart people thinking about important things over there.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Some tech stuff: DreamHost, WordPress and OpenID</title>
+      <link>https://blog.nella.org/2008/09/26/some-tech-stuff-dreamhost-wordpress-and-openid/</link>
+      <pubDate>Fri, 26 Sep 2008 09:21:34 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=292</guid> 
+      <description>&lt;p&gt;Since I am getting back to tech life, a good first post would be about tech.&lt;/p&gt;
+&lt;p&gt;What caused the big downtime was a not-very-careful switch from a friend&amp;rsquo;s Linux server to DreamHost. I switched because I am too old, too lazy, and too impatient to do Linux sysadmin anymore. I outsource it now. Especially mail system setup, which has become an infinite nightmare as a result of spam. With just a few clicks at their really excellent control panel, DreamHost let me outsource all the hassles of email to Google, while still keeping control of my web server. And actually DreamHost helps me with that too, because with a few more clicks on the control panel, I installed WordPress in my blog, then upgraded it a few months later.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>One of a kind</title>
+      <link>https://blog.nella.org/2007/12/09/one-of-a-kind/</link>
+      <pubDate>Sun, 09 Dec 2007 09:36:02 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=282</guid> 
+      <description>&lt;p&gt;I was looking for something else and ran across this somewhat ridiculous part of LinkedIn&amp;rsquo;s web site: &lt;a href=&#34;http://www.linkedin.com/find/a/a24/a24_46.html&#34;&gt;Allen, J&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;This is why in every place my name is used publicly, especially related to work, that I am very careful to use the exact string, &amp;ldquo;Jeff R. Allen&amp;rdquo;. It is a habit I started in college when &lt;a href=&#34;http://www.usenix.org/publications/library/proceedings/lisa95/allen.html&#34;&gt;my first academic paper&lt;/a&gt; was ever published. When you work with computers from an early age, you have a good understanding of namespaces, and how to best deal with the sub-optimal namespaces favored by humans and their idiosyncratic language.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Won&#39;t you blog about this song?</title>
+      <link>https://blog.nella.org/2007/12/04/wont-you-blog-about-this-song/</link>
+      <pubDate>Tue, 04 Dec 2007 11:48:21 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=281</guid> 
+      <description>&lt;p&gt;This is the next Internet meme, ladies and gentlemen&amp;hellip; and just remember you heard about it here first.&lt;/p&gt;
+&lt;p&gt;This is from the group that my friend &lt;a href=&#34;http://snout.org/&#34;&gt;Curtis Chen&lt;/a&gt; belongs to, the &lt;a href=&#34;http://www.richterscales.com&#34;&gt;The Richter Scales&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Bencode, Bdecode in shell script</title>
+      <link>https://blog.nella.org/2007/08/15/bencode-bdecode-in-shell-script/</link>
+      <pubDate>Wed, 15 Aug 2007 05:57:12 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=277</guid> 
+      <description>&lt;p&gt;I have been playing around with OpenWRT recently, to see what IT tools you could deploy to the bush using cheap, low power computers as a base.&lt;/p&gt;
+&lt;p&gt;One of the really interesting things about writing systems to live in the embedded Linux world is that you want to try to do as much as possible with the stuff that&amp;rsquo;s there out of the box. This is because smarter people than me have stuffed the tiny 8 meg flash images with useful tools, leaving no room for my bloated Perl-ware. So the question becomes, how can I live with what they gave me and still get what I want done.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>April Fools!</title>
+      <link>https://blog.nella.org/2007/04/23/april-fools/</link>
+      <pubDate>Mon, 23 Apr 2007 11:53:04 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=274</guid> 
+      <description>&lt;p&gt;Here&amp;rsquo;s a new book from two great guys in the Unix/Internet/Cranky-old-bastards community (of which I am apparently a member, based on the third category).&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.rfc-humor.com&#34;&gt;&lt;em&gt;The Complete April Fools RFCs&lt;/em&gt;&lt;/a&gt; by Thomas A. Limoncelli and Peter J. Salus. You an buy it on Amazon &lt;a href=&#34;http://www.amazon.com/dp/1573980420?tag=tomontime-20&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;According to Tom:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;This is a compilation of the best April Fools jokes created by the
+IETF, the group that creates the standards for how the Internet
+works. It&amp;rsquo;s pretty technical but fun to read for anyone that is
+in software development, system administration, or any kind of
+computer geek. A good, cheap, gift for the geek that has everything
+and is impossible to shop for.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Getting Podcasts out to the Bush</title>
+      <link>https://blog.nella.org/2007/04/04/getting-podcasts-out-to-the-bush/</link>
+      <pubDate>Wed, 04 Apr 2007 02:49:50 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=273</guid> 
+      <description>&lt;p&gt;Here&amp;rsquo;s my problem. I work for Doctors Without Borders/MÃ©decins Sans FrontiÃ¨res (MSF). I go out to the bush for 6 months and have only very low bandwidth access to e-mail, so no podcasts! It gets lonely and boring out there sometimes. We try to bring things with us to entertain ourselves, but it&amp;rsquo;s never really enough, and it is not topical. In MSF we are lucky that it is fairly easy to get postal mail, because we have a lot of people coming and going from the field, and a well developed system of &amp;ldquo;pony express&amp;rdquo; mail.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Google Video hacking</title>
+      <link>https://blog.nella.org/2006/01/10/google-video-hacking/</link>
+      <pubDate>Tue, 10 Jan 2006 20:56:18 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=219</guid> 
+      <description>&lt;p&gt;I decided to look into Google Video a bit, now that they are selling stuff.&lt;/p&gt;
+&lt;p&gt;First things first, I looked into how the Google Video Player works for free files. (I&amp;rsquo;m a cheapskate.) It&amp;rsquo;s Google Engineering at it&amp;rsquo;s finest; the simplest thing that will work, and no simpler. When you click to see a movie in the Google Video Player, you download a tiny text file (with file extension GVP). That causes the Google Video Player to launch. It reads the file and starts to download the video via HTTP, just like the Flash player is doing in the web browser. The GVP file is just a text file, so you can open it and find the URL. If you fetch the URL yourself with wget (i.e. no cookies, no javascript, etc) you get a big binary stream. The content-type claims that it is &amp;ldquo;video/x-msvideo&amp;rdquo;, but it does not play in Windows Media Player.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>GPS satellites are spy satellites too</title>
+      <link>https://blog.nella.org/2006/01/03/gps-satellites-are-spy-satellites-too/</link>
+      <pubDate>Tue, 03 Jan 2006 14:21:47 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=218</guid> 
+      <description>&lt;p&gt;I ran across this intriguing sentence in a &lt;a href=&#34;http://www.gao.gov/new.items/d0683.pdf&#34;&gt;GAO report on Los Alamos National Labs&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;LANL fabricates suites of sensors for Global Positioning System satellites that are used to monitor nuclear detonations.&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;Interesting. Wonder what else GPS satellites do&amp;hellip;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Feature wish</title>
+      <link>https://blog.nella.org/2005/12/08/feature-wish/</link>
+      <pubDate>Thu, 08 Dec 2005 03:28:05 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=213</guid> 
+      <description>&lt;p&gt;I want a Firefox extension that lets me select some text on a webpage, right click, and get that HTML in a box to edit. Once I edit it, I want the extension to compute the diff between my edited copy and the copy in the web page, find an address to send it to the author of the page via e-mail, and send the diff to them. To find the e-mail address, it will look in the HTML for a hint via some standard HTML or some semi-standard HTML dealie that it defines itself. If it doesn&amp;rsquo;t find the e-mail address that way, then maybe something like trying to send e-mail to the technical contact for the domain name, according to Whois. Or maybe just &amp;ldquo;webmaster@$domain&amp;rdquo;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Google WiFi</title>
+      <link>https://blog.nella.org/2005/11/29/google-wifi/</link>
+      <pubDate>Tue, 29 Nov 2005 03:57:16 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=211</guid> 
+      <description>&lt;p&gt;Info on Google&amp;rsquo;s proposal to the City of Mountain View to put in a WiFi network is &lt;a href=&#34;http://www.siliconbeat.com/entries/google-mv-wifi.pdf&#34;&gt;publically available&lt;/a&gt; (490K PDF).&lt;/p&gt;
+&lt;p&gt;There are some interesting things:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;It will be using mesh technology. There will be about 400 mesh nodes, and 3 uplinks to the Internet (which Google says will use fiber, as though the media really matters).&lt;/li&gt;
+&lt;li&gt;The system will use a captive portal, requiring you to log in. The username and password will be a Google account (i.e. the same one as Gtalk, Gmail, customized homepage, etc.) The tinfoil-hat crowd will point out that this will allow Google to snoop all your packets and associate them will all of your e-mail and your chat logs.&lt;/li&gt;
+&lt;li&gt;The installs will be on city-owned light poles. Parts of Mountain View will not get service immediately because their light poles are owned by PGE and Google and the city have to negotiate with PGE more. Don&amp;rsquo;t hold your breath on this, folks. PGE&amp;rsquo;s probably got some powerline Internet thing it wants to do instead.&lt;/li&gt;
+&lt;li&gt;The equipment taps power to the light poles, and as such is unmetered. Google will pay $36 per pole per year for power. That&amp;rsquo;s $0.0041 per hour. If electricity costs the city 4 cents per kilowatt hour, that means the devices use 100 watts of power. Seems like a fair price.&lt;/li&gt;
+&lt;li&gt;There is no mention of solar power or battery backup, which means that this system will be useless for disaster response. Also, because the equipment taps the utility power for the lights, it will not be possible to use generator power to fix some portion of the mesh. Finally, if street light circuits were de-prioritized for repair by the power company during an emergency (as seems likely), the Google wifi mesh would come back slower than other networking technologies.&lt;/li&gt;
+&lt;li&gt;There is talk of running a VLAN over the network in the future for city services use. It is not going to be in 1.0. The security aspects of having city services data running over a wireless mesh would need to be thought about. I&amp;rsquo;m not saying it&amp;rsquo;s a bad idea, but it&amp;rsquo;s a sizable liability for Google to take on.&lt;/li&gt;
+&lt;li&gt;There are grainy, useless pictures of the proposed hardware. No surprise, it looks like commodity stuff. Google&amp;rsquo;s value-add will be in software.&lt;/li&gt;
+&lt;li&gt;There is no discussion of how the boxes will get installed. I suspect Google will contract that job out to someone with a fleet of boom trucks. Perhaps they will have &lt;a href=&#34;http://www.peek-traffic.co.uk/&#34;&gt;Peek&lt;/a&gt; do it, who you see around town fixing traffic lights.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This project is significant for more than the normal &lt;a href=&#34;http://www.chron.com/disp/story.mpl/business/3469077.html&#34;&gt;&amp;ldquo;Telcos Battle Municipal Wifi&amp;rdquo;&lt;/a&gt; reason. This is going to be a real mesh network. Mesh networking is one of those urban legends among networking people. Everyone says that they are nifty, but no one has ever seen one work. Perhaps Google will nail this like they have so many other things.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Google Local for Mobiles</title>
+      <link>https://blog.nella.org/2005/11/27/google-local-for-mobiles/</link>
+      <pubDate>Sun, 27 Nov 2005 01:58:57 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=210</guid> 
+      <description>&lt;p&gt;If you have a phone that can download Java games, and you know how to make it go visit URL&amp;rsquo;s outside the walled garden your provider desperately wants to keep you locked inside, you can go to this URL: &lt;a href=&#34;http://google.com/glm&#34;&gt;http://google.com/glm&lt;/a&gt; to get Google Local for Mobiles.&lt;/p&gt;
+&lt;p&gt;It will let you do everything that Google Maps can do on your phone. including satellite images! With my tiny screen, it&amp;rsquo;s probably mostly a geewhiz thing. With a hiptop it would be pretty neat, I bet.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>It&#39;s a small Internet</title>
+      <link>https://blog.nella.org/2005/08/15/its-a-small-internet/</link>
+      <pubDate>Mon, 15 Aug 2005 11:10:40 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=181</guid> 
+      <description>&lt;p&gt;An ex-coworker made an &lt;a href=&#34;http://www.nextthing.org/archives/2005/08/07/fun-with-http-headers&#34;&gt;interesting survey of HTTP headers&lt;/a&gt;. During which he &lt;a href=&#34;https://blog.nella.org/archives/2003/08/google_cant_spe_1.html&#34;&gt;found my own comments&lt;/a&gt; on apparent typos in HTTP headers.&lt;/p&gt;
+&lt;p&gt;Hi Andrew! It&amp;rsquo;s good to see you are still hacking!&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Apple&#39;s new mouse</title>
+      <link>https://blog.nella.org/2005/08/02/apples-new-mouse/</link>
+      <pubDate>Tue, 02 Aug 2005 17:02:50 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=176</guid> 
+      <description>&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;http://nella.org/img/fingermouse.jpg&#34;&gt;Apple released the Mighty Mouse today. Leave it to Apple to &amp;ldquo;innovate&amp;rdquo; themselves into making a zero button, four button mouse. Yes, they added some space-age alien technology to sense your &amp;ldquo;clicking&amp;rdquo; through the shell so that there would BE NO BUTTONS.&lt;/p&gt;
+&lt;p&gt;Because, seriously, the fact that there are buttons on my mouse is the BIGGEST SINGLE PROBLEM in my daily digital life.&lt;/p&gt;
+&lt;p&gt;Idiots.&lt;/p&gt;
+&lt;p&gt;The entire product is captured nicely in this quote (from &lt;a href=&#34;http://www.apple.com/mightymouse/software.html&#34;&gt;here&lt;/a&gt;):&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>No Commenting?</title>
+      <link>https://blog.nella.org/2005/03/25/no-commenting/</link>
+      <pubDate>Fri, 25 Mar 2005 15:36:48 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=143</guid> 
+      <description>&lt;p&gt;Some people have asked why I do not allow comments on my blog. The answer is that this is my space, and I want total control of what&amp;rsquo;s here. Fighting comment spam is a losing proposition, and I don&amp;rsquo;t want to be involved in it.&lt;/p&gt;
+&lt;p&gt;I have trackbacks turned on, so if you are using a blogging system that supports them, anything you say on your blog that links to my blog will be crosslinked between the two blogs (and i will see it, just as if you posted a comment to my blog). If you don&amp;rsquo;t have a blog and feel like you are muzzled by my decision to not have comments, I have a simple solution for you: get a blog, and post to it. (If you don&amp;rsquo;t know how to get your own blog, ask me and I&amp;rsquo;ll help you.)&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Small world!</title>
+      <link>https://blog.nella.org/2005/03/11/small-world/</link>
+      <pubDate>Fri, 11 Mar 2005 11:13:20 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=137</guid> 
+      <description>&lt;p&gt;A coworker of mine from when I was at Tellme has started a new blog to show and tell what he&amp;rsquo;s learning and thinking about network configuration management. In his &lt;a href=&#34;http://www.greatcircle.com/blog/2005/03/10/new_paper_rigor.html&#34;&gt;most recent posting&lt;/a&gt; it turns out he&amp;rsquo;s found a paper written by a friend of mine from college! What a small world!&lt;/p&gt;
+&lt;p&gt;This problem is an important one. Automated system administration is a well accepted concept at this point. You simply cannot run 10,000 node clusters without extensive automation, and there are &lt;a href=&#34;http://top500.org/&#34;&gt;a lot&lt;/a&gt; of clusters that size these days (not to mention &lt;a href=&#34;http://google.com&#34;&gt;service providers&lt;/a&gt; who use over 10,000 computers to implement their service). Networks were growing in absolute size due to the pervasive nature of the computers they connect now. But as if that wasn&amp;rsquo;t enough to demand automation, network admins are adding a myriad of devices on top of (and embedded within) their networks, all of which have configurations that depend on the overall configuration. Over and over again, we see in outages in production networks precipitated by seemingly unrelated changes in far-off parts of the network. Assuming you can predict the dependencies and write some software to address them, automated network configuration management should be able to nip some of these outages in the bud.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Jabber</title>
+      <link>https://blog.nella.org/2005/01/20/jabber/</link>
+      <pubDate>Thu, 20 Jan 2005 00:40:53 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=136</guid> 
+      <description>&lt;p&gt;I&amp;rsquo;m on Jabber as &lt;a href=&#34;mailto:jra@nella.org&#34;&gt;jra@nella.org&lt;/a&gt;. I&amp;rsquo;m running my own server, and supposedly other Jabber servers are supposed to be able to contact mine and send me messages. I&amp;rsquo;m not convinced it&amp;rsquo;s really working because my test case didn&amp;rsquo;t seem to do what I expected. So if you use Jabber and want to talk to me, give it a try.&lt;/p&gt;
+&lt;p&gt;The Jabber guys ship their stuff configured to talk to MySQL instead of to BerkeleyDB. Doesn&amp;rsquo;t make sense, since the average Fedora Core install has the right BerkeleyDB, but doesn&amp;rsquo;t have MySQL. Dumb, dumb, dumb. We need to lower the bar to non-commercial chat systems, not make it harder.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Easter Eggs in Open Source Software</title>
+      <link>https://blog.nella.org/2005/01/17/easter-eggs-in-open-source-software/</link>
+      <pubDate>Mon, 17 Jan 2005 02:27:07 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=135</guid> 
+      <description>&lt;p&gt;&lt;a href=&#34;http://www.oreilly.com/catalog/cb/&#34;&gt;They&lt;/a&gt; say that the nice thing about Open Source software is that all the users are looking at the source checking it for bugs, so it will be higher quality than closed-source software.&lt;/p&gt;
+&lt;p&gt;Heh. I have proof that people don&amp;rsquo;t read the code they are installing.&lt;/p&gt;
+&lt;p&gt;Since the earliest widely-distributed releases of &lt;a href=&#34;http://cricket.sf.net&#34;&gt;Cricket&lt;/a&gt;, there&amp;rsquo;s been an easter egg in it. It is hidden in code that should arouse the curiosity of anyone doing a security audit, but it is hidden well enough that someone poking around in the code won&amp;rsquo;t see it. To my knowledge the only person who&amp;rsquo;s ever found it was &lt;a href=&#34;http://www.granicus.com/&#34;&gt;Javier Muniz&lt;/a&gt;, my officemate when I was writing Cricket. And that was only after I dropped a hint that I&amp;rsquo;d put an easter egg into Cricket. Javier&amp;rsquo;s a bright guy, and it didn&amp;rsquo;t take him long to find it.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Gmail continues to rock my world</title>
+      <link>https://blog.nella.org/2005/01/07/gmail-continues-to-rock-my-world/</link>
+      <pubDate>Fri, 07 Jan 2005 12:09:08 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=133</guid> 
+      <description>&lt;p&gt;I just noticed a really cool feature of Gmail. This is subtle, so hang in there with me&amp;hellip;&lt;/p&gt;
+&lt;p&gt;It, like other mail programs attempts to automatically maintain your address book for you by adding entries for addresses in mail you send. When you reply to someone who&amp;rsquo;s e-mail arrived without a real name, just an e-mail address you&amp;rsquo;ve got a problem: how do you add a useful address book entry for that?&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Sam Spade search plugin</title>
+      <link>https://blog.nella.org/2005/01/06/sam-spade-search-plugin/</link>
+      <pubDate>Thu, 06 Jan 2005 03:47:42 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=132</guid> 
+      <description>&lt;p&gt;I use Firefox, and I like the little search box thingie in the upper left. I decided it might be fun to figure out how it works by making a search plugin for the website SamSpade.org. Sam Spade looks up whois data and other interesting things about websites, and I find myself using it from time to time.&lt;/p&gt;
+&lt;p&gt;If you&amp;rsquo;d like to get the Sam Spade plugin for Firefox, visit &lt;a href=&#34;http://www.nella.org/jra/geek/plugins/plugins.html&#34;&gt;this page&lt;/a&gt;. After installing it, you&amp;rsquo;ll have a new search type in the popup menu in the upper right. Look, ma, no restart!&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Gmail doesn&#39;t use RAID</title>
+      <link>https://blog.nella.org/2004/07/30/gmail-doesnt-use-raid/</link>
+      <pubDate>Fri, 30 Jul 2004 11:14:34 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=114</guid> 
+      <description>&lt;p&gt;This guy arranged for thousands of email messages to be sent to his Gmail account at once, and surprise, surprise! It fell over. What a jackass. One way to know for sure he&amp;rsquo;s a jackass is the theory about compression and RAID.&lt;/p&gt;
+&lt;p&gt;First, Gmail doesn&amp;rsquo;t use RAID. It uses the &lt;a href=&#34;http://www.cs.rochester.edu/sosp2003/papers/p125-ghemawat.pdf&#34;&gt;Google Filesystem&lt;/a&gt;. It is like RAID, but implemented in user space, which lets Google play games with filesystem semantics you can&amp;rsquo;t do when you are restricted to one of the Unix filesystems on top of a hardware RAID box. It also leverages the CPU power you get for free when you buy thousands of PCI busses and IDE interfaces. The mainframe guys figured out long ago the key to throughput is lots of I/O paths. The Google Filesystem lets them use lots of CHEAP I/O paths, instead of the insanely expensive I/O paths that Netapp and Sun sell.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Firefox 0.9.1</title>
+      <link>https://blog.nella.org/2004/07/04/firefox-091/</link>
+      <pubDate>Sun, 04 Jul 2004 00:44:53 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=113</guid> 
+      <description>&lt;p&gt;First the good news: Firefox 0.9.1 for Win32 fixes my crashing problems. (So all you Mozilla zealots that found this page last time I said something about Firefox, please don&amp;rsquo;t spam me.)&lt;/p&gt;
+&lt;p&gt;The bad news is that Firefox 0.9 was a crashy mess, and it stomped my icons such that my HTML files that I saved out of Excel no longer had the &amp;ldquo;Excel generated HTML&amp;rdquo; icon, and no longer had the &amp;ldquo;Edit&amp;rdquo; option on the context menu.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Smarter</title>
+      <link>https://blog.nella.org/2004/06/17/smarter/</link>
+      <pubDate>Thu, 17 Jun 2004 21:04:38 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=110</guid> 
+      <description>&lt;p&gt;There must be something in the chemical they use to deodorize urinals that makes you smarter, because every time I have a hard programming problem and take a break to take a pee, I come up with the answer.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Some good clean fun bashing OSes</title>
+      <link>https://blog.nella.org/2004/06/03/some-good-clean-fun-bashing-oses/</link>
+      <pubDate>Thu, 03 Jun 2004 00:00:44 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=109</guid> 
+      <description>&lt;p&gt;Check out these two funny posts: &lt;a href=&#34;http://fishbowl.pastiche.org/2004/05/25/the_mac_is_a_harsh_mistress&#34;&gt;The Mac is a harsh mistress&lt;/a&gt; &lt;a href=&#34;http://fishbowl.pastiche.org/2004/05/26/and_linux_is_your_psychotic_ex&#34;&gt;&amp;hellip; and Linux is your psychotic ex&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;For the record, my computing environment is as follows: Windows XP on a laptop with SSH and PPTP (depending&amp;hellip;) over 802.11 to get connected to work. The VNC viewer gets me in touch with a bunch of xterms on a FreeBSD server where I do my real work on real computers (at Tellme, that&amp;rsquo;s Solaris on Intel). I use Mozilla Firefox almost exclusively. I often go a week or so between using Internet Explorer for some bogus website that requires it. I have Microsoft Office installed on the laptop. I abhor Word, but I really like Excel. I use it to work on clues for the Game, to visualize data while debugging systems, and even to draw rack diagrams! I also love PowerPoint&amp;hellip; but I use it as a poor-man&amp;rsquo;s desktop publishing system, rarely for giving talks. I prefer impromptu talks with whiteboards to prepared talks.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Gmail Rocks</title>
+      <link>https://blog.nella.org/2004/05/14/gmail-rocks/</link>
+      <pubDate>Fri, 14 May 2004 21:54:31 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=107</guid> 
+      <description>&lt;p&gt;Google&amp;rsquo;s Gmail is pretty cool. In fact, I&amp;rsquo;m using it as my primary user interface for my personal mailbox right now. Now I&amp;rsquo;m trying to figure out how to make mailto: links result in a jump to the Gmail compose screen. The first step is getting Windows to turn &amp;ldquo;navigate to a mailto: link&amp;rdquo; into a jump to a parameterized URL of my choosing. Then the second part is to figure out what a Gmail compose URL looks like.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Cool Toy!</title>
+      <link>https://blog.nella.org/2004/03/19/cool-toy/</link>
+      <pubDate>Fri, 19 Mar 2004 16:55:48 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=100</guid> 
+      <description>&lt;p&gt;&lt;a href=&#34;http://www.thenakedpcstore.com/swisstech/&#34;&gt;This&lt;/a&gt; is the coolest keychain tool ever.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Moving my Vote</title>
+      <link>https://blog.nella.org/2004/03/18/moving-my-vote/</link>
+      <pubDate>Thu, 18 Mar 2004 15:59:35 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=99</guid> 
+      <description>&lt;p&gt;I currently live in California. It is not considered a &amp;ldquo;key battleground state&amp;rdquo; for the presidential election. Both parties have essentially conceded the electoral votes to Kerry. As long as Californians as a whole vote the way everyone expects them to, Democrats in California can afford to ship some of those votes off to other precincts in the nation, where the election will be more competitive. The same reasoning would allow Republicans to move some votes from states like Texas to the battleground states.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>DRM revisited</title>
+      <link>https://blog.nella.org/2004/02/23/drm-revisited/</link>
+      <pubDate>Mon, 23 Feb 2004 10:57:38 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=94</guid> 
+      <description>&lt;p&gt;&lt;a href=&#34;http://ianmurdock.com/archives/000193.html&#34;&gt;Another take&lt;/a&gt; on DRM. We come at the issue from different points of view, and end up at the same place: just wanting to make unencumbered MP3&amp;rsquo;s to work around the whole thing.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>DRM, cracks, and my buying habits</title>
+      <link>https://blog.nella.org/2004/01/26/drm-cracks-and-my-buying-habits/</link>
+      <pubDate>Mon, 26 Jan 2004 11:01:13 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=91</guid> 
+      <description>&lt;p&gt;The iPod, WMA, and DRM get &lt;a href=&#34;http://radio.weblogs.com/0001011/2004/01/26.html#a6361&#34;&gt;Scobleized&lt;/a&gt;. The point he makes is that having many players available to you is important because once you commit to buying media locked up via DRM, you are locked in to whatever platforms support the kind of DRM your content uses.&lt;/p&gt;
+&lt;p&gt;The problem with that argument is that I don&amp;rsquo;t accept the premise that content I buy should be locked up. I am responsible in the way I use and distribute digital music files. I do not share them more than I shared CD&amp;rsquo;s when I used to use them. My behavior might not be squeaky clean to the letter of the law, but I&amp;rsquo;m certain that I am not sharing my digital content more than the industry was able to bear in the early 90&amp;rsquo;s. But in order to exercise the same rights I used to enjoy with content I bought, I need it to be unlocked.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Clueless critique of RSS</title>
+      <link>https://blog.nella.org/2004/01/22/clueless-critique-of-rss/</link>
+      <pubDate>Thu, 22 Jan 2004 16:17:14 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=90</guid> 
+      <description>&lt;p&gt;Wow, is this list of &lt;a href=&#34;http://www.dylangreene.com/blog.asp?blogID=363&#34;&gt;&amp;ldquo;Ten Reasons RSS is not ready for Primetime&amp;rdquo;&lt;/a&gt; clueless.&lt;/p&gt;
+&lt;p&gt;He makes some fair points. But out of the ten, these are either simply false, irrelevant, or seriously debatable: 2, 4, 5, 8, 9, 10. I&amp;rsquo;m not going to rebut them one at a time, because I expect others to jump down his throat for me.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Vegetarians Take Note</title>
+      <link>https://blog.nella.org/2004/01/22/vegetarians-take-note/</link>
+      <pubDate>Thu, 22 Jan 2004 15:19:55 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=89</guid> 
+      <description>&lt;p&gt;Turns out plants are &lt;a href=&#34;http://radio.weblogs.com/0105910/2004/01/22.html#a713&#34;&gt;thinking too&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;So there&amp;rsquo;s only one non-sentient food product left on the planet: Right-wing Republican Ribs! Finger lickin&amp;rsquo; good. (And if you happen to get Rush&amp;rsquo;s ribs, you&amp;rsquo;ll get a nice buzz from the residual oxycontin.)&lt;/p&gt;
+&lt;p&gt;Seriously, this is neat stuff. It is further proof that cellular automata are a critical part of the working of the world. Far from being simply a mathematical curiousity, they appear to be the mechanism by which complex behavior emerges from simple systems.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Image recognition to prevent casual forgery</title>
+      <link>https://blog.nella.org/2004/01/09/image-recognition-to-prevent-casual-forgery/</link>
+      <pubDate>Fri, 09 Jan 2004 15:30:50 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=87</guid> 
+      <description>&lt;p&gt;&lt;a href=&#34;http://www.cl.cam.ac.uk/~mgk25/eurion.pdf&#34;&gt;This&lt;/a&gt; is &lt;em&gt;so cool&lt;/em&gt;!&lt;/p&gt;
+&lt;p&gt;That explains why there are all those silly yellow &amp;ldquo;20&amp;rdquo;&amp;rsquo;s in the background of the new US 20 dollar bills.&lt;/p&gt;
+&lt;p&gt;The political/social/freedom aspects of this story leave me totally irritated. But the technology involved is pretty nifty, and the fact that the authorities managed to get this integrated into software for image editing, photocopiers, etc without any public scrutiny is just absolutely unbelievable.&lt;/p&gt;
+&lt;p&gt;So now the countdown starts. How many days until a hacker writes a tool to fix this brain damage in Photoshop? All that is required is a program that takes a bitmap with EURion constellations in it as input and creates as output a bitmap missing the minimal amount of data so as to not trigger the EURion detection algorithm.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Binary Clock</title>
+      <link>https://blog.nella.org/2004/01/08/binary-clock/</link>
+      <pubDate>Thu, 08 Jan 2004 17:54:23 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=86</guid> 
+      <description>&lt;p&gt;&lt;a href=&#34;http://www.mit.edu/~jhango/&#34;&gt;Jhango&lt;/a&gt; is throwing a party Friday night to Saturday morning to celebrate when Unix time rolls over from 230-1 to 230. Since I can&amp;rsquo;t be there in person, I made her a &lt;a href=&#34;http://www.nella.org/jra/geek/BinaryClock-1.0.zip&#34;&gt;binary clock&lt;/a&gt; that runs under Win32.&lt;/p&gt;
+&lt;p&gt;It was surprisingly easy. I had it working in under 2 hours. I&amp;rsquo;ve made a few Windows apps before, but nothing like this. Yay for good documentation and an IDE that literally forces you to do it their way. (But I&amp;rsquo;m still glad my day job is not making Win32 apps.)&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>CAIDA&#39;s Network Telescope at work</title>
+      <link>https://blog.nella.org/2003/12/12/caidas-network-telescope-at-work/</link>
+      <pubDate>Fri, 12 Dec 2003 12:11:00 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=82</guid> 
+      <description>&lt;p&gt;Interesting new report from CAIDA on the &lt;a href=&#34;http://www.caida.org/analysis/security/sco-dos/&#34;&gt;DOS attacks against SCO&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>iTunes gripes</title>
+      <link>https://blog.nella.org/2003/11/05/itunes-gripes/</link>
+      <pubDate>Wed, 05 Nov 2003 01:47:21 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=80</guid> 
+      <description>&lt;p&gt;On the first day it was released, I installed iTunes for Windows. I figured something from Apple has a chance of dislodging WinAmp as my music player. They pay attention to important details, and except for the ongoing Quicktime debacle, make software most people seem to like.&lt;/p&gt;
+&lt;p&gt;Using it to edit MP3 metadata has been a disappointment. Though other people claim it makes perfect sense to them, I can&amp;rsquo;t for the life of me understand how to make a playlist. Part of the problem is that I keep right clicking on stuff, and nothing useful happens.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>The donkeys own &#34;ass&#34;</title>
+      <link>https://blog.nella.org/2003/10/26/the-donkeys-own-ass/</link>
+      <pubDate>Sun, 26 Oct 2003 23:42:02 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=79</guid> 
+      <description>&lt;p&gt;On a whim, I typed a few naughty words into Mozilla&amp;rsquo;s URL bar, just to see what would happen.&lt;/p&gt;
+&lt;p&gt;I typed &amp;ldquo;ass&amp;rdquo;, and I got sent to &lt;a href=&#34;http://www.democrats.org/blog/&#34;&gt;the DNC blog&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;WTF?&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Security in Bee Society</title>
+      <link>https://blog.nella.org/2003/08/20/security-in-bee-society/</link>
+      <pubDate>Wed, 20 Aug 2003 12:29:54 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=75</guid> 
+      <description>&lt;p&gt;Biology is neat, and is making huge progress towards being able to explain human nature. Check out this &lt;a href=&#34;http://www.nature.com/nsu/nsu_pf/020422/020422-16.html&#34;&gt;article on security mechanisms in bee populations&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Perhaps someday we&amp;rsquo;ll know how to overcome human nature. Will we choose to do so?&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Google Can&#39;t Spell, pt 2</title>
+      <link>https://blog.nella.org/2003/08/16/google-cant-spell-pt-2/</link>
+      <pubDate>Sat, 16 Aug 2003 17:26:29 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=74</guid> 
+      <description>&lt;p&gt;It occured to me that if you were trying to remove the Connection header from in the middle of a &lt;code&gt;char *&lt;/code&gt; buffer, the absolute fastest way to do it would be to use &lt;code&gt;strstr()&lt;/code&gt; to get a pointer to it, then do a byte swap to change the token from &amp;ldquo;Connection&amp;rdquo; to &amp;ldquo;Cneonction&amp;rdquo;. If you choose to optimize for CPU cycles and not bandwidth, that&amp;rsquo;s a valid optimization.&lt;/p&gt;
+&lt;p&gt;The question is, who would be motivated to optimize like that? A content provider pays for their bandwidth. If I caught one of my developers pulling a trick like that, I&amp;rsquo;d walk over to his desk and wack him up side the head with the 2x4 Of Justice. CPU cycles (especially the 20,000 or so it would take to excise the string correcetly) are cheap compared to bandwidth. I suppose, in fairness, I&amp;rsquo;d have to make a spreadsheet proving my point before I won the right to whack the developer. But my gut instinct is so strong on this, I&amp;rsquo;d probably at least shoot them with a Nerf gun before I went to do the spreadsheet.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Sending Microsoft Packing</title>
+      <link>https://blog.nella.org/2003/08/16/sending-microsoft-packing/</link>
+      <pubDate>Sat, 16 Aug 2003 17:10:44 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=73</guid> 
+      <description>&lt;p&gt;Hpaul turned me on to Mulberry when I was bitching and moaning about something stupid Outlook Express did the other day. I decided to give it a try, and I&amp;rsquo;m delighted.&lt;/p&gt;
+&lt;p&gt;In addition to being much faster than Outlook Express, it also supports server-side address books via IMSP. I set up an IMSP server, which was not as easy as one would like, but not too bad either. I arranged for it to run inside of stunnel, so no passwords in the clear.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Weblogs are the ultimate profiling tool</title>
+      <link>https://blog.nella.org/2003/07/07/weblogs-are-the-ultimate-profiling-tool/</link>
+      <pubDate>Mon, 07 Jul 2003 14:28:16 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=70</guid> 
+      <description>&lt;p&gt;Paolo makes &lt;a href=&#34;http://paolo.evectors.it/2003/07/02.html#a1756&#34;&gt;a great observation&lt;/a&gt; about how accurate ad profiling can get when the advertiser is reading your weblog.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>IBM makes metamaterials</title>
+      <link>https://blog.nella.org/2003/06/26/ibm-makes-metamaterials/</link>
+      <pubDate>Thu, 26 Jun 2003 05:17:12 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=66</guid> 
+      <description>&lt;p&gt;&lt;a href=&#34;http://www.eetuk.com/tech/news/OEG20030625S0025&#34;&gt;This&lt;/a&gt; sounds important. Humans now have the ability to make materials with properties never before seen in the universe. That&amp;rsquo;s a big deal.&lt;/p&gt;
+&lt;p&gt;You can get semi-conducting behavior out of natural substances (search for &amp;ldquo;crystal radio&amp;rdquo; and &amp;ldquo;razor blade&amp;rdquo; for an example). But you&amp;rsquo; be hard pressed to find anything on the planet outside of an IBM lab that can switch optical energy using magnetic fields.&lt;/p&gt;
+&lt;p&gt;Always a bit behind the curve, I&amp;rsquo;m finally understanding why nanotech is a big deal.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>SCO Claim credible, according to incredible analyst</title>
+      <link>https://blog.nella.org/2003/06/06/sco-claim-credible-according-to-incredible-analyst/</link>
+      <pubDate>Fri, 06 Jun 2003 00:32:04 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=63</guid> 
+      <description>&lt;p&gt;Seen in &lt;a href=&#34;http://www.informationweek.com/story/showArticle.jhtml?articleID=10300314&#34;&gt;Information Week&lt;/a&gt;: &amp;ldquo;My impression is that [SCO&amp;rsquo;s claim] is credible,&amp;rdquo; says Laura DiDio, a Yankee Group analyst who was shown the evidence by SCO Group earlier this week.&lt;/p&gt;
+&lt;p&gt;Who is this chick?&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s her bio, from &lt;a href=&#34;http://www.yankeegroup.com/public/events/conferences/ITF2003/components/IntegrationTechForumSpeakers.pdf&#34;&gt;the ITF2003 speaker list&lt;/a&gt;.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Laura DiDio, Senior Analyst, The Yankee Group&lt;/p&gt;
+&lt;p&gt;Laura DiDio is a senior analyst for the Yankee Group&amp;rsquo;s Application Infrastructure &amp;amp; Software Platforms Planning Service, which is closely aligned with the Enterprise Computing &amp;amp; Networking Planning Service. In this capacity, Ms. DiDio focuses on desktop and server operating systems, with a particular emphasis on Microsoft Windows 2000, Windows XP, Active Directory, and Novell, Inc.&amp;rsquo;s NetWare. Additional areas of coverage are Web services platforms and standards including Microsoft&amp;rsquo;s emerging .NET services and the rival J2EE. She also covers the directory services arena and interoperability and migration issues associated with Active Directory, eDirectory, and Sun&amp;rsquo;s iPlanet, as well as desktop and server operating system security, software distribution, and third-party performance monitoring and management tools.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>VMWare on Servers</title>
+      <link>https://blog.nella.org/2003/06/03/vmware-on-servers/</link>
+      <pubDate>Tue, 03 Jun 2003 11:29:32 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=62</guid> 
+      <description>&lt;p&gt;Another interesting Joel note is about &lt;a href=&#34;http://www.joelonsoftware.com/items/2003/06/02.html&#34;&gt;using VMWare on servers&lt;/a&gt;. When VMWare came out years ago, smart sysadmins I hung out with realized that it would be useful this way. But it hasn&amp;rsquo;t really taken off among folks I know.&lt;/p&gt;
+&lt;p&gt;At Tellme there are a couple reasons why we don&amp;rsquo;t use it. First, it doesn&amp;rsquo;t run on the Solaris x86 servers. Second, we are very price sensitive, since our business model calls for us to deliver a complex and potentially very expensive service via a large set of very cheap systems. So, when we consider a change that involves putting new commercial software on all those little machines, the costs can add up quickly and overwhelm the benefit. I haven&amp;rsquo;t done a specific investigation at Tellme, but my gut instinct is that it wouldn&amp;rsquo;t fly.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Mozilla Firebird is ready to rock</title>
+      <link>https://blog.nella.org/2003/06/03/mozilla-firebird-is-ready-to-rock/</link>
+      <pubDate>Tue, 03 Jun 2003 11:14:18 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=61</guid> 
+      <description>&lt;p&gt;&lt;a href=&#34;http://www.mozilla.org/projects/firebird/&#34;&gt;Mozilla Firebird&lt;/a&gt; is almost ready to replace IE on my desktop. It is fast, and almost all of my habits from IE carry over. &lt;a href=&#34;http://www.joelonsoftware.com/news/20030601.html&#34;&gt;Joel&amp;rsquo;s review&lt;/a&gt; of it is what got me to try again. I&amp;rsquo;ve tried Mozilla several times in the past and just given up because it was such a pig.&lt;/p&gt;
+&lt;p&gt;I have two complaints. First, the middle-click and drag scrolling behavior of IE is not supported. Second, the Moveable Type entry body editing box does not have the useful little &amp;ldquo;make link&amp;rdquo; button, which I use a lot.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Google can&#39;t spell?</title>
+      <link>https://blog.nella.org/2003/06/03/google-cant-spell/</link>
+      <pubDate>Tue, 03 Jun 2003 00:59:36 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=60</guid> 
+      <description>&lt;p&gt;Google&amp;rsquo;s HTTP replies have headers like this in them:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Cneonction: Close&lt;/p&gt;
+&lt;p&gt;NnCoection: Close&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;The first one happens for responses with result code 200. The second one happens with responses of 403. (If you are asking yourself how I got Google to give me a 403, try &lt;a href=&#34;http://google.com/wml&#34;&gt;http://google.com/wml&lt;/a&gt; with a user agent that does not include &amp;ldquo;Mozilla&amp;rdquo; in it. Weird.)&lt;/p&gt;
+&lt;p&gt;Google is too smart of a company to do this by mistake. But what crazy bug could they possibly be working around with this?&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>SF Bay Bloggers</title>
+      <link>https://blog.nella.org/2003/05/27/sf-bay-bloggers/</link>
+      <pubDate>Tue, 27 May 2003 18:35:32 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=57</guid> 
+      <description>&lt;p&gt;&lt;a href=&#34;http://www.sfbaybloggers.com/&#34;&gt;SF Bay Bloggers&lt;/a&gt; is a website for bloggers in the SF Bay Area that some &lt;a href=&#34;http://www.geekychick.net/&#34;&gt;geeky chick&lt;/a&gt; put together. Congrats Courtney!&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Beter Speling</title>
+      <link>https://blog.nella.org/2003/05/24/beter-speling/</link>
+      <pubDate>Sat, 24 May 2003 23:26:07 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=55</guid> 
+      <description>&lt;p&gt;You should be seeing better spelling on this weblog from now on, since I added &lt;a href=&#34;http://rescomp.stanford.edu/~akosut/software/mtspeling.html&#34;&gt;MTSpeling.pl&lt;/a&gt; to my MoveableType installation. Unfortunately, you have to patch MT itself to integrate it, but it was no big deal.&lt;/p&gt;
+&lt;p&gt;There&amp;rsquo;s no way to add words to your personal dictionary on the server side, but I have an idea for how to do it, which I might try out. If I get it figured out, I&amp;rsquo;ll post it here. Basically, I&amp;rsquo;ll write a CGI script called &amp;ldquo;add-word.cgi&amp;rdquo; or something. Then I&amp;rsquo;ll arrange for every potentially misspelled word to be a link to a javascript function which submits the word to the CGI, and possibly even makes changes using the DOM so that the word is no longer a link, and no longer marked as misspelled.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Matrix Reloaded and Stephen Wolfram</title>
+      <link>https://blog.nella.org/2003/05/21/matrix-reloaded-and-stephen-wolfram/</link>
+      <pubDate>Wed, 21 May 2003 01:28:14 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=49</guid> 
+      <description>&lt;p&gt;I saw &lt;a href=&#34;http://www.thematrix.com&#34;&gt;Matrix Reloaded&lt;/a&gt; today. It was pretty good, I guess I&amp;rsquo;d score it a 4 out of 5. Not like the original Matrix, which was an 11 out of 5! I remember leaving the theater after the first Matrix thinking, &amp;ldquo;Wow, that movie has changed the playing field of Sci-Fi movies forever.&amp;rdquo; And it turned out I was right. This time I left the theater thinking, &amp;ldquo;That was a good movie, and I&amp;rsquo;m glad I went to it.&amp;rdquo; Which, compared to some of the crap that you see in the theaters, is a pretty huge compliment.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Finding IDE drive firmware version from Solaris</title>
+      <link>https://blog.nella.org/2003/05/15/finding-ide-drive-firmware-version-from-solaris/</link>
+      <pubDate>Thu, 15 May 2003 19:23:07 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=46</guid> 
+      <description>&lt;p&gt;I am working on a mysterious bug at work, and absent of any other promising theories, I decided to compare the firmware revision of all the hard drives involved to see if that correlated with the pattern of problems. If you aren&amp;rsquo;t a sysadmin, that will either not make any sense at all, or will give you some insight into what our lives are like.&lt;/p&gt;
+&lt;p&gt;So I figured it can&amp;rsquo;t be too hard, right? Getting this info from a SCSI disk turns out to be easy, as long as you have Veritas NetBackup server installed, and are on a Sparc. You run &amp;ldquo;sgscan&amp;rdquo;, which uses the SCSI Generic driver to scan the buses. Fine, but I was on Solaris x86, and though I did have the NetBackup client package available to me, sgscan is only available in the server install.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Hello, I&#39;m back!</title>
+      <link>https://blog.nella.org/2003/05/06/hello-im-back/</link>
+      <pubDate>Tue, 06 May 2003 12:08:34 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=44</guid> 
+      <description>&lt;p&gt;nella.org dropped off the net because of some nameserver difficulties. I took the chance to also change registrars, which added to the downtime. I am back now, so if you sent mail and it bounced and you want me to see it, please send it again.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Aggressive Caching in TiVo.pm</title>
+      <link>https://blog.nella.org/2003/04/16/aggressive-caching-in-tivopm/</link>
+      <pubDate>Wed, 16 Apr 2003 03:55:20 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=39</guid> 
+      <description>&lt;p&gt;So, it appears that too aggressive caching in TiVo.pm is the culprit. Even after I changed which services it was supposed to be advertising to the TiVo, it still sent down the old stuff it had cached in files in /tmp. Removing everything in /tmp owned by apache solved the problem. Not graceful, but it worked.&lt;/p&gt;
+&lt;p&gt;Hello, TiVo? Is there someone there I can report these bugs to?&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Update to tivo-beacon</title>
+      <link>https://blog.nella.org/2003/04/16/update-to-tivo-beacon/</link>
+      <pubDate>Wed, 16 Apr 2003 03:48:51 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=38</guid> 
+      <description>&lt;p&gt;I made a new version of &lt;a href=&#34;http://www.nella.org/jra/geek/tivo/tivo-beacon&#34;&gt;tivo-beacon&lt;/a&gt;, with the length bytes included that TiVo seems to send on TCP connections. That makes it quite a bit happier. Now I just need to figure out why TiVo.pm is sending down messages about services (&amp;ldquo;Music&amp;rdquo; in my case) that are commented out of example.cgi.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>TiVoConnect Hacking</title>
+      <link>https://blog.nella.org/2003/04/16/tivoconnect-hacking/</link>
+      <pubDate>Wed, 16 Apr 2003 02:59:42 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=37</guid> 
+      <description>&lt;p&gt;Tonite I set out to make my Tivo use my remotely-hosted Linux webserver as my MP3 server. The eventual goal is to teach WinAmp to play from the same collection of files, so that I can have one copy of my mp3&amp;rsquo;s in the &amp;ldquo;cloud&amp;rdquo; and still get access to them easily on each device.&lt;/p&gt;
+&lt;p&gt;The first step was to investigate the &lt;a href=&#34;https://web.archive.org/web/20030408073412/http://www.tivo.com/developer/&#34;&gt;TiVo Developers info&lt;/a&gt;. There I found &lt;a href=&#34;https://web.archive.org/web/20030408073412/http://www.tivo.com/developer/i/TiVoPM_032003.tar.gz&#34;&gt;a tar.gz file&lt;/a&gt; with some stuff in it that implemented the funky XML messages TiVo needs to know what&amp;rsquo;s in the directory tree. I fetched it put it in a directory on my webserver.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>MySQL making in-roads in enterprises</title>
+      <link>https://blog.nella.org/2003/04/14/mysql-making-in-roads-in-enterprises/</link>
+      <pubDate>Mon, 14 Apr 2003 03:01:47 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=35</guid> 
+      <description>&lt;p&gt;You heard &lt;a href=&#34;http://www.eweek.com/article2/0,3959,1020266,00.asp&#34;&gt;it&lt;/a&gt; &lt;a href=&#34;https://blog.nella.org/archives/000002.html&#34;&gt;here first&lt;/a&gt; folks. And it appears MySQL AB&amp;rsquo;s intends to make version 5 the one that really puts the hurt on Oracle and MS SQL Server.&lt;/p&gt;
+&lt;p&gt;Note to &lt;a href=&#34;http://www.oracle.com/corporate/pressroom/html/index.html?ellisonl.html&#34;&gt;Larry&lt;/a&gt;: Sell short.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Free Wireless</title>
+      <link>https://blog.nella.org/2003/04/04/free-wireless/</link>
+      <pubDate>Fri, 04 Apr 2003 10:33:25 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=31</guid> 
+      <description>&lt;p&gt;This weblog post, and the last one, brought to you courtesy of the owner of &lt;code&gt;adsl-34-22-231.mia.bellsouth.net&lt;/code&gt;. Whoever you are, thanks for making it possible for me to sit in the shade on a Fort Lauderdale street and use the net. If you are ever on Arch St. in Redwood City, I&amp;rsquo;ll happily return the favor.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>TDMoIP</title>
+      <link>https://blog.nella.org/2003/03/30/tdmoip/</link>
+      <pubDate>Sun, 30 Mar 2003 22:00:28 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=25</guid> 
+      <description>&lt;p&gt;There&amp;rsquo;s a new technology to learn about&amp;hellip; &lt;a href=&#34;https://web.archive.org/web/20031124002713/http://www.eetimes.com/story/OEG20030326S0012&#34;&gt;TDMoIP&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;VoIP (Voice over IP) has been a big disaster. Lots of engineering effort in, little success out. I had a Vonage phone line for a while, and the call quality (mostly due to latency) was terrible. I was using my Vonage endpoint under significantly less than ideal circumstances, so it might not have even been their fault. But I&amp;rsquo;ve seen VoIP stuff take up lots of time and deliver very little value at &lt;a href=&#34;https://web.archive.org/web/20030217021356/http://www.tellme.com/&#34;&gt;work&lt;/a&gt; too.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>16-bit Internet?</title>
+      <link>https://blog.nella.org/2003/03/30/16-bit-internet/</link>
+      <pubDate>Sun, 30 Mar 2003 20:58:35 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=24</guid> 
+      <description>&lt;p&gt;Check out this snippet from the &amp;ldquo;Having trouble connecting&amp;rdquo; help screen for &lt;a href=&#34;http://www.aim.com&#34;&gt;AOL Instant Messenger&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;You might not be able to sign on if:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Your Internet connection is only 16-bit. AIM needs a 32-bit connection. Contact your ISP if you are not sure.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;snip&amp;hellip;&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/blockquote&gt;
+&lt;p&gt;16-bit Internet? What they hell are these guys &lt;a href=&#34;http://www.smokedot.org&#34;&gt;smoking&lt;/a&gt;?&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Wooden Clockworks</title>
+      <link>https://blog.nella.org/2003/03/22/wooden-clockworks/</link>
+      <pubDate>Sat, 22 Mar 2003 17:26:39 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=23</guid> 
+      <description>&lt;p&gt;Here&amp;rsquo;s a collection of links about wooden clockworks.&lt;/p&gt;
+&lt;p&gt;First, you need to search for &amp;ldquo;wooden clockworks&amp;rdquo;, not &amp;ldquo;wooden clocks&amp;rdquo;, since lots of people make wooden cases, put a quartz clockworks in them and then list them as &amp;ldquo;wooden clocks&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.abbeyclock.com/&#34;&gt;This site&lt;/a&gt; would win the awards for both &amp;ldquo;most irritating website ever&amp;rdquo;, and &amp;ldquo;most useful information&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.wooden-clockworks.com/&#34;&gt;This site&lt;/a&gt; looks really promising, and is what pointed me at the first one.
+It even has a beginner&amp;rsquo;s project, which has only a weight and an escapement which runs for 10 minutes.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Blogchalking</title>
+      <link>https://blog.nella.org/2003/03/12/blogchalking/</link>
+      <pubDate>Wed, 12 Mar 2003 04:27:18 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=12</guid> 
+      <description>&lt;p&gt;This is my new blogchalk:
+&lt;strong&gt;United States, California, Redwood City, Central, English, Jeff, Male, 26-30.&lt;/strong&gt; :)&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>It&#39;s not IBM that Oracle needs to worry about</title>
+      <link>https://blog.nella.org/2003/03/11/its-not-ibm-that-oracle-needs-to-worry-about/</link>
+      <pubDate>Tue, 11 Mar 2003 12:07:15 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=9</guid> 
+      <description>&lt;p&gt;TechNewsWorld reports, &lt;a href=&#34;https://web.archive.org/web/20040624210641/http://www.technewsworld.com/story/20968.html&#34;&gt;Top Dog Oracle Losing Database Market Share&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;At work, we are using mySQL for new projects, and looking seriously at replacing Oracle in old projects with it too. Oracle is too expensive when mySQL, which is free, will do the same job.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Update&lt;/strong&gt;: &lt;a href=&#34;http://www.cnn.com/2003/TECH/ptech/03/12/fortune.ff.open.source/index.html&#34;&gt;Fortune&lt;/a&gt; picked up the story, but probably not from me.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Afganistan gets a top level domain</title>
+      <link>https://blog.nella.org/2003/03/11/afganistan-gets-a-top-level-domain/</link>
+      <pubDate>Tue, 11 Mar 2003 11:51:01 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=8</guid> 
+      <description>&lt;p&gt;On March 10 2003 the UNDP made the &amp;ldquo;af&amp;rdquo; top level domain go live. Coverage is here: &lt;a href=&#34;http://www.cnn.com/2003/TECH/03/10/afghan.internet/index.html&#34;&gt;CNN&lt;/a&gt;, &lt;a href=&#34;https://web.archive.org/web/20030605093606/http://www.undp.org.af:80/archive/2003/10mar03.html&#34;&gt;UNDP&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I decided to look into this to see what it looked like. I found to my delight that ns.undp.org was allowing zone transfers for the entire &amp;ldquo;.af&amp;rdquo; namespace. Unfortunately, there&amp;rsquo;s still not much &lt;a href=&#34;http://www.nella.org/jra/geek/af/2003-03-11/&#34;&gt;there to see&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The interesting thing is the list of &lt;a href=&#34;http://www.nella.org/jra/geek/af/2003-03-11/second-levels.txt&#34;&gt;second-level domains&lt;/a&gt; they have started out with. Where did those come from? Do you suppose that some geek in the basement of the UNDP set those up for fun? Why aren&amp;rsquo;t any of them in the local language?&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Old News</title>
+      <link>https://blog.nella.org/2002/07/24/old-news/</link>
+      <pubDate>Wed, 24 Jul 2002 02:49:00 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=4</guid> 
+      <description>&lt;p&gt;There are two things wrong with this story: &lt;a href=&#34;https://web.archive.org/web/20050204193630/http://news.com.com/2100-1040-945911.html&#34;&gt;MSN TV prank creating &amp;ldquo;emergencies&amp;rdquo;&lt;/a&gt;. One, that it could happen at all, because the design problems and bugs that made it possible have been known for a long time by people smart enough, but too busy to fix them. Second, that people are calling it a virus. It&amp;rsquo;s not a virus, just like it wasn&amp;rsquo;t the &lt;a href=&#34;https://web.archive.org/web/20040917185036/http://zdnet.com.com/2100-11-519338.html&#34;&gt;last time&lt;/a&gt; this came up.&lt;/p&gt;
+&lt;p&gt;The press can be so frustrating to deal with. The day I gave that interview, I had to get out of the office and go watch people flying kites to unwind.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

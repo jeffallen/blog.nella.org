@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Playing (cards) with Clojure | jra&#39;s thoughts</title>
+<meta name="keywords" content="">
+<meta name="description" content="I&rsquo;m learning Clojure, which is a modern Lisp, which is hosted on the JVM. I&rsquo;m so far really liking the focus on integrating the benefits of functional programming into a modern environment. It is pragmatic and reasonable. It feels like programming for grown-ups, in the same way that Node.js feels like programming for people with more energy than sense.
+While riding on the train with my kids, I told them, &ldquo;Hey, I&rsquo;m learning this new language, let&rsquo;s use it to make a card game since we don&rsquo;t have any cards with us.&rdquo; Clojure, as a Lisp, is meant to be usable interactively from a REPL and since I was on my phone in a train, I used an in-browser version of Clojure called ClojureScript. The one I used is at http://trycojure.org.">
+<meta name="author" content="jra">
+<link rel="canonical" href="https://blog.nella.org/2024/02/21/playing-cards-with-clojure/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.3beea2776320e39a6c8d0589cd10cf4cbbbe3ca9b6f0363cfeef1417ed39a195.css" integrity="sha256-O&#43;6id2Mg45psjQWJzRDPTLu&#43;PKm28DY8/u8UF&#43;05oZU=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://blog.nella.org/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://blog.nella.org/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://blog.nella.org/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://blog.nella.org/apple-touch-icon.png">
+<link rel="mask-icon" href="https://blog.nella.org/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://blog.nella.org/2024/02/21/playing-cards-with-clojure/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend&display=swap" rel="stylesheet">
+<meta property="og:url" content="https://blog.nella.org/2024/02/21/playing-cards-with-clojure/">
+  <meta property="og:site_name" content="jra&#39;s thoughts">
+  <meta property="og:title" content="Playing (cards) with Clojure">
+  <meta property="og:description" content="I’m learning Clojure, which is a modern Lisp, which is hosted on the JVM. I’m so far really liking the focus on integrating the benefits of functional programming into a modern environment. It is pragmatic and reasonable. It feels like programming for grown-ups, in the same way that Node.js feels like programming for people with more energy than sense.
+While riding on the train with my kids, I told them, “Hey, I’m learning this new language, let’s use it to make a card game since we don’t have any cards with us.” Clojure, as a Lisp, is meant to be usable interactively from a REPL and since I was on my phone in a train, I used an in-browser version of Clojure called ClojureScript. The one I used is at http://trycojure.org.">
+  <meta property="og:locale" content="en-US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-02-21T16:19:18+00:00">
+    <meta property="article:modified_time" content="2024-02-21T16:19:18+00:00">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Playing (cards) with Clojure">
+<meta name="twitter:description" content="I&rsquo;m learning Clojure, which is a modern Lisp, which is hosted on the JVM. I&rsquo;m so far really liking the focus on integrating the benefits of functional programming into a modern environment. It is pragmatic and reasonable. It feels like programming for grown-ups, in the same way that Node.js feels like programming for people with more energy than sense.
+While riding on the train with my kids, I told them, &ldquo;Hey, I&rsquo;m learning this new language, let&rsquo;s use it to make a card game since we don&rsquo;t have any cards with us.&rdquo; Clojure, as a Lisp, is meant to be usable interactively from a REPL and since I was on my phone in a train, I used an in-browser version of Clojure called ClojureScript. The one I used is at http://trycojure.org.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://blog.nella.org/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Playing (cards) with Clojure",
+      "item": "https://blog.nella.org/2024/02/21/playing-cards-with-clojure/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Playing (cards) with Clojure",
+  "name": "Playing (cards) with Clojure",
+  "description": "I\u0026rsquo;m learning Clojure, which is a modern Lisp, which is hosted on the JVM. I\u0026rsquo;m so far really liking the focus on integrating the benefits of functional programming into a modern environment. It is pragmatic and reasonable. It feels like programming for grown-ups, in the same way that Node.js feels like programming for people with more energy than sense.\nWhile riding on the train with my kids, I told them, \u0026ldquo;Hey, I\u0026rsquo;m learning this new language, let\u0026rsquo;s use it to make a card game since we don\u0026rsquo;t have any cards with us.\u0026rdquo; Clojure, as a Lisp, is meant to be usable interactively from a REPL and since I was on my phone in a train, I used an in-browser version of Clojure called ClojureScript. The one I used is at http://trycojure.org.\n",
+  "keywords": [
+    
+  ],
+  "articleBody": "I’m learning Clojure, which is a modern Lisp, which is hosted on the JVM. I’m so far really liking the focus on integrating the benefits of functional programming into a modern environment. It is pragmatic and reasonable. It feels like programming for grown-ups, in the same way that Node.js feels like programming for people with more energy than sense.\nWhile riding on the train with my kids, I told them, “Hey, I’m learning this new language, let’s use it to make a card game since we don’t have any cards with us.” Clojure, as a Lisp, is meant to be usable interactively from a REPL and since I was on my phone in a train, I used an in-browser version of Clojure called ClojureScript. The one I used is at http://trycojure.org.\nSo, to play with cards, we need a deck. I used the for function to iterate over a pair of variables for the cards and the suits:\n(def deck (for [rank (take 13 (drop 1 (range))) suit [:♥️ :♦️ :♣️ :♠️]] {:rank rank :suit suit})) Range starts at 0, but cards run from 1 to 13. So we need to drop 1 off the front of range before taking 13 more items from the infinite list it provides.\nNow we can play with our deck a bit:\n; take the first 3 cards off and look at them (take 3 deck) \u003e ({:rank 1, :suit :♥️} {:rank 1, :suit :♦️} {:rank 1, :suit :♣️}) ; take the next 3 cards off and look at them (take 3 deck) \u003e ({:rank 1, :suit :♥️} {:rank 1, :suit :♦️} {:rank 1, :suit :♣️}) So we see two things there. First, we see how simple and beautiful it is to make an “object” in Clojure: just use a map to associate various types of data (including Unicode strings) together. Second we see the “consequences” of Clojure’s immutable data: taking the “first 3 cards” and the “next 3 cards” doesn’t do what you might expect: we get the same 3 cards, because both calls to take are making new 3 element immutable lists based off of the same original immutable list.\nSo then how do we deal out two hands of 3 cards? What we need to do is shuffle the cards, and then take our hands from this new list. We can take 3 for one hand and 3 for the other hand:\n(let [shuffled (shuffle deck) you (take 3 shuffled) me (take 3 (drop 3 shuffled))] {:you you :me me}) \u003e {:you ({:rank 1, :suit :♦️} {:rank 12, :suit :♠️} {:rank 9, :suit :♣️}), :me ({:rank 8, :suit :♠️} {:rank 6, :suit :♣️} {:rank 6, :suit :♥️})} The key to getting the benefits of pure functions and immutable data structures is to adapt to them, instead of fighting them. So here, we need to put a name on the copy of the deck that’s been shuffled, so that we can take cards from the same shuffle for the two players.\nI wondered how shuffle works, and I got an interesting surprise when I looked at “view source” for it in VS Code. (I use VS Code and Calva to program Clojure. The first time I learned Lisp, in university, I was working within a not-very-good editor inside of a not-very-good Scheme implementation for MacOS System 7. It crashed a lot. The next time I re-learned Lisp was in 2006, when I did Abdulaziz Ghuloum’s step by step Scheme compiler tutorial. Then, I worked in Emacs, which I like. But I hate configuring Emacs, and so I was delighted when VS Code came on the scene and let me forget what microscopic amount of e-lisp I ever managed to learn.)\nHere’s how Clojure implements shuffle:\n(defn shuffle \"Return a random permutation of coll\" {:added \"1.2\" :static true} [^java.util.Collection coll] (let [al (java.util.ArrayList. coll)] (java.util.Collections/shuffle al) (clojure.lang.RT/vector (.toArray al)))) That’s interesting because it demonstrates the Java interoperation part of Clojure. In general, the Clojure standard library has a lot of “batteries included”, and when it makes sense, they depend on existing “batteries” included in Java itself. In this case, they are using java.util.Collections’ shuffle​(List\u003c?\u003e list), which shuffles in-place. That’s why they need to make a copy of the collection as an ArrayList and then construct a new Clojure vector from the array before returning it. Typical Java code does not use immutable data, and so when you do interoperation with it, getting the output data back to normal Clojure data structures as soon as possible is important to regain the benefits of immutable data.\nThere is another shuffle implementation in Java that allows you to pass in your own Random object. Using that, you’d be able to get deterministic shuffles, which is something we used when investigating how to put games on decentralized ledgers when I worked at DEDIS. As a way to play with Java interoperation in Clojure, perhaps I will try to make a deterministic shuffle.\nTo have some kind of game at all, I wanted to add up the cards. So I used reduce to do that. I had a lot of trouble understanding reduce the first few times I read about it, until I read what Clojure for the Brave and True had to say about it. Now I understand that reduce often means “go do this thing for each item in the list, and build up one result from visiting all those things”. That helped me see how to use it here to add cards:\n(defn add-cards [coll] (reduce #(+ % (:rank %2)) 0 coll)) ; a micro-unit test: the first 3 cards, all with rank 1, should add to 3 (= (add-cards (take 3 deck)) 3) \u003e true Here we also see the supremely pragmatic technique in Clojure of using a keyword as a function. The underlying machinery that implements keywords in Clojure implements the IFn interface, which means you can call into it from Clojure. When a keyword is called, it looks at it’s first argument, and if it is a map, it will look itself up in the map. The smallest possible demonstration of this is: (= 3 (:rank {:rank 3})) -\u003e true\nAnd so now, we just need to put it together into a boring little game, which though it bored my children to tears, at least helped me pass a little time on a long train trip and practice my new Clojure skills:\n(defn game [] (let [shuffled-cards (shuffle deck) you (take 3 shuffled-cards) me (take 3 (drop 3 shuffled-cards)) you-score (add-cards you) me-score (add-cards me)] {:you you :me me, :winner (if (\u003e you-score me-score) :you :me)})) \u003e (game) {:you ({:rank 5, :suit :♦️} {:rank 7, :suit :♣️} {:rank 3, :suit :♠️}), :me ({:rank 2, :suit :♠️} {:rank 7, :suit :♠️} {:rank 3, :suit :♦️}), :winner :you} \u003e (game) {:you ({:rank 7, :suit :♦️} {:rank 12, :suit :♥️} {:rank 8, :suit :♥️}), :me ({:rank 12, :suit :♦️} {:rank 11, :suit :♦️} {:rank 5, :suit :♣️}), :winner :me} \u003e (game) {:you ({:rank 4, :suit :♠️} {:rank 5, :suit :♦️} {:rank 5, :suit :♥️}), :me ({:rank 13, :suit :♠️} {:rank 5, :suit :♠️} {:rank 11, :suit :♥️}), :winner :me} I win!\n",
+  "wordCount" : "1196",
+  "inLanguage": "en",
+  "datePublished": "2024-02-21T16:19:18Z",
+  "dateModified": "2024-02-21T16:19:18Z",
+  "author":{
+    "@type": "Person",
+    "name": "jra"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://blog.nella.org/2024/02/21/playing-cards-with-clojure/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "jra's thoughts",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://blog.nella.org/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://blog.nella.org/" accesskey="h" title="jra&#39;s thoughts (Alt + H)">jra&#39;s thoughts</a>
+            <div class="logo-switches">
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://blog.nella.org/">Home</a>&nbsp;»&nbsp;<a href="https://blog.nella.org/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      Playing (cards) with Clojure
+    </h1>
+    <div class="post-meta"><span title='2024-02-21 16:19:18 +0000 +0000'>February 21, 2024</span>&nbsp;·&nbsp;6 min&nbsp;·&nbsp;jra
+
+</div>
+  </header> 
+  <div class="post-content"><p>I&rsquo;m learning Clojure, which is a modern Lisp, which is hosted on the JVM. I&rsquo;m so far really liking the focus on integrating the benefits of functional programming into a modern environment. It is pragmatic and reasonable. It feels like programming for grown-ups, in the same way that Node.js feels like programming for people with more energy than sense.</p>
+<p>While riding on the train with my kids, I told them, &ldquo;Hey, I&rsquo;m learning this new language, let&rsquo;s use it to make a card game since we don&rsquo;t have any cards with us.&rdquo; Clojure, as a Lisp, is meant to be usable interactively from a REPL and since I was on my phone in a train, I used an in-browser version of Clojure called ClojureScript. The one I used is at <a href="http://trycojure.org">http://trycojure.org</a>.</p>
+<p>So, to play with cards, we need a deck. I used the <code>for</code> function to iterate over a pair of variables for the cards and the suits:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-clojure" data-lang="clojure"><span style="display:flex;"><span>(<span style="color:#66d9ef">def </span>deck (for [rank (take <span style="color:#ae81ff">13</span> (drop <span style="color:#ae81ff">1</span> (<span style="color:#a6e22e">range</span>)))
+</span></span><span style="display:flex;"><span>                  suit [<span style="color:#960050;background-color:#1e0010">:♥</span>️ <span style="color:#960050;background-color:#1e0010">:♦</span>️ <span style="color:#960050;background-color:#1e0010">:♣</span>️ <span style="color:#960050;background-color:#1e0010">:♠</span>️]]
+</span></span><span style="display:flex;"><span>              {<span style="color:#e6db74">:rank</span> rank <span style="color:#e6db74">:suit</span> suit}))
+</span></span></code></pre></div><p>Range starts at 0, but cards run from 1 to 13. So we need to drop 1 off the front of range before taking 13 more items from the infinite list it provides.</p>
+<p>Now we can play with our deck a bit:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-clojure" data-lang="clojure"><span style="display:flex;"><span><span style="color:#75715e">; take the first 3 cards off and look at them</span>
+</span></span><span style="display:flex;"><span>(take <span style="color:#ae81ff">3</span> deck)
+</span></span><span style="display:flex;"><span>&gt; ({<span style="color:#e6db74">:rank</span> <span style="color:#ae81ff">1</span>, <span style="color:#e6db74">:suit</span> <span style="color:#960050;background-color:#1e0010">:♥</span>️} {<span style="color:#e6db74">:rank</span> <span style="color:#ae81ff">1</span>, <span style="color:#e6db74">:suit</span> <span style="color:#960050;background-color:#1e0010">:♦</span>️} {<span style="color:#e6db74">:rank</span> <span style="color:#ae81ff">1</span>, <span style="color:#e6db74">:suit</span> <span style="color:#960050;background-color:#1e0010">:♣</span>️})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">; take the next 3 cards off and look at them</span>
+</span></span><span style="display:flex;"><span>(take <span style="color:#ae81ff">3</span> deck)
+</span></span><span style="display:flex;"><span>&gt; ({<span style="color:#e6db74">:rank</span> <span style="color:#ae81ff">1</span>, <span style="color:#e6db74">:suit</span> <span style="color:#960050;background-color:#1e0010">:♥</span>️} {<span style="color:#e6db74">:rank</span> <span style="color:#ae81ff">1</span>, <span style="color:#e6db74">:suit</span> <span style="color:#960050;background-color:#1e0010">:♦</span>️} {<span style="color:#e6db74">:rank</span> <span style="color:#ae81ff">1</span>, <span style="color:#e6db74">:suit</span> <span style="color:#960050;background-color:#1e0010">:♣</span>️})
+</span></span></code></pre></div><p>So we see two things there. First, we see how simple and beautiful it is to make an &ldquo;object&rdquo; in Clojure: just use a map to associate various types of data (including Unicode strings) together. Second we see the &ldquo;consequences&rdquo; of Clojure&rsquo;s immutable data: taking the &ldquo;first 3 cards&rdquo; and the &ldquo;next 3 cards&rdquo; doesn&rsquo;t do what you might expect: we get the same 3 cards, because both calls to take are making new 3 element immutable lists based off of the same original immutable list.</p>
+<p>So then how do we deal out two hands of 3 cards? What we need to do is shuffle the cards, and then take our hands from this new list. We can take 3 for one hand and 3 for the other hand:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-clojure" data-lang="clojure"><span style="display:flex;"><span>(<span style="color:#66d9ef">let </span>[shuffled (<span style="color:#a6e22e">shuffle</span> deck)
+</span></span><span style="display:flex;"><span>        you (take <span style="color:#ae81ff">3</span> shuffled)
+</span></span><span style="display:flex;"><span>        me (take <span style="color:#ae81ff">3</span> (drop <span style="color:#ae81ff">3</span> shuffled))]
+</span></span><span style="display:flex;"><span>    {<span style="color:#e6db74">:you</span> you <span style="color:#e6db74">:me</span> me})
+</span></span><span style="display:flex;"><span>&gt; {<span style="color:#e6db74">:you</span> ({<span style="color:#e6db74">:rank</span> <span style="color:#ae81ff">1</span>, <span style="color:#e6db74">:suit</span> <span style="color:#960050;background-color:#1e0010">:♦</span>️}
+</span></span><span style="display:flex;"><span>         {<span style="color:#e6db74">:rank</span> <span style="color:#ae81ff">12</span>, <span style="color:#e6db74">:suit</span> <span style="color:#960050;background-color:#1e0010">:♠</span>️}
+</span></span><span style="display:flex;"><span>         {<span style="color:#e6db74">:rank</span> <span style="color:#ae81ff">9</span>, <span style="color:#e6db74">:suit</span> <span style="color:#960050;background-color:#1e0010">:♣</span>️}),
+</span></span><span style="display:flex;"><span>   <span style="color:#e6db74">:me</span> ({<span style="color:#e6db74">:rank</span> <span style="color:#ae81ff">8</span>, <span style="color:#e6db74">:suit</span> <span style="color:#960050;background-color:#1e0010">:♠</span>️}
+</span></span><span style="display:flex;"><span>        {<span style="color:#e6db74">:rank</span> <span style="color:#ae81ff">6</span>, <span style="color:#e6db74">:suit</span> <span style="color:#960050;background-color:#1e0010">:♣</span>️}
+</span></span><span style="display:flex;"><span>        {<span style="color:#e6db74">:rank</span> <span style="color:#ae81ff">6</span>, <span style="color:#e6db74">:suit</span> <span style="color:#960050;background-color:#1e0010">:♥</span>️})}
+</span></span></code></pre></div><p>The key to getting the benefits of pure functions and immutable data structures is to adapt to them, instead of fighting them. So here, we need to put a name on the copy of the deck that&rsquo;s been shuffled, so that we can take cards from the same shuffle for the two players.</p>
+<p>I wondered how shuffle works, and I got an interesting surprise when I looked at &ldquo;view source&rdquo; for it in VS Code. (I use VS Code and Calva to program Clojure. The first time I learned Lisp, in university, I was working within a not-very-good editor inside of a not-very-good Scheme implementation for MacOS System 7. It crashed a lot. The next time I re-learned Lisp was in 2006, when I did Abdulaziz Ghuloum&rsquo;s step by step Scheme compiler tutorial. Then, I worked in Emacs, which I like. But I hate configuring Emacs, and so I was delighted when VS Code came on the scene and let me forget what microscopic amount of e-lisp I ever managed to learn.)</p>
+<p>Here&rsquo;s how Clojure implements shuffle:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-clojure" data-lang="clojure"><span style="display:flex;"><span>(<span style="color:#66d9ef">defn </span>shuffle
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;Return a random permutation of coll&#34;</span>
+</span></span><span style="display:flex;"><span>  {<span style="color:#e6db74">:added</span> <span style="color:#e6db74">&#34;1.2&#34;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#e6db74">:static</span> true}
+</span></span><span style="display:flex;"><span>  [<span style="color:#f92672">^</span>java.util.Collection coll]
+</span></span><span style="display:flex;"><span>  (<span style="color:#66d9ef">let </span>[al (<span style="color:#a6e22e">java.util.ArrayList.</span> coll)]
+</span></span><span style="display:flex;"><span>    (<span style="color:#a6e22e">java.util.Collections/shuffle</span> al)
+</span></span><span style="display:flex;"><span>    (<span style="color:#a6e22e">clojure.lang.RT/vector</span> (<span style="color:#a6e22e">.toArray</span> al))))
+</span></span></code></pre></div><p>That&rsquo;s interesting because it demonstrates the Java interoperation part of Clojure. In general, the Clojure standard library has a lot of &ldquo;batteries included&rdquo;, and when it makes sense, they depend on existing &ldquo;batteries&rdquo; included in Java itself. In this case, they are using <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Collections.html#shuffle(java.util.List)">java.util.Collections&rsquo; shuffle​(List<?> list)</a>, which shuffles in-place. That&rsquo;s why they need to make a copy of the collection as an ArrayList and then construct a new Clojure vector from the array before returning it. Typical Java code does not use immutable data, and so when you do interoperation with it, getting the output data back to normal Clojure data structures as soon as possible is important to regain the benefits of immutable data.</p>
+<p>There is <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Collections.html#shuffle(java.util.List,java.util.Random)">another shuffle implementation</a> in Java that allows you to pass in your own Random object. Using that, you&rsquo;d be able to get deterministic shuffles, which is something we used when investigating how to put games on decentralized ledgers when I worked at DEDIS. As a way to play with Java interoperation in Clojure, perhaps I will try to make a deterministic shuffle.</p>
+<p>To have some kind of game at all, I wanted to add up the cards. So I used reduce to do that. I had a lot of trouble understanding reduce the first few times I read about it, until I read what <a href="https://www.braveclojure.com/">Clojure for the Brave and True</a> had to say about it. Now I understand that reduce often means &ldquo;go do this thing for each item in the list, and build up one result from visiting all those things&rdquo;. That helped me see how to use it here to add cards:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-clojure" data-lang="clojure"><span style="display:flex;"><span>(<span style="color:#66d9ef">defn </span>add-cards [coll]
+</span></span><span style="display:flex;"><span>  (reduce <span style="color:#f92672">#</span>(+ % (<span style="color:#e6db74">:rank</span> %2)) <span style="color:#ae81ff">0</span> coll))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">; a micro-unit test: the first 3 cards, all with rank 1, should add to 3</span>
+</span></span><span style="display:flex;"><span>(= (<span style="color:#a6e22e">add-cards</span> (take <span style="color:#ae81ff">3</span> deck)) <span style="color:#ae81ff">3</span>)
+</span></span><span style="display:flex;"><span>&gt; true
+</span></span></code></pre></div><p>Here we also see the supremely pragmatic technique in Clojure of using a keyword as a function. The underlying machinery that implements keywords in Clojure implements the IFn interface, which means you can call into it from Clojure. When a keyword is called, it looks at it&rsquo;s first argument, and if it is a map, it will look itself up in the map. The smallest possible demonstration of this is: <code>(= 3 (:rank {:rank 3})) -&gt; true</code></p>
+<p>And so now, we just need to put it together into a boring little game, which though it bored my children to tears, at least helped me pass a little time on a long train trip and practice my new Clojure skills:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-clojure" data-lang="clojure"><span style="display:flex;"><span>(<span style="color:#66d9ef">defn </span>game []
+</span></span><span style="display:flex;"><span>  (<span style="color:#66d9ef">let </span>[shuffled-cards (<span style="color:#a6e22e">shuffle</span> deck)
+</span></span><span style="display:flex;"><span>        you (take <span style="color:#ae81ff">3</span> shuffled-cards)
+</span></span><span style="display:flex;"><span>        me (take <span style="color:#ae81ff">3</span> (drop <span style="color:#ae81ff">3</span> shuffled-cards))
+</span></span><span style="display:flex;"><span>        you-score (<span style="color:#a6e22e">add-cards</span> you)
+</span></span><span style="display:flex;"><span>        me-score (<span style="color:#a6e22e">add-cards</span> me)]
+</span></span><span style="display:flex;"><span>    {<span style="color:#e6db74">:you</span> you <span style="color:#e6db74">:me</span> me, <span style="color:#e6db74">:winner</span> (<span style="color:#66d9ef">if </span>(&gt; you-score me-score) <span style="color:#e6db74">:you</span> <span style="color:#e6db74">:me</span>)}))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&gt; (<span style="color:#a6e22e">game</span>)
+</span></span><span style="display:flex;"><span>{<span style="color:#e6db74">:you</span> ({<span style="color:#e6db74">:rank</span> <span style="color:#ae81ff">5</span>, <span style="color:#e6db74">:suit</span> <span style="color:#960050;background-color:#1e0010">:♦</span>️} {<span style="color:#e6db74">:rank</span> <span style="color:#ae81ff">7</span>, <span style="color:#e6db74">:suit</span> <span style="color:#960050;background-color:#1e0010">:♣</span>️} {<span style="color:#e6db74">:rank</span> <span style="color:#ae81ff">3</span>, <span style="color:#e6db74">:suit</span> <span style="color:#960050;background-color:#1e0010">:♠</span>️}),
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">:me</span> ({<span style="color:#e6db74">:rank</span> <span style="color:#ae81ff">2</span>, <span style="color:#e6db74">:suit</span> <span style="color:#960050;background-color:#1e0010">:♠</span>️} {<span style="color:#e6db74">:rank</span> <span style="color:#ae81ff">7</span>, <span style="color:#e6db74">:suit</span> <span style="color:#960050;background-color:#1e0010">:♠</span>️} {<span style="color:#e6db74">:rank</span> <span style="color:#ae81ff">3</span>, <span style="color:#e6db74">:suit</span> <span style="color:#960050;background-color:#1e0010">:♦</span>️}),
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">:winner</span> <span style="color:#e6db74">:you</span>}
+</span></span><span style="display:flex;"><span>&gt; (<span style="color:#a6e22e">game</span>)
+</span></span><span style="display:flex;"><span>{<span style="color:#e6db74">:you</span> ({<span style="color:#e6db74">:rank</span> <span style="color:#ae81ff">7</span>, <span style="color:#e6db74">:suit</span> <span style="color:#960050;background-color:#1e0010">:♦</span>️} {<span style="color:#e6db74">:rank</span> <span style="color:#ae81ff">12</span>, <span style="color:#e6db74">:suit</span> <span style="color:#960050;background-color:#1e0010">:♥</span>️} {<span style="color:#e6db74">:rank</span> <span style="color:#ae81ff">8</span>, <span style="color:#e6db74">:suit</span> <span style="color:#960050;background-color:#1e0010">:♥</span>️}),
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">:me</span> ({<span style="color:#e6db74">:rank</span> <span style="color:#ae81ff">12</span>, <span style="color:#e6db74">:suit</span> <span style="color:#960050;background-color:#1e0010">:♦</span>️} {<span style="color:#e6db74">:rank</span> <span style="color:#ae81ff">11</span>, <span style="color:#e6db74">:suit</span> <span style="color:#960050;background-color:#1e0010">:♦</span>️} {<span style="color:#e6db74">:rank</span> <span style="color:#ae81ff">5</span>, <span style="color:#e6db74">:suit</span> <span style="color:#960050;background-color:#1e0010">:♣</span>️}),
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">:winner</span> <span style="color:#e6db74">:me</span>}
+</span></span><span style="display:flex;"><span>&gt; (<span style="color:#a6e22e">game</span>)
+</span></span><span style="display:flex;"><span>{<span style="color:#e6db74">:you</span> ({<span style="color:#e6db74">:rank</span> <span style="color:#ae81ff">4</span>, <span style="color:#e6db74">:suit</span> <span style="color:#960050;background-color:#1e0010">:♠</span>️} {<span style="color:#e6db74">:rank</span> <span style="color:#ae81ff">5</span>, <span style="color:#e6db74">:suit</span> <span style="color:#960050;background-color:#1e0010">:♦</span>️} {<span style="color:#e6db74">:rank</span> <span style="color:#ae81ff">5</span>, <span style="color:#e6db74">:suit</span> <span style="color:#960050;background-color:#1e0010">:♥</span>️}),
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">:me</span> ({<span style="color:#e6db74">:rank</span> <span style="color:#ae81ff">13</span>, <span style="color:#e6db74">:suit</span> <span style="color:#960050;background-color:#1e0010">:♠</span>️} {<span style="color:#e6db74">:rank</span> <span style="color:#ae81ff">5</span>, <span style="color:#e6db74">:suit</span> <span style="color:#960050;background-color:#1e0010">:♠</span>️} {<span style="color:#e6db74">:rank</span> <span style="color:#ae81ff">11</span>, <span style="color:#e6db74">:suit</span> <span style="color:#960050;background-color:#1e0010">:♥</span>️}),
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">:winner</span> <span style="color:#e6db74">:me</span>}
+</span></span></code></pre></div><p>I win!</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+
+<ul class="share-buttons">
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Playing (cards) with Clojure on linkedin"
+            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.nella.org%2f2024%2f02%2f21%2fplaying-cards-with-clojure%2f&amp;title=Playing%20%28cards%29%20with%20Clojure&amp;summary=Playing%20%28cards%29%20with%20Clojure&amp;source=https%3a%2f%2fblog.nella.org%2f2024%2f02%2f21%2fplaying-cards-with-clojure%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Playing (cards) with Clojure on ycombinator"
+            href="https://news.ycombinator.com/submitlink?t=Playing%20%28cards%29%20with%20Clojure&u=https%3a%2f%2fblog.nella.org%2f2024%2f02%2f21%2fplaying-cards-with-clojure%2f">
+            <svg version="1.1" xml:space="preserve" width="30px" height="30px" viewBox="0 0 512 512" fill="currentColor"
+                xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
+                <path
+                    d="M449.446 0C483.971 0 512 28.03 512 62.554L512 449.446C512 483.97 483.97 512 449.446 512L62.554 512C28.03 512 0 483.97 0 449.446L0 62.554C0 28.03 28.029 0 62.554 0L449.446 0ZM183.8767 87.9921H121.8427L230.6673 292.4508V424.0079H281.3328V292.4508L390.1575 87.9921H328.1233L256 238.2489z" />
+            </svg>
+        </a>
+    </li>
+</ul>
+
+  </footer>
+</article>
+    </main>
+    
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

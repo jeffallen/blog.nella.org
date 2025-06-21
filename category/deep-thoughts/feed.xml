@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Deep-Thoughts on jra&#39;s thoughts</title>
+    <link>https://blog.nella.org/category/deep-thoughts/</link>
+    <description>Recent content in Deep-Thoughts on jra&#39;s thoughts</description>
+    <generator>Hugo -- 0.147.8</generator>
+    <language>en-US</language>
+    <lastBuildDate>Tue, 14 Jun 2016 09:11:01 +0000</lastBuildDate>
+    <atom:link href="https://blog.nella.org/category/deep-thoughts/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The SRE book</title>
+      <link>https://blog.nella.org/2016/06/14/the-sre-book/</link>
+      <pubDate>Tue, 14 Jun 2016 09:11:01 +0000</pubDate>
+       <guid isPermaLink="false">/?p=1209</guid> 
+      <description>&lt;p&gt;I &lt;a href=&#34;https://youtu.be/UKPbLsRdwAg?t=23m28s&#34;&gt;gave a Lightning Talk&lt;/a&gt; at SREcon16 and I was lucky enough to win the SRE book from Google while I was there.&lt;/p&gt;
+&lt;p&gt;Here are some notes of things I was thinking while reading it.&lt;/p&gt;
+&lt;p&gt;First, this is a phenomenal piece of work, that really marks a special point in time: the dawn of the possibility of wide adoption of SRE principles. I say, &amp;ldquo;possibility&amp;rdquo; because after getting exposed to the deepest details of what makes SRE work, I think that there are lots of organizations that won&amp;rsquo;t be willing or able to make it work.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>The &#34;Listen Up&#34; Pledge</title>
+      <link>https://blog.nella.org/2015/06/17/the-listen-up-pledge/</link>
+      <pubDate>Wed, 17 Jun 2015 07:02:47 +0000</pubDate>
+       <guid isPermaLink="false">/?p=1155</guid> 
+      <description>&lt;p&gt;Thanks, Dave, for &lt;a href=&#34;http://dave.cheney.net/2015/06/13/listen-up&#34;&gt;speaking up for what&amp;rsquo;s right&lt;/a&gt;. I&amp;rsquo;m with you, buddy. I also find harassment offensive, and I pledge to do the same as you.&lt;/p&gt;
+&lt;p&gt;We need to draw a line in the sand, and organize ourselves so that healthy, respectful teams are on one side of it, and trolls are on the other side of it.&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;m so thankful that &lt;a href=&#34;https://www.linkedin.com/pub/massimo-lucchina/0/37/221&#34;&gt;my boss&lt;/a&gt; has created a respectful, mixed workplace.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Dell and the NSA</title>
+      <link>https://blog.nella.org/2014/08/27/dell-and-the-nsa/</link>
+      <pubDate>Wed, 27 Aug 2014 13:30:15 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=1072</guid> 
+      <description>&lt;p&gt;While I was reading this blog about &lt;a href=&#34;http://resources.infosecinstitute.com/nsa-bios-backdoor-god-mode-malware-deitybounce/&#34;&gt;how NSA&amp;rsquo;s bad-BIOS malware probably works&lt;/a&gt;, I was struck by a &amp;ldquo;coincidence&amp;rdquo;: Dell does significant amount of government contracting work. In fact, Ed Snowden worked for Dell at one point. NSA&amp;rsquo;s bad-BIOS targets the RAID cards in Dell servers.&lt;/p&gt;
+&lt;p&gt;Now, Dell servers are widely deployed. I&amp;rsquo;ve used them in several jobs, for example. So it&amp;rsquo;s not unreasonable that NSA would target them, to get the best bang for the buck. But it also seems possible that in order to achieve the things Dell&amp;rsquo;s executives promised to NSA executives in fancy sales calls, some Dell engineers would find themselves using what they know about Dell servers to write bad-BIOS malware to attack those very servers.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Double take</title>
+      <link>https://blog.nella.org/2012/10/26/double-take/</link>
+      <pubDate>Fri, 26 Oct 2012 16:10:53 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=932</guid> 
+      <description>&lt;p&gt;The nicest thing happened to me on the way home from work&amp;hellip; I got one of those movie-perfect double takes from a guy I passed.&lt;/p&gt;
+&lt;p&gt;Of course, it was probably due to the pretty rainbow umbrella I was carrying, while cruising along on my unicycle. Years ago I realized that if it&amp;rsquo;s a grey rainy day it is nice to have bright colours overhead. Black umbrellas should be outlawed!&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Just Married</title>
+      <link>https://blog.nella.org/2009/06/14/just-married/</link>
+      <pubDate>Sun, 14 Jun 2009 17:03:40 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=700</guid> 
+      <description>&lt;p&gt;I&amp;rsquo;ve been away from the web for a while because I was in Olivone, Ticino, Switzerland getting married!&lt;/p&gt;
+&lt;p&gt;Thanks to friends and family who came from so far away to witness such a special day.&lt;/p&gt;
+&lt;p&gt;And thanks also to our wonderful vendors, who made the day go so well. If you are thinking of putting on a wedding in Blenio, give these guys a call:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.albergo-arcobaleno.ch/&#34;&gt;Restaurant/Hotel Arcobaleno&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.osteriacentraleolivone.ch/&#34;&gt;Osteria Centrale&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.casalucomagno.ch/&#34;&gt;Casa Lucomagno&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.swissguide.ch/it/Forno/Olivone/1141813_panetteriaepasticceriabi.html&#34;&gt;Pasticceria Bini&lt;/a&gt; for wedding cakes&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://designyou.ch&#34;&gt;Viva gli sposi&lt;/a&gt; wedding photojournalism&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://tinyurl.com/giramondo&#34;&gt;Giramondo Travel Agency&lt;/a&gt; for the wedding registry&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.mx3.ch/artist/sonpalaria&#34;&gt;Sonpalaria&lt;/a&gt;, the heartbeat of the Ticinese dance floor!&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;It feels different to be married. It seems like it shouldn&amp;rsquo;t&amp;hellip; the house is the same, we still sleep on the same sides of the bed. But it&amp;rsquo;s different. Good. And safe. And happy. And&amp;hellip; different.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Just DO It</title>
+      <link>https://blog.nella.org/2009/05/13/just-do-it/</link>
+      <pubDate>Wed, 13 May 2009 09:32:26 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=681</guid> 
+      <description>&lt;p&gt;There&amp;rsquo;s &lt;a href=&#34;http://simplesizeme.blogspot.com/&#34;&gt;a guy in Philly&lt;/a&gt; who realized he&amp;rsquo;s rich, because me makes $30,000 as a community organizer, and many people in the world live on far less. He decided to go on a diet, for his own helath, but also to understand what it means to live on a simple diet.&lt;/p&gt;
+&lt;p&gt;That&amp;rsquo;s already an interesting story, but what&amp;rsquo;s really interesting is &lt;a href=&#34;http://www.youtube.com/watch?v=DsC1aOXfjVU&amp;amp;feature=channel&#34;&gt;this video he posted&lt;/a&gt;, where he talks about what held him back from starting the project (fear) and what the reality has been (support). This is exactly the same thing I found when I made the big change to leave IT and be a log for MSF.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>50 pennies for your thoughts</title>
+      <link>https://blog.nella.org/2009/05/11/50-pennies-for-your-thoughts/</link>
+      <pubDate>Mon, 11 May 2009 10:45:46 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=679</guid> 
+      <description>&lt;p&gt;I love Alex Chadwick. He&amp;rsquo;s proven he&amp;rsquo;s a real artist for finding stories on &lt;a href=&#34;http://www.slatev.com/li_50cents.html&#34;&gt;50 cent interviews&lt;/a&gt;. He&amp;rsquo;s Studs Terkel for another generation.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Learning to Love Social Welfare</title>
+      <link>https://blog.nella.org/2009/05/07/learning-to-love-social-welfare/</link>
+      <pubDate>Thu, 07 May 2009 15:03:39 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=672</guid> 
+      <description>&lt;p&gt;When you fall in love with someone from another country, it just happens. Then what comes after that takes more effort. You have to learn to love the other culture you&amp;rsquo;ve thrown your lot in with. That process is, and will continue to be, a joy for Marina and me.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.nytimes.com/2009/05/03/magazine/03european-t.html?_r=2&amp;amp;pagewanted=all&#34;&gt;Here&amp;rsquo;s an article&lt;/a&gt; that describes some of what I&amp;rsquo;ve learned about how life is organized in Europe. I followed the same course, roughly, as the author. Though I have to admit, I was never as skeptical as he was. Perhaps that&amp;rsquo;s because I was given humanist values by my mother, and I always understood that something wasn&amp;rsquo;t working right in my homeland.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Heard in Europe</title>
+      <link>https://blog.nella.org/2009/04/20/heard-in-europe/</link>
+      <pubDate>Mon, 20 Apr 2009 16:08:14 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=643</guid> 
+      <description>&lt;p&gt;Overheard here in England (which was, last I checked, a European country):&lt;/p&gt;
+&lt;p&gt;I found a really interesting partnership we could join, but we&amp;rsquo;d have to make friends with a bunch of Europeans.&lt;/p&gt;
+&lt;p&gt;Insert sound of my jaw dropping the floor here&amp;hellip;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Repair vs Replace</title>
+      <link>https://blog.nella.org/2009/04/10/repair-vs-replace/</link>
+      <pubDate>Fri, 10 Apr 2009 07:56:47 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=632</guid> 
+      <description>&lt;p&gt;What are the economic effects of the repair vs replace decision? Interesting question, that.&lt;/p&gt;
+&lt;p&gt;If you missed &amp;ldquo;more local employment of the blue collar type&amp;rdquo;, &lt;a href=&#34;http://www.npr.org/blogs/money/2009/04/repair_beats_replace.html&#34;&gt;go read this&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;There is a slight diversion of purchasing strategy, repair rather than replace. This feeds a blue collar industry in the local region.&lt;/p&gt;
+&lt;p&gt;It used to be, when money was loose, replace with new was the norm. If the repair was 75 percent of the cost of replacement a new motor was ordered, the old motor was scraped, and the country of origin (Mexico, China, Taiwan) benefited. These beautiful USA built, 50 year old, 200 horsepower motors, were going to the scrap heap.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>My favorite things, all at once!</title>
+      <link>https://blog.nella.org/2009/03/31/my-favorite-things-all-at-once/</link>
+      <pubDate>Tue, 31 Mar 2009 00:07:38 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=608</guid> 
+      <description>&lt;p&gt;Yay for &lt;a href=&#34;http://www.caida.org/~kc/&#34;&gt;old friends&lt;/a&gt;, economics, and technology! All at once!&lt;/p&gt;
+&lt;p&gt;kc wrote a &lt;a href=&#34;http://blog.caida.org/best_available_data/2009/03/29/icannrir-research-agenda-writ-large/&#34;&gt;blog posting with her humble ideas&lt;/a&gt; on how to use IP address space tax. Wait&amp;hellip; there&amp;rsquo;s a tax on address space? Yes, because it has become a scare quantity, because people are too lazy to move to IPv6, IPv4 address space is running out. The best of all bad ideas about what to do about this is to make an open market for address space, as though network addresses were some kind of useful piece of property with any kind of useful value. (BTW: When the present econolypse is over, and the next bubble starts, it will be an IPv4 address space bubble. Mark my words&amp;hellip;) Address space is bits. We can make more bits&amp;hellip; Look! I just made some! But because the value of a network exists in everyone who is using it, not just &lt;strong&gt;your&lt;/strong&gt; implementation of the network, you can&amp;rsquo;t just add bits in your IP stack and get any benefit. So, while bits are free, and address space could conceiveably be free, because we have a network with limited space, we have a scarce asset. And, of course, what do humans do with scarce assets? We make bubbles! Yay for bubbles!&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Global Warming is going to be an embarassment</title>
+      <link>https://blog.nella.org/2009/03/29/global-warming-is-going-to-be-an-embarassment/</link>
+      <pubDate>Sun, 29 Mar 2009 00:36:15 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=606</guid> 
+      <description>&lt;p&gt;In 15 years, the Global Warming hysteria is going to be one of those embarassing episodes in history. Several sociology and history of science PhDs will write their theses on &amp;ldquo;how they blew it on climate change&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;The latest person to risk his reputation by coming out and speaking truthiness to the enviro-powers is &lt;a href=&#34;http://www.nytimes.com/2009/03/29/magazine/29Dyson-t.html?_r=1&amp;amp;ref=magazine&amp;amp;pagewanted=all&#34;&gt;Freeman Dyson&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;As I am not 80 years old, and I have to live with my reputation for a while longer, let me make my position clear again:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>You heard it here first, folks...</title>
+      <link>https://blog.nella.org/2009/03/28/you-heard-it-here-first-folks/</link>
+      <pubDate>Sat, 28 Mar 2009 01:20:36 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=601</guid> 
+      <description>&lt;p&gt;More discussion about &lt;a href=&#34;http://hardware.slashdot.org/article.pl?sid=09/03/27/2047236&#34;&gt;marks on hard things&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I suppose I should really get around to figuring out the physics of my modest proposal.&lt;/p&gt;
+&lt;p&gt;The Long Now Foundation&amp;rsquo;s &lt;a href=&#34;http://blog.longnow.org/2009/03/23/rosetta-disk-10-browseable-archive-now-available-online-2/&#34;&gt;Rosetta Project&lt;/a&gt; does something clever, which is to start their disk with big text that swirls into microscopic text. The idea is to tempt the reader to want to keep going, and help him figure out that the next step to read the next scale of text is to go grind himself a lens.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>A Kaleidoscope of Languages</title>
+      <link>https://blog.nella.org/2009/03/24/a-kaleidoscope-of-languages/</link>
+      <pubDate>Tue, 24 Mar 2009 14:20:14 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=590</guid> 
+      <description>&lt;p&gt;By way of procrastinating doing my French homework, I found myself on a webpage which has the Universal Declaration on Human Rights in &lt;a href=&#34;http://www.unhchr.ch/udhr/navigate/alpha.htm&#34;&gt;more languages than you knew existed&lt;/a&gt; (including, to absolve some of my guilt, &lt;a href=&#34;http://www.unhchr.ch/udhr/lang/frn.htm&#34;&gt;French&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;That&amp;rsquo;s a little bit of hope right there. That&amp;rsquo;s a message in a bottle that says, &amp;ldquo;we might not get it right all the time, but this is what we as humans stand for, and you are allowed to hear it in the language that your elders speak when they teach you about the old ways&amp;rdquo;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Vanity Fair on Iceland</title>
+      <link>https://blog.nella.org/2009/03/10/vanity-fair-on-iceland/</link>
+      <pubDate>Tue, 10 Mar 2009 12:29:01 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=569</guid> 
+      <description>&lt;p&gt;I became aware of Iceland&amp;rsquo;s bankruptcy through a curious route. A local geek mailing list &lt;a href=&#34;http://groups.google.com/group/geekup/browse_thread/thread/754965a91630114&#34;&gt;had a posting&lt;/a&gt; from a friend of one of the guys on the list. She was Icelandic, and she was really in distress &amp;ndash; able to understand how serious the situation was, unable to understand it at the same time, scared for the future, and reaching out to a friend. It was really touching. I replied to the guy that it was a shame I couldn&amp;rsquo;t access any of the Icelandic news as an English speaker, and that perhaps his friend would like to start a blog translating it, so that I could understand her country&amp;rsquo;s situation better. I offered to donate some money for the service.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>A Secret of the Economics of Manufacturing</title>
+      <link>https://blog.nella.org/2009/02/27/a-secret-of-the-economics-of-manufacturing/</link>
+      <pubDate>Fri, 27 Feb 2009 14:01:27 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=561</guid> 
+      <description>&lt;p&gt;I saw this quote in an &lt;a href=&#34;http://www.xconomy.com/boston/2009/02/26/kindling-a-revolution-e-inks-russ-wilcox-on-e-paper-amazon-and-the-future-of-publishing&#34;&gt;article on E-Ink&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;If you ever want to make a billion of anything cheaply, you print it.&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;What an interesting observation! With such interesting far reaching consequences:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.nanosolar.com/&#34;&gt;Nano Solar&lt;/a&gt; is on the right track, crystaline solar is not.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://en.wikipedia.org/wiki/The_Diamond_Age&#34;&gt;Diamond Age&lt;/a&gt;-style nano-assembly is not quite a sure bet, and mass-customization by &lt;a href=&#34;http://fab.cba.mit.edu/&#34;&gt;table-top fabs&lt;/a&gt; will clearly never be able to compete on price with items that are printed. Though another way of looking at nano-assembly is to recognize that nature manufactures far more, far cheaper, than all the printing presses in the world&amp;hellip;&lt;/li&gt;
+&lt;li&gt;Things that are flat, flexible, and where the complexity is expressed in 2D will always be cheaper than their competitors which violate one of those constraints of printing presses.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;It also further informs my &lt;a href=&#34;https://blog.nella.org/?p=448&#34;&gt;day dreaming about clay tablets&lt;/a&gt;: a system for preserving data needs to be flat, flexible, and 2D. My &amp;ldquo;dots on ceramic&amp;rdquo; design might still be able to fit the bill, but the kind of uber-cheap ceramic I was thinking of (i.e. the same stuff in the 20 cent porcelin plates at Ikea) won&amp;rsquo;t be the material, something else will be. But what? What can go roll-to-roll in a printing press environment, but has the chemical stability of ceramics? I&amp;rsquo;m feeling like I really wish there was a layman&amp;rsquo;s introduction to ceramics on my reading list right now. Anyone? Anyone? Bueller?&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>A &#34;Told You So&#34; Moment</title>
+      <link>https://blog.nella.org/2009/01/27/a-told-you-so-moment/</link>
+      <pubDate>Tue, 27 Jan 2009 10:09:29 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=522</guid> 
+      <description>&lt;p&gt;One of the risks of being a person who is constantly processing information, forming opinions, and trying to predict the future is that when you get it right-ish, you tend to say, &amp;ldquo;I told you so&amp;rdquo;. Or if you are polite, you just think, &amp;ldquo;I told you so&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;m not so polite so I blog it instead.&lt;/p&gt;
+&lt;p&gt;Right this moment, the top two stories on Slashdot make me say I told you so. I don&amp;rsquo;t have the time to dig into them right now, but the headlines lead me to believe my gut instinct has been on the right track for a while:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>The power of debt</title>
+      <link>https://blog.nella.org/2009/01/22/the-power-of-debt/</link>
+      <pubDate>Thu, 22 Jan 2009 02:33:38 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=518</guid> 
+      <description>&lt;p&gt;Here&amp;rsquo;s a quote that turns everything you think you know on it&amp;rsquo;s head:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;When the debt is big enough, it&amp;rsquo;s the debtor who has the power, not the creditor.&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;That&amp;rsquo;s &lt;a href=&#34;http://www.vanityfair.com/online/politics/2009/01/niall-ferguson-america-needs-to-cancel-its-debt.html&#34;&gt;Niall Ferguson talking in Vanity Fair&lt;/a&gt;. It&amp;rsquo;s for stuff like that I read Vanity Fair. Well, the &lt;a href=&#34;http://www.vanityfair.com/culture/features/2009/02/cate-blanchett-slideshow200902?slide=18&#34;&gt;photos&lt;/a&gt; don&amp;rsquo;t hurt either&amp;hellip;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Why I work for MSF...</title>
+      <link>https://blog.nella.org/2009/01/11/why-i-work-for-msf/</link>
+      <pubDate>Sun, 11 Jan 2009 20:39:49 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=471</guid> 
+      <description>&lt;p&gt;&lt;a href=&#34;http://jeremy.zawodny.com/blog/archives/010853.html&#34;&gt;Here&amp;rsquo;s someone else&lt;/a&gt; who has taken control of his life and chosen exactly what he&amp;rsquo;s doing and why. That&amp;rsquo;s part of why I work for MSF. It occurred to me about the time Silicon Valley was getting ready for another lap (which came to be called Web 2.0) that I didn&amp;rsquo;t want to make the lap with them. And that if I was going to do something, that it should matter.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>The New Yorker on Aid Work</title>
+      <link>https://blog.nella.org/2009/01/09/the-new-yorker-on-aid-work/</link>
+      <pubDate>Fri, 09 Jan 2009 15:22:16 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=464</guid> 
+      <description>&lt;p&gt;There is a really excellent &lt;a href=&#34;http://www.newyorker.com/reporting/2009/01/05/090105fa_fact_harr?printable=true&#34;&gt;article on aid work&lt;/a&gt; in The New Yorker.&lt;/p&gt;
+&lt;p&gt;Though this is pretty much a write-only blog at this point, and I don&amp;rsquo;t really know if anyone cares, here are my reactions to the article:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;It is remarkably candid, but&amp;hellip;&lt;/li&gt;
+&lt;li&gt;it is too hopeless&amp;hellip;&lt;/li&gt;
+&lt;li&gt;because it focuses too much on the UN and not enough on independent actors.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Of course, any reader of mine know my biases: I am a cynical humanist capitalist from Silicon Valley (engaged to be married to a practical humanist socialist from Switzerland), who chose to work with MSF due to it&amp;rsquo;s independence. Because this article speaks to the core of my identity, of course my biases are going to be the key to my understanding of it.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>350</title>
+      <link>https://blog.nella.org/2008/12/13/350/</link>
+      <pubDate>Sat, 13 Dec 2008 19:11:09 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=455</guid> 
+      <description>&lt;p&gt;No, not &lt;a href=&#34;http://www.imdb.com/title/tt0416449/&#34;&gt;300&lt;/a&gt;, that&amp;rsquo;s a movie. 350. Parts per million CO2 concentration.&lt;/p&gt;
+&lt;p&gt;Pass the word. Oh, right, it&amp;rsquo;s &lt;a href=&#34;http://www.350.org/en/animation&#34;&gt;just a number, not words&amp;hellip;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;PS: This posting does not constitute an admission that CO2 causes global warming. But I happen to agree with everything that anti-carbon campaigners believe in, even if I think that &lt;a href=&#34;https://blog.nella.org/?p=270&#34;&gt;global warming is a hoax&lt;/a&gt;. And this is a nifty animation with cool music, so I&amp;rsquo;m posting it anyway.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Long Term Data Storage</title>
+      <link>https://blog.nella.org/2008/12/13/long-term-data-storage/</link>
+      <pubDate>Sat, 13 Dec 2008 17:56:58 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=448</guid> 
+      <description>&lt;p&gt;I was thinking about data archival the other day because &lt;a href=&#34;http://www.sahtp.com/&#34;&gt;David Hagan&lt;/a&gt; was telling me about one time when he spoke to a group of librarians and told them to expect a data gap starting in 1950 and extending until we get serious about data preservation. According to David, the time when we stopped being able to save data was in the 50&amp;rsquo;s because xerography (which is the same as laser-printer technology) came into existence then. All other data archival techniques (magnetic storage on tape or disk, recordable CD&amp;rsquo;s, etc) are inferior to toner pressed onto paper, which is itself inferior to ink soaked into paper fibers. And, come to think of it, ink on paper is inferior to marks on clay tablets &amp;ndash; though ink on paper has proven to be stable enough, since we use knowledge today gleaned from papyrus scrolls from thousands of years ago.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Too Much Travel is Bad for the Soul</title>
+      <link>https://blog.nella.org/2008/10/22/too-much-travel-is-bad-for-the-soul/</link>
+      <pubDate>Wed, 22 Oct 2008 15:31:32 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=387</guid> 
+      <description>&lt;p&gt;There&amp;rsquo;s an interesting little nugget of reality near the end of the first page of &lt;a href=&#34;http://www.salon.com/tech/col/smith/2008/10/17/askthepilot294/&#34;&gt;Ask the Pilot&lt;/a&gt; this week:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;If I have grown more cynical in recent years, it is travel, I think, that has pushed me in this direction. Exploring other parts of the world is beneficial in all the ways it is typically given credit for&amp;hellip; But traveling can also burn you out, suck away your faith in humanity. You will see, right there in front of you, how the world is falling to pieces; the planet has been ravaged, life is cheap, and there is little that you, as the Western observer, with or without your good conscience, are going to do about it.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Big Mining Machines</title>
+      <link>https://blog.nella.org/2008/10/20/big-mining-machines/</link>
+      <pubDate>Mon, 20 Oct 2008 12:25:24 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=379</guid> 
+      <description>&lt;p&gt;The Long Now foundation &lt;a href=&#34;http://blog.longnow.org/2008/10/09/our-lust-for-metal-is-great/&#34;&gt;took a field trip&lt;/a&gt; recently. The pictures are cool, as is the irony that they went to a trade show held once every four years. Miners have a time scale closer to the Long Now&amp;rsquo;s.&lt;/p&gt;
+&lt;p&gt;What does it mean that mining is a slowly changing industry? The economics of extractive industries push them that direction (capital investment is only warranted by a positive outlook in the commodity price). But workplace safety, which is a special case of universal human rights, demands that &lt;a href=&#34;http://www.coalminingsafety.org/&#34;&gt;industries take advantage&lt;/a&gt; of the best available technology as fast as possible. This is an interesting story of the tension between capitalism and social welfare. If a mining regulator pushes an industry too much it will give up and move elsewhere. And apparently the mining industry is especially prone to &lt;a href=&#34;http://en.wikipedia.org/wiki/Regulatory_capture&#34;&gt;regulatory capture&lt;/a&gt; an euphemism for corruption I especially like (like as in hate; in newspeak up is down, enslaved is free and corruption is regulatory capture).&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Banks: You&#39;re Under New Management... Listen Up!</title>
+      <link>https://blog.nella.org/2008/10/14/banks-youre-under-new-management-listen-up/</link>
+      <pubDate>Tue, 14 Oct 2008 23:24:20 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=369</guid> 
+      <description>&lt;p&gt;A wonderful &lt;a href=&#34;http://www.owen.org/blog/95&#34; title=&#34;open letter&#34;&gt;open letter&lt;/a&gt; from a fellow stockholder to our new investment&amp;rsquo;s board of directors.&lt;/p&gt;
+&lt;p&gt;If only it were so easy&amp;hellip; This is what justice would look like in a society that craved social justice and capitalism in equal parts.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>When Not In Control, People Imagine Order</title>
+      <link>https://blog.nella.org/2008/10/13/when-not-in-control-people-imagine-order/</link>
+      <pubDate>Mon, 13 Oct 2008 10:04:22 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=365</guid> 
+      <description>&lt;p&gt;Science Friday did an &lt;a href=&#34;http://www.sciencefriday.com/program/archives/200810037&#34;&gt;interesting story recently&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;New research shows that when people perceive they have no control over a given situation, they are more likely to see illusions, patterns where none exist and even believe in conspiracy theories. The study suggests that people impose imaginary order when no real order can be perceived.&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;The first caller reports on how the conditions he experienced working as an aid worker in Somalia showed this. Also, he comments on the rough ride back to normality after suffering a situation with loss of control.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Better Practices in OpenID</title>
+      <link>https://blog.nella.org/2008/10/11/better-practices-in-openid/</link>
+      <pubDate>Sat, 11 Oct 2008 18:10:55 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=359</guid> 
+      <description>&lt;p&gt;Yahoo published &lt;a href=&#34;http://developer.yahoo.com/openid/bestpractices.html&#34;&gt;some best practices&lt;/a&gt; on OpenID, but I have one they forgot.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://imran.typepad.com/&#34;&gt;Imran&lt;/a&gt; and I were talking at &lt;a href=&#34;http://imran.typepad.com/blog/opencoffee/&#34;&gt;OpenCoffee Leeds&lt;/a&gt; the other day and we independently and together came up with this realization:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;OpenID providers should be required to be OpenID consumers first.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Why? Well, the problem OpenID is trying to solve is &amp;ldquo;too many usernames&amp;rdquo;, which really equates to &amp;ldquo;too many authentication providers&amp;rdquo;. That means that the &lt;strong&gt;last thing&lt;/strong&gt; we need is more stinkin&amp;rsquo; authentication providers. OpenID providers who are not also OpenID consumers, are just &lt;strong&gt;making the problem worse&lt;/strong&gt;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>A Call for Help</title>
+      <link>https://blog.nella.org/2008/10/11/a-call-for-help/</link>
+      <pubDate>Sat, 11 Oct 2008 13:09:20 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=352</guid> 
+      <description>&lt;p&gt;&lt;a href=&#34;http://www.iol.co.za/index.php?set_id=1&amp;amp;click_id=3069&amp;amp;art_id=vn20081010055634633C272033&#34;&gt;Something very wrong&lt;/a&gt; is going on on South Africa, and the world is missing it:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&amp;ldquo;It is better for us to be here than go for reintegration. The South Africans want to kill us and the government is trying to kill us. Reintegration&amp;rsquo;s a death sentence. We&amp;rsquo;d rather die here together,&amp;rdquo; said Johnny Kaka.&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;MSF is only one voice, and &lt;a href=&#34;http://www.msf.org/msfinternational/invoke.cfm?objectid=D3341261-15C5-F00A-257A117997E83742&amp;amp;component=toolkit.pressrelease&amp;amp;method=full_html&#34;&gt;though they are speaking out&lt;/a&gt;, the immigrants in South Africa need more people to speak for them.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>21 words that should change your life (but probably won&#39;t)</title>
+      <link>https://blog.nella.org/2008/10/09/21-words-that-should-change-your-life-but-probably-wont/</link>
+      <pubDate>Thu, 09 Oct 2008 09:05:01 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=341</guid> 
+      <description>&lt;p&gt;Clarity on what&amp;rsquo;s wrong with our economy and our society, and advice on how to correct it, all in just 3 lines, and 21 words:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;You buy things and you don&amp;rsquo;t need.
+With money that you don&amp;rsquo;t have.
+To impress people that you don&amp;rsquo;t even like.&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;From Aaron Stewart, &amp;quot; &lt;a href=&#34;http://aaronstewart.blogspot.com/2008/10/our-economic-woes-in-three-lines.html&#34;&gt;Our economic woes in three lines&lt;/a&gt;&amp;quot;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>The real reason for Google Books</title>
+      <link>https://blog.nella.org/2008/10/01/the-real-reason-for-google-books/</link>
+      <pubDate>Wed, 01 Oct 2008 09:15:32 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=306</guid> 
+      <description>&lt;p&gt;I was reading about &lt;a href=&#34;http://vdash.org/&#34;&gt;vdash&lt;/a&gt; and inside the presentation, I found this interesting quote:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&amp;ldquo;We are not scanning all those books to be read by people,&amp;rdquo; explained one of my hosts after my talk (at Google). &amp;ldquo;We are scanning them to be read by an AI.&amp;rdquo;&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;That came from George Dyson, in &lt;a href=&#34;http://www.edge.org/3rd_culture/dyson05/dyson05_index.html&#34;&gt;this article&lt;/a&gt; on Edge. And as always with Edge, if you read on through the piece to the end, there&amp;rsquo;s some big ideas. Smart people thinking about important things over there.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Compare the Candidates</title>
+      <link>https://blog.nella.org/2008/09/30/compare-the-candidates/</link>
+      <pubDate>Tue, 30 Sep 2008 15:34:07 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=303</guid> 
+      <description>&lt;p&gt;&lt;a href=&#34;http://comparecandidates.appspot.com/&#34;&gt;Compare The Candidates&lt;/a&gt; is a nifty web app that I found when looking into AppSpot, a Google cloud computing thingie. It shows a new style of design that rose in the last few years. I really admire it, and I love interacting with sites like this.&lt;/p&gt;
+&lt;p&gt;It&amp;rsquo;s a little scary though, it feels like a generation gap. I don&amp;rsquo;t really feel like I know how to make something that feels like it. When HTTP and CGI came on the scene, I had my feet under me right off the bat. With this generation of design sensibility, I feel a little lost still.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Another theory of climate change</title>
+      <link>https://blog.nella.org/2007/02/12/another-theory-of-climate-change/</link>
+      <pubDate>Mon, 12 Feb 2007 09:47:13 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=270</guid> 
+      <description>&lt;p&gt;I have from time to time astonished, annoyed, or otherwise aggrieved my friends by denying that greenhouse gases cause climate change. This is like standing up in an atheist convention and yelling, &amp;ldquo;Long Live the Pope!&amp;rdquo; Everyone knows that all civilized people believe in Global Warming, and the Grand Conspiracy to Prop Up Big Oil by Denying the Action of Greenhouse Gases. It gets even uglier because these days I mostly hang around Europeans, who have been brainwashed about the Global Warming story for much longer than Americans, and consider it one more indication that they are the more highly advanced lifeforms. (Regarding foreign policy and cheese, I will admit that Europeans are in fact more advanced lifeforms than Americans. The jury is still out on the state of the press, as I happened to read a few UK celebrity rags recently, and it appears that not even American journalism has yet fallen that low. But I digress.)&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>I love the IRS</title>
+      <link>https://blog.nella.org/2005/12/06/i-love-the-irs/</link>
+      <pubDate>Tue, 06 Dec 2005 19:46:15 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=212</guid> 
+      <description>&lt;p&gt;I like the IRS. I&amp;rsquo;ve never really minded paying taxes, and though I have some complaints with the complexity of our tax code, I know that&amp;rsquo;s not the IRS&amp;rsquo;s fault. They do the best they can with the mess given to them each year by congress. I think the way the IRS does e-filing is stupid, but I suspect it&amp;rsquo;s one of those things that simply can&amp;rsquo;t be any better than it is, for a bunch of reasons out of control of the reasonable people at the IRS. (There are unreasonable people everywhere, even at the IRS.)&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Fahrenheit 9/11</title>
+      <link>https://blog.nella.org/2004/07/03/fahrenheit-911/</link>
+      <pubDate>Sat, 03 Jul 2004 01:29:10 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=112</guid> 
+      <description>&lt;p&gt;Karl and I went to see Fahrenheit 9/11 tonight. There are fewer classic Moore scenes in it than his other movies, which is a huge improvement. His message is way too important to be lost in the noise of his wacky hijinks. In some ways, I think the criticism of his previous movies have taught him what Moore-moments are defensible, and which ones he needs to just leave out of movies. (The &lt;a href=&#34;http://www.bowlingfortruth.com/bowlingforcolumbine/scenes/bank.htm&#34;&gt;bank-rifle scene&lt;/a&gt; in Bowling for Columbine scene is a case where he was fairly excoriated by the critics, I think. To my knowledge, there are none of those in Fahrenheit 9/11.)&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>The Founders Letter in Google&#39;s S1</title>
+      <link>https://blog.nella.org/2004/04/30/the-founders-letter-in-googles-s1/</link>
+      <pubDate>Fri, 30 Apr 2004 03:08:39 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=106</guid> 
+      <description>&lt;p&gt;&lt;a href=&#34;http://www.sec.gov/Archives/edgar/data/1288776/000119312504073639/ds1.htm#toc16167_1&#34;&gt;This&lt;/a&gt; is well worth reading. Something special is happing at Google, and with luck they will chart a new course that other companies can follow as they go public. Perhaps my employer, Tellme, will choose to follow such a course, though it seems unlikely. Our core values are probably as strong as Google&amp;rsquo;s, but are not exactly aligned with theirs.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Island of Dr. Moreau</title>
+      <link>https://blog.nella.org/2004/03/30/island-of-dr-moreau/</link>
+      <pubDate>Tue, 30 Mar 2004 00:18:13 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=102</guid> 
+      <description>&lt;p&gt;Karl and I watched &lt;a href=&#34;http://us.imdb.com/title/tt0116654/&#34;&gt;The Island of Dr. Moreau&lt;/a&gt; tonight. Luckily we were, uh, enhanced, by several beers, a white Russian, a screwdriver, and a &lt;strong&gt;glass&lt;/strong&gt; of Kamikazes.&lt;/p&gt;
+&lt;p&gt;The move sucked. But at least Karl uttered these memorable lines:&lt;/p&gt;
+&lt;p&gt;&amp;ldquo;He&amp;rsquo;s getting the hang of the boom stick.&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;&amp;ldquo;Quonset hut madness!!!&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;&amp;ldquo;Cat versus Dog!&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;&amp;ldquo;He&amp;rsquo;s not dead YET.&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;I think maybe I need to redeem myself by reading the H. G. Wells novel now.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Peak Oil</title>
+      <link>https://blog.nella.org/2004/03/02/peak-oil/</link>
+      <pubDate>Tue, 02 Mar 2004 13:49:14 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=95</guid> 
+      <description>&lt;p&gt;Psst&amp;hellip; want to be terrified?&lt;/p&gt;
+&lt;p&gt;Take a look at &lt;a href=&#34;http://www.lifeaftertheoilcrash.net&#34;&gt;this&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;It&amp;rsquo;s this guy exploring the worst case scenario of what happens when we run out of oil. It goes as far as cannibalism! Real end-of-the-world stuff. At some point, it&amp;rsquo;s not terrifying anymore, because clearly the guy&amp;rsquo;s just off his rocker, right?&lt;/p&gt;
+&lt;p&gt;OK, now go read some of the writing &lt;a href=&#34;http://www.peakoil.net/&#34;&gt;here&lt;/a&gt;, which is a group of reputable experts discussing the same thing and coming to the same conclusions.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Great band names</title>
+      <link>https://blog.nella.org/2003/06/06/great-band-names/</link>
+      <pubDate>Fri, 06 Jun 2003 02:16:10 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=64</guid> 
+      <description>&lt;p&gt;Sometimes I come across a saying and I think, &amp;ldquo;that would make a good band name&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;Tonight, which watching Insomniac, there was a steel mill on. In the furnace control room, there was a dial labeled megawatts. Megawatts! I immediately realized I just HAD to have one for a &lt;a href=&#34;http://www.retrosynth.com/&#34;&gt;coworker&lt;/a&gt;. So I searched on ebay, and on Google. Nothing came up. Perhaps it was the search terms I used. I tried different things until I ended up with the search terms &amp;ldquo;megawatt gauge&amp;rdquo;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Smart people doing important things</title>
+      <link>https://blog.nella.org/2003/05/28/smart-people-doing-important-things/</link>
+      <pubDate>Wed, 28 May 2003 11:38:25 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=58</guid> 
+      <description>&lt;p&gt;I get this certain feeling when I read some things on the net. It&amp;rsquo;s this &amp;ldquo;click&amp;rdquo; in my brain that says, &amp;ldquo;This is a smart person, making good progress on an important problem.&amp;rdquo; I get it almost every time I read &lt;a href=&#34;http://blogs.law.harvard.edu/philg/&#34;&gt;philg&lt;/a&gt;. Today&amp;rsquo;s dose of that feeling came from &lt;a href=&#34;http://www.advogato.org/article/657.html&#34;&gt;this article&lt;/a&gt; about what&amp;rsquo;s happening at &lt;a href=&#34;http://www.oscom.org&#34;&gt;OSCOM&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Friendster Critical Mass</title>
+      <link>https://blog.nella.org/2003/05/27/friendster-critical-mass/</link>
+      <pubDate>Tue, 27 May 2003 10:42:06 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=56</guid> 
+      <description>&lt;p&gt;&lt;a href=&#34;http://www.friendster.com/&#34;&gt;Friendster&lt;/a&gt; has critical mass. I just recently met two new groups of people, and both are hooked into Friendster. I knew about it a while ago, but I prefer to be a follower, instead of a leader in these &amp;ldquo;invite your friends&amp;rdquo; things. Looks like it is time for me to follow along and invite some friends to join.&lt;/p&gt;
+&lt;p&gt;Hopefully Friendster will last longer than Six Degrees did last time this idea came around.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>More on the Matrix Reloaded</title>
+      <link>https://blog.nella.org/2003/05/22/more-on-the-matrix-reloaded/</link>
+      <pubDate>Thu, 22 May 2003 02:13:20 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=52</guid> 
+      <description>&lt;p&gt;&lt;a href=&#34;http://www.corporatemofo.com/stories/051803matrix.htm&#34;&gt;Corporate Mofo&lt;/a&gt; discusses the Matrix universe in detail too deep for a philosophical lightweight for me to comprehend. But he picks up on, and explains something I noticed too.&lt;/p&gt;
+&lt;p&gt;He says:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Not coincidentally, most of the people in Zion seem to be black or Hispanic, which makes perfect sense: If you&amp;rsquo;re a white suburban Matrix resident, driving your Matrix SUV to your Matrix golf club, why doubt the nature of reality?&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Alas Ars Digita, I knew thee well</title>
+      <link>https://blog.nella.org/2003/05/21/alas-ars-digita-i-knew-thee-well/</link>
+      <pubDate>Wed, 21 May 2003 03:48:08 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=50</guid> 
+      <description>&lt;p&gt;I watched Ars Digita, because I sensed something important and interesting was happening there. I was saddened when it all fell apart. To me, it was an important part of the tale of the dot-com days.&lt;/p&gt;
+&lt;p&gt;I found an article that looks to be an interesting insider&amp;rsquo;s view on things there.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Update:&lt;/strong&gt; Eve has removed the article from her website.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Gender differences in navigation</title>
+      <link>https://blog.nella.org/2003/04/21/gender-differences-in-navigation/</link>
+      <pubDate>Mon, 21 Apr 2003 13:32:26 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=43</guid> 
+      <description>&lt;p&gt;Some usability researchers &lt;a href=&#34;http://www.newscientist.com/news/news.jsp?id=ns99993628&#34;&gt;reported&lt;/a&gt; that with a 35 degree viewing angle, women are slower at navigational tasks than men, but when the viewing angle opens up to 70 degrees or more, the gender difference disappears. The improvement only shows up if the animation is smooth like reality, not jumpy.&lt;/p&gt;
+&lt;p&gt;Somehow I feel just a little bit pleased and superior as a result of reading about this. I know I&amp;rsquo;m not supposed to, but I still do.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Life at Microsoft</title>
+      <link>https://blog.nella.org/2003/04/18/life-at-microsoft/</link>
+      <pubDate>Fri, 18 Apr 2003 14:25:26 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=41</guid> 
+      <description>&lt;p&gt;This description of &lt;a href=&#34;http://web.archive.org/web/20070101233035/http://www.netcrucible.com/blog/2003/04/17/radioactive-hiring/&#34;&gt;life at Microsoft&lt;/a&gt; is pretty accurate. There&amp;rsquo;s more to it, of course. Every big company has politics and culture &amp;ldquo;issues&amp;rdquo;. Also, not every employee of Microsoft is so privileged to work at a level where they can control their own fate as much as the article implies. But for a certain class of Microsoft employees, it really just as he says it is.&lt;/p&gt;
+&lt;p&gt;I didn&amp;rsquo;t leave because I was being overly controlled or constrained by The Borg. I left Microsoft because I was dissatisfied with the business ethics of the company, and was not willing to commit my effort to changing it. Instead, I chose to put my effort into a smaller company where I could more easily reinforce the behaviors I wanted to see in my employer.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Shoes</title>
+      <link>https://blog.nella.org/2003/04/16/shoes/</link>
+      <pubDate>Wed, 16 Apr 2003 04:20:56 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=40</guid> 
+      <description>&lt;p&gt;Girls, &lt;a href=&#34;https://megnut.com/2003/04/14/words-of-wisdom/&#34;&gt;listen up&lt;/a&gt;!&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>College of the Future</title>
+      <link>https://blog.nella.org/2003/04/15/college-of-the-future/</link>
+      <pubDate>Tue, 15 Apr 2003 11:02:14 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=36</guid> 
+      <description>&lt;p&gt;Why is it that so few people ask the interesting questions that turn institutions on their heads? Philg &lt;a href=&#34;https://philip.greenspun.com/blog/2003/04/14/why-do-colleges-build-dormitories-and-teach-half-time/&#34;&gt;contemplates&lt;/a&gt; colleges optimized for learning.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Countrywide Home Loans</title>
+      <link>https://blog.nella.org/2003/04/14/countrywide-home-loans/</link>
+      <pubDate>Mon, 14 Apr 2003 02:07:55 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=34</guid> 
+      <description>&lt;p&gt;The little loan on my house got sold to Countrywide (though a closer inspection of the paperwork makes me think it was probably sold to the Bank of New York, which is having Countrywide service the loan for them). They kick ass, because they have real people, not lawyer-automatons write their letters. Here&amp;rsquo;s an excerpt:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Welcome to Countrywide Home Loans, the nation&amp;rsquo;s largest independent home loan lender. Your home loan servicing was recently transferred to us and this is your official notice, as legally required. So please excuse the formality.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Hobby Horses</title>
+      <link>https://blog.nella.org/2003/04/04/hobby-horses/</link>
+      <pubDate>Fri, 04 Apr 2003 10:30:30 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=30</guid> 
+      <description>&lt;p&gt;I used to work for Arnold de Leon. He has a method of teaching his coworkers lessons that Dave Winer &lt;a href=&#34;http://scriptingnews.userland.com/backissues/2003/04/04#orlowskisRant&#34;&gt;just explained&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Moore did coin a new phrase, and like all good bloggers wanting to initialize a new meme, he repeats it over and over. This is not a new idea. Jake Savin was a music major at Reed College. He told me his composition teacher taught him that a good theme is worth repeating, many times.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>The Cathedral and the Shed</title>
+      <link>https://blog.nella.org/2003/04/03/the-cathedral-and-the-shed/</link>
+      <pubDate>Thu, 03 Apr 2003 13:54:27 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=29</guid> 
+      <description>&lt;p&gt;I spent yesterday reading, debugging, and then fixing a Java program. What a pain in the ass. If I manage to go another 5 years until I do Java again, I&amp;rsquo;ll be happy.&lt;/p&gt;
+&lt;p&gt;The problem with Java is that the language provides the tiniest little basic units, and everything else you need you have to build. Or use other things that other people built for you (but first you have to learn about them and understand their quirks). That all makes sense from a theoretical viewpoint, but it is just much harder to use than a language like Perl which has very well developed, robust primitives whose quirks I already mastered years ago.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Advice from an Englishman</title>
+      <link>https://blog.nella.org/2003/04/01/advice-from-an-englishman/</link>
+      <pubDate>Tue, 01 Apr 2003 17:35:27 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=28</guid> 
+      <description>&lt;p&gt;In the Daily Telegraph, Patrick Bishop &lt;a href=&#34;https://web.archive.org/web/20070627042357/http://www.telegraph.co.uk/opinion/main.jhtml?xml=/opinion/2003/04/02/do0201.xml&amp;amp;sSheet=/news/2003/04/02/ixnewstop.html&#34;&gt;writes&lt;/a&gt; of American soldiers, &amp;ldquo;In short, they must work harder to show that they belong to the human race.&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;I don&amp;rsquo;t know who he is or if he has any credibility, but if the difference is visible to him, it probably is to the Iraqis too.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Government by and for the people</title>
+      <link>https://blog.nella.org/2003/03/31/government-by-and-for-the-people/</link>
+      <pubDate>Mon, 31 Mar 2003 15:42:04 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=27</guid> 
+      <description>&lt;p&gt;Dave Winer &lt;a href=&#34;http://web.archive.org/web/20040202031111/http://cyber.law.harvard.edu/people/jmoore/secondsuperpower.html&#34;&gt;points to a paper&lt;/a&gt; from a new colleague of his. His thesis is that a new super power is coming into existence to hold in check the United States. It&amp;rsquo;s about time, since it looks like we really need one.&lt;/p&gt;
+&lt;p&gt;This brings to mind something else I heard on the radio, I forget where. Many people in other countries say, &amp;ldquo;We don&amp;rsquo;t hate Americans, we just hate their government.&amp;rdquo; And it would be nice if we could just shrug off our current administration&amp;rsquo;s deplorable diplomatic manner so easily. But we can&amp;rsquo;t, because our government is a government &lt;strong&gt;of the people&lt;/strong&gt;. If you don&amp;rsquo;t like my government, you don&amp;rsquo;t like me.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Stealth Blog</title>
+      <link>https://blog.nella.org/2003/03/30/stealth-blog/</link>
+      <pubDate>Sun, 30 Mar 2003 23:43:52 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=26</guid> 
+      <description>&lt;p&gt;If you have a blog, and no one reads it, is it really a blog? Or is it like the tree that falls in the forest with no one around?&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;ve told exactly one person I have a blog, and even that was by mistake. I didn&amp;rsquo;t tell him the URL, though he is enterprising enough to find it himself. I&amp;rsquo;m not keeping it an Official Secret or anything. I guess I&amp;rsquo;m just trying an experiment to see how long I can be part of the blogosphere without people noticing.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>I&#39;m still here</title>
+      <link>https://blog.nella.org/2003/03/22/im-still-here/</link>
+      <pubDate>Sat, 22 Mar 2003 01:15:04 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=21</guid> 
+      <description>&lt;p&gt;I just haven&amp;rsquo;t posted in a while, that&amp;rsquo;s all.&lt;/p&gt;
+&lt;p&gt;Hmm, why? I haven&amp;rsquo;t been extraordinately busy. I just haven&amp;rsquo;t had anything to say. I&amp;rsquo;m hoping to break the trend by saying something about not saying anything.&lt;/p&gt;
+&lt;p&gt;One reason I haven&amp;rsquo;t had anything to say is that some of the things I have to say are not for public consumption. And though I have no readers of this blog that I know of, I know that this is a public space. One reason I decided to start this blog (apart from the simple need to understand this technology) is that I know that to be a good writer, you need to write. I value keeping a broad set of skills in good working order, so I want to be, among (many) other things, a very good writer.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Happy St. Patrick&#39;s day!</title>
+      <link>https://blog.nella.org/2003/03/17/happy-st-patricks-day/</link>
+      <pubDate>Mon, 17 Mar 2003 14:40:16 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=19</guid> 
+      <description>&lt;p&gt;I went with Dan to St. Steven&amp;rsquo;s Green today for lunch. I ordered Chicken Strips with salad. When I got mine, the first chicken strip looked just like the island of Great Britain. I picked it up by Scotland and dipped Wales in Ranch dressing before I noticed the similarity. So I immediately started digging through this pile of chicken to find an Ireland. And I found one! It was so cool to have my own little map on my plate.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Meat eaters</title>
+      <link>https://blog.nella.org/2003/03/15/meat-eaters/</link>
+      <pubDate>Sat, 15 Mar 2003 02:34:08 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=17</guid> 
+      <description>&lt;p&gt;Now, as &lt;a href=&#34;https://web.archive.org/web/20070621170435/http://bitsy.sub-atomic.com/~karl/&#34;&gt;Karl&lt;/a&gt; reminds me all the time, I do eat meat. But I am not a Meat EaterTM. My mother happily taught me to eat a lot of chicken and fish, and then dating a vegetarian pushed me over the edge to where I eat meat only a few meals a week, and even then it&amp;rsquo;s usually turkey sandwiches or something. The inexplicable rules I use to decide on which foods to eat would seem to make me something other than a vegetarian. One friend suggested &amp;ldquo;arbitrarian&amp;rdquo;. Suits me.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Genealogy of place</title>
+      <link>https://blog.nella.org/2003/03/13/genealogy-of-place/</link>
+      <pubDate>Thu, 13 Mar 2003 22:40:15 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=16</guid> 
+      <description>&lt;p&gt;Megnut &lt;a href=&#34;https://megnut.com/2003/03/12/the-old-neighbors/&#34;&gt;came across&lt;/a&gt; an article about something I&amp;rsquo;ve been thinking of as the new owner of a house from 1921.&lt;/p&gt;
+&lt;p&gt;At my housewarming party, a neighbor showed up who had lived next door, looking at and wondering about my house for 37 years. She had never been inside it. She has now!&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Egosurfing, pt 3</title>
+      <link>https://blog.nella.org/2002/07/25/egosurfing-pt-3/</link>
+      <pubDate>Thu, 25 Jul 2002 00:00:00 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=7</guid> 
+      <description>&lt;p&gt;After yesterday&amp;rsquo;s musings about my copious net presence, it was interesting to run across &lt;a href=&#34;http://www.nytimes.com/2002/07/25/technology/circuits/25GOOG.html&#34;&gt;this article&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Egosurfing, pt 2</title>
+      <link>https://blog.nella.org/2002/07/24/egosurfing-pt-2/</link>
+      <pubDate>Wed, 24 Jul 2002 03:16:00 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=6</guid> 
+      <description>&lt;p&gt;OK, I really need to stop &lt;a href=&#34;https://web.archive.org/web/20020211221421/http://www.tuxedo.org/~esr/jargon/html/entry/egosurf.html&#34;&gt;egosurfing&lt;/a&gt; and get to sleep. But look at this &lt;a href=&#34;https://web.archive.org/web/20020604150933/http://www.jacf.org/&#34;&gt;bizarre thing&lt;/a&gt; I found. I grew up in Oregon, and I&amp;rsquo;m all for wilderness conservation programs. Maybe they named the fund after me, once I left for California?&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Egosurfing</title>
+      <link>https://blog.nella.org/2002/07/24/egosurfing/</link>
+      <pubDate>Wed, 24 Jul 2002 02:55:00 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=5</guid> 
+      <description>&lt;p&gt;Look what I found&amp;hellip; When searching for the old article about WebTV, I found a version of it &lt;a href=&#34;https://web.archive.org/web/20010617034634/http://www.zdnet.co.jp/news/0003/21/webtv.html&#34;&gt;translated into Japanese&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;My friend Lisa was pretty blown away by how much stuff she found about me on the net. Even I&amp;rsquo;m blown away to find a Japanese article quoting me.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

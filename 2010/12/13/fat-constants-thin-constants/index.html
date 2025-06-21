@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Fat Constants, Thin Constants | jra&#39;s thoughts</title>
+<meta name="keywords" content="">
+<meta name="description" content="I play from time to time with a patch for Go that makes the Tiny runtime more capable. My current goal is to get a new backend for exp/draw working which writes to the SVGA screen. It would be cool to be able to decode the Go mascot and have him flying around the screen or something.
+In the Tiny runtime, there&rsquo;s no OS, so there&rsquo;s no disk drivers, so there&rsquo;s no filesystem, so there&rsquo;s no files. Which makes decoding a PNG and showing it kind of hard. But if the program carries along the data with it, in the form of a []byte, then you could use bytes.NewReader to turn it into an io.Reader and then pass it to image/png.Decode. So that&rsquo;s what I set out to do.">
+<meta name="author" content="jra">
+<link rel="canonical" href="https://blog.nella.org/2010/12/13/fat-constants-thin-constants/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.3beea2776320e39a6c8d0589cd10cf4cbbbe3ca9b6f0363cfeef1417ed39a195.css" integrity="sha256-O&#43;6id2Mg45psjQWJzRDPTLu&#43;PKm28DY8/u8UF&#43;05oZU=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://blog.nella.org/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://blog.nella.org/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://blog.nella.org/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://blog.nella.org/apple-touch-icon.png">
+<link rel="mask-icon" href="https://blog.nella.org/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://blog.nella.org/2010/12/13/fat-constants-thin-constants/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend&display=swap" rel="stylesheet">
+<meta property="og:url" content="https://blog.nella.org/2010/12/13/fat-constants-thin-constants/">
+  <meta property="og:site_name" content="jra&#39;s thoughts">
+  <meta property="og:title" content="Fat Constants, Thin Constants">
+  <meta property="og:description" content="I play from time to time with a patch for Go that makes the Tiny runtime more capable. My current goal is to get a new backend for exp/draw working which writes to the SVGA screen. It would be cool to be able to decode the Go mascot and have him flying around the screen or something.
+In the Tiny runtime, there’s no OS, so there’s no disk drivers, so there’s no filesystem, so there’s no files. Which makes decoding a PNG and showing it kind of hard. But if the program carries along the data with it, in the form of a []byte, then you could use bytes.NewReader to turn it into an io.Reader and then pass it to image/png.Decode. So that’s what I set out to do.">
+  <meta property="og:locale" content="en-US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2010-12-13T15:23:33+00:00">
+    <meta property="article:modified_time" content="2010-12-13T15:23:33+00:00">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Fat Constants, Thin Constants">
+<meta name="twitter:description" content="I play from time to time with a patch for Go that makes the Tiny runtime more capable. My current goal is to get a new backend for exp/draw working which writes to the SVGA screen. It would be cool to be able to decode the Go mascot and have him flying around the screen or something.
+In the Tiny runtime, there&rsquo;s no OS, so there&rsquo;s no disk drivers, so there&rsquo;s no filesystem, so there&rsquo;s no files. Which makes decoding a PNG and showing it kind of hard. But if the program carries along the data with it, in the form of a []byte, then you could use bytes.NewReader to turn it into an io.Reader and then pass it to image/png.Decode. So that&rsquo;s what I set out to do.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://blog.nella.org/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Fat Constants, Thin Constants",
+      "item": "https://blog.nella.org/2010/12/13/fat-constants-thin-constants/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Fat Constants, Thin Constants",
+  "name": "Fat Constants, Thin Constants",
+  "description": "I play from time to time with a patch for Go that makes the Tiny runtime more capable. My current goal is to get a new backend for exp/draw working which writes to the SVGA screen. It would be cool to be able to decode the Go mascot and have him flying around the screen or something.\nIn the Tiny runtime, there\u0026rsquo;s no OS, so there\u0026rsquo;s no disk drivers, so there\u0026rsquo;s no filesystem, so there\u0026rsquo;s no files. Which makes decoding a PNG and showing it kind of hard. But if the program carries along the data with it, in the form of a []byte, then you could use bytes.NewReader to turn it into an io.Reader and then pass it to image/png.Decode. So that\u0026rsquo;s what I set out to do.\n",
+  "keywords": [
+    
+  ],
+  "articleBody": "I play from time to time with a patch for Go that makes the Tiny runtime more capable. My current goal is to get a new backend for exp/draw working which writes to the SVGA screen. It would be cool to be able to decode the Go mascot and have him flying around the screen or something.\nIn the Tiny runtime, there’s no OS, so there’s no disk drivers, so there’s no filesystem, so there’s no files. Which makes decoding a PNG and showing it kind of hard. But if the program carries along the data with it, in the form of a []byte, then you could use bytes.NewReader to turn it into an io.Reader and then pass it to image/png.Decode. So that’s what I set out to do.\nI got surprised by something, and that’s what I’m writing about today. Here’s the code that surprised me:\npackage main func main() { println([...]byte{'f', 'o', 'o'}[:]) } The resulting assembly is:\n... 8048c26 8b442404 | (4) MOVL 4(SP),AX 8048c2a 89c3 | (4) MOVL AX,BX 8048c2c 83c300 | (4) ADDL $0,BX // 102 = 'f' 8048c2f c60366 | (4) MOVB $102,(BX) // put it in the array 8048c32 89c3 | (4) MOVL AX,BX 8048c34 43 | (4) INCL ,BX // increment and do it again... 8048c35 c6036f | (4) MOVB $111,(BX) 8048c38 89c3 | (4) MOVL AX,BX 8048c3a 83c302 | (4) ADDL $2,BX 8048c3d c6036f | (4) MOVB $111,(BX) 8048c40 890424 | (4) MOVL AX,(SP) 8048c43 c744240403000000 | (4) MOVL $3,4(SP) 8048c4b c744240800000000 | (4) MOVL $0,8(SP) 8048c53 c744240c00000000 | (4) MOVL $0,12(SP) 8048c5b c744241000000000 | (4) MOVL $0,16(SP) 8048c63 c744241403000000 | (4) MOVL $3,20(SP) 8048c6b c744241800000000 | (4) MOVL $0,24(SP) 8048c73 c744241c01000000 | (4) MOVL $1,28(SP) 8048c7b c744242000000000 | (4) MOVL $0,32(SP) 8048c83 e89d840000 | (4) CALL ,8051125+runtime.slicearray This is a pretty inefficient way to build a constant! I wouldn’t even have noticed, except that when I changed the simple “foo” above into the actual PNG I wanted to include in my program, 8g took so much memory the out of memory killer woke up and killed my Firefox! And we were talking about a little 80 kb PNG! The resulting ELF binary was 1.3 megs!\nThe syntax I used, namely “make an array then take a slice of it” turns out to be excessively complicated. The routine I was using expected a slice, so that’s how I ended up tacking the [:] on the end. Word to the wise: when the compiler is complaining about wanting a slice instead of an array, don’t just add the [:] on the end, give the compiler a chance to make the slice itself:\npackage main func main() { // there are 57 0's here: println([]byte{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, }) } Here’s the resulting assembly:\n8048c17 83ec2c | (3) SUBL $44,SP // allocate a new array that's 57 bytes long 8048c1a c7042439000000 | (4) MOVL $57,(SP) 8048c21 e85d1d0000 | (4) CALL ,804a983+runtime.new 8048c26 8b542404 | (4) MOVL 4(SP),DX // load the data from this place in the program's image (my zeros are there; the file would be later) 8048c2a 8d35dc590508 | (4) LEAL main.statictmp_0001+0(SB),SI 8048c30 89d7 | (4) MOVL DX,DI 8048c32 fc | (4) CLD , // with a loop count of 14 8048c33 b90e000000 | (4) MOVL $14,CX // repeat 8048c38 f3 | (4) REP , // a move long 8048c39 a5 | (4) MOVSL , // and then one more byte (4 * 14 + 1 = 57) 8048c3a a4 | (4) MOVSB , // slice cap = 57 8048c3b c744242439000000 | (4) MOVL $57,main.autotmp_0000+36(SP) // slice len = 57 8048c43 c744242839000000 | (4) MOVL $57,main.autotmp_0000+40(SP) // underlying array = the new array 8048c4b 89542420 | (4) MOVL DX,main.autotmp_0000+32(SP) OK, so this is closer to Not Totally Insane, which is what we want. But why? I suppose this is either a bug or a very deep part of the compiler. In the first program, the compiler thinks it needs to compute and put into the array every item. In the second program, the compiler understands that every item is unchanging and can live in the program text.\nThough it is no longer assembling the array at runtime byte by byte, it is still calling runtime.new and then making a copy from the program text into the new array. Can we do better? If we move the array out of the function call and give it a local variable, it doesn’t change anything, it is still copied (not shown, check for yourself if you want). If we move the initialization of the array out to the global scope, then the Go compiler moves it into main.init() for us, doing the copy just the same.\nSo, can we do it without the copy at all? Yes! But it requires unsafe, slice brain surgery, and Cgo. Hang on tight…\nA slice is a data structure on top of an underlying zone of memory. The definition of a slice from reflect.SliceHeader is:\ntype SliceHeader struct { Data uintptr Len int Cap int } So what we want to do is get a pointer to a place in memory where our contiguous bytes are stored, then set the Data pointer of the slice to that pointer (as well as making sure Len and Cap are correct). Mucking around with pointers like this can get you in trouble: if the garbage collector decides that the only reference it has to the thing at slice.Data, and it is ready to garbage collect your slice, then it’s going to try to garbage collect your underlying array as well. If that array came from someplace other than the Go heap, you’re going to corrupt something. But it is relatively easy to prevent a slice from ever getting GC’d; all you have to do is hold it in a map at global scope. For my application (a set of byte arrays representing contents of files), I already want to hold them in a map with keys equal to the filename and values equal to the byte slice.\nI said we’d need Cgo too. But why? The answer is that if we let the Go compiler put the bytes away into the program text, it will know where they are, but we won’t. We can’t reference a symbol like “main.statictmp_0001” to find the bytes themselves. And no matter what we do when we are trying to find out where the bytes are stored, Go copies them into memory alloced with new. Why? Probably because it needs to guarantee that the array will be writeable later, since it is not marked as immutable as strings are (the fact that strings are immutable means there might be another way to achieve our goal; we’ll have to come back to that in a bit) it can’t leave the bytes pointing to the read-only memory where the program text is stored.\nSo we need Cgo not because we want to call into a C subroutine, but because we want to have C put the bytes into the read-only segment of the program text with a symbol on them that we know, and can pass to unsafe.Pointer when we are doing our slice brain surgery.\nHere is the resulting test program:\npackage main /* unsigned char const data__tmp_test_zip[] = { 0, 1, 2 }; */ import \"C\" import ( \"unsafe\" \"reflect\" ) var FileMap map[string][]byte func main() { FileMap = make(map[string][]byte) s1 := C.data__tmp_test_zip[:] s1x := (*reflect.SliceHeader)(unsafe.Pointer(\u0026s1)) var buf [1]byte s2 := buf[:] s2x := (*reflect.SliceHeader)(unsafe.Pointer(\u0026s2)) s2x.Data = s1x.Data s2x.Len = s1x.Len s2x.Cap = s1x.Cap FileMap[\"/tmp/test.zip\"] = s2 println(FileMap[\"/tmp/test.zip\"]) } In this case, we are trying to store the three bytes 0, 1, 2. We do that inside the /* */ block right before the import \"C\". The slice brain surgery happens in main(). C.data__tmp_test_zip is type [3]C.uchar. To get a slice on top of it, we just ask for C.data__tmp_test_zip[:] and put it in s1. We use reflect to dig inside the slice and find the pointer to the underlying bytes.\n(Thanks to Gustavo, who showed me how to do this with his mmap module.)\nThe next part, with s2 and s2x, is a second piece of brain surgery. The underlying array is a [3]C.uchar. But we want an API based on []byte, because that way we can pass them to things like bytes.NewReader to get an io.Reader that we can pass onwards to things like image/png.Decode. To do that, we make a new slice with an underlying [1]byte array, then we swap out the pointer to point to the array of bytes the C made for us. Voila, a []byte that points to the contents of our file, without a copy.\n",
+  "wordCount" : "1443",
+  "inLanguage": "en",
+  "datePublished": "2010-12-13T15:23:33Z",
+  "dateModified": "2010-12-13T15:23:33Z",
+  "author":{
+    "@type": "Person",
+    "name": "jra"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://blog.nella.org/2010/12/13/fat-constants-thin-constants/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "jra's thoughts",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://blog.nella.org/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://blog.nella.org/" accesskey="h" title="jra&#39;s thoughts (Alt + H)">jra&#39;s thoughts</a>
+            <div class="logo-switches">
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://blog.nella.org/">Home</a>&nbsp;»&nbsp;<a href="https://blog.nella.org/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      Fat Constants, Thin Constants
+    </h1>
+    <div class="post-meta"><span title='2010-12-13 15:23:33 +0000 +0000'>December 13, 2010</span>&nbsp;·&nbsp;7 min&nbsp;·&nbsp;jra
+
+</div>
+  </header> 
+  <div class="post-content"><p>I play from time to time with <a href="http://code.google.com/p/tinygo/">a patch for Go that makes the Tiny runtime more capable</a>. My current goal is to get a new backend for exp/draw working which writes to the SVGA screen. It would be cool to be able to decode the Go mascot and have him flying around the screen or something.</p>
+<p>In the Tiny runtime, there&rsquo;s no OS, so there&rsquo;s no disk drivers, so there&rsquo;s no filesystem, so there&rsquo;s no files. Which makes decoding a PNG and showing it kind of hard. But if the program carries along the data with it, in the form of a []byte, then you could use bytes.NewReader to turn it into an io.Reader and then pass it to image/png.Decode. So that&rsquo;s what I set out to do.</p>
+<p>I got surprised by something, and that&rsquo;s what I&rsquo;m writing about today. Here&rsquo;s the code that surprised me:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>package main
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> main() {
+</span></span><span style="display:flex;"><span>  println([<span style="color:#f92672">...</span>]byte{<span style="color:#e6db74">&#39;f&#39;</span>, <span style="color:#e6db74">&#39;o&#39;</span>, <span style="color:#e6db74">&#39;o&#39;</span>}[:])
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The resulting assembly is:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>8048c26 8b442404             | (4)  MOVL  4(SP),AX
+</span></span><span style="display:flex;"><span>8048c2a 89c3                 | (4)  MOVL  AX,BX
+</span></span><span style="display:flex;"><span>8048c2c 83c300               | (4)  ADDL  $0,BX
+</span></span><span style="display:flex;"><span>// 102 = &#39;f&#39;
+</span></span><span style="display:flex;"><span>8048c2f c60366               | (4)  MOVB  $102,(BX)
+</span></span><span style="display:flex;"><span>// put it in the array
+</span></span><span style="display:flex;"><span>8048c32 89c3                 | (4)  MOVL  AX,BX
+</span></span><span style="display:flex;"><span>8048c34 43                   | (4)  INCL  ,BX
+</span></span><span style="display:flex;"><span>// increment and do it again...
+</span></span><span style="display:flex;"><span>8048c35 c6036f               | (4)  MOVB  $111,(BX)
+</span></span><span style="display:flex;"><span>8048c38 89c3                 | (4)  MOVL  AX,BX
+</span></span><span style="display:flex;"><span>8048c3a 83c302               | (4)  ADDL  $2,BX
+</span></span><span style="display:flex;"><span>8048c3d c6036f               | (4)  MOVB  $111,(BX)
+</span></span><span style="display:flex;"><span>8048c40 890424               | (4)  MOVL  AX,(SP)
+</span></span><span style="display:flex;"><span>8048c43 c744240403000000     | (4)  MOVL  $3,4(SP)
+</span></span><span style="display:flex;"><span>8048c4b c744240800000000     | (4)  MOVL  $0,8(SP)
+</span></span><span style="display:flex;"><span>8048c53 c744240c00000000     | (4)  MOVL  $0,12(SP)
+</span></span><span style="display:flex;"><span>8048c5b c744241000000000     | (4)  MOVL  $0,16(SP)
+</span></span><span style="display:flex;"><span>8048c63 c744241403000000     | (4)  MOVL  $3,20(SP)
+</span></span><span style="display:flex;"><span>8048c6b c744241800000000     | (4)  MOVL  $0,24(SP)
+</span></span><span style="display:flex;"><span>8048c73 c744241c01000000     | (4)  MOVL  $1,28(SP)
+</span></span><span style="display:flex;"><span>8048c7b c744242000000000     | (4)  MOVL  $0,32(SP)
+</span></span><span style="display:flex;"><span>8048c83 e89d840000           | (4)  CALL  ,8051125+runtime.slicearray
+</span></span></code></pre></div><p>This is a pretty inefficient way to build a constant! I wouldn&rsquo;t even have noticed, except that when I changed the simple &ldquo;foo&rdquo; above into the actual PNG I wanted to include in my program, 8g took so much memory the out of memory killer woke up and killed my Firefox! And we were talking about a little 80 kb PNG! The resulting ELF binary was 1.3 megs!</p>
+<p>The syntax I used, namely &ldquo;make an array then take a slice of it&rdquo; turns out to be excessively complicated. The routine I was using expected a slice, so that&rsquo;s how I ended up tacking the [:] on the end. Word to the wise: when the compiler is complaining about wanting a slice instead of an array, don&rsquo;t just add the [:] on the end, give the compiler a chance to make the slice itself:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// there are 57 0&#39;s here:</span>
+</span></span><span style="display:flex;"><span>  println([]<span style="color:#66d9ef">byte</span>{ <span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>, })
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Here&rsquo;s the resulting assembly:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span><span style="color:#ae81ff">8048</span>c17 <span style="color:#ae81ff">83</span>ec2c               <span style="color:#f92672">|</span> (<span style="color:#ae81ff">3</span>)  SUBL  <span style="color:#f92672">$</span><span style="color:#ae81ff">44</span>,SP
+</span></span><span style="display:flex;"><span><span style="color:#f92672">//</span> allocate a new array that<span style="color:#e6db74">&#39;s 57 bytes long</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">8048</span>c1a c7042439000000       <span style="color:#f92672">|</span> (<span style="color:#ae81ff">4</span>)  MOVL  <span style="color:#f92672">$</span><span style="color:#ae81ff">57</span>,(SP)
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">8048</span>c21 e85d1d0000           <span style="color:#f92672">|</span> (<span style="color:#ae81ff">4</span>)  CALL  ,<span style="color:#ae81ff">804</span>a983<span style="color:#f92672">+</span>runtime<span style="color:#f92672">.</span>new
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">8048</span>c26 <span style="color:#ae81ff">8</span>b542404             <span style="color:#f92672">|</span> (<span style="color:#ae81ff">4</span>)  MOVL  <span style="color:#ae81ff">4</span>(SP),DX
+</span></span><span style="display:flex;"><span><span style="color:#f92672">//</span> load the data from this place <span style="color:#f92672">in</span> the program<span style="color:#e6db74">&#39;s image (my zeros are there; the file would be later)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">8048</span>c2a <span style="color:#ae81ff">8</span>d35dc590508         <span style="color:#f92672">|</span> (<span style="color:#ae81ff">4</span>)  LEAL  main<span style="color:#f92672">.</span>statictmp_0001<span style="color:#f92672">+</span><span style="color:#ae81ff">0</span>(SB),SI
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">8048</span>c30 <span style="color:#ae81ff">89</span>d7                 <span style="color:#f92672">|</span> (<span style="color:#ae81ff">4</span>)  MOVL  DX,DI
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">8048</span>c32 fc                   <span style="color:#f92672">|</span> (<span style="color:#ae81ff">4</span>)  CLD ,
+</span></span><span style="display:flex;"><span><span style="color:#f92672">//</span> with a loop count of <span style="color:#ae81ff">14</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">8048</span>c33 b90e000000           <span style="color:#f92672">|</span> (<span style="color:#ae81ff">4</span>)  MOVL  <span style="color:#f92672">$</span><span style="color:#ae81ff">14</span>,CX
+</span></span><span style="display:flex;"><span><span style="color:#f92672">//</span> repeat
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">8048</span>c38 f3                   <span style="color:#f92672">|</span> (<span style="color:#ae81ff">4</span>)  REP ,
+</span></span><span style="display:flex;"><span><span style="color:#f92672">//</span> a move long
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">8048</span>c39 a5                   <span style="color:#f92672">|</span> (<span style="color:#ae81ff">4</span>)  MOVSL ,
+</span></span><span style="display:flex;"><span><span style="color:#f92672">//</span> <span style="color:#f92672">and</span> then one more byte (<span style="color:#ae81ff">4</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">14</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">57</span>)
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">8048</span>c3a a4                   <span style="color:#f92672">|</span> (<span style="color:#ae81ff">4</span>)  MOVSB ,
+</span></span><span style="display:flex;"><span><span style="color:#f92672">//</span> slice cap <span style="color:#f92672">=</span> <span style="color:#ae81ff">57</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">8048</span>c3b c744242439000000     <span style="color:#f92672">|</span> (<span style="color:#ae81ff">4</span>)  MOVL  <span style="color:#f92672">$</span><span style="color:#ae81ff">57</span>,main<span style="color:#f92672">.</span>autotmp_0000<span style="color:#f92672">+</span><span style="color:#ae81ff">36</span>(SP)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">//</span> slice len <span style="color:#f92672">=</span> <span style="color:#ae81ff">57</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">8048</span>c43 c744242839000000     <span style="color:#f92672">|</span> (<span style="color:#ae81ff">4</span>)  MOVL  <span style="color:#f92672">$</span><span style="color:#ae81ff">57</span>,main<span style="color:#f92672">.</span>autotmp_0000<span style="color:#f92672">+</span><span style="color:#ae81ff">40</span>(SP)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">//</span> underlying array <span style="color:#f92672">=</span> the new array
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">8048</span>c4b <span style="color:#ae81ff">89542420</span>             <span style="color:#f92672">|</span> (<span style="color:#ae81ff">4</span>)  MOVL  DX,main<span style="color:#f92672">.</span>autotmp_0000<span style="color:#f92672">+</span><span style="color:#ae81ff">32</span>(SP)
+</span></span></code></pre></div><p>OK, so this is closer to Not Totally Insane, which is what we want. But why? I suppose this is either a bug or a very deep part of the compiler. In the first program, the compiler thinks it needs to compute and put into the array every item. In the second program, the compiler understands that every item is unchanging and can live in the program text.</p>
+<p>Though it is no longer assembling the array at runtime byte by byte, it is still calling runtime.new and then making a copy from the program text into the new array. Can we do better? If we move the array out of the function call and give it a local variable, it doesn&rsquo;t change anything, it is still copied (not shown, check for yourself if you want). If we move the initialization of the array out to the global scope, then the Go compiler moves it into main.init() for us, doing the copy just the same.</p>
+<p>So, can we do it without the copy at all? Yes! But it requires unsafe, slice brain surgery, and Cgo. Hang on tight&hellip;</p>
+<p>A slice is a data structure on top of an underlying zone of memory. The definition of a slice from reflect.SliceHeader is:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">SliceHeader</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">Data</span> <span style="color:#66d9ef">uintptr</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">Len</span>  <span style="color:#66d9ef">int</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">Cap</span>  <span style="color:#66d9ef">int</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>So what we want to do is get a pointer to a place in memory where our contiguous bytes are stored, then set the Data pointer of the slice to that pointer (as well as making sure Len and Cap are correct). Mucking around with pointers like this can get you in trouble: if the garbage collector decides that the only reference it has to the thing at slice.Data, and it is ready to garbage collect your slice, then it&rsquo;s going to try to garbage collect your underlying array as well. If that array came from someplace other than the Go heap, you&rsquo;re going to corrupt something. But it is relatively easy to prevent a slice from ever getting GC&rsquo;d; all you have to do is hold it in a map at global scope. For my application (a set of byte arrays representing contents of files), I already want to hold them in a map with keys equal to the filename and values equal to the byte slice.</p>
+<p>I said we&rsquo;d need Cgo too. But why? The answer is that if we let the Go compiler put the bytes away into the program text, it will know where they are, but we won&rsquo;t. We can&rsquo;t reference a symbol like &ldquo;main.statictmp_0001&rdquo; to find the bytes themselves. And no matter what we do when we are trying to find out where the bytes are stored, Go copies them into memory alloced with new. Why? Probably because it needs to guarantee that the array will be writeable later, since it is not marked as immutable as strings are (the fact that strings are immutable means there might be another way to achieve our goal; we&rsquo;ll have to come back to that in a bit) it can&rsquo;t leave the bytes pointing to the read-only memory where the program text is stored.</p>
+<p>So we need Cgo not because we want to call into a C subroutine, but because we want to have C put the bytes into the read-only segment of the program text with a symbol on them that we know, and can pass to unsafe.Pointer when we are doing our slice brain surgery.</p>
+<p>Here is the resulting test program:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">unsigned char const data__tmp_test_zip[] = { 0, 1, 2 };
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">*/</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;C&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;unsafe&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;reflect&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">FileMap</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>][]<span style="color:#66d9ef">byte</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">FileMap</span> = make(<span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>][]<span style="color:#66d9ef">byte</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">s1</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">data__tmp_test_zip</span>[:]
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">s1x</span> <span style="color:#f92672">:=</span> (<span style="color:#f92672">*</span><span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">SliceHeader</span>)(<span style="color:#a6e22e">unsafe</span>.<span style="color:#a6e22e">Pointer</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">s1</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">buf</span> [<span style="color:#ae81ff">1</span>]<span style="color:#66d9ef">byte</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">s2</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">buf</span>[:]
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">s2x</span> <span style="color:#f92672">:=</span> (<span style="color:#f92672">*</span><span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">SliceHeader</span>)(<span style="color:#a6e22e">unsafe</span>.<span style="color:#a6e22e">Pointer</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">s2</span>))
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">s2x</span>.<span style="color:#a6e22e">Data</span> = <span style="color:#a6e22e">s1x</span>.<span style="color:#a6e22e">Data</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">s2x</span>.<span style="color:#a6e22e">Len</span> = <span style="color:#a6e22e">s1x</span>.<span style="color:#a6e22e">Len</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">s2x</span>.<span style="color:#a6e22e">Cap</span> = <span style="color:#a6e22e">s1x</span>.<span style="color:#a6e22e">Cap</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">FileMap</span>[<span style="color:#e6db74">&#34;/tmp/test.zip&#34;</span>] = <span style="color:#a6e22e">s2</span>
+</span></span><span style="display:flex;"><span>        println(<span style="color:#a6e22e">FileMap</span>[<span style="color:#e6db74">&#34;/tmp/test.zip&#34;</span>])
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>In this case, we are trying to store the three bytes 0, 1, 2. We do that inside the /* */ block right before the <code>import &quot;C&quot;</code>. The slice brain surgery happens in main(). C.data__tmp_test_zip is type [3]C.uchar. To get a slice on top of it, we just ask for C.data__tmp_test_zip[:] and put it in s1. We use reflect to dig inside the slice and find the pointer to the underlying bytes.</p>
+<p>(Thanks to Gustavo, who <a href="http://blog.labix.org/2010/11/28/removing-seatbelts-with-the-go-language-for-mmap-support">showed me how to do this</a> with his mmap module.)</p>
+<p>The next part, with s2 and s2x, is a second piece of brain surgery. The underlying array is a [3]C.uchar. But we want an API based on []byte, because that way we can pass them to things like bytes.NewReader to get an io.Reader that we can pass onwards to things like image/png.Decode. To do that, we make a new slice with an underlying [1]byte array, then we swap out the pointer to point to the array of bytes the C made for us. Voila, a []byte that points to the contents of our file, without a copy.</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+
+<ul class="share-buttons">
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Fat Constants, Thin Constants on linkedin"
+            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.nella.org%2f2010%2f12%2f13%2ffat-constants-thin-constants%2f&amp;title=Fat%20Constants%2c%20Thin%20Constants&amp;summary=Fat%20Constants%2c%20Thin%20Constants&amp;source=https%3a%2f%2fblog.nella.org%2f2010%2f12%2f13%2ffat-constants-thin-constants%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Fat Constants, Thin Constants on ycombinator"
+            href="https://news.ycombinator.com/submitlink?t=Fat%20Constants%2c%20Thin%20Constants&u=https%3a%2f%2fblog.nella.org%2f2010%2f12%2f13%2ffat-constants-thin-constants%2f">
+            <svg version="1.1" xml:space="preserve" width="30px" height="30px" viewBox="0 0 512 512" fill="currentColor"
+                xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
+                <path
+                    d="M449.446 0C483.971 0 512 28.03 512 62.554L512 449.446C512 483.97 483.97 512 449.446 512L62.554 512C28.03 512 0 483.97 0 449.446L0 62.554C0 28.03 28.029 0 62.554 0L449.446 0ZM183.8767 87.9921H121.8427L230.6673 292.4508V424.0079H281.3328V292.4508L390.1575 87.9921H328.1233L256 238.2489z" />
+            </svg>
+        </a>
+    </li>
+</ul>
+
+  </footer>
+</article>
+    </main>
+    
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

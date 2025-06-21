@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Google Video hacking | jra&#39;s thoughts</title>
+<meta name="keywords" content="">
+<meta name="description" content="I decided to look into Google Video a bit, now that they are selling stuff.
+First things first, I looked into how the Google Video Player works for free files. (I&rsquo;m a cheapskate.) It&rsquo;s Google Engineering at it&rsquo;s finest; the simplest thing that will work, and no simpler. When you click to see a movie in the Google Video Player, you download a tiny text file (with file extension GVP). That causes the Google Video Player to launch. It reads the file and starts to download the video via HTTP, just like the Flash player is doing in the web browser. The GVP file is just a text file, so you can open it and find the URL. If you fetch the URL yourself with wget (i.e. no cookies, no javascript, etc) you get a big binary stream. The content-type claims that it is &ldquo;video/x-msvideo&rdquo;, but it does not play in Windows Media Player.">
+<meta name="author" content="jra">
+<link rel="canonical" href="https://blog.nella.org/2006/01/10/google-video-hacking/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.3beea2776320e39a6c8d0589cd10cf4cbbbe3ca9b6f0363cfeef1417ed39a195.css" integrity="sha256-O&#43;6id2Mg45psjQWJzRDPTLu&#43;PKm28DY8/u8UF&#43;05oZU=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://blog.nella.org/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://blog.nella.org/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://blog.nella.org/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://blog.nella.org/apple-touch-icon.png">
+<link rel="mask-icon" href="https://blog.nella.org/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://blog.nella.org/2006/01/10/google-video-hacking/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend&display=swap" rel="stylesheet">
+<meta property="og:url" content="https://blog.nella.org/2006/01/10/google-video-hacking/">
+  <meta property="og:site_name" content="jra&#39;s thoughts">
+  <meta property="og:title" content="Google Video hacking">
+  <meta property="og:description" content="I decided to look into Google Video a bit, now that they are selling stuff.
+First things first, I looked into how the Google Video Player works for free files. (I’m a cheapskate.) It’s Google Engineering at it’s finest; the simplest thing that will work, and no simpler. When you click to see a movie in the Google Video Player, you download a tiny text file (with file extension GVP). That causes the Google Video Player to launch. It reads the file and starts to download the video via HTTP, just like the Flash player is doing in the web browser. The GVP file is just a text file, so you can open it and find the URL. If you fetch the URL yourself with wget (i.e. no cookies, no javascript, etc) you get a big binary stream. The content-type claims that it is “video/x-msvideo”, but it does not play in Windows Media Player.">
+  <meta property="og:locale" content="en-US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2006-01-10T20:56:18+00:00">
+    <meta property="article:modified_time" content="2006-01-10T20:56:18+00:00">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Google Video hacking">
+<meta name="twitter:description" content="I decided to look into Google Video a bit, now that they are selling stuff.
+First things first, I looked into how the Google Video Player works for free files. (I&rsquo;m a cheapskate.) It&rsquo;s Google Engineering at it&rsquo;s finest; the simplest thing that will work, and no simpler. When you click to see a movie in the Google Video Player, you download a tiny text file (with file extension GVP). That causes the Google Video Player to launch. It reads the file and starts to download the video via HTTP, just like the Flash player is doing in the web browser. The GVP file is just a text file, so you can open it and find the URL. If you fetch the URL yourself with wget (i.e. no cookies, no javascript, etc) you get a big binary stream. The content-type claims that it is &ldquo;video/x-msvideo&rdquo;, but it does not play in Windows Media Player.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://blog.nella.org/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Google Video hacking",
+      "item": "https://blog.nella.org/2006/01/10/google-video-hacking/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Google Video hacking",
+  "name": "Google Video hacking",
+  "description": "I decided to look into Google Video a bit, now that they are selling stuff.\nFirst things first, I looked into how the Google Video Player works for free files. (I\u0026rsquo;m a cheapskate.) It\u0026rsquo;s Google Engineering at it\u0026rsquo;s finest; the simplest thing that will work, and no simpler. When you click to see a movie in the Google Video Player, you download a tiny text file (with file extension GVP). That causes the Google Video Player to launch. It reads the file and starts to download the video via HTTP, just like the Flash player is doing in the web browser. The GVP file is just a text file, so you can open it and find the URL. If you fetch the URL yourself with wget (i.e. no cookies, no javascript, etc) you get a big binary stream. The content-type claims that it is \u0026ldquo;video/x-msvideo\u0026rdquo;, but it does not play in Windows Media Player.\n",
+  "keywords": [
+    
+  ],
+  "articleBody": "I decided to look into Google Video a bit, now that they are selling stuff.\nFirst things first, I looked into how the Google Video Player works for free files. (I’m a cheapskate.) It’s Google Engineering at it’s finest; the simplest thing that will work, and no simpler. When you click to see a movie in the Google Video Player, you download a tiny text file (with file extension GVP). That causes the Google Video Player to launch. It reads the file and starts to download the video via HTTP, just like the Flash player is doing in the web browser. The GVP file is just a text file, so you can open it and find the URL. If you fetch the URL yourself with wget (i.e. no cookies, no javascript, etc) you get a big binary stream. The content-type claims that it is “video/x-msvideo”, but it does not play in Windows Media Player.\nI took a look at the header of the file, and the first four bytes are “RIFF”. Using File::Format::RIFF , I took a look inside the file and found that it starts with a LIST of type “goog”, which has inside it a chunk of type “GDAT” that is 32 bytes long. AVICodec is willing to overlook this extra data, but Windows Media Player and WinAmp don’t. Later, I’ll try to remove the Google extensions to the AVI file and see if I can get WinAmp to play it. Here’s what AVICodec sees inside the AVI file:\nFile : 9.91 MB (9.91 MB), duration: 0:02:34, type: AVI, 1 audio stream(s), quality: 46 % Video : 7.56 MB, 411 Kbps, 30.0 fps, 480*360 (4:3), divx = OpenDivx v4, Supported Audio : 2.34 MB, 128 Kbps, 44100 Hz, 2 channels, 0x55 = MPEG Layer-3, Supported So, there’s nothing fancy about the data; it’s Divx video and MP3 audio. There’s just a litte extra data in there gumming up the works.\nWhen I went to buy my first video, I checked out the terms of service. They are located here. The interesting thing, which you can tell from the way the TOS are worded, is that you are signing up for a generalized payment processing system, not for a video purchase system. That’s a big deal, and an under-reported one. Some bloggers discovered the Google Purchases system in October, but no one in the press is talking about it right now.\nThe TOS says that I’ll be doing business with Google Payment Corp, a wholly owned subsidiary or Google. The other surprising thing is that it clearly says that GPC will not charge a service fee. As a video publisher, I know that if I choose to have Google collect fees for me, they reserve the right to take a portion of the fees, so it’s not like they are running Google Purchases for free or anything.\nWhen you go to confirm the purchase, here are the final three reminders you get:\nRequires Internet connection to watch Requires Windows 2000 or XP All sales final There is also a small note saying, “Google processes video sales but is not the seller.”\nOnce the purchase is completed, you download a GVP file, just like with the free movies. It is formatted precisely the same. And fetching the video content outside of the Google Video Player also works fine. So that’s one interesting bit: the copy-protected files travel over vanilla HTTP, no cookies required. If you know the URL for a file someone purchased, you can download it. Playing it is a different matter, of course.\nI took a look at the header of the copy-protected file while it was downloading. It has the same format, with the LIST of type “goog” and a chunk named GDAT. But there’s two extra chunks named “DRMI” and “drmh”. After that the AVI file seems to be about the same, but the chunks of video and audio are undoubtedly encrypted.\nWhen you go to play the copy protected file, it works just like iTunes. The file indicates that it is copy protected, and the viewer talks to Google via SSL. I presume it submits your username, password, and the video id, and in return gets a key to decrypt it. If you try to play the file without a network connection, it fails, even after I’d watched it once, which means they chose not to use a key caching file, like Apple’s iTunes did. Good thing too, because that’s the feature that made it possible to break iTunes’ DRM system.\nGoogle Video Player said, “checking for updates”, and then downloaded a decoder of some sort. Due to operator error, I didn’t manage to capture that in Ethereal, so I’ll have to try again sometime to make that happen. Finally the video played. The framerate and colors were very disappointing, bordering on unwatchable. It might be better once the entire file has loaded, but once Google Video Player got a good long ways ahead of the paused video, it stopped downloading.\nAll in all, an interesting way to spent $1.99, but not something I’d ever do again probably.\nUpdate: When you strip out the “goog” list from the front of a GVI file, you get a valid AVI that will play in Windows Media Player and WinAmp. The following script, called gvi2avi will convert a GVI to an AVI:\n#!/usr/bin/perl -w use File::Format::RIFF; my ( $riff1 ) = File::Format::RIFF-\u003eread( *STDIN ); $riff1-\u003eshift(); $riff1-\u003ewrite( *STDOUT ); An unmodified GVI file (i.e. with the “goog” list intact) will play correctly in VLC.\n",
+  "wordCount" : "925",
+  "inLanguage": "en",
+  "datePublished": "2006-01-10T20:56:18Z",
+  "dateModified": "2006-01-10T20:56:18Z",
+  "author":{
+    "@type": "Person",
+    "name": "jra"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://blog.nella.org/2006/01/10/google-video-hacking/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "jra's thoughts",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://blog.nella.org/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://blog.nella.org/" accesskey="h" title="jra&#39;s thoughts (Alt + H)">jra&#39;s thoughts</a>
+            <div class="logo-switches">
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://blog.nella.org/">Home</a>&nbsp;»&nbsp;<a href="https://blog.nella.org/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      Google Video hacking
+    </h1>
+    <div class="post-meta"><span title='2006-01-10 20:56:18 +0000 +0000'>January 10, 2006</span>&nbsp;·&nbsp;5 min&nbsp;·&nbsp;jra
+
+</div>
+  </header> 
+  <div class="post-content"><p>I decided to look into Google Video a bit, now that they are selling stuff.</p>
+<p>First things first, I looked into how the Google Video Player works for free files. (I&rsquo;m a cheapskate.) It&rsquo;s Google Engineering at it&rsquo;s finest; the simplest thing that will work, and no simpler. When you click to see a movie in the Google Video Player, you download a tiny text file (with file extension GVP). That causes the Google Video Player to launch. It reads the file and starts to download the video via HTTP, just like the Flash player is doing in the web browser. The GVP file is just a text file, so you can open it and find the URL. If you fetch the URL yourself with wget (i.e. no cookies, no javascript, etc) you get a big binary stream. The content-type claims that it is &ldquo;video/x-msvideo&rdquo;, but it does not play in Windows Media Player.</p>
+<p>I took a look at the header of the file, and the first four bytes are <a href="http://msdn.microsoft.com/archive/default.asp?url=/archive/en-us/directx9_c/directx/htm/avirifffilereference.asp">&ldquo;RIFF&rdquo;</a>. Using <a href="http://search.cpan.org/~sturm/File-Format-RIFF-1.0.1/lib/File/Format/RIFF.pm">File::Format::RIFF</a> , I took a look inside the file and found that it starts with a LIST of type &ldquo;goog&rdquo;, which has inside it a chunk of type &ldquo;GDAT&rdquo; that is 32 bytes long. <a href="http://avicodec.duby.info/">AVICodec</a> is willing to overlook this extra data, but Windows Media Player and WinAmp don&rsquo;t. Later, I&rsquo;ll try to remove the Google extensions to the AVI file and see if I can get WinAmp to play it. Here&rsquo;s what AVICodec sees inside the AVI file:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>File  :  9.91 MB (9.91 MB),  duration: 0:02:34,  type: AVI,  1 audio stream(s),  quality: 46 %
+</span></span><span style="display:flex;"><span>Video :  7.56 MB,  411 Kbps,  30.0 fps,  480*360 (4:3),  divx = OpenDivx v4,    Supported
+</span></span><span style="display:flex;"><span>Audio :  2.34 MB,  128 Kbps,  44100 Hz,  2 channels,  0x55 = MPEG Layer-3,    Supported
+</span></span></code></pre></div><p>So, there&rsquo;s nothing fancy about the data; it&rsquo;s Divx video and MP3 audio. There&rsquo;s just a litte extra data in there gumming up the works.</p>
+<p>When I went to buy my first video, I checked out the terms of service. They are located <a href="http://purchases.google.com/files/buyerterms.html">here</a>. The interesting thing, which you can tell from the way the TOS are worded, is that you are signing up for a generalized payment processing system, not for a video purchase system. That&rsquo;s a big deal, and an under-reported one. Some bloggers discovered the Google Purchases system in October, but no one in the press is talking about it right now.</p>
+<p>The TOS says that I&rsquo;ll be doing business with Google Payment Corp, a wholly owned subsidiary or Google. The other surprising thing is that it clearly says that GPC will not charge a service fee. As a video publisher, I know that if I choose to have Google collect fees for me, they reserve the right to take a portion of the fees, so it&rsquo;s not like they are running Google Purchases for free or anything.</p>
+<p>When you go to confirm the purchase, here are the final three reminders you get:</p>
+<ul>
+<li>Requires Internet connection to watch</li>
+<li>Requires Windows 2000 or XP</li>
+<li>All sales final</li>
+</ul>
+<p>There is also a small note saying, &ldquo;Google processes video sales but is not the seller.&rdquo;</p>
+<p>Once the purchase is completed, you download a GVP file, just like with the free movies. It is formatted precisely the same. And fetching the video content outside of the Google Video Player also works fine. So that&rsquo;s one interesting bit: the copy-protected files travel over vanilla HTTP, no cookies required. If you know the URL for a file someone purchased, you can download it. Playing it is a different matter, of course.</p>
+<p>I took a look at the header of the copy-protected file while it was downloading. It has the same format, with the LIST of type &ldquo;goog&rdquo; and a chunk named GDAT. But there&rsquo;s two extra chunks named &ldquo;DRMI&rdquo; and &ldquo;drmh&rdquo;. After that the AVI file seems to be about the same, but the chunks of video and audio are undoubtedly encrypted.</p>
+<p>When you go to play the copy protected file, it works just like iTunes. The file indicates that it is copy protected, and the viewer talks to Google via SSL. I presume it submits your username, password, and the video id, and in return gets a key to decrypt it. If you try to play the file without a network connection, it fails, even after I&rsquo;d watched it once, which means they chose not to use a key caching file, like Apple&rsquo;s iTunes did. Good thing too, because that&rsquo;s the feature that made it possible to break iTunes&rsquo; DRM system.</p>
+<p>Google Video Player said, &ldquo;checking for updates&rdquo;, and then downloaded a decoder of some sort. Due to operator error, I didn&rsquo;t manage to capture that in Ethereal, so I&rsquo;ll have to try again sometime to make that happen. Finally the video played. The framerate and colors were very disappointing, bordering on unwatchable. It might be better once the entire file has loaded, but once Google Video Player got a good long ways ahead of the paused video, it stopped downloading.</p>
+<p>All in all, an interesting way to spent $1.99, but not something I&rsquo;d ever do again probably.</p>
+<p><strong>Update</strong>: When you strip out the &ldquo;goog&rdquo; list from the front of a GVI file, you get a valid AVI that will play in Windows Media Player and WinAmp. The following script, called gvi2avi will convert a GVI to an AVI:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-jsx" data-lang="jsx"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/perl -w
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">use</span> <span style="color:#a6e22e">File</span><span style="color:#f92672">::</span><span style="color:#a6e22e">Format</span><span style="color:#f92672">::</span><span style="color:#a6e22e">RIFF</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">my</span> ( <span style="color:#a6e22e">$riff1</span> ) <span style="color:#f92672">=</span> <span style="color:#a6e22e">File</span><span style="color:#f92672">::</span><span style="color:#a6e22e">Format</span><span style="color:#f92672">::</span><span style="color:#a6e22e">RIFF</span><span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">read</span>( <span style="color:#f92672">*</span><span style="color:#a6e22e">STDIN</span> );
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">$riff1</span><span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">shift</span>();
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">$riff1</span><span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">write</span>( <span style="color:#f92672">*</span><span style="color:#a6e22e">STDOUT</span> );
+</span></span></code></pre></div><p>An unmodified GVI file (i.e. with the &ldquo;goog&rdquo; list intact) will play correctly in VLC.</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+
+<ul class="share-buttons">
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Google Video hacking on linkedin"
+            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.nella.org%2f2006%2f01%2f10%2fgoogle-video-hacking%2f&amp;title=Google%20Video%20hacking&amp;summary=Google%20Video%20hacking&amp;source=https%3a%2f%2fblog.nella.org%2f2006%2f01%2f10%2fgoogle-video-hacking%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Google Video hacking on ycombinator"
+            href="https://news.ycombinator.com/submitlink?t=Google%20Video%20hacking&u=https%3a%2f%2fblog.nella.org%2f2006%2f01%2f10%2fgoogle-video-hacking%2f">
+            <svg version="1.1" xml:space="preserve" width="30px" height="30px" viewBox="0 0 512 512" fill="currentColor"
+                xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
+                <path
+                    d="M449.446 0C483.971 0 512 28.03 512 62.554L512 449.446C512 483.97 483.97 512 449.446 512L62.554 512C28.03 512 0 483.97 0 449.446L0 62.554C0 28.03 28.029 0 62.554 0L449.446 0ZM183.8767 87.9921H121.8427L230.6673 292.4508V424.0079H281.3328V292.4508L390.1575 87.9921H328.1233L256 238.2489z" />
+            </svg>
+        </a>
+    </li>
+</ul>
+
+  </footer>
+</article>
+    </main>
+    
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

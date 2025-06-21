@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Rants on jra&#39;s thoughts</title>
+    <link>https://blog.nella.org/category/rants/</link>
+    <description>Recent content in Rants on jra&#39;s thoughts</description>
+    <generator>Hugo -- 0.147.8</generator>
+    <language>en-US</language>
+    <lastBuildDate>Tue, 03 Mar 2015 12:12:15 +0000</lastBuildDate>
+    <atom:link href="https://blog.nella.org/category/rants/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The Podcast/Spam nexus</title>
+      <link>https://blog.nella.org/2015/03/03/the-podcastspam-nexus/</link>
+      <pubDate>Tue, 03 Mar 2015 12:12:15 +0000</pubDate>
+       <guid isPermaLink="false">/?p=1112</guid> 
+      <description>&lt;p&gt;I listen to a lot of podcasts. They virtually are all sponsored by either MailChimp or Emma (some new Mailchimp clone).&lt;/p&gt;
+&lt;p&gt;What I want to know is why spammers (even opt-in, targeted email marketing solutions are spammers as far as I can tell) find that podcasts are listened to by their target market (i.e. other spammers).&lt;/p&gt;
+&lt;p&gt;Hmm. Maybe I should be spamming more&amp;hellip;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>The SQL backlash</title>
+      <link>https://blog.nella.org/2009/07/03/the-sql-backlash/</link>
+      <pubDate>Fri, 03 Jul 2009 08:57:03 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=743</guid> 
+      <description>&lt;p&gt;I remember sitting in my databases class years ago and thinking, &amp;ldquo;This can&amp;rsquo;t possibly be the right way to store data.&amp;rdquo; It was a strange class, because it mixed theory and practice in a way that was anathema to the way I think. The theory part bored me to tears, and seemed ludicrously useless (first normal form? third normal form? who cares!). The practice part seemed ridiculously complicated and pointless. Why go to all that effort to write something down? Why not just write it? Yes, yes, I know, ACID and all that. I grudgingly learned it all, and I passed the class. But it never felt right to me. It felt like the students were putting on a performance to satisfy the teacher. It didn&amp;rsquo;t feel like Theory of Computing (i.e. Turing machines, regular expressions, the halting problem, etc), which just Felt Right.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Trafigura&#39;s West African dumping</title>
+      <link>https://blog.nella.org/2009/05/15/trafiguras-west-african-dumping/</link>
+      <pubDate>Fri, 15 May 2009 12:01:03 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=689</guid> 
+      <description>&lt;p&gt;Here&amp;rsquo;s an interesting story, well told, about an industrial process that takes refinery waste from the United States (derived from high-sulfur Mexican crude oil), cycles it through Europe, then dumps the result in West Africa.&lt;/p&gt;
+&lt;p&gt;The company running this racket (or &amp;ldquo;innovative commodity exchange&amp;rdquo;, as they call it) is Trafigura.&lt;/p&gt;
+&lt;p&gt;Learn more here:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://nrk.no/programmer/tv/brennpunkt/1.6105347&#34;&gt;Coker gasoline&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://nrk.no/programmer/tv/brennpunkt/1.6104888&#34;&gt;A small pawn in the game&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.nrk.no/programmer/tv/brennpunkt/1.6104693&#34;&gt;Vast Tank sweetens gasoline&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://news.bbc.co.uk/2/hi/programmes/newsnight/8048626.stm&#34;&gt;BBC Newsnight on Trafigura&amp;rsquo;s dumping&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Here&amp;rsquo;s a quick summary:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Gates Foundation vs the Lancet</title>
+      <link>https://blog.nella.org/2009/05/13/gates-foundation-vs-the-lancet/</link>
+      <pubDate>Wed, 13 May 2009 11:23:27 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=685</guid> 
+      <description>&lt;p&gt;The Lancet has published &lt;a href=&#34;http://www.thelancet.com/journals/lancet/article/PIIS0140-6736(09)60571-7/fulltext&#34;&gt;an academic paper&lt;/a&gt; analyzing the deployment of funds at the Gates Foundation against a backdrop of the actual burden of disease. The bottom line is the Gates Foundation does not come out looking too good, seemingly interested in whizbang gadgets and not in focusing on the job at hand. Another really interesting and sad note was the extent to which being nearby the Gates Foundation, geographically or culturally gets you in the money. PATH and the University of Washington raked in the cash. African researchers? Not so much.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>La promesse grippe - The Flu Code</title>
+      <link>https://blog.nella.org/2009/04/30/la-promesse-grippe-the-flu-code/</link>
+      <pubDate>Thu, 30 Apr 2009 11:00:00 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=667</guid> 
+      <description>&lt;p&gt;Vinay Gupta published something called the &lt;a href=&#34;http://vinay.howtolivewiki.com/blog/personal/the-flu-code-ethical-behavior-to-protect-each-other-1435&#34;&gt;flu code&lt;/a&gt;. Here it is in French:&lt;/p&gt;
+&lt;p&gt;La promesse grippe 0.1Beta, version franÃ§ais â€“ Une service dans l&amp;rsquo;intÃ©rÃªt publique de &lt;a href=&#34;http://collapsonomics.org/&#34;&gt;L&amp;rsquo;institute pour efrondnomiques&lt;/a&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Si j&amp;rsquo;ai des signes d&amp;rsquo;une grippe Ã©ventuel, je vais rester chez moi.&lt;/li&gt;
+&lt;li&gt;Je vais rester Ã  distance des foules quand c&amp;rsquo;est possible, et je vais toujours porter une masque dans les lieux publiques.&lt;/li&gt;
+&lt;li&gt;Je vais laver les mains a la porte chaque fois je arrive a ma destination.&lt;/li&gt;
+&lt;li&gt;Je vais me engager de enseigner ces rÃ¨gles aux autres de protÃ©ger tous.&lt;/li&gt;
+&lt;/ol&gt;</description>
+    </item>
+    <item>
+      <title>A long trip in Afghanistan</title>
+      <link>https://blog.nella.org/2009/04/11/a-long-trip-in-afghanistan/</link>
+      <pubDate>Sat, 11 Apr 2009 12:42:56 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=641</guid> 
+      <description>&lt;p&gt;&lt;a href=&#34;http://news.bbc.co.uk/2/hi/programmes/from_our_own_correspondent/7991937.stm&#34;&gt;This is an interesting story&lt;/a&gt; by a BBC correspondent, which pulls no punches. Easy to see why he was left feeling bitter.&lt;/p&gt;
+&lt;p&gt;There are two sides to every story of course, and I&amp;rsquo;m sure the military folks would tell you about security rules, zero tolerance for violation of force protection imperatives, risk asessments, etc, etc, etc. But that&amp;rsquo;s all missing the point. When you are doing counterinsurgency work, you have to be close to the people. You have to earn their respect by finding out what earns respect in their culture and then finding a way to &lt;strong&gt;do&lt;/strong&gt; it inside of your own culture. They, in turn, will come to know you and, if you deserve it, you&amp;rsquo;ll earn their respect in return.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Exiting from xsltproc with an error</title>
+      <link>https://blog.nella.org/2009/04/08/exiting-from-xsltproc-with-an-error/</link>
+      <pubDate>Wed, 08 Apr 2009 13:50:47 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=623</guid> 
+      <description>&lt;p&gt;Does anyone out there know why xsltproc and the DocBooc stylesheets are so stuuuupid? When there&amp;rsquo;s a processing error, they just keep going. OK, fine, maybe useful. But then there&amp;rsquo;s no return value to say that there was a problem. The man page for xsltproc says it has return values, but it always returns 0 for me. And I&amp;rsquo;ve found the place in the DocBook stylesheets where the error is emitted. It looks like this:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Global Warming is going to be an embarassment</title>
+      <link>https://blog.nella.org/2009/03/29/global-warming-is-going-to-be-an-embarassment/</link>
+      <pubDate>Sun, 29 Mar 2009 00:36:15 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=606</guid> 
+      <description>&lt;p&gt;In 15 years, the Global Warming hysteria is going to be one of those embarassing episodes in history. Several sociology and history of science PhDs will write their theses on &amp;ldquo;how they blew it on climate change&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;The latest person to risk his reputation by coming out and speaking truthiness to the enviro-powers is &lt;a href=&#34;http://www.nytimes.com/2009/03/29/magazine/29Dyson-t.html?_r=1&amp;amp;ref=magazine&amp;amp;pagewanted=all&#34;&gt;Freeman Dyson&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;As I am not 80 years old, and I have to live with my reputation for a while longer, let me make my position clear again:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Two things I like about England</title>
+      <link>https://blog.nella.org/2009/02/25/two-things-i-like-about-england/</link>
+      <pubDate>Wed, 25 Feb 2009 15:21:11 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=558</guid> 
+      <description>&lt;p&gt;I&amp;rsquo;ve been known to complain a bit, now and then, about my current hosts, the English. I reserve the right to continue complaining, to be sure, but I&amp;rsquo;d like to take a moment to point out two things I like about England:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://icicibank.co.uk/&#34;&gt;ICICI Bank UK&lt;/a&gt;: This is one of the largest banks in India. In England, they are a very little fish in a very big nasty pond. English banks are incredibly expensive, arrogant, rude, and customer unfriendly. But because ICICI is tiny, and because it is focused on a small niche (immigrants who are sending remittances home), it gives excellent service. Go ICICI! I love you!&lt;/li&gt;
+&lt;li&gt;Muffins: The English make very nice muffins. The chocolate/chocolate-chip ones are totally decadent, so when you want to take it easy, go for the ones which &lt;em&gt;merely&lt;/em&gt; have lemon curd inside and crystalized sugar on top.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;PS: The English also display enormous &lt;a href=&#34;http://images.google.com/images?q=muffintops&#34;&gt;muffin tops&lt;/a&gt;, but they are not really something you want to have&amp;hellip;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Silverlight on Linux</title>
+      <link>https://blog.nella.org/2009/02/18/silverlight-on-linux/</link>
+      <pubDate>Wed, 18 Feb 2009 13:10:11 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=553</guid> 
+      <description>&lt;p&gt;Microsoft, what&amp;rsquo;s your problem? Why are you so stupid?&lt;/p&gt;
+&lt;p&gt;My current irritation is with Silverlight. First, it&amp;rsquo;s a redundant technology. Bringing .Net into browsers is not a compelling argument for redoing everything that Adobe Flash already does better than Silverlight. But fine, I&amp;rsquo;m not a shareholder anymore, you can waste their money all you want.&lt;/p&gt;
+&lt;p&gt;I wanted to see how well Moonlight (the Linux version of Silverlight) works. It&amp;rsquo;s partly because I&amp;rsquo;m compelled to poke my nose into the train crash that is Linux + Firefox + plugins + video + audio. It&amp;rsquo;s one of those things&amp;hellip; so horrific, you can&amp;rsquo;t stop watching.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Landlords - Les PropriÃ©taires</title>
+      <link>https://blog.nella.org/2009/01/14/apartments/</link>
+      <pubDate>Wed, 14 Jan 2009 16:37:22 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=502</guid> 
+      <description>&lt;p&gt;&lt;a href=&#34;http://www.boingboing.net/2009/01/13/terrible-apartment-a.html&#34;&gt;This posting&lt;/a&gt; on Boing Boing reminded me of something I wanted to mention about Switzerland. Though I sometimes makes it sound like heaven, with &lt;a href=&#34;https://blog.nella.org/?p=283&#34;&gt;beautiful Swiss girls&lt;/a&gt; begging to marry you, &lt;a href=&#34;http://walking.about.com/od/traileurope/ig/Swiss-Cows/&#34;&gt;cows&lt;/a&gt; that give chocolate milk when you milk them, and &lt;a href=&#34;https://blog.nella.org/?p=473&#34;&gt;every man with an assault rifle&lt;/a&gt;, that&amp;rsquo;s not the whole truth.&lt;/p&gt;
+&lt;p&gt;Swiss landlords are crazy. And Swiss people, who have a certain zeal for social harmony, indulge them. Here are some examples:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Welcome to the USA</title>
+      <link>https://blog.nella.org/2009/01/13/welcome-to-the-usa/</link>
+      <pubDate>Tue, 13 Jan 2009 16:45:41 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=497</guid> 
+      <description>&lt;p&gt;The new &lt;a href=&#34;https://esta.cbp.dhs.gov&#34;&gt;ESTA&lt;/a&gt; (Electronic System for Travel Authorizations) that the US has instituted is really, really lame. Everything about the system screams, &amp;ldquo;Stop! Don&amp;rsquo;t come here! You are a suspicious foreigner and we don&amp;rsquo;t want you.&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;Check out this insane message that pops up on the website before you can even start:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;You are about to access a Department of Homeland Security computer system. This computer system and data therein are property of the U.S. Government and provided for official U.S. Government information and use.  &lt;strong&gt;There is no expectation of privacy when you use this computer system.&lt;/strong&gt; The use of a password or any other security measure does not establish an expectation of privacy.  By using this system, you consent to the terms set forth in this notice. You may not process classified national security information on this computer system.  Access to this system is restricted to authorized users only.  Unauthorized access, use, or modification of this system or of data contained herein, or in transit to/from this system, may constitute a violation of section 1030 of title 18 of the U.S. Code and other criminal laws.  Anyone who accesses a Federal computer system without authorization or exceeds access authority, or obtains, alters, damages, destroys, or discloses information, or prevents authorized use of information on the computer system, may be subject to penalties, fines or imprisonment. This computer system and any related equipment is subject to monitoring for administrative oversight, law enforcement, criminal investigative purposes, inquiries into alleged wrongdoing or misuse, and to ensure proper performance of applicable security features and procedures. DHS may conduct monitoring activities without further notice.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Grub 2 and the Law of Software Envelopment</title>
+      <link>https://blog.nella.org/2009/01/12/grub-2-and-the-law-of-software-envelopment/</link>
+      <pubDate>Mon, 12 Jan 2009 17:54:34 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=495</guid> 
+      <description>&lt;p&gt;I was reading a bit about Grub 2&amp;rsquo;s modules, including &lt;a href=&#34;http://grub.enbug.org/gfxterm&#34;&gt;this page&lt;/a&gt; for gfxterm, a reimplementation of VGA console mode for Grub 2 &amp;ndash; VGA console mode isn&amp;rsquo;t good enough because it cannot display Arabic, simplified Chineese, nor Inuit glyphs. And, let&amp;rsquo;s face it, the kinds of Inuits frobbing their boot loaders can&amp;rsquo;t possibly be expected to &lt;strong&gt;only&lt;/strong&gt; get along with Latin-1 characters, right?&lt;/p&gt;
+&lt;p&gt;This reminded me of &lt;a href=&#34;http://www.catb.org/~esr/jargon/html/Z/Zawinskis-Law.html&#34;&gt;Zawinkski&amp;rsquo;s Law of Software Envelopment&lt;/a&gt;:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Of words, arms, and freedom</title>
+      <link>https://blog.nella.org/2009/01/12/of-words-arms-and-freedom/</link>
+      <pubDate>Mon, 12 Jan 2009 13:56:30 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=473</guid> 
+      <description>&lt;p&gt;I&amp;rsquo;m sick, and back in England. Not that the two are related&amp;hellip; no, not at all. But the fact that I was irritable and chanting &amp;ldquo;I hate England&amp;rdquo; in my head all morning as I made my way in to work doing various errands on the way, might be due to one or the other thing&amp;hellip; or both.&lt;/p&gt;
+&lt;p&gt;While I was chanting my not-too-Buddhist chant to calm myself, I was thinking about all the differences between jolly old England and Switzerland. I realized at least part of it comes down to the freedom that comes from a durable social contract&amp;hellip; a sense of solidarity and interdependence springing from deep down in the Swiss culture.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Royal Mail and the Colour Red</title>
+      <link>https://blog.nella.org/2009/01/09/royal-mail-and-the-colour-red/</link>
+      <pubDate>Fri, 09 Jan 2009 11:27:03 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=461</guid> 
+      <description>&lt;p&gt;I just got a little note from Royal Mail telling me that I need to come pick up a packet at the post office. It has this choice bit of stupidity on the back:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Royal Mail, the Criciform, and the colour red are registered trademarks of Royal Mail.&lt;/p&gt;
+&lt;p&gt;Christmas - Sorry you were out, Copyright (C) Royal Mail Group 2008.&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;What I want to know is who is the idiot lawyer who actually thinks that not only can he trademark red, but that he can copyright &amp;ldquo;Sorry you were out&amp;rdquo;?&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>350</title>
+      <link>https://blog.nella.org/2008/12/13/350/</link>
+      <pubDate>Sat, 13 Dec 2008 19:11:09 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=455</guid> 
+      <description>&lt;p&gt;No, not &lt;a href=&#34;http://www.imdb.com/title/tt0416449/&#34;&gt;300&lt;/a&gt;, that&amp;rsquo;s a movie. 350. Parts per million CO2 concentration.&lt;/p&gt;
+&lt;p&gt;Pass the word. Oh, right, it&amp;rsquo;s &lt;a href=&#34;http://www.350.org/en/animation&#34;&gt;just a number, not words&amp;hellip;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;PS: This posting does not constitute an admission that CO2 causes global warming. But I happen to agree with everything that anti-carbon campaigners believe in, even if I think that &lt;a href=&#34;https://blog.nella.org/?p=270&#34;&gt;global warming is a hoax&lt;/a&gt;. And this is a nifty animation with cool music, so I&amp;rsquo;m posting it anyway.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>The OC</title>
+      <link>https://blog.nella.org/2008/12/13/the-oc/</link>
+      <pubDate>Sat, 13 Dec 2008 18:22:46 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=450</guid> 
+      <description>&lt;p&gt;(Good lord is this a day for blogging. I suppose sometimes the dam breaks and the thoughts spill out&amp;hellip;)&lt;/p&gt;
+&lt;p&gt;Today I got a question from &lt;a href=&#34;http://aidworkerdaily.com&#34;&gt;Jon&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;What is OCA and OCP? MSF is getting into the acronym business like everyone else!&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;The simple answer: OC = Operating Centre, or Cell depending on the person.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;OCB - Brussels&lt;/li&gt;
+&lt;li&gt;OCA - Amsterdam&lt;/li&gt;
+&lt;li&gt;OCBA - Barcelona/Athens&lt;/li&gt;
+&lt;li&gt;OCG - Geneva&lt;/li&gt;
+&lt;li&gt;OCP - The mythical Parisian OC, which does not exist as far as I know&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;An OC is supposed to be a reflection of the difference between the hosting section, which has a responsibility to communicate with the people of the country for temoinage and fundraising, recruit, etc and the OC, which has a responsibility to all of the donor sections that contribute to it to get the work done, and report back what got done, so that the donor section can explain to their constituency what got done with the $$.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>A message...</title>
+      <link>https://blog.nella.org/2008/11/05/a-message/</link>
+      <pubDate>Wed, 05 Nov 2008 15:54:22 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=424</guid> 
+      <description>&lt;p&gt;&amp;hellip;from America, reaching out to every corner of the globe, into the hearts of those who have watched us struggle and fail to meet our potential over the last 8 years:&lt;/p&gt;
+&lt;p&gt;Yes We Can!&lt;/p&gt;
+&lt;p&gt;Like a drug-addled celebrity, we&amp;rsquo;ve hit &lt;a href=&#34;http://en.wikipedia.org/wiki/George_W._Bush&#34;&gt;rock bottom&lt;/a&gt;, and now we&amp;rsquo;re ready to turn our lives around and meet our potential.&lt;/p&gt;
+&lt;p&gt;Now, if you will excuse me, I&amp;rsquo;m going to go celebrate the &lt;a href=&#34;http://en.wikipedia.org/wiki/Guy_Fawkes_Night&#34;&gt;near destruction of the English parliament&lt;/a&gt;. (Guy Falkes was clearly a democrat.) Another example of why England is backwards: normal people rejoice at the idea of blowing up their corrupt and greedy legislatures. Bonfire night is unfortunately apparently about celebrating that the plot was &lt;strong&gt;foiled!&lt;/strong&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>HQ folks: Don&#39;t Do This</title>
+      <link>https://blog.nella.org/2008/10/31/hq-folks-dont-do-this/</link>
+      <pubDate>Fri, 31 Oct 2008 16:19:12 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=416</guid> 
+      <description>&lt;p&gt;Hopping on the meme-wagon for a second here&amp;hellip; if you care enough, read these three posts about paper pushing in the NGO world:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://alannashaikh.blogspot.com/2008/10/this-job-is-not-always-fun.html&#34;&gt;This Job Is Not Always Fun&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.owen.org/blog/106&#34;&gt;De-escalating the paperwork in development&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.humanitarian.info/2008/10/31/kill-your-reports/&#34;&gt;Kill Your Reports&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In the last one, Paul considers what happens after the reports make it to HQ, from the point of view of field people:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&amp;hellip;it seems there is no such impact. Country offices receive little or no feedback on their reports, and individual staff receive none. It&amp;rsquo;s also hard to identify any link between the reports that are generated in-country and any strategic decision-making, although it&amp;rsquo;s clear that there is some benefit there.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Why doesn&#39;t this already exist?</title>
+      <link>https://blog.nella.org/2008/10/25/why-doesnt-this-already-exist/</link>
+      <pubDate>Sat, 25 Oct 2008 18:43:17 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=399</guid> 
+      <description>&lt;p&gt;Yesterday, I was walking in town and there was a nice guy playing a clarinet in front of North Face. I intentionally fumbled with my coins for a while so as to enjoy his music a bit. Then I paid him a tip and walked along, enjoying the clarinet as it faded behind me.&lt;/p&gt;
+&lt;p&gt;Why can&amp;rsquo;t I do that for the gigabytes of copyright violations I illegally download? (Note to RIAA lawyers: this is a hypothetical situation. No need to sue me. Thanks.)&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>With all due respect Mr Holmes...</title>
+      <link>https://blog.nella.org/2008/10/23/with-all-due-respect-mr-holmes/</link>
+      <pubDate>Thu, 23 Oct 2008 15:36:20 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=394</guid> 
+      <description>&lt;p&gt;You can kiss my ass.&lt;/p&gt;
+&lt;p&gt;Talking about the risks faced by humanitarian workers, you &lt;a href=&#34;http://news.bbc.co.uk/2/hi/7681604.stm&#34;&gt;said&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;People in this business have always accepted the risks, there have always been losses, there have always been horrific incidents&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;There is NO SUCH THING as acceptable losses for humanitarian aid. Period.&lt;/p&gt;
+&lt;p&gt;PS: I noticed that, &lt;a href=&#34;http://ochaonline.un.org/AboutOCHA/Organigramme/TheUnderSecretaryGeneral/tabid/1154/language/en-US/Default.aspx&#34;&gt;according to your bio&lt;/a&gt;, you&amp;rsquo;ve never even worked in the field. So please do not count my life and the lives of my colleages as &amp;ldquo;acceptable losses&amp;rdquo;. Thanks.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>MoveOn: Wrong on the environment, wrong for America</title>
+      <link>https://blog.nella.org/2008/10/23/moveon-wrong-on-the-environment-wrong-for-america/</link>
+      <pubDate>Thu, 23 Oct 2008 14:58:59 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=392</guid> 
+      <description>&lt;p&gt;MoveOn suggests that the best way to further your liberal agenda of reduced carbon emissions is to&amp;hellip; (wait for it, wait for it&amp;hellip;)&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;http://pol.moveon.org/obama/carpool/&#34;&gt;Driving Change: Carpool to a swing state&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;If you don&amp;rsquo;t live in a swing state, how can you volunteer in one? &lt;strong&gt;Drive!&lt;/strong&gt;&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;You can&amp;rsquo;t make this stuff up&amp;hellip;&lt;/p&gt;
+&lt;p&gt;This is like Daily Show funny. This is like irony at &lt;a href=&#34;http://en.wikipedia.org/wiki/Up_to_eleven&#34;&gt;11&lt;/a&gt; on the irony scale. This is like the look on Tina Fey&amp;rsquo;s face when Palin &lt;a href=&#34;http://www.nbc.com/Saturday_Night_Live/video/clips/gov-palin-cold-open/773761/&#34;&gt;kicks her off the stage&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Too Much Travel is Bad for the Soul</title>
+      <link>https://blog.nella.org/2008/10/22/too-much-travel-is-bad-for-the-soul/</link>
+      <pubDate>Wed, 22 Oct 2008 15:31:32 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=387</guid> 
+      <description>&lt;p&gt;There&amp;rsquo;s an interesting little nugget of reality near the end of the first page of &lt;a href=&#34;http://www.salon.com/tech/col/smith/2008/10/17/askthepilot294/&#34;&gt;Ask the Pilot&lt;/a&gt; this week:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;If I have grown more cynical in recent years, it is travel, I think, that has pushed me in this direction. Exploring other parts of the world is beneficial in all the ways it is typically given credit for&amp;hellip; But traveling can also burn you out, suck away your faith in humanity. You will see, right there in front of you, how the world is falling to pieces; the planet has been ravaged, life is cheap, and there is little that you, as the Western observer, with or without your good conscience, are going to do about it.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>How to ride a bus</title>
+      <link>https://blog.nella.org/2008/10/18/how-to-ride-a-bus/</link>
+      <pubDate>Sat, 18 Oct 2008 15:01:05 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=374</guid> 
+      <description>&lt;p&gt;Marina and I could have used this &lt;a href=&#34;http://www.boingboing.net/2008/10/16/howto-ride-a-london.html&#34;&gt;useful training film&lt;/a&gt; before we arrived in England.&lt;/p&gt;
+&lt;p&gt;It seems the film needs to be updated some to reflect the current state of the privatized English bus system:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;First, be sure to find out which company has bought the route you want to ride from the government. Be careful not to buy a ticket for a competing service, it will be refused.&lt;/li&gt;
+&lt;li&gt;Don&amp;rsquo;t bother checking the schedules, your friendly First driver will come when he&amp;rsquo;s ready. In order to assure prompt and reliable First service, we will sometimes send three busses at a time. Sometimes you&amp;rsquo;ll have to wait 30 minutes or more on one of our &amp;ldquo;every 10 minute&amp;rdquo; lines, so as to ensure that three busses can travel together.&lt;/li&gt;
+&lt;li&gt;Be sure to wave at the bus driver as he passes you without stopping. Like that, you are sure he enjoys a pleasant and friendly day, without the bother of carrying passengers. Cheer up, there will be three more buses in 30 minutes!&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    <item>
+      <title>Banks: You&#39;re Under New Management... Listen Up!</title>
+      <link>https://blog.nella.org/2008/10/14/banks-youre-under-new-management-listen-up/</link>
+      <pubDate>Tue, 14 Oct 2008 23:24:20 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=369</guid> 
+      <description>&lt;p&gt;A wonderful &lt;a href=&#34;http://www.owen.org/blog/95&#34; title=&#34;open letter&#34;&gt;open letter&lt;/a&gt; from a fellow stockholder to our new investment&amp;rsquo;s board of directors.&lt;/p&gt;
+&lt;p&gt;If only it were so easy&amp;hellip; This is what justice would look like in a society that craved social justice and capitalism in equal parts.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Same conversation, different venue</title>
+      <link>https://blog.nella.org/2008/10/09/same-conversation-different-venue/</link>
+      <pubDate>Thu, 09 Oct 2008 12:53:14 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=343</guid> 
+      <description>&lt;p&gt;The dirty secret of aid work&amp;hellip; it always comes down to this&amp;hellip; the navel-gazing, &amp;ldquo;why am I here&amp;rdquo;, &amp;ldquo;why is it so ineffective&amp;rdquo; conversation.&lt;/p&gt;
+&lt;p&gt;Usually it happens around the campfire, over a bottle of locally made beer, or perhaps for the lucky coordination team in the capital city, at the nearby expat-only restaurant over a nice bottle of South African wine. As with everything this century, it&amp;rsquo;s &lt;a href=&#34;http://www.aidworkers.net/?q=node/1604&#34;&gt;moved onto the Internet&lt;/a&gt;. But the essential tone of the conversation, and the impossibility of resolving the problem remains.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>21 words that should change your life (but probably won&#39;t)</title>
+      <link>https://blog.nella.org/2008/10/09/21-words-that-should-change-your-life-but-probably-wont/</link>
+      <pubDate>Thu, 09 Oct 2008 09:05:01 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=341</guid> 
+      <description>&lt;p&gt;Clarity on what&amp;rsquo;s wrong with our economy and our society, and advice on how to correct it, all in just 3 lines, and 21 words:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;You buy things and you don&amp;rsquo;t need.
+With money that you don&amp;rsquo;t have.
+To impress people that you don&amp;rsquo;t even like.&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;From Aaron Stewart, &amp;quot; &lt;a href=&#34;http://aaronstewart.blogspot.com/2008/10/our-economic-woes-in-three-lines.html&#34;&gt;Our economic woes in three lines&lt;/a&gt;&amp;quot;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>And now a word from your local public health authorities...</title>
+      <link>https://blog.nella.org/2008/10/03/and-now-a-word-from-your-local-public-health-authorities/</link>
+      <pubDate>Fri, 03 Oct 2008 16:29:08 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=323</guid> 
+      <description>&lt;p&gt;Headline from a Scientific American blog posting:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.sciam.com/blog/60-second-science/post.cfm?id=measles-is-back-and-its-because-you-2008-08-22&amp;amp;sc=rss&#34;&gt;Measles is back, and it&amp;rsquo;s because your kids aren&amp;rsquo;t vaccinated&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;There was a measles epidemic in the canton of Vaud in Switzerland this year. MSF was thinking about intervening and setting up a vaccination site in Place Ripon, but the corrupt, inefficient, and chronically underfunded local health authorities managed to handle the crisis themselves and MSF just monitored the situation from it&amp;rsquo;s base in Geneva.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Compare the Candidates</title>
+      <link>https://blog.nella.org/2008/09/30/compare-the-candidates/</link>
+      <pubDate>Tue, 30 Sep 2008 15:34:07 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=303</guid> 
+      <description>&lt;p&gt;&lt;a href=&#34;http://comparecandidates.appspot.com/&#34;&gt;Compare The Candidates&lt;/a&gt; is a nifty web app that I found when looking into AppSpot, a Google cloud computing thingie. It shows a new style of design that rose in the last few years. I really admire it, and I love interacting with sites like this.&lt;/p&gt;
+&lt;p&gt;It&amp;rsquo;s a little scary though, it feels like a generation gap. I don&amp;rsquo;t really feel like I know how to make something that feels like it. When HTTP and CGI came on the scene, I had my feet under me right off the bat. With this generation of design sensibility, I feel a little lost still.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Another Measure Q blogger</title>
+      <link>https://blog.nella.org/2004/10/10/another-measure-q-blogger/</link>
+      <pubDate>Sun, 10 Oct 2004 22:25:48 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=120</guid> 
+      <description>&lt;p&gt;I got an email from Chris Shipley today, who is also writing &lt;a href=&#34;http://cshipley.typepad.com/noonq/2004/10/jras_my_neighbo.html&#34;&gt;a blog&lt;/a&gt; about Measure Q.&lt;/p&gt;
+&lt;p&gt;Chris is right, I did vote no on Measure Q when I sent in my absentee ballot last week. I did so for two reasons, each of about the same importance to me. For one thing, I feel like the Yes on Q campaign is bought and paid for by a developer who is ramming this development down our throats, and I want to send the developer a message that democracy still works, and money does not buy votes. The other reason that I am against it is because I believe such high density development should be within walking distance of Caltrain. I don&amp;rsquo;t mind the idea of high-rises on the Peninsula, but I want to see them someplace which will at least make it possible for people to live car-free.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Yes on Q gets it&#39;s revenge</title>
+      <link>https://blog.nella.org/2004/10/09/yes-on-q-gets-its-revenge/</link>
+      <pubDate>Sat, 09 Oct 2004 13:52:10 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=119</guid> 
+      <description>&lt;p&gt;So, I&amp;rsquo;m sitting here minding my own business on a sunny Saturday afternoon. I hear a car pull up, and some pounding in the front yard. I look out the window, and it now appears I am a Measure Q supporter, because I&amp;rsquo;ve got a brand new Yes On Q sign in my yard.&lt;/p&gt;
+&lt;p&gt;So I go ask the guy what&amp;rsquo;s up. He says, &amp;ldquo;you&amp;rsquo;re on the list for a sign&amp;rdquo;. I say, no, that&amp;rsquo;s a mistake, the only list I should be on is the do not call list. &amp;ldquo;Take it away!&amp;rdquo;, I say.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Astroturf or Concerned Citizen?</title>
+      <link>https://blog.nella.org/2004/10/08/astroturf-or-concerned-citizen/</link>
+      <pubDate>Fri, 08 Oct 2004 18:13:01 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=118</guid> 
+      <description>&lt;p&gt;Today, I got a letter in the mail hand addressed to Lisa Long, who has her mail sent to my house while she&amp;rsquo;s in London. The return address is just down the street, which is confusing, since I figured Lisa would have introduced me to any family she had in the neighborhood. Then I notice on the back that it says, &amp;ldquo;Yes on Measure Q&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;Aha! So it&amp;rsquo;s astroturf, right? The developer has his wife rent an apartment in the neighborhood, then outsources the hand-written address part to a sweatshop in Liberia, then they send them out, and &lt;em&gt;voila&lt;/em&gt;: instant grassroots support.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>A visit to Yes on Q headquarters</title>
+      <link>https://blog.nella.org/2004/09/27/a-visit-to-yes-on-q-headquarters/</link>
+      <pubDate>Mon, 27 Sep 2004 18:35:13 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=117</guid> 
+      <description>&lt;p&gt;So I hopped on my bike and rode down to Yes On Q headquarters. It is, not surprisingly, located in spacious offices owned by the same organization that wants to build the high rises. Sigh. Democracy at it&amp;rsquo;s finest.&lt;/p&gt;
+&lt;p&gt;I talked to a nice guy there named Bill Ferguson. Here are the things we talked about:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;me: Get me off your freakin&amp;rsquo; list!&lt;/li&gt;
+&lt;li&gt;him: No problem. (He scribbles down my name and number.)&lt;/li&gt;
+&lt;li&gt;him: Your phone number is public knowledge once you register to vote, and we&amp;rsquo;re allowed to call you.&lt;/li&gt;
+&lt;li&gt;me: Yes, you are allowed to call me. ONCE. Then I&amp;rsquo;m allowed to ask to be on your do not call list.&lt;/li&gt;
+&lt;li&gt;me: Your telemarketers are not respecting do not call lists, and treating callers unprofessionally when they ask to be removed&lt;/li&gt;
+&lt;li&gt;him: I don&amp;rsquo;t know how the call centers feed that back that list to us.&lt;/li&gt;
+&lt;li&gt;me: Please figure it out, because I will file a formal complaint against your organization if it happens again.&lt;/li&gt;
+&lt;li&gt;me: This reflects very poorly on your organization, and makes me unsympathetic to your arguments. I&amp;rsquo;m likely to vote &amp;ldquo;no&amp;rdquo; now.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;So, a constructive conversation was had. I expect to keep getting calls, and I expect to have to learn how to file a formal complaint. Luckily, I&amp;rsquo;m currently unemployed (by choice, thank god) and so I have plenty of time to make Bill Ferguson&amp;rsquo;s life hell.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Measure Q tele-spammers</title>
+      <link>https://blog.nella.org/2004/09/27/measure-q-tele-spammers/</link>
+      <pubDate>Mon, 27 Sep 2004 17:51:47 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=116</guid> 
+      <description>&lt;p&gt;If you are searching the web for info about the Marina Shores development in Redwood City this might interest you:&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;ve been getting a number of call and hang-up calls on my cell phone with &amp;ldquo;caller id unavailable&amp;rdquo;. This is usually an indication that you are in a predictive dialer system&amp;rsquo;s phone list, and they are having trouble matching the call they made outbound to you with an telemarketer on their end. I kept answering them hoping to finally get someone to talk to to get me on their do not call list.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Kiss My Ass, Chronicle</title>
+      <link>https://blog.nella.org/2003/12/22/kiss-my-ass-chronicle/</link>
+      <pubDate>Mon, 22 Dec 2003 13:44:45 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=84</guid> 
+      <description>&lt;p&gt;This &lt;a href=&#34;http://www.sfgate.com/cgi-bin/article.cgi?f=/c/a/2003/12/21/MNG7U3S1M91.DTL&#34;&gt;article in the Chronicle&lt;/a&gt;, describing confused visitors to the city of San Fransisco during a power outage, is just over the top. Its treatment of the suburbanites who subsidize San Francisco&amp;rsquo;s excesses is offensive, and I hope they get called on it.&lt;/p&gt;
+&lt;p&gt;You know, we don&amp;rsquo;t need to come to Union Square to shop. We have malls in San Mateo and Santa Clara county too. Perhaps we only go to the City because we have some deep seated desire to be insulted by the city dwellers, to be reminded of how inferior our suburban lives are. Or maybe we come offering a few dollars of tax revenue that your city can use to get the bums off your streets, so that we can bring our relatives to your city next summer without being ashamed by it.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>iTunes gripes</title>
+      <link>https://blog.nella.org/2003/11/05/itunes-gripes/</link>
+      <pubDate>Wed, 05 Nov 2003 01:47:21 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=80</guid> 
+      <description>&lt;p&gt;On the first day it was released, I installed iTunes for Windows. I figured something from Apple has a chance of dislodging WinAmp as my music player. They pay attention to important details, and except for the ongoing Quicktime debacle, make software most people seem to like.&lt;/p&gt;
+&lt;p&gt;Using it to edit MP3 metadata has been a disappointment. Though other people claim it makes perfect sense to them, I can&amp;rsquo;t for the life of me understand how to make a playlist. Part of the problem is that I keep right clicking on stuff, and nothing useful happens.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

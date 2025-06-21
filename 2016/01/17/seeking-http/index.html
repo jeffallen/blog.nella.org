@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Seeking around in an HTTP object | jra&#39;s thoughts</title>
+<meta name="keywords" content="">
+<meta name="description" content="Imagine there&rsquo;s a giant ZIP file on a HTTP server, and you want to know what&rsquo;s inside it. You don&rsquo;t know if it&rsquo;s got what you are looking for, and you don&rsquo;t want to download the whole thing. Is it possible to do something like &ldquo;unzip -l https://example.com/giant.zip&quot;?
+This is not a theoretical problem just to demonstrate something in Go. In fact, I wasn&rsquo;t looking to write an article at all, except that I wanted to know the structure of the bulk patent downloads from the US Patent and Trademark Office (USPTO) from those ZIP files. Or, I thought, how cool would it be to be able to fetch individual images of some of the patents issued in 1790 out of these tarfiles?">
+<meta name="author" content="jra">
+<link rel="canonical" href="https://blog.nella.org/2016/01/17/seeking-http/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.3beea2776320e39a6c8d0589cd10cf4cbbbe3ca9b6f0363cfeef1417ed39a195.css" integrity="sha256-O&#43;6id2Mg45psjQWJzRDPTLu&#43;PKm28DY8/u8UF&#43;05oZU=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://blog.nella.org/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://blog.nella.org/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://blog.nella.org/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://blog.nella.org/apple-touch-icon.png">
+<link rel="mask-icon" href="https://blog.nella.org/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://blog.nella.org/2016/01/17/seeking-http/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend&display=swap" rel="stylesheet">
+<meta property="og:url" content="https://blog.nella.org/2016/01/17/seeking-http/">
+  <meta property="og:site_name" content="jra&#39;s thoughts">
+  <meta property="og:title" content="Seeking around in an HTTP object">
+  <meta property="og:description" content="Imagine there’s a giant ZIP file on a HTTP server, and you want to know what’s inside it. You don’t know if it’s got what you are looking for, and you don’t want to download the whole thing. Is it possible to do something like “unzip -l https://example.com/giant.zip&#34;?
+This is not a theoretical problem just to demonstrate something in Go. In fact, I wasn’t looking to write an article at all, except that I wanted to know the structure of the bulk patent downloads from the US Patent and Trademark Office (USPTO) from those ZIP files. Or, I thought, how cool would it be to be able to fetch individual images of some of the patents issued in 1790 out of these tarfiles?">
+  <meta property="og:locale" content="en-US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2016-01-17T08:11:45+00:00">
+    <meta property="article:modified_time" content="2016-01-17T08:11:45+00:00">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Seeking around in an HTTP object">
+<meta name="twitter:description" content="Imagine there&rsquo;s a giant ZIP file on a HTTP server, and you want to know what&rsquo;s inside it. You don&rsquo;t know if it&rsquo;s got what you are looking for, and you don&rsquo;t want to download the whole thing. Is it possible to do something like &ldquo;unzip -l https://example.com/giant.zip&quot;?
+This is not a theoretical problem just to demonstrate something in Go. In fact, I wasn&rsquo;t looking to write an article at all, except that I wanted to know the structure of the bulk patent downloads from the US Patent and Trademark Office (USPTO) from those ZIP files. Or, I thought, how cool would it be to be able to fetch individual images of some of the patents issued in 1790 out of these tarfiles?">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://blog.nella.org/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Seeking around in an HTTP object",
+      "item": "https://blog.nella.org/2016/01/17/seeking-http/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Seeking around in an HTTP object",
+  "name": "Seeking around in an HTTP object",
+  "description": "Imagine there\u0026rsquo;s a giant ZIP file on a HTTP server, and you want to know what\u0026rsquo;s inside it. You don\u0026rsquo;t know if it\u0026rsquo;s got what you are looking for, and you don\u0026rsquo;t want to download the whole thing. Is it possible to do something like \u0026ldquo;unzip -l https://example.com/giant.zip\u0026quot;?\nThis is not a theoretical problem just to demonstrate something in Go. In fact, I wasn\u0026rsquo;t looking to write an article at all, except that I wanted to know the structure of the bulk patent downloads from the US Patent and Trademark Office (USPTO) from those ZIP files. Or, I thought, how cool would it be to be able to fetch individual images of some of the patents issued in 1790 out of these tarfiles?\n",
+  "keywords": [
+    
+  ],
+  "articleBody": "Imagine there’s a giant ZIP file on a HTTP server, and you want to know what’s inside it. You don’t know if it’s got what you are looking for, and you don’t want to download the whole thing. Is it possible to do something like “unzip -l https://example.com/giant.zip\"?\nThis is not a theoretical problem just to demonstrate something in Go. In fact, I wasn’t looking to write an article at all, except that I wanted to know the structure of the bulk patent downloads from the US Patent and Trademark Office (USPTO) from those ZIP files. Or, I thought, how cool would it be to be able to fetch individual images of some of the patents issued in 1790 out of these tarfiles?\nGo take a look. There’s hundreds of huge ZIP and tarfiles to explore there!\nThe ZIP file format has a table of contents in it, located at the end. So on local disk, “unzip -l” is as simple as “seek to the end, find the TOC, parse it and print it”. And in fact, we can see that’s how Go is going to proceed, because the zip.NewReader function wants a file it will be able to seek around in. As for tar files, they were designed for a time when tape streamed and memory was scarce, so their table of contents is interleaved among the files themselves.\nBut we’re not on local disk, we’ve given ourselves the challenge of reading from a URL. What to do? Where to start?\nWe’ve got a couple things to check and then we can plan a way forward. The equivalent of seeking and reading from a file for HTTP is the Range header. So, do the USPTO servers support the Range header? That’s easy enough to check using curl and an HTTP HEAD request:\n$ curl -I https://bulkdata.uspto.gov/data/patent/officialgazette/2017/e-OG20170103_1434-1.zip HTTP/1.1 200 OK Date: Mon, 11 Dec 2017 21:10:26 GMT Server: Apache Last-Modified: Tue, 03 Jan 2017 11:58:45 GMT ETag: \"afb8ac8-5452f63e0a82f\" Accept-Ranges: bytes Content-Length: 184257224 X-Frame-Options: DENY Content-Type: application/zip Note the “Accept-Ranges” header in there, which says that we can send byte ranges to it. Range headers let you implement the HTTP equivalent of the operating system’s random-access reads (i.e. the io.ReaderAt interface).\nSo it would theoretically be possible to pick and choose which bytes we download from the web server, in order to download only the parts of a file that have the metadata (table of contents) in it.\nNow we need an implementation of the ZIP file format that will let us replace the “read next table of contents header” part with an implementation of read that reads only the metadata, using an HTTP GET with a Range header. And that is where Go’s archive/zip and archive/tar packages come in!\nAs we’ve already noted, zip.NewReader is chomping at the bit to start seeking. However as we take a look at TAR, we find a problem. The tar.NewReader method takes an io.Reader. The problem with the io.Reader is that it does not let us get random access to the resource, like io.ReaderAt does. It is implemented that way because it makes the tar package more adaptable. In particular, you can hook the Go tar package directly up to the compress/gzip package and read tar.gz files – as long as you are content to read them sequentially and not jump around in them, as we wish to.\nSo what to do? Use the source, Luke! Go dig into the Next method, and look around. That’s where we’d expect it to go find the next piece of metadata. Within a few lines, we find an intriguing function call, to skipUnread. And there, we find something very interesting:\n// skipUnread skips any unread bytes in the existing file entry, as well as any alignment padding. func (tr *Reader) skipUnread() { nr := tr.numBytes() + tr.pad // number of bytes to skip tr.curr, tr.pad = nil, 0 if sr, ok := tr.r.(io.Seeker); ok { if _, err := sr.Seek(nr, os.SEEK_CUR); err == nil { return } } _, tr.err = io.CopyN(ioutil.Discard, tr.r, nr) } // Note: This is from Go 1.4, which had a simpler skipUnread than go 1.9 does. The type assertion in there says, “if the io.Reader is actually capable of seeking as well, then instead of reading and discarding, we seek directly to the right place”. Eureka! We just need to send an io.Reader into tar.NewReader that also satisfies io.Seeker (thus, it is an io.ReadSeeker).\nSo, now go check out package github.com/jeffallen/seekinghttp and see how we accomplish that.\nThis package implements not only io.ReadSeeker, but also io.ReaderAt. Why? Because, as I mentioned above, reading a ZIP file requires an io.ReaderAt. It also needs the length of the file passed to it, so that it can look at the end of the file for the table of contents. The HTTP HEAD method works nicely to get the Content-Length of the HTTP object, without downloading the entire thing.\nA command-line tool to get the table of contents of tar and zip files remotely is in remote-archive-ls. Turn on the “-debug” option in order to see what’s happening. It is fascinating to watch as the TAR or ZIP readers from Go’s standard library “call back” into our code and ask for a few bytes here, a few bytes there.\nSoon after I first got this program working, I found a serious flaw. Here’s an example run:\n$ ./remote-archive-ls -debug 'https://bulkdata.uspto.gov/data/patent/grant/multipagepdf/1790_1999/grant_pdf_17900731_18641101.tar' 2017/12/12 00:07:38 got read len 512 2017/12/12 00:07:38 ReadAt len 512 off 0 2017/12/12 00:07:38 Start HTTP GET with Range: bytes=0-511 2017/12/12 00:07:39 HTTP ok. File: 00000001-X009741H/ 2017/12/12 00:07:39 got read len 512 2017/12/12 00:07:39 ReadAt len 512 off 512 2017/12/12 00:07:39 Start HTTP GET with Range: bytes=512-1023 2017/12/12 00:07:39 HTTP ok. File: 00000001-X009741H/00/ 2017/12/12 00:07:39 got read len 512 2017/12/12 00:07:39 ReadAt len 512 off 1024 2017/12/12 00:07:39 Start HTTP GET with Range: bytes=1024-1535 2017/12/12 00:07:39 HTTP ok. File: 00000001-X009741H/00/000/ 2017/12/12 00:07:39 got read len 512 2017/12/12 00:07:39 ReadAt len 512 off 1536 2017/12/12 00:07:39 Start HTTP GET with Range: bytes=1536-2047 2017/12/12 00:07:39 HTTP ok. File: 00000001-X009741H/00/000/001/ 2017/12/12 00:07:39 got read len 512 2017/12/12 00:07:39 ReadAt len 512 off 2048 2017/12/12 00:07:39 Start HTTP GET with Range: bytes=2048-2559 2017/12/12 00:07:39 HTTP ok. File: 00000001-X009741H/00/000/001/us-patent-image.xml 2017/12/12 00:07:39 got seek 0 1 2017/12/12 00:07:39 got seek 982 1 2017/12/12 00:07:39 got read len 42 2017/12/12 00:07:39 ReadAt len 42 off 3542 2017/12/12 00:07:39 Start HTTP GET with Range: bytes=3542-3583 2017/12/12 00:07:39 HTTP ok. 2017/12/12 00:07:39 got read len 512 2017/12/12 00:07:39 ReadAt len 512 off 3584 2017/12/12 00:07:39 Start HTTP GET with Range: bytes=3584-4095 2017/12/12 00:07:39 HTTP ok. File: 00000001-X009741H/00/000/001/00000001.pdf 2017/12/12 00:07:39 got seek 0 1 2017/12/12 00:07:39 got seek 320840 1 2017/12/12 00:07:39 got read len 184 2017/12/12 00:07:39 ReadAt len 184 off 324936 ...etc... Can you see the problem? That’s a whole lot of HTTP transactions! The TAR reader is working through the TAR stream a little bit at a time, issuing a stream of tiny reads. All of those short HTTP transactions are hard on the server, and terrible for our throughput, since each one entails many round-trips to the server.\nThe solution, of course, it caching. Instead of reading just the first 512 bytes that the TAR reader asks for, I read 10 times that many, so that the next several reads will be serviced directly from cache. If there is a read that is outside of the cache, we assume that the other reads will come in that area as well, and drop the entire current cache, in order to fill it with 10x the current read amount from the new current offset.\nThe fact that the TAR reader sends a lot of small reads points out something very important about buffering. Giving the results of os.Open directly to tar.NewReader isn’t very clever, especially if your plan is to jump through the file looking for metadata. While it is true that *os.File implements io.ReadSeeker, we now know that TAR is going to issue a huge number of small system calls to the kernel. The solution, much like caching was the solution above, might be to use the bufio package to buffer the *os.File, so that the small reads that TAR is issuing will come out of RAM instead of going to the operating system. But be careful: is it really the solution? Does bufio.Reader really implement io.ReadSeeker and io.ReadAt like we need? (Spoiler: it doesn’t; maybe one of you readers would like to show us how to speed up Go’s tar using a replacement for bufio next advent season?)\nI hope you have enjoyed this little trip through the standard library and HTTP, taking a look at how to work together with the standard library in order to help it achieve more than it was was written to do, so that it can help you get your job done. When you implement io.Reader and friends, you get a chance to go behind the scenes of the libraries you are calling into, and feed them data from places their authors never expected!\n",
+  "wordCount" : "1509",
+  "inLanguage": "en",
+  "datePublished": "2016-01-17T08:11:45Z",
+  "dateModified": "2016-01-17T08:11:45Z",
+  "author":{
+    "@type": "Person",
+    "name": "jra"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://blog.nella.org/2016/01/17/seeking-http/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "jra's thoughts",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://blog.nella.org/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://blog.nella.org/" accesskey="h" title="jra&#39;s thoughts (Alt + H)">jra&#39;s thoughts</a>
+            <div class="logo-switches">
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://blog.nella.org/">Home</a>&nbsp;»&nbsp;<a href="https://blog.nella.org/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      Seeking around in an HTTP object
+    </h1>
+    <div class="post-meta"><span title='2016-01-17 08:11:45 +0000 +0000'>January 17, 2016</span>&nbsp;·&nbsp;8 min&nbsp;·&nbsp;jra
+
+</div>
+  </header> 
+  <div class="post-content"><p>Imagine there&rsquo;s a giant ZIP file on a HTTP server, and you want to know what&rsquo;s inside it. You don&rsquo;t know if it&rsquo;s got what you are looking for, and you don&rsquo;t want to download the whole thing. Is it possible to do something like &ldquo;unzip -l <a href="https://example.com/giant.zip%22">https://example.com/giant.zip&quot;</a>?</p>
+<p>This is not a theoretical problem just to demonstrate something in Go. In fact, I wasn&rsquo;t looking to write an article at all, except that I wanted to know the structure of the <a href="https://bulkdata.uspto.gov/data/patent/officialgazette/2017/">bulk patent downloads from the US Patent and Trademark Office (USPTO)</a> from those ZIP files. Or, I thought, how cool would it be to be able to fetch <a href="https://bulkdata.uspto.gov/data/patent/grant/multipagepdf/1790_1999/">individual images of some of the patents issued in 1790</a> out of these tarfiles?</p>
+<p>Go take a look. There&rsquo;s hundreds of huge ZIP and tarfiles to explore there!</p>
+<p>The <a href="https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT">ZIP file format</a> has a table of contents in it, located at the end. So on local disk, &ldquo;unzip -l&rdquo; is as simple as &ldquo;seek to the end, find the TOC, parse it and print it&rdquo;. And in fact, we can see that&rsquo;s how Go is going to proceed, because the <a href="https://godoc.org/archive/zip#NewReader">zip.NewReader function</a> wants a file it <a href="https://godoc.org/io#ReaderAt">will be able to seek around in</a>. As for tar files, they were designed for a time when tape streamed and memory was scarce, so their table of contents is interleaved among the files themselves.</p>
+<p>But we&rsquo;re not on local disk, we&rsquo;ve given ourselves the challenge of reading from a URL. What to do? Where to start?</p>
+<p>We&rsquo;ve got a couple things to check and then we can plan a way forward. The equivalent of seeking and reading from a file for HTTP is the Range header. So, do the USPTO servers support <a href="https://tools.ietf.org/html/rfc7233">the Range header</a>? That&rsquo;s easy enough to check using curl and an HTTP HEAD request:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ curl -I https://bulkdata.uspto.gov/data/patent/officialgazette/2017/e-OG20170103_1434-1.zip
+</span></span><span style="display:flex;"><span>HTTP/1.1 200 OK
+</span></span><span style="display:flex;"><span>Date: Mon, 11 Dec 2017 21:10:26 GMT
+</span></span><span style="display:flex;"><span>Server: Apache
+</span></span><span style="display:flex;"><span>Last-Modified: Tue, 03 Jan 2017 11:58:45 GMT
+</span></span><span style="display:flex;"><span>ETag: &#34;afb8ac8-5452f63e0a82f&#34;
+</span></span><span style="display:flex;"><span>Accept-Ranges: bytes
+</span></span><span style="display:flex;"><span>Content-Length: 184257224
+</span></span><span style="display:flex;"><span>X-Frame-Options: DENY
+</span></span><span style="display:flex;"><span>Content-Type: application/zip
+</span></span></code></pre></div><p>Note the &ldquo;Accept-Ranges&rdquo; header in there, which says that we can send byte ranges to it. Range headers let you implement the HTTP equivalent of the operating system&rsquo;s random-access reads (i.e. the <a href="https://godoc.org/io#ReaderAt">io.ReaderAt</a> interface).</p>
+<p>So it would theoretically be possible to pick and choose which bytes we download from the web server, in order to download only the parts of a file that have the metadata (table of contents) in it.</p>
+<p>Now we need an implementation of the ZIP file format that will let us replace the &ldquo;read next table of contents header&rdquo; part with an implementation of read that reads only the metadata, using an HTTP GET with a Range header. And that is where Go&rsquo;s <a href="https://golang.org/pkg/archive/zip">archive/zip</a> and <a href="https://godoc.org/archive/tar">archive/tar</a> packages come in!</p>
+<p>As we&rsquo;ve already noted, <a href="https://godoc.org/archive/zip#NewReader">zip.NewReader</a> is chomping at the bit to start seeking. However as we take a look at TAR, we find a problem. The <a href="https://golang.org/pkg/archive/tar/#NewReader">tar.NewReader</a> method takes an io.Reader. The problem with the io.Reader is that it does not let us get random access to the resource, like io.ReaderAt does. It is implemented that way because it makes the tar package more adaptable. In particular, you can hook the Go tar package directly up to the <a href="https://golang.org/pkg/compress/gzip/">compress/gzip</a> package and read tar.gz files &ndash; as long as you are content to read them sequentially and not jump around in them, as we wish to.</p>
+<p>So what to do? Use the source, Luke! Go dig into the <a href="https://github.com/golang/go/blob/c007ce824d9a4fccb148f9204e04c23ed2984b71/src/archive/tar/reader.go#L88">Next method</a>, and look around. That&rsquo;s where we&rsquo;d expect it to go find the next piece of metadata. Within a few lines, we find an intriguing function call, to <a href="https://github.com/golang/go/blob/c007ce824d9a4fccb148f9204e04c23ed2984b71/src/archive/tar/reader.go#L407">skipUnread</a>. And there, we find something very interesting:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span><span style="color:#f92672">//</span> skipUnread skips any unread bytes <span style="color:#f92672">in</span> the existing file entry, as well as any alignment padding<span style="color:#f92672">.</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (tr <span style="color:#f92672">*</span>Reader) skipUnread() {
+</span></span><span style="display:flex;"><span>  nr :<span style="color:#f92672">=</span> tr<span style="color:#f92672">.</span>numBytes() <span style="color:#f92672">+</span> tr<span style="color:#f92672">.</span>pad <span style="color:#f92672">//</span> number of bytes to skip
+</span></span><span style="display:flex;"><span>  tr<span style="color:#f92672">.</span>curr, tr<span style="color:#f92672">.</span>pad <span style="color:#f92672">=</span> nil, <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> sr, ok :<span style="color:#f92672">=</span> tr<span style="color:#f92672">.</span>r<span style="color:#f92672">.</span>(io<span style="color:#f92672">.</span>Seeker); ok {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> _, err :<span style="color:#f92672">=</span> sr<span style="color:#f92672">.</span>Seek(nr, os<span style="color:#f92672">.</span>SEEK_CUR); err <span style="color:#f92672">==</span> nil {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  _, tr<span style="color:#f92672">.</span>err <span style="color:#f92672">=</span> io<span style="color:#f92672">.</span>CopyN(ioutil<span style="color:#f92672">.</span>Discard, tr<span style="color:#f92672">.</span>r, nr)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">//</span> Note: This is from Go <span style="color:#ae81ff">1.4</span>, which had a simpler skipUnread than go <span style="color:#ae81ff">1.9</span> does<span style="color:#f92672">.</span>
+</span></span></code></pre></div><p>The type assertion in there says, &ldquo;if the io.Reader is actually capable of seeking as well, then instead of reading and discarding, we seek directly to the right place&rdquo;. Eureka! We just need to send an io.Reader into tar.NewReader that also satisfies <a href="https://golang.org/pkg/io/#Seeker">io.Seeker</a> (thus, it is an <a href="https://golang.org/pkg/io/#ReadSeeker">io.ReadSeeker</a>).</p>
+<p>So, now go check out package <a href="https://github.com/jeffallen/seekinghttp">github.com/jeffallen/seekinghttp</a> and see how we accomplish that.</p>
+<p>This package implements not only io.ReadSeeker, but also io.ReaderAt. Why? Because, as I mentioned above, reading a ZIP file requires an io.ReaderAt. It also needs the length of the file passed to it, so that it can look at the end of the file for the table of contents. The HTTP HEAD method works nicely to get the Content-Length of the HTTP object, without downloading the entire thing.</p>
+<p>A command-line tool to get the table of contents of tar and zip files remotely is in <a href="https://github.com/jeffallen/seekinghttp/tree/master/cmd/remote-archive-ls">remote-archive-ls</a>. Turn on the &ldquo;-debug&rdquo; option in order to see what&rsquo;s happening. It is fascinating to watch as the TAR or ZIP readers from Go&rsquo;s standard library &ldquo;call back&rdquo; into our code and ask for a few bytes here, a few bytes there.</p>
+<p>Soon after I first got this program working, I found a serious flaw. Here&rsquo;s an example run:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ ./remote-archive-ls -debug &#39;https://bulkdata.uspto.gov/data/patent/grant/multipagepdf/1790_1999/grant_pdf_17900731_18641101.tar&#39;
+</span></span><span style="display:flex;"><span>2017/12/12 00:07:38 got read len 512
+</span></span><span style="display:flex;"><span>2017/12/12 00:07:38 ReadAt len 512 off 0
+</span></span><span style="display:flex;"><span>2017/12/12 00:07:38 Start HTTP GET with Range: bytes=0-511
+</span></span><span style="display:flex;"><span>2017/12/12 00:07:39 HTTP ok.
+</span></span><span style="display:flex;"><span>File: 00000001-X009741H/
+</span></span><span style="display:flex;"><span>2017/12/12 00:07:39 got read len 512
+</span></span><span style="display:flex;"><span>2017/12/12 00:07:39 ReadAt len 512 off 512
+</span></span><span style="display:flex;"><span>2017/12/12 00:07:39 Start HTTP GET with Range: bytes=512-1023
+</span></span><span style="display:flex;"><span>2017/12/12 00:07:39 HTTP ok.
+</span></span><span style="display:flex;"><span>File: 00000001-X009741H/00/
+</span></span><span style="display:flex;"><span>2017/12/12 00:07:39 got read len 512
+</span></span><span style="display:flex;"><span>2017/12/12 00:07:39 ReadAt len 512 off 1024
+</span></span><span style="display:flex;"><span>2017/12/12 00:07:39 Start HTTP GET with Range: bytes=1024-1535
+</span></span><span style="display:flex;"><span>2017/12/12 00:07:39 HTTP ok.
+</span></span><span style="display:flex;"><span>File: 00000001-X009741H/00/000/
+</span></span><span style="display:flex;"><span>2017/12/12 00:07:39 got read len 512
+</span></span><span style="display:flex;"><span>2017/12/12 00:07:39 ReadAt len 512 off 1536
+</span></span><span style="display:flex;"><span>2017/12/12 00:07:39 Start HTTP GET with Range: bytes=1536-2047
+</span></span><span style="display:flex;"><span>2017/12/12 00:07:39 HTTP ok.
+</span></span><span style="display:flex;"><span>File: 00000001-X009741H/00/000/001/
+</span></span><span style="display:flex;"><span>2017/12/12 00:07:39 got read len 512
+</span></span><span style="display:flex;"><span>2017/12/12 00:07:39 ReadAt len 512 off 2048
+</span></span><span style="display:flex;"><span>2017/12/12 00:07:39 Start HTTP GET with Range: bytes=2048-2559
+</span></span><span style="display:flex;"><span>2017/12/12 00:07:39 HTTP ok.
+</span></span><span style="display:flex;"><span>File: 00000001-X009741H/00/000/001/us-patent-image.xml
+</span></span><span style="display:flex;"><span>2017/12/12 00:07:39 got seek 0 1
+</span></span><span style="display:flex;"><span>2017/12/12 00:07:39 got seek 982 1
+</span></span><span style="display:flex;"><span>2017/12/12 00:07:39 got read len 42
+</span></span><span style="display:flex;"><span>2017/12/12 00:07:39 ReadAt len 42 off 3542
+</span></span><span style="display:flex;"><span>2017/12/12 00:07:39 Start HTTP GET with Range: bytes=3542-3583
+</span></span><span style="display:flex;"><span>2017/12/12 00:07:39 HTTP ok.
+</span></span><span style="display:flex;"><span>2017/12/12 00:07:39 got read len 512
+</span></span><span style="display:flex;"><span>2017/12/12 00:07:39 ReadAt len 512 off 3584
+</span></span><span style="display:flex;"><span>2017/12/12 00:07:39 Start HTTP GET with Range: bytes=3584-4095
+</span></span><span style="display:flex;"><span>2017/12/12 00:07:39 HTTP ok.
+</span></span><span style="display:flex;"><span>File: 00000001-X009741H/00/000/001/00000001.pdf
+</span></span><span style="display:flex;"><span>2017/12/12 00:07:39 got seek 0 1
+</span></span><span style="display:flex;"><span>2017/12/12 00:07:39 got seek 320840 1
+</span></span><span style="display:flex;"><span>2017/12/12 00:07:39 got read len 184
+</span></span><span style="display:flex;"><span>2017/12/12 00:07:39 ReadAt len 184 off 324936
+</span></span><span style="display:flex;"><span>...etc...
+</span></span></code></pre></div><p>Can you see the problem? That&rsquo;s a whole lot of HTTP transactions! The TAR reader is working through the TAR stream a little bit at a time, issuing a stream of tiny reads. All of those short HTTP transactions are hard on the server, and terrible for our throughput, since each one entails many round-trips to the server.</p>
+<p>The solution, of course, it caching. Instead of reading just the first 512 bytes that the TAR reader asks for, I read 10 times that many, so that the next several reads will be serviced directly from cache. If there is a read that is outside of the cache, we assume that the other reads will come in that area as well, and drop the entire current cache, in order to fill it with 10x the current read amount from the new current offset.</p>
+<p>The fact that the TAR reader sends a lot of small reads points out something very important about buffering. Giving the results of <a href="https://godoc.org/os#Open">os.Open</a> directly to tar.NewReader isn&rsquo;t very clever, especially if your plan is to jump through the file looking for metadata. While it is true that *os.File implements io.ReadSeeker, we now know that TAR is going to issue a huge number of small system calls to the kernel. The solution, much like caching was the solution above, might be to use the <a href="https://godoc.org/bufio">bufio</a> package to buffer the *os.File, so that the small reads that TAR is issuing will come out of RAM instead of going to the operating system. But be careful: is it really the solution? Does <a href="https://godoc.org/bufio#Reader">bufio.Reader</a> really implement io.ReadSeeker and io.ReadAt like we need? (Spoiler: it doesn&rsquo;t; maybe one of you readers would like to show us how to speed up Go&rsquo;s tar using a replacement for bufio next advent season?)</p>
+<p>I hope you have enjoyed this little trip through the standard library and HTTP, taking a look at how to work together with the standard library in order to help it achieve more than it was was written to do, so that it can help you get your job done. When you implement io.Reader and friends, you get a chance to go behind the scenes of the libraries you are calling into, and feed them data from places their authors never expected!</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+
+<ul class="share-buttons">
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Seeking around in an HTTP object on linkedin"
+            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.nella.org%2f2016%2f01%2f17%2fseeking-http%2f&amp;title=Seeking%20around%20in%20an%20HTTP%20object&amp;summary=Seeking%20around%20in%20an%20HTTP%20object&amp;source=https%3a%2f%2fblog.nella.org%2f2016%2f01%2f17%2fseeking-http%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Seeking around in an HTTP object on ycombinator"
+            href="https://news.ycombinator.com/submitlink?t=Seeking%20around%20in%20an%20HTTP%20object&u=https%3a%2f%2fblog.nella.org%2f2016%2f01%2f17%2fseeking-http%2f">
+            <svg version="1.1" xml:space="preserve" width="30px" height="30px" viewBox="0 0 512 512" fill="currentColor"
+                xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
+                <path
+                    d="M449.446 0C483.971 0 512 28.03 512 62.554L512 449.446C512 483.97 483.97 512 449.446 512L62.554 512C28.03 512 0 483.97 0 449.446L0 62.554C0 28.03 28.029 0 62.554 0L449.446 0ZM183.8767 87.9921H121.8427L230.6673 292.4508V424.0079H281.3328V292.4508L390.1575 87.9921H328.1233L256 238.2489z" />
+            </svg>
+        </a>
+    </li>
+</ul>
+
+  </footer>
+</article>
+    </main>
+    
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

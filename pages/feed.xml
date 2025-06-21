@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Pages on jra&#39;s thoughts</title>
+    <link>https://blog.nella.org/pages/</link>
+    <description>Recent content in Pages on jra&#39;s thoughts</description>
+    <generator>Hugo -- 0.147.8</generator>
+    <language>en-US</language>
+    <lastBuildDate>Tue, 27 May 2008 15:19:33 +0000</lastBuildDate>
+    <atom:link href="https://blog.nella.org/pages/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>About me</title>
+      <link>https://blog.nella.org/about/</link>
+      <pubDate>Tue, 27 May 2008 15:19:33 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?page_id=2</guid> 
+      <description>&lt;p&gt;You can learn more about me &lt;a href=&#34;http://nella.org/jra&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I have spoken about MSF sometimes on this blog. I have worked for MSF sometimes in the field. Neither of the two are connected, and when I am working in the field, I do not post to the blog, because during those times, 100% of my life is MSF. It is the policy of MSF that &lt;a href=&#34;https://www.msf.org/msf-charter&#34;&gt;we talk about our experiences according to the needs of our beneficiaries&lt;/a&gt;, and not as individuals.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

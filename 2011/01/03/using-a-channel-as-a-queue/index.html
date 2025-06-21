@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Using a channel as a queue | jra&#39;s thoughts</title>
+<meta name="keywords" content="">
+<meta name="description" content="I try to write a Go article every Monday, but the holiday season has disrupted me a bit. So here&rsquo;s a little something I dug out of my stocking to get things going again.
+I thought an interesting way to play with the exp/draw package, the http client, and the image decoder would be a program to animate the tiles from Google Maps, showing the world scrolling by, as though you were in an airplane looking straight down and flying in a straight line. It came to me in one of those flying dreams&hellip; (not really).">
+<meta name="author" content="jra">
+<link rel="canonical" href="https://blog.nella.org/2011/01/03/using-a-channel-as-a-queue/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.3beea2776320e39a6c8d0589cd10cf4cbbbe3ca9b6f0363cfeef1417ed39a195.css" integrity="sha256-O&#43;6id2Mg45psjQWJzRDPTLu&#43;PKm28DY8/u8UF&#43;05oZU=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://blog.nella.org/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://blog.nella.org/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://blog.nella.org/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://blog.nella.org/apple-touch-icon.png">
+<link rel="mask-icon" href="https://blog.nella.org/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://blog.nella.org/2011/01/03/using-a-channel-as-a-queue/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend&display=swap" rel="stylesheet">
+<meta property="og:url" content="https://blog.nella.org/2011/01/03/using-a-channel-as-a-queue/">
+  <meta property="og:site_name" content="jra&#39;s thoughts">
+  <meta property="og:title" content="Using a channel as a queue">
+  <meta property="og:description" content="I try to write a Go article every Monday, but the holiday season has disrupted me a bit. So here’s a little something I dug out of my stocking to get things going again.
+I thought an interesting way to play with the exp/draw package, the http client, and the image decoder would be a program to animate the tiles from Google Maps, showing the world scrolling by, as though you were in an airplane looking straight down and flying in a straight line. It came to me in one of those flying dreams… (not really).">
+  <meta property="og:locale" content="en-US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2011-01-03T15:10:23+00:00">
+    <meta property="article:modified_time" content="2011-01-03T15:10:23+00:00">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Using a channel as a queue">
+<meta name="twitter:description" content="I try to write a Go article every Monday, but the holiday season has disrupted me a bit. So here&rsquo;s a little something I dug out of my stocking to get things going again.
+I thought an interesting way to play with the exp/draw package, the http client, and the image decoder would be a program to animate the tiles from Google Maps, showing the world scrolling by, as though you were in an airplane looking straight down and flying in a straight line. It came to me in one of those flying dreams&hellip; (not really).">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://blog.nella.org/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Using a channel as a queue",
+      "item": "https://blog.nella.org/2011/01/03/using-a-channel-as-a-queue/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Using a channel as a queue",
+  "name": "Using a channel as a queue",
+  "description": "I try to write a Go article every Monday, but the holiday season has disrupted me a bit. So here\u0026rsquo;s a little something I dug out of my stocking to get things going again.\nI thought an interesting way to play with the exp/draw package, the http client, and the image decoder would be a program to animate the tiles from Google Maps, showing the world scrolling by, as though you were in an airplane looking straight down and flying in a straight line. It came to me in one of those flying dreams\u0026hellip; (not really).\n",
+  "keywords": [
+    
+  ],
+  "articleBody": "I try to write a Go article every Monday, but the holiday season has disrupted me a bit. So here’s a little something I dug out of my stocking to get things going again.\nI thought an interesting way to play with the exp/draw package, the http client, and the image decoder would be a program to animate the tiles from Google Maps, showing the world scrolling by, as though you were in an airplane looking straight down and flying in a straight line. It came to me in one of those flying dreams… (not really).\nThe general idea is simple: fetch a tile, and display it, animating it by sliding it to the left while fetching the next one to the east and ensuring that you either get it before the last one scrolled off, or stop the scrolling. That’s a perfect job for goroutines; one should be fetching and one should be in charge of drawing, and should block if the other one is not done. And they should talk via a channel, like all well behaved goroutines do. Because channels are ordered and can be buffered, the channel between the fetcher and the displayer can play the part of a queue in this producer/consumer system. Simple and elegant, just how we like it to be in Go-land.\nHere’s the program. You can also get by running “goinstall jra-go.googlecode.com/hg”, then go look in your $GOROOT/src/pkg/jra-go.googlecode.com/hg/cmd/mapscroll directory.\npackage main import ( \"log\" \"fmt\" \"time\" \"http\" \"exp/draw\" \"exp/draw/x11\" \"image\" \"image/png\" \"image/jpeg\" ) func imagePuller(urls chan string, imgs chan *image.Image) { for url := range urls { r, _, err := http.Get(url) if err == nil { log.Print(\"Fetched \", url) ctype, found := r.Header[\"Content-Type\"] if found { switch { default: log.Print(\"For \", url, \", unknown type: \", ctype) case ctype == \"image/png\": img, err := png.Decode(r.Body) if err == nil { imgs \u003c- \u0026img } else { log.Print(\"For \", url, \", decode error: \", err) } case ctype == \"image/jpeg\" || ctype == \"image/jpg\": img, err := jpeg.Decode(r.Body) if err == nil { imgs \u003c- \u0026img } else { log.Print(\"For \", url, \", decode error: \", err) return } } } else { log.Print(\"For \", url, \", no content type.\") } r.Body.Close() } else { log.Print(\"Error fetching \", url, \": \", err) } } } func urlGen(urls chan string) { x := 33981 y := 23179 for { url := fmt.Sprintf(\"http://khm1.google.com/kh/v=74\u0026x=%d\u0026s=\u0026y=%d\u0026z=16\u0026s=Ga\", x, y) urls \u003c- url x++ } } func processEvent(ch \u003c-chan interface{}) { for { if closed(ch) { log.Exit(\"X display closed.\") } ev, ok := \u003c-ch if !ok { // no events, return return } switch ev.(type) { case draw.ErrEvent: log.Exit(\"X11 err: \", ev.(draw.ErrEvent).Err) } } } func main() { urls := make(chan string, 4) imgReady := make(chan *image.Image, 4) go imagePuller(urls, imgReady) go urlGen(urls) xdisp, err := x11.NewWindow() if err != nil { log.Exit(\"X11 error: \", err) } screen := xdisp.Screen() tileHeight := 256 tileWidth := 256 numTiles := screen.Bounds().Dx()/tileWidth + 2 tileStrip := image.NewRGBA(numTiles*tileWidth, tileHeight) // pre-load the tile strip for i := 0; i \u003c numTiles; i++ { iptr := \u003c-imgReady img := *iptr draw.Draw(tileStrip, image.Rect(i*tileWidth, 0, i*tileWidth+tileWidth, tileHeight), img, image.ZP) } topBlack := (screen.Bounds().Dy() - tileHeight) / 2 for { for x := 0; x \u003c tileWidth; x += 15 { then := time.Nanoseconds() draw.Draw(screen, image.Rect(0, topBlack, screen.Bounds().Dx(), topBlack+tileHeight), tileStrip, image.Pt(x, 0)) now := time.Nanoseconds() frameTime := now - then // a flush is just a write on a channel, so it takes negligible time xdisp.FlushImage() toSleep := 0.1*1e9 - frameTime // log.Print(\"Took \", frameTime, \" ns to draw, will sleep \", toSleep, \" ns\") time.Sleep(toSleep) processEvent(xdisp.EventChan()) } // shift tiles in tileStrip and put in new last one draw.Draw(tileStrip, image.Rect(0, 0, (numTiles-1)*tileWidth, tileHeight), tileStrip, image.Pt(tileWidth, 0)) iptr := \u003c-imgReady img := *iptr draw.Draw(tileStrip, image.Rect((numTiles-1)*tileWidth, 0, numTiles*tileWidth, tileHeight), img, image.ZP) } } Some little details to point out:\nNote how I made the goroutine that fetches urls read from a chan string to get its URLs instead of making them up itself. This compartmentalizes the logic, and has nothing to do with parallelism. A good practice in Go is to use channels to improve clarity, not only as part of a scheme to increase parallelism. Your goal is to express the intrinsic “this hands to this” nature of your program, and if that results in a speedup with multiple cores, fine. If it just results in clearer code, even better!\nThe imgReady channel is buffered, 4 deep. That means I’ll have 4 images queued up and ready at all times. When the head is popped, there are 3 left. If each tile took 1 second to scroll by, then the maximum delay for any one fetch would be 3 seconds, and the fetches should average under one second. For this little app, it’s over thinking it; but the same analysis would hold for other asynchronous producer/consumer systems of this type.\nThe images themselves are not sent through the channel, only pointers to them. This is to reduce the amount of copying that the runtime has to do. For this application the difference would probably be almost undetectable, just a minor increase in CPU time (the dominant user of CPU time is the draw.Draw which moves the strip across the screen). But it seemed like a perfect place to be sending pointers instead of the objects themselves; in Go we share memory by communicating, not communicate by sharing. But a good compromise is where one goroutine says to the other “I’m done with the thing we can both access that is at the end of this pointer, you take it”.\nThe animation in this beast is definitely not the smoothest and most beautiful. The way exp/draw/x11 puts stuff on the screen is pretty costly, and it is too far removed from the X server itself to be able to synchronize updates and avoid flashing artifacts. Remember that the “exp” in exp/draw/x11 means “experimental” and it probably won’t stay around for the long haul. Perhaps linking against an OpenGL library using cgo would let me make the animation smoother. Perhaps I’ll look into that one day…\nTake a look at that unassuming processEvents hidden down in the middle of the inner loop. It is important to get things to close down nicely, and even to keep your window running without blocking on unhanded events. Without it, if you close the window, the system keeps fetching and updating the in-memory copy of the screen image. Every time through, processEvents empties the event channel, ignoring stuff it doesn’t care about. This is important, because if the event channels fill up, the X11 window hangs because the sends to the event channel are blocking (see $GOROOT/src/pkg/exp/draw/x11/conn.go, search for eventc). Even if you have no UI, you still need to empty that sucker, because just moving the mouse over the window creates events. (I can’t reproduce the theoretical hang I’m talking about now, so I could be wrong on this part. But empty the channel, just to be safe.)\nUpdate: Andrew tells me that not bailing early is non-idiomatic (see imagePuller, “if found”) and results in more indents than necessary. I tend to agree, but obviously I’m not quite yet in the habit of doing things the Go way. Thanks for the feedback, Andrew.\nPS: The starting location is Lausanne, my beautiful city. The x++ causes it to fly due east from Lausanne. If you wait until you get to 180 degrees east, it will likely fail, because I didn’t handle global wraparound right. :)\n",
+  "wordCount" : "1253",
+  "inLanguage": "en",
+  "datePublished": "2011-01-03T15:10:23Z",
+  "dateModified": "2011-01-03T15:10:23Z",
+  "author":{
+    "@type": "Person",
+    "name": "jra"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://blog.nella.org/2011/01/03/using-a-channel-as-a-queue/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "jra's thoughts",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://blog.nella.org/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://blog.nella.org/" accesskey="h" title="jra&#39;s thoughts (Alt + H)">jra&#39;s thoughts</a>
+            <div class="logo-switches">
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://blog.nella.org/">Home</a>&nbsp;»&nbsp;<a href="https://blog.nella.org/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      Using a channel as a queue
+    </h1>
+    <div class="post-meta"><span title='2011-01-03 15:10:23 +0000 +0000'>January 3, 2011</span>&nbsp;·&nbsp;6 min&nbsp;·&nbsp;jra
+
+</div>
+  </header> 
+  <div class="post-content"><p>I try to write a Go article every Monday, but the holiday season has disrupted me a bit. So here&rsquo;s a little something I dug out of my stocking to get things going again.</p>
+<p>I thought an interesting way to play with the exp/draw package, the http client, and the image decoder would be a program to animate the tiles from Google Maps, showing the world scrolling by, as though you were in an airplane looking straight down and flying in a straight line. It came to me in one of those flying dreams&hellip; (not really).</p>
+<p>The general idea is simple: fetch a tile, and display it, animating it by sliding it to the left while fetching the next one to the east and ensuring that you either get it before the last one scrolled off, or stop the scrolling. That&rsquo;s a perfect job for goroutines; one should be fetching and one should be in charge of drawing, and should block if the other one is not done. And they should talk via a channel, like all well behaved goroutines do. Because channels are ordered and can be buffered, the channel between the fetcher and the displayer can play the part of a queue in this producer/consumer system. Simple and elegant, just how we like it to be in Go-land.</p>
+<p>Here&rsquo;s the program. You can also get by running &ldquo;goinstall jra-go.googlecode.com/hg&rdquo;, then go look in your $GOROOT/src/pkg/jra-go.googlecode.com/hg/cmd/mapscroll directory.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;log&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;time&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;http&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;exp/draw&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;exp/draw/x11&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;image&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;image/png&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;image/jpeg&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">imagePuller</span>(<span style="color:#a6e22e">urls</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">imgs</span> <span style="color:#66d9ef">chan</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">image</span>.<span style="color:#a6e22e">Image</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">url</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">urls</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">r</span>, <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Get</span>(<span style="color:#a6e22e">url</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Print</span>(<span style="color:#e6db74">&#34;Fetched &#34;</span>, <span style="color:#a6e22e">url</span>)
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">ctype</span>, <span style="color:#a6e22e">found</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Header</span>[<span style="color:#e6db74">&#34;Content-Type&#34;</span>]
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">found</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">switch</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">default</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Print</span>(<span style="color:#e6db74">&#34;For &#34;</span>, <span style="color:#a6e22e">url</span>, <span style="color:#e6db74">&#34;, unknown type: &#34;</span>, <span style="color:#a6e22e">ctype</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">ctype</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;image/png&#34;</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">img</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">png</span>.<span style="color:#a6e22e">Decode</span>(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Body</span>)
+</span></span><span style="display:flex;"><span>          <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">imgs</span> <span style="color:#f92672">&lt;-</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">img</span>
+</span></span><span style="display:flex;"><span>          } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Print</span>(<span style="color:#e6db74">&#34;For &#34;</span>, <span style="color:#a6e22e">url</span>, <span style="color:#e6db74">&#34;, decode error: &#34;</span>, <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>          }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">ctype</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;image/jpeg&#34;</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">ctype</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;image/jpg&#34;</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">img</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">jpeg</span>.<span style="color:#a6e22e">Decode</span>(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Body</span>)
+</span></span><span style="display:flex;"><span>          <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">imgs</span> <span style="color:#f92672">&lt;-</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">img</span>
+</span></span><span style="display:flex;"><span>          } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Print</span>(<span style="color:#e6db74">&#34;For &#34;</span>, <span style="color:#a6e22e">url</span>, <span style="color:#e6db74">&#34;, decode error: &#34;</span>, <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>          }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>      } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Print</span>(<span style="color:#e6db74">&#34;For &#34;</span>, <span style="color:#a6e22e">url</span>, <span style="color:#e6db74">&#34;, no content type.&#34;</span>)
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Body</span>.<span style="color:#a6e22e">Close</span>()
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Print</span>(<span style="color:#e6db74">&#34;Error fetching &#34;</span>, <span style="color:#a6e22e">url</span>, <span style="color:#e6db74">&#34;: &#34;</span>, <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">urlGen</span>(<span style="color:#a6e22e">urls</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">x</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">33981</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">y</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">23179</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">url</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;http://khm1.google.com/kh/v=74&amp;x=%d&amp;s=&amp;y=%d&amp;z=16&amp;s=Ga&#34;</span>, <span style="color:#a6e22e">x</span>, <span style="color:#a6e22e">y</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">urls</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">url</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">x</span><span style="color:#f92672">++</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">processEvent</span>(<span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span><span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">interface</span>{}) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">closed</span>(<span style="color:#a6e22e">ch</span>) {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Exit</span>(<span style="color:#e6db74">&#34;X display closed.&#34;</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">ev</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">ch</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">ok</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// no events, return</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">switch</span> <span style="color:#a6e22e">ev</span>.(<span style="color:#66d9ef">type</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">draw</span>.<span style="color:#a6e22e">ErrEvent</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Exit</span>(<span style="color:#e6db74">&#34;X11 err: &#34;</span>, <span style="color:#a6e22e">ev</span>.(<span style="color:#a6e22e">draw</span>.<span style="color:#a6e22e">ErrEvent</span>).<span style="color:#a6e22e">Err</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">urls</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>, <span style="color:#ae81ff">4</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">imgReady</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">image</span>.<span style="color:#a6e22e">Image</span>, <span style="color:#ae81ff">4</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">imagePuller</span>(<span style="color:#a6e22e">urls</span>, <span style="color:#a6e22e">imgReady</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">urlGen</span>(<span style="color:#a6e22e">urls</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">xdisp</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">x11</span>.<span style="color:#a6e22e">NewWindow</span>()
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Exit</span>(<span style="color:#e6db74">&#34;X11 error: &#34;</span>, <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">screen</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">xdisp</span>.<span style="color:#a6e22e">Screen</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">tileHeight</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">256</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">tileWidth</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">256</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">numTiles</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">screen</span>.<span style="color:#a6e22e">Bounds</span>().<span style="color:#a6e22e">Dx</span>()<span style="color:#f92672">/</span><span style="color:#a6e22e">tileWidth</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">tileStrip</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">image</span>.<span style="color:#a6e22e">NewRGBA</span>(<span style="color:#a6e22e">numTiles</span><span style="color:#f92672">*</span><span style="color:#a6e22e">tileWidth</span>, <span style="color:#a6e22e">tileHeight</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// pre-load the tile strip</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#a6e22e">numTiles</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">iptr</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">imgReady</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">img</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">iptr</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">draw</span>.<span style="color:#a6e22e">Draw</span>(<span style="color:#a6e22e">tileStrip</span>, <span style="color:#a6e22e">image</span>.<span style="color:#a6e22e">Rect</span>(<span style="color:#a6e22e">i</span><span style="color:#f92672">*</span><span style="color:#a6e22e">tileWidth</span>, <span style="color:#ae81ff">0</span>, <span style="color:#a6e22e">i</span><span style="color:#f92672">*</span><span style="color:#a6e22e">tileWidth</span><span style="color:#f92672">+</span><span style="color:#a6e22e">tileWidth</span>, <span style="color:#a6e22e">tileHeight</span>), <span style="color:#a6e22e">img</span>, <span style="color:#a6e22e">image</span>.<span style="color:#a6e22e">ZP</span>)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">topBlack</span> <span style="color:#f92672">:=</span> (<span style="color:#a6e22e">screen</span>.<span style="color:#a6e22e">Bounds</span>().<span style="color:#a6e22e">Dy</span>() <span style="color:#f92672">-</span> <span style="color:#a6e22e">tileHeight</span>) <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">x</span> &lt; <span style="color:#a6e22e">tileWidth</span>; <span style="color:#a6e22e">x</span> <span style="color:#f92672">+=</span> <span style="color:#ae81ff">15</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">then</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Nanoseconds</span>()
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">draw</span>.<span style="color:#a6e22e">Draw</span>(<span style="color:#a6e22e">screen</span>, <span style="color:#a6e22e">image</span>.<span style="color:#a6e22e">Rect</span>(<span style="color:#ae81ff">0</span>, <span style="color:#a6e22e">topBlack</span>, <span style="color:#a6e22e">screen</span>.<span style="color:#a6e22e">Bounds</span>().<span style="color:#a6e22e">Dx</span>(), <span style="color:#a6e22e">topBlack</span><span style="color:#f92672">+</span><span style="color:#a6e22e">tileHeight</span>), <span style="color:#a6e22e">tileStrip</span>, <span style="color:#a6e22e">image</span>.<span style="color:#a6e22e">Pt</span>(<span style="color:#a6e22e">x</span>, <span style="color:#ae81ff">0</span>))
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">now</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Nanoseconds</span>()
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">frameTime</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">now</span> <span style="color:#f92672">-</span> <span style="color:#a6e22e">then</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// a flush is just a write on a channel, so it takes negligible time</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">xdisp</span>.<span style="color:#a6e22e">FlushImage</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">toSleep</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0.1</span><span style="color:#f92672">*</span><span style="color:#ae81ff">1e9</span> <span style="color:#f92672">-</span> <span style="color:#a6e22e">frameTime</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">//      log.Print(&#34;Took &#34;, frameTime, &#34; ns to draw, will sleep &#34;, toSleep, &#34; ns&#34;)</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Sleep</span>(<span style="color:#a6e22e">toSleep</span>)
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">processEvent</span>(<span style="color:#a6e22e">xdisp</span>.<span style="color:#a6e22e">EventChan</span>())
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// shift tiles in tileStrip and put in new last one</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">draw</span>.<span style="color:#a6e22e">Draw</span>(<span style="color:#a6e22e">tileStrip</span>, <span style="color:#a6e22e">image</span>.<span style="color:#a6e22e">Rect</span>(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, (<span style="color:#a6e22e">numTiles</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">*</span><span style="color:#a6e22e">tileWidth</span>, <span style="color:#a6e22e">tileHeight</span>), <span style="color:#a6e22e">tileStrip</span>, <span style="color:#a6e22e">image</span>.<span style="color:#a6e22e">Pt</span>(<span style="color:#a6e22e">tileWidth</span>, <span style="color:#ae81ff">0</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">iptr</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">imgReady</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">img</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">iptr</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">draw</span>.<span style="color:#a6e22e">Draw</span>(<span style="color:#a6e22e">tileStrip</span>, <span style="color:#a6e22e">image</span>.<span style="color:#a6e22e">Rect</span>((<span style="color:#a6e22e">numTiles</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">*</span><span style="color:#a6e22e">tileWidth</span>, <span style="color:#ae81ff">0</span>, <span style="color:#a6e22e">numTiles</span><span style="color:#f92672">*</span><span style="color:#a6e22e">tileWidth</span>, <span style="color:#a6e22e">tileHeight</span>), <span style="color:#a6e22e">img</span>, <span style="color:#a6e22e">image</span>.<span style="color:#a6e22e">ZP</span>)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Some little details to point out:</p>
+<p>Note how I made the goroutine that fetches urls read from a <code>chan string</code> to get its URLs instead of making them up itself. This compartmentalizes the logic, and has nothing to do with parallelism. A good practice in Go is to use channels to improve clarity, not only as part of a scheme to increase parallelism. Your goal is to express the intrinsic &ldquo;this hands to this&rdquo; nature of your program, and if that results in a speedup with multiple cores, fine. If it <em>just</em> results in clearer code, even better!</p>
+<p>The imgReady channel is buffered, 4 deep. That means I&rsquo;ll have 4 images queued up and ready at all times. When the head is popped, there are 3 left. If each tile took 1 second to scroll by, then the maximum delay for any one fetch would be 3 seconds, and the fetches should average under one second. For this little app, it&rsquo;s over thinking it; but the same analysis would hold for other asynchronous producer/consumer systems of this type.</p>
+<p>The images themselves are not sent through the channel, only pointers to them. This is to reduce the amount of copying that the runtime has to do. For this application the difference would probably be almost undetectable, just a minor increase in CPU time (the dominant user of CPU time is the draw.Draw which moves the strip across the screen). But it seemed like a perfect place to be sending pointers instead of the objects themselves; in Go we share memory by communicating, not communicate by sharing. But a good compromise is where one goroutine says to the other &ldquo;I&rsquo;m done with the thing we can both access that is at the end of this pointer, you take it&rdquo;.</p>
+<p>The animation in this beast is definitely not the smoothest and most beautiful. The way exp/draw/x11 puts stuff on the screen is pretty costly, and it is too far removed from the X server itself to be able to synchronize updates and avoid flashing artifacts. Remember that the &ldquo;exp&rdquo; in exp/draw/x11 means &ldquo;experimental&rdquo; and it probably won&rsquo;t stay around for the long haul. Perhaps linking against an OpenGL library using cgo would let me make the animation smoother. Perhaps I&rsquo;ll look into that one day&hellip;</p>
+<p>Take a look at that unassuming processEvents hidden down in the middle of the inner loop. It is important to get things to close down nicely, and even to keep your window running without blocking on unhanded events. Without it, if you close the window, the system keeps fetching and updating the in-memory copy of the screen image. Every time through, processEvents empties the event channel, ignoring stuff it doesn&rsquo;t care about. This is important, because if the event channels fill up, the X11 window hangs because the sends to the event channel are blocking (see $GOROOT/src/pkg/exp/draw/x11/conn.go, search for eventc). Even if you have no UI, you still need to empty that sucker, because just moving the mouse over the window creates events. (I can&rsquo;t reproduce the theoretical hang I&rsquo;m talking about now, so I could be wrong on this part. But empty the channel, just to be safe.)</p>
+<p><strong>Update:</strong> <a href="http://nf.id.au/">Andrew</a> tells me that not bailing early is non-idiomatic (see imagePuller, &ldquo;if found&rdquo;) and results in more indents than necessary. I tend to agree, but obviously I&rsquo;m not quite yet in the habit of doing things the Go way. Thanks for the feedback, Andrew.</p>
+<p>PS: The starting location is Lausanne, my beautiful city. The x++ causes it to fly due east from Lausanne. If you wait until you get to 180 degrees east, it will likely fail, because I didn&rsquo;t handle global wraparound right. :)</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+
+<ul class="share-buttons">
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Using a channel as a queue on linkedin"
+            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.nella.org%2f2011%2f01%2f03%2fusing-a-channel-as-a-queue%2f&amp;title=Using%20a%20channel%20as%20a%20queue&amp;summary=Using%20a%20channel%20as%20a%20queue&amp;source=https%3a%2f%2fblog.nella.org%2f2011%2f01%2f03%2fusing-a-channel-as-a-queue%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Using a channel as a queue on ycombinator"
+            href="https://news.ycombinator.com/submitlink?t=Using%20a%20channel%20as%20a%20queue&u=https%3a%2f%2fblog.nella.org%2f2011%2f01%2f03%2fusing-a-channel-as-a-queue%2f">
+            <svg version="1.1" xml:space="preserve" width="30px" height="30px" viewBox="0 0 512 512" fill="currentColor"
+                xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
+                <path
+                    d="M449.446 0C483.971 0 512 28.03 512 62.554L512 449.446C512 483.97 483.97 512 449.446 512L62.554 512C28.03 512 0 483.97 0 449.446L0 62.554C0 28.03 28.029 0 62.554 0L449.446 0ZM183.8767 87.9921H121.8427L230.6673 292.4508V424.0079H281.3328V292.4508L390.1575 87.9921H328.1233L256 238.2489z" />
+            </svg>
+        </a>
+    </li>
+</ul>
+
+  </footer>
+</article>
+    </main>
+    
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

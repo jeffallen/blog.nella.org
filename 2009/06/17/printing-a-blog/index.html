@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Printing a Blog | jra&#39;s thoughts</title>
+<meta name="keywords" content="">
+<meta name="description" content="I got interested in applying my new XSLT wizardry to the task of printing an entire blog. Like making every post into a big PDF and sending it off to a print-on-demand service. Digital backups = bad. Paper backups = good.
+I thought it would be easy, just do &ldquo;Wordpress export&rdquo;, then write the XSLT to turn the export XML file into FO, and process into PDF. Well, it is easy, in principle. But in practice it&rsquo;s not.">
+<meta name="author" content="jra">
+<link rel="canonical" href="https://blog.nella.org/2009/06/17/printing-a-blog/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.3beea2776320e39a6c8d0589cd10cf4cbbbe3ca9b6f0363cfeef1417ed39a195.css" integrity="sha256-O&#43;6id2Mg45psjQWJzRDPTLu&#43;PKm28DY8/u8UF&#43;05oZU=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://blog.nella.org/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://blog.nella.org/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://blog.nella.org/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://blog.nella.org/apple-touch-icon.png">
+<link rel="mask-icon" href="https://blog.nella.org/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://blog.nella.org/2009/06/17/printing-a-blog/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend&display=swap" rel="stylesheet">
+<meta property="og:url" content="https://blog.nella.org/2009/06/17/printing-a-blog/">
+  <meta property="og:site_name" content="jra&#39;s thoughts">
+  <meta property="og:title" content="Printing a Blog">
+  <meta property="og:description" content="I got interested in applying my new XSLT wizardry to the task of printing an entire blog. Like making every post into a big PDF and sending it off to a print-on-demand service. Digital backups = bad. Paper backups = good.
+I thought it would be easy, just do “Wordpress export”, then write the XSLT to turn the export XML file into FO, and process into PDF. Well, it is easy, in principle. But in practice it’s not.">
+  <meta property="og:locale" content="en-US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2009-06-17T10:44:27+00:00">
+    <meta property="article:modified_time" content="2009-06-17T10:44:27+00:00">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Printing a Blog">
+<meta name="twitter:description" content="I got interested in applying my new XSLT wizardry to the task of printing an entire blog. Like making every post into a big PDF and sending it off to a print-on-demand service. Digital backups = bad. Paper backups = good.
+I thought it would be easy, just do &ldquo;Wordpress export&rdquo;, then write the XSLT to turn the export XML file into FO, and process into PDF. Well, it is easy, in principle. But in practice it&rsquo;s not.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://blog.nella.org/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Printing a Blog",
+      "item": "https://blog.nella.org/2009/06/17/printing-a-blog/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Printing a Blog",
+  "name": "Printing a Blog",
+  "description": "I got interested in applying my new XSLT wizardry to the task of printing an entire blog. Like making every post into a big PDF and sending it off to a print-on-demand service. Digital backups = bad. Paper backups = good.\nI thought it would be easy, just do \u0026ldquo;Wordpress export\u0026rdquo;, then write the XSLT to turn the export XML file into FO, and process into PDF. Well, it is easy, in principle. But in practice it\u0026rsquo;s not.\n",
+  "keywords": [
+    
+  ],
+  "articleBody": "I got interested in applying my new XSLT wizardry to the task of printing an entire blog. Like making every post into a big PDF and sending it off to a print-on-demand service. Digital backups = bad. Paper backups = good.\nI thought it would be easy, just do “Wordpress export”, then write the XSLT to turn the export XML file into FO, and process into PDF. Well, it is easy, in principle. But in practice it’s not.\nThe first problem is that posts have HTML in them. Not a lot. It’s almost entirely in-line stuff, like bold and italics. But it’s there, and you have to format it. Which means that you have to get it into the XML document tree so that XSLT can walk the tree and convert the HTML into FO one tag at a time. (By the way, a great resource on how to do the HTML to FO is at IBM developerWorks.)\nBut the problem is that Wordpress exports blog entries using the content:encoded tag, with the stuff inside that tag is a CDATA string. Which means that your XSLT processor gets the chunk of HTML as a string, and not as nodes in the XML tree, which means you can’t process it. But if you pull off the CDATA and send the Wordpress version of the blog posts directly into your XML parser, bad things happen. It’s not valid XHTML, so you can’t process it. Lots and lots of error messages, like 20000 for my blog.\nAnd like that, like a flash of lightening, I finally understood what all the fuss is about XHTML, etc. Data has to start structured so that if you want to process it later, you won’t have to clean it up. Duh.\nThe first step is to hack your Wordpress so that export does not hide the XHTML inside of a CDATA. Here’s the patch:\n*** wp-admin/includes/export.php- 2009-06-16 02:22:19.000000000 -0700 --- wp-admin/includes/export.php 2009-06-17 03:35:16.000000000 -0700 *************** *** 14,24 **** header(\"Content-Disposition: attachment; filename=$filename\"); header('Content-Type: text/xml; charset=' . get_option('blog_charset'), true); ! $where = ''; ! if ( $author and $author != 'all' ) { ! $author_id = (int) $author; ! $where = $wpdb-\u003eprepare(\" WHERE post_author = %d \", $author_id); ! } // grab a snapshot of post IDs, just in case it changes during the export $post_ids = $wpdb-\u003eget_col(\"SELECT ID FROM $wpdb-\u003eposts $where ORDER BY post_date_gmt ASC\"); --- 14,25 ---- header(\"Content-Disposition: attachment; filename=$filename\"); header('Content-Type: text/xml; charset=' . get_option('blog_charset'), true); ! $where = $wpdb-\u003eprepare(\"WHERE post_type != 'revision'\"); ! ! #if ( $author and $author != 'all' ) { ! # $author_id = (int) $author; ! # $where = $wpdb-\u003eprepare(\"WHERE post_author = %d \", $author_id); ! #} // grab a snapshot of post IDs, just in case it changes during the export $post_ids = $wpdb-\u003eget_col(\"SELECT ID FROM $wpdb-\u003eposts $where ORDER BY post_date_gmt ASC\"); *************** *** 160,165 **** --- 161,167 ---- \u003c?php the_generator('export');?\u003e ",
+  "wordCount" : "1123",
+  "inLanguage": "en",
+  "datePublished": "2009-06-17T10:44:27Z",
+  "dateModified": "2009-06-17T10:44:27Z",
+  "author":{
+    "@type": "Person",
+    "name": "jra"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://blog.nella.org/2009/06/17/printing-a-blog/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "jra's thoughts",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://blog.nella.org/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://blog.nella.org/" accesskey="h" title="jra&#39;s thoughts (Alt + H)">jra&#39;s thoughts</a>
+            <div class="logo-switches">
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://blog.nella.org/">Home</a>&nbsp;»&nbsp;<a href="https://blog.nella.org/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      Printing a Blog
+    </h1>
+    <div class="post-meta"><span title='2009-06-17 10:44:27 +0000 +0000'>June 17, 2009</span>&nbsp;·&nbsp;6 min&nbsp;·&nbsp;jra
+
+</div>
+  </header> 
+  <div class="post-content"><p>I got interested in applying my new XSLT wizardry to the task of printing an entire blog. Like making every post into a big PDF and sending it off to a print-on-demand service. Digital backups = bad. Paper backups = good.</p>
+<p>I thought it would be easy, just do &ldquo;Wordpress export&rdquo;, then write the XSLT to turn the export XML file into FO, and process into PDF. Well, it <strong>is</strong> easy, in principle. But in practice it&rsquo;s not.</p>
+<p>The first problem is that posts have HTML in them. Not a lot. It&rsquo;s almost entirely in-line stuff, like <strong>bold</strong> and <em>italics</em>. But it&rsquo;s there, and you have to format it. Which means that you have to get it into the XML document tree so that XSLT can walk the tree and convert the HTML into FO one tag at a time. (By the way, a great resource on how to do the HTML to FO is <a href="http://www.ibm.com/developerworks/library/x-xslfo2app/">at IBM developerWorks</a>.)</p>
+<p>But the problem is that Wordpress exports blog entries using the <a href="content:encoded">content:encoded</a> tag, with the stuff inside that tag is a CDATA string. Which means that your XSLT processor gets the chunk of HTML as a string, and not as nodes in the XML tree, which means you can&rsquo;t process it. But if you pull off the CDATA and send the Wordpress version of the blog posts directly into your XML parser, bad things happen. It&rsquo;s not valid XHTML, so you can&rsquo;t process it. Lots and lots of error messages, like 20000 for my blog.</p>
+<p>And like that, like a flash of lightening, I <strong>finally</strong> understood what all the fuss is about XHTML, etc. Data has to start structured so that if you want to process it later, you won&rsquo;t have to clean it up. Duh.</p>
+<p>The first step is to hack your Wordpress so that export does not hide the XHTML inside of a CDATA. Here&rsquo;s the patch:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">***</span> <span style="color:#a6e22e">wp</span><span style="color:#f92672">-</span><span style="color:#a6e22e">admin</span><span style="color:#f92672">/</span><span style="color:#a6e22e">includes</span><span style="color:#f92672">/</span><span style="color:#a6e22e">export</span><span style="color:#f92672">.</span><span style="color:#a6e22e">php</span><span style="color:#f92672">-</span>       <span style="color:#ae81ff">2009</span><span style="color:#f92672">-</span><span style="color:#ae81ff">06</span><span style="color:#f92672">-</span><span style="color:#ae81ff">16</span> <span style="color:#ae81ff">02</span><span style="color:#f92672">:</span><span style="color:#ae81ff">22</span><span style="color:#f92672">:</span><span style="color:#ae81ff">19.000000000</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">0700</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">---</span> <span style="color:#a6e22e">wp</span><span style="color:#f92672">-</span><span style="color:#a6e22e">admin</span><span style="color:#f92672">/</span><span style="color:#a6e22e">includes</span><span style="color:#f92672">/</span><span style="color:#a6e22e">export</span><span style="color:#f92672">.</span><span style="color:#a6e22e">php</span>        <span style="color:#ae81ff">2009</span><span style="color:#f92672">-</span><span style="color:#ae81ff">06</span><span style="color:#f92672">-</span><span style="color:#ae81ff">17</span> <span style="color:#ae81ff">03</span><span style="color:#f92672">:</span><span style="color:#ae81ff">35</span><span style="color:#f92672">:</span><span style="color:#ae81ff">16.000000000</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">0700</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">***************</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">***</span> <span style="color:#ae81ff">14</span>,<span style="color:#ae81ff">24</span> <span style="color:#f92672">****</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">header</span>(<span style="color:#e6db74">&#34;Content-Disposition: attachment; filename=</span><span style="color:#e6db74">$filename</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">header</span>(<span style="color:#e6db74">&#39;Content-Type: text/xml; charset=&#39;</span> <span style="color:#f92672">.</span> <span style="color:#a6e22e">get_option</span>(<span style="color:#e6db74">&#39;blog_charset&#39;</span>), <span style="color:#66d9ef">true</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">!</span> $where <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">!</span> <span style="color:#66d9ef">if</span> ( $author <span style="color:#66d9ef">and</span> $author <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;all&#39;</span> ) {
+</span></span><span style="display:flex;"><span><span style="color:#f92672">!</span>       $author_id <span style="color:#f92672">=</span> (<span style="color:#a6e22e">int</span>) $author;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">!</span>       $where <span style="color:#f92672">=</span> $wpdb<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">prepare</span>(<span style="color:#e6db74">&#34; WHERE post_author = %d &#34;</span>, $author_id);
+</span></span><span style="display:flex;"><span><span style="color:#f92672">!</span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// grab a snapshot of post IDs, just in case it changes during the export
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  $post_ids <span style="color:#f92672">=</span> $wpdb<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">get_col</span>(<span style="color:#e6db74">&#34;SELECT ID FROM </span><span style="color:#e6db74">$wpdb-&gt;posts</span><span style="color:#e6db74"> </span><span style="color:#e6db74">$where</span><span style="color:#e6db74"> ORDER BY post_date_gmt ASC&#34;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#f92672">---</span> <span style="color:#ae81ff">14</span>,<span style="color:#ae81ff">25</span> <span style="color:#f92672">----</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">header</span>(<span style="color:#e6db74">&#34;Content-Disposition: attachment; filename=</span><span style="color:#e6db74">$filename</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">header</span>(<span style="color:#e6db74">&#39;Content-Type: text/xml; charset=&#39;</span> <span style="color:#f92672">.</span> <span style="color:#a6e22e">get_option</span>(<span style="color:#e6db74">&#39;blog_charset&#39;</span>), <span style="color:#66d9ef">true</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">!</span> $where <span style="color:#f92672">=</span> $wpdb<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">prepare</span>(<span style="color:#e6db74">&#34;WHERE post_type != &#39;revision&#39;&#34;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#f92672">!</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">!</span> <span style="color:#75715e">#if ( $author and $author != &#39;all&#39; ) {
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">!</span> <span style="color:#75715e">#     $author_id = (int) $author;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">!</span> <span style="color:#75715e">#     $where = $wpdb-&gt;prepare(&#34;WHERE post_author = %d &#34;, $author_id);
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">!</span> <span style="color:#75715e">#}
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// grab a snapshot of post IDs, just in case it changes during the export
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  $post_ids <span style="color:#f92672">=</span> $wpdb<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">get_col</span>(<span style="color:#e6db74">&#34;SELECT ID FROM </span><span style="color:#e6db74">$wpdb-&gt;posts</span><span style="color:#e6db74"> </span><span style="color:#e6db74">$where</span><span style="color:#e6db74"> ORDER BY post_date_gmt ASC&#34;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#f92672">***************</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">***</span> <span style="color:#ae81ff">160</span>,<span style="color:#ae81ff">165</span> <span style="color:#f92672">****</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">---</span> <span style="color:#ae81ff">161</span>,<span style="color:#ae81ff">167</span> <span style="color:#f92672">----</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span> <span style="color:#a6e22e">the_generator</span>(<span style="color:#e6db74">&#39;export&#39;</span>);<span style="color:#75715e">?&gt;</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">  &lt;rss version=&#34;2.0&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">        xmlns:content=&#34;http://purl.org/rss/1.0/modules/content/&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">+       xmlns:excerpt=&#34;http://purl.org/rss/1.0/modules/excerpt/&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">        xmlns:wfw=&#34;http://wellformedweb.org/CommentAPI/&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">        xmlns:dc=&#34;http://purl.org/dc/elements/1.1/&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">        xmlns:wp=&#34;http://wordpress.org/export/&lt;?php echo WXR_VERSION; ?&gt;/&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">***************
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">*** 200,206 ****
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">  &lt;guid isPermaLink=&#34;false&#34;&gt;&lt;?php the_guid(); ?&gt;&lt;/guid&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">  &lt;description&gt;&lt;/description&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">! &lt;content:encoded&gt;&lt;?php echo wxr_cdata( apply_filters(&#39;the_content_export&#39;, $post-&gt;post_content) ); ?&gt;&lt;/content:encoded&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">  &lt;excerpt:encoded&gt;&lt;?php echo wxr_cdata( apply_filters(&#39;the_excerpt_export&#39;, $post-&gt;post_excerpt) ); ?&gt;&lt;/excerpt:encoded&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">  &lt;wp:post_id&gt;&lt;?php echo $post-&gt;ID; ?&gt;&lt;/wp:post_id&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">  &lt;wp:post_date&gt;&lt;?php echo $post-&gt;post_date; ?&gt;&lt;/wp:post_date&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">--- 202,208 ----
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">  &lt;guid isPermaLink=&#34;false&#34;&gt;&lt;?php the_guid(); ?&gt;&lt;/guid&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">  &lt;description&gt;&lt;/description&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">! &lt;content:encoded&gt;&lt;?php echo apply_filters(&#39;the_content_export&#39;, $post-&gt;post_content); ?&gt;&lt;/content:encoded&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">  &lt;excerpt:encoded&gt;&lt;?php echo wxr_cdata( apply_filters(&#39;the_excerpt_export&#39;, $post-&gt;post_excerpt) ); ?&gt;&lt;/excerpt:encoded&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">  &lt;wp:post_id&gt;&lt;?php echo $post-&gt;ID; ?&gt;&lt;/wp:post_id&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">  &lt;wp:post_date&gt;&lt;?php echo $post-&gt;post_date; ?&gt;&lt;/wp:post_date&gt;
+</span></span></span></code></pre></div><p>Wow, lots of changes. Why? Here&rsquo;s the rundown:</p>
+<ol>
+<li>You have to filter out all the auto-saves that Wordpress maintains in the database. I was lazy and broke the author filtering when I made my hack. YMMV.</li>
+<li>You have to add some namespaces so that your XML parser does not flip out.</li>
+<li>You have to remove the CDATA thingie.</li>
+</ol>
+<p>Even once you have the XHTML outside the CDATA, there&rsquo;s two more layers of problems, actually. First is that Wordpress has a set of filters it uses to turn the simple input it allows into HTML, by doing stuff like adding the <p>&rsquo;s for you, etc. So you need to get that filter to trigger during your export. To do that, you use the following plugin:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">Plugin Name: XHTML Export
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">Version: 1.0
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">Plugin URI: http://nella.org
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">Description: Insures output is XHTML
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">Author: Jeff R. Allen
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">Author URI: http://nella.org
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">Disclaimer: This Plugin comes with no warranty, expressed or implied
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">*/</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">xhtml_export</span>( $content )
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  $content <span style="color:#f92672">=</span> <span style="color:#a6e22e">apply_filters</span>(<span style="color:#e6db74">&#39;the_content&#39;</span>, $content);
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// there&#39;s another way to do this: see start of the stylesheet from IBM developerWorks
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  $content <span style="color:#f92672">=</span> <span style="color:#a6e22e">str_replace</span>(<span style="color:#e6db74">&#39;&amp;nbsp;&#39;</span>, <span style="color:#e6db74">&#39;&amp;#160;&#39;</span>, $content);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> $content;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">add_filter</span>( <span style="color:#e6db74">&#39;the_excerpt_export&#39;</span>, <span style="color:#e6db74">&#39;xhtml_export&#39;</span> );
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">add_filter</span>( <span style="color:#e6db74">&#39;the_content_export&#39;</span>, <span style="color:#e6db74">&#39;xhtml_export&#39;</span> );
+</span></span><span style="display:flex;"><span><span style="color:#75715e">?&gt;</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><p>Put that into your wp-content/plugins directory, then go to your plugins page and activate it.</p>
+<p>The output of the Wordpress filtering step is XHTML, so if you <strong>never ever</strong> resort to the HTML tab to hack at the HTML yourself, you&rsquo;d be OK. But I do that a lot, and I also imported posts from Movable Type, which wasn&rsquo;t as XHTML-aware back in the day. So I still had a massive mess on my hands. Lots and lots of XML errors.</p>
+<p>Right about this time, in flies <a href="http://tidy.sourceforge.net">HTML Tidy</a> to save the day. It can turn HTML into XHTML pretty reliably. And the <a href="http://wordpress.org/extend/plugins/tidy-up">Tidy-up plugin for Wordpress</a> arranges for Tidy to do its work on each of your posts in turn and makes it super-easy to edit the posts and fix the problems.</p>
+<p>So that&rsquo;s how far I have gotten so far. I have a tidy blog, I have a big file called blog.xml which is valid XML, including all the XHTML children nodes of the <a href="content:encoded">content:encoded</a> node. Now I am hacking away on the XSLT to turn the blog into FO to make a beautiful book. As I&rsquo;m not a designer, that&rsquo;s the part where things fall apart for me. But I&rsquo;m hoping to find a nice design template from Lulu or someone and follow that.</p>
+<p>Also&hellip; Tidy is also useful if you are trying to debug your FO output. Use a Makefile like this so that the error messages you get from FOP will have line numbers you can go look at instead of character offsets into the <strong>one long line</strong> that your XSLT processor emits. Tidy stupidly defaults to non-UTF8, even when you tell it it is reading an XML file, and even when the XML file has the right encoding named. So be sure to use the -utf8 flag. And don&rsquo;t forget the -q flag, which shuts up the stupid advertisement the Tidy developers saw fit to put in their software. <em>(Hello, W3C people? Yeah, we don&rsquo;t care. Shut up. Thanks. okloveyabye.)</em></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>all: view
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>view: blog.pdf
+</span></span><span style="display:flex;"><span>  gnome-open $&lt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>blog.fo: blog.xml rss-to-fop.xslt
+</span></span><span style="display:flex;"><span>  xsltproc --output $@ rss-to-fop.xslt $&lt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>blog.fob: blog.fo
+</span></span><span style="display:flex;"><span>  tidy -utf8 -q -i -xml -o $@ $&lt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>blog.pdf: blog.fob
+</span></span><span style="display:flex;"><span>  fop -fo $&lt; $@
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>clean:
+</span></span><span style="display:flex;"><span>  rm -f blog.fob blog.fo blog.pdf
+</span></span></code></pre></div>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+
+<ul class="share-buttons">
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Printing a Blog on linkedin"
+            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.nella.org%2f2009%2f06%2f17%2fprinting-a-blog%2f&amp;title=Printing%20a%20Blog&amp;summary=Printing%20a%20Blog&amp;source=https%3a%2f%2fblog.nella.org%2f2009%2f06%2f17%2fprinting-a-blog%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Printing a Blog on ycombinator"
+            href="https://news.ycombinator.com/submitlink?t=Printing%20a%20Blog&u=https%3a%2f%2fblog.nella.org%2f2009%2f06%2f17%2fprinting-a-blog%2f">
+            <svg version="1.1" xml:space="preserve" width="30px" height="30px" viewBox="0 0 512 512" fill="currentColor"
+                xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
+                <path
+                    d="M449.446 0C483.971 0 512 28.03 512 62.554L512 449.446C512 483.97 483.97 512 449.446 512L62.554 512C28.03 512 0 483.97 0 449.446L0 62.554C0 28.03 28.029 0 62.554 0L449.446 0ZM183.8767 87.9921H121.8427L230.6673 292.4508V424.0079H281.3328V292.4508L390.1575 87.9921H328.1233L256 238.2489z" />
+            </svg>
+        </a>
+    </li>
+</ul>
+
+  </footer>
+</article>
+    </main>
+    
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

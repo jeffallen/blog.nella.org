@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Google WiFi | jra&#39;s thoughts</title>
+<meta name="keywords" content="">
+<meta name="description" content="Info on Google&rsquo;s proposal to the City of Mountain View to put in a WiFi network is publically available (490K PDF).
+There are some interesting things:
+
+It will be using mesh technology. There will be about 400 mesh nodes, and 3 uplinks to the Internet (which Google says will use fiber, as though the media really matters).
+The system will use a captive portal, requiring you to log in. The username and password will be a Google account (i.e. the same one as Gtalk, Gmail, customized homepage, etc.) The tinfoil-hat crowd will point out that this will allow Google to snoop all your packets and associate them will all of your e-mail and your chat logs.
+The installs will be on city-owned light poles. Parts of Mountain View will not get service immediately because their light poles are owned by PGE and Google and the city have to negotiate with PGE more. Don&rsquo;t hold your breath on this, folks. PGE&rsquo;s probably got some powerline Internet thing it wants to do instead.
+The equipment taps power to the light poles, and as such is unmetered. Google will pay $36 per pole per year for power. That&rsquo;s $0.0041 per hour. If electricity costs the city 4 cents per kilowatt hour, that means the devices use 100 watts of power. Seems like a fair price.
+There is no mention of solar power or battery backup, which means that this system will be useless for disaster response. Also, because the equipment taps the utility power for the lights, it will not be possible to use generator power to fix some portion of the mesh. Finally, if street light circuits were de-prioritized for repair by the power company during an emergency (as seems likely), the Google wifi mesh would come back slower than other networking technologies.
+There is talk of running a VLAN over the network in the future for city services use. It is not going to be in 1.0. The security aspects of having city services data running over a wireless mesh would need to be thought about. I&rsquo;m not saying it&rsquo;s a bad idea, but it&rsquo;s a sizable liability for Google to take on.
+There are grainy, useless pictures of the proposed hardware. No surprise, it looks like commodity stuff. Google&rsquo;s value-add will be in software.
+There is no discussion of how the boxes will get installed. I suspect Google will contract that job out to someone with a fleet of boom trucks. Perhaps they will have Peek do it, who you see around town fixing traffic lights.
+
+This project is significant for more than the normal &ldquo;Telcos Battle Municipal Wifi&rdquo; reason. This is going to be a real mesh network. Mesh networking is one of those urban legends among networking people. Everyone says that they are nifty, but no one has ever seen one work. Perhaps Google will nail this like they have so many other things.">
+<meta name="author" content="jra">
+<link rel="canonical" href="https://blog.nella.org/2005/11/29/google-wifi/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.3beea2776320e39a6c8d0589cd10cf4cbbbe3ca9b6f0363cfeef1417ed39a195.css" integrity="sha256-O&#43;6id2Mg45psjQWJzRDPTLu&#43;PKm28DY8/u8UF&#43;05oZU=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://blog.nella.org/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://blog.nella.org/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://blog.nella.org/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://blog.nella.org/apple-touch-icon.png">
+<link rel="mask-icon" href="https://blog.nella.org/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://blog.nella.org/2005/11/29/google-wifi/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend&display=swap" rel="stylesheet">
+<meta property="og:url" content="https://blog.nella.org/2005/11/29/google-wifi/">
+  <meta property="og:site_name" content="jra&#39;s thoughts">
+  <meta property="og:title" content="Google WiFi">
+  <meta property="og:description" content="Info on Google’s proposal to the City of Mountain View to put in a WiFi network is publically available (490K PDF).
+There are some interesting things:
+It will be using mesh technology. There will be about 400 mesh nodes, and 3 uplinks to the Internet (which Google says will use fiber, as though the media really matters). The system will use a captive portal, requiring you to log in. The username and password will be a Google account (i.e. the same one as Gtalk, Gmail, customized homepage, etc.) The tinfoil-hat crowd will point out that this will allow Google to snoop all your packets and associate them will all of your e-mail and your chat logs. The installs will be on city-owned light poles. Parts of Mountain View will not get service immediately because their light poles are owned by PGE and Google and the city have to negotiate with PGE more. Don’t hold your breath on this, folks. PGE’s probably got some powerline Internet thing it wants to do instead. The equipment taps power to the light poles, and as such is unmetered. Google will pay $36 per pole per year for power. That’s $0.0041 per hour. If electricity costs the city 4 cents per kilowatt hour, that means the devices use 100 watts of power. Seems like a fair price. There is no mention of solar power or battery backup, which means that this system will be useless for disaster response. Also, because the equipment taps the utility power for the lights, it will not be possible to use generator power to fix some portion of the mesh. Finally, if street light circuits were de-prioritized for repair by the power company during an emergency (as seems likely), the Google wifi mesh would come back slower than other networking technologies. There is talk of running a VLAN over the network in the future for city services use. It is not going to be in 1.0. The security aspects of having city services data running over a wireless mesh would need to be thought about. I’m not saying it’s a bad idea, but it’s a sizable liability for Google to take on. There are grainy, useless pictures of the proposed hardware. No surprise, it looks like commodity stuff. Google’s value-add will be in software. There is no discussion of how the boxes will get installed. I suspect Google will contract that job out to someone with a fleet of boom trucks. Perhaps they will have Peek do it, who you see around town fixing traffic lights. This project is significant for more than the normal “Telcos Battle Municipal Wifi” reason. This is going to be a real mesh network. Mesh networking is one of those urban legends among networking people. Everyone says that they are nifty, but no one has ever seen one work. Perhaps Google will nail this like they have so many other things.">
+  <meta property="og:locale" content="en-US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2005-11-29T03:57:16+00:00">
+    <meta property="article:modified_time" content="2005-11-29T03:57:16+00:00">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Google WiFi">
+<meta name="twitter:description" content="Info on Google&rsquo;s proposal to the City of Mountain View to put in a WiFi network is publically available (490K PDF).
+There are some interesting things:
+
+It will be using mesh technology. There will be about 400 mesh nodes, and 3 uplinks to the Internet (which Google says will use fiber, as though the media really matters).
+The system will use a captive portal, requiring you to log in. The username and password will be a Google account (i.e. the same one as Gtalk, Gmail, customized homepage, etc.) The tinfoil-hat crowd will point out that this will allow Google to snoop all your packets and associate them will all of your e-mail and your chat logs.
+The installs will be on city-owned light poles. Parts of Mountain View will not get service immediately because their light poles are owned by PGE and Google and the city have to negotiate with PGE more. Don&rsquo;t hold your breath on this, folks. PGE&rsquo;s probably got some powerline Internet thing it wants to do instead.
+The equipment taps power to the light poles, and as such is unmetered. Google will pay $36 per pole per year for power. That&rsquo;s $0.0041 per hour. If electricity costs the city 4 cents per kilowatt hour, that means the devices use 100 watts of power. Seems like a fair price.
+There is no mention of solar power or battery backup, which means that this system will be useless for disaster response. Also, because the equipment taps the utility power for the lights, it will not be possible to use generator power to fix some portion of the mesh. Finally, if street light circuits were de-prioritized for repair by the power company during an emergency (as seems likely), the Google wifi mesh would come back slower than other networking technologies.
+There is talk of running a VLAN over the network in the future for city services use. It is not going to be in 1.0. The security aspects of having city services data running over a wireless mesh would need to be thought about. I&rsquo;m not saying it&rsquo;s a bad idea, but it&rsquo;s a sizable liability for Google to take on.
+There are grainy, useless pictures of the proposed hardware. No surprise, it looks like commodity stuff. Google&rsquo;s value-add will be in software.
+There is no discussion of how the boxes will get installed. I suspect Google will contract that job out to someone with a fleet of boom trucks. Perhaps they will have Peek do it, who you see around town fixing traffic lights.
+
+This project is significant for more than the normal &ldquo;Telcos Battle Municipal Wifi&rdquo; reason. This is going to be a real mesh network. Mesh networking is one of those urban legends among networking people. Everyone says that they are nifty, but no one has ever seen one work. Perhaps Google will nail this like they have so many other things.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://blog.nella.org/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Google WiFi",
+      "item": "https://blog.nella.org/2005/11/29/google-wifi/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Google WiFi",
+  "name": "Google WiFi",
+  "description": "Info on Google\u0026rsquo;s proposal to the City of Mountain View to put in a WiFi network is publically available (490K PDF).\nThere are some interesting things:\nIt will be using mesh technology. There will be about 400 mesh nodes, and 3 uplinks to the Internet (which Google says will use fiber, as though the media really matters). The system will use a captive portal, requiring you to log in. The username and password will be a Google account (i.e. the same one as Gtalk, Gmail, customized homepage, etc.) The tinfoil-hat crowd will point out that this will allow Google to snoop all your packets and associate them will all of your e-mail and your chat logs. The installs will be on city-owned light poles. Parts of Mountain View will not get service immediately because their light poles are owned by PGE and Google and the city have to negotiate with PGE more. Don\u0026rsquo;t hold your breath on this, folks. PGE\u0026rsquo;s probably got some powerline Internet thing it wants to do instead. The equipment taps power to the light poles, and as such is unmetered. Google will pay $36 per pole per year for power. That\u0026rsquo;s $0.0041 per hour. If electricity costs the city 4 cents per kilowatt hour, that means the devices use 100 watts of power. Seems like a fair price. There is no mention of solar power or battery backup, which means that this system will be useless for disaster response. Also, because the equipment taps the utility power for the lights, it will not be possible to use generator power to fix some portion of the mesh. Finally, if street light circuits were de-prioritized for repair by the power company during an emergency (as seems likely), the Google wifi mesh would come back slower than other networking technologies. There is talk of running a VLAN over the network in the future for city services use. It is not going to be in 1.0. The security aspects of having city services data running over a wireless mesh would need to be thought about. I\u0026rsquo;m not saying it\u0026rsquo;s a bad idea, but it\u0026rsquo;s a sizable liability for Google to take on. There are grainy, useless pictures of the proposed hardware. No surprise, it looks like commodity stuff. Google\u0026rsquo;s value-add will be in software. There is no discussion of how the boxes will get installed. I suspect Google will contract that job out to someone with a fleet of boom trucks. Perhaps they will have Peek do it, who you see around town fixing traffic lights. This project is significant for more than the normal \u0026ldquo;Telcos Battle Municipal Wifi\u0026rdquo; reason. This is going to be a real mesh network. Mesh networking is one of those urban legends among networking people. Everyone says that they are nifty, but no one has ever seen one work. Perhaps Google will nail this like they have so many other things.\n",
+  "keywords": [
+    
+  ],
+  "articleBody": "Info on Google’s proposal to the City of Mountain View to put in a WiFi network is publically available (490K PDF).\nThere are some interesting things:\nIt will be using mesh technology. There will be about 400 mesh nodes, and 3 uplinks to the Internet (which Google says will use fiber, as though the media really matters). The system will use a captive portal, requiring you to log in. The username and password will be a Google account (i.e. the same one as Gtalk, Gmail, customized homepage, etc.) The tinfoil-hat crowd will point out that this will allow Google to snoop all your packets and associate them will all of your e-mail and your chat logs. The installs will be on city-owned light poles. Parts of Mountain View will not get service immediately because their light poles are owned by PGE and Google and the city have to negotiate with PGE more. Don’t hold your breath on this, folks. PGE’s probably got some powerline Internet thing it wants to do instead. The equipment taps power to the light poles, and as such is unmetered. Google will pay $36 per pole per year for power. That’s $0.0041 per hour. If electricity costs the city 4 cents per kilowatt hour, that means the devices use 100 watts of power. Seems like a fair price. There is no mention of solar power or battery backup, which means that this system will be useless for disaster response. Also, because the equipment taps the utility power for the lights, it will not be possible to use generator power to fix some portion of the mesh. Finally, if street light circuits were de-prioritized for repair by the power company during an emergency (as seems likely), the Google wifi mesh would come back slower than other networking technologies. There is talk of running a VLAN over the network in the future for city services use. It is not going to be in 1.0. The security aspects of having city services data running over a wireless mesh would need to be thought about. I’m not saying it’s a bad idea, but it’s a sizable liability for Google to take on. There are grainy, useless pictures of the proposed hardware. No surprise, it looks like commodity stuff. Google’s value-add will be in software. There is no discussion of how the boxes will get installed. I suspect Google will contract that job out to someone with a fleet of boom trucks. Perhaps they will have Peek do it, who you see around town fixing traffic lights. This project is significant for more than the normal “Telcos Battle Municipal Wifi” reason. This is going to be a real mesh network. Mesh networking is one of those urban legends among networking people. Everyone says that they are nifty, but no one has ever seen one work. Perhaps Google will nail this like they have so many other things.\nOn a related note, there’s a site called wifi.google.com. It redirects you to the Google personalized homepage. But by searching for all the links Google knows about to wifi.google.com I found more info. In particular, I found this FAQ about something called Google Secure Access (BETA). When you try to download it, you get a page saying they have turned off downloads. But you can still download it via one of the links the web search above turned up. After I installed it, I took a look at the about box. It says, “Tunc tua res agitur, Paries cum proximus ardet.” Which is Greek (well, ok, Latin) to me. (Someone on the net translated: “It is your problem when your neighbor’s wall is burning.”)\nNow, Google says clearly that this won’t work for me on my home Internet connection. I need to go to one of their hotspots to see it working. But that doesn’t stop me from playing, does it?\nWhen you tell it to connect, it tries to open a PPTP connection to 66.28.250.33. But who owns that IP address? The reverse DNS says “plsf2internet.putnamlovellnbf.com”. Is that a mistake? What the heck is Putnam Lovell NBF, an investment bank, doing running a PPTP server for Google to connect to?\nUpdate: As of Jan 2007, vpn.google.com points at addresses in the NET-64-9-224-0-1 block, which is named GOOGLE-WIFI-MV. Hmm, no more Putnam Lovell NBF.\nLater, after timing out or something, it popped up a normal Windows VPN signin box. I typed my Google username and password, and it started to try to connect to vpn.google.com. I did a name lookup, and got these back: 66.28.250.23, 66.28.250.25, 66.28.250.26, 66.28.250.27. Those are from the same IP address range, so they are also owned by Putnam Lovell NBF. Why is a Google DNS name pointing at addresses owned by someone else? (And why did no one else notice this but me? This story broke back in September, and 1000 people posted ways to make Mac and Linux PPTP implementations work with the same servers.)\nMy guess is this is Google’s answer to the criticism that them hosting a VPN server makes it possible for them to snoop all your data. They set up some kind of escrow agreement with Putnam Lovell so that they can provide this service, but have a trusted intermediary in the loop. But the interesting thing is that it cuts Google off from doing anything clever in their network to implement PPTP.\n",
+  "wordCount" : "899",
+  "inLanguage": "en",
+  "datePublished": "2005-11-29T03:57:16Z",
+  "dateModified": "2005-11-29T03:57:16Z",
+  "author":{
+    "@type": "Person",
+    "name": "jra"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://blog.nella.org/2005/11/29/google-wifi/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "jra's thoughts",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://blog.nella.org/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://blog.nella.org/" accesskey="h" title="jra&#39;s thoughts (Alt + H)">jra&#39;s thoughts</a>
+            <div class="logo-switches">
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://blog.nella.org/">Home</a>&nbsp;»&nbsp;<a href="https://blog.nella.org/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      Google WiFi
+    </h1>
+    <div class="post-meta"><span title='2005-11-29 03:57:16 +0000 +0000'>November 29, 2005</span>&nbsp;·&nbsp;5 min&nbsp;·&nbsp;jra
+
+</div>
+  </header> 
+  <div class="post-content"><p>Info on Google&rsquo;s proposal to the City of Mountain View to put in a WiFi network is <a href="http://www.siliconbeat.com/entries/google-mv-wifi.pdf">publically available</a> (490K PDF).</p>
+<p>There are some interesting things:</p>
+<ul>
+<li>It will be using mesh technology. There will be about 400 mesh nodes, and 3 uplinks to the Internet (which Google says will use fiber, as though the media really matters).</li>
+<li>The system will use a captive portal, requiring you to log in. The username and password will be a Google account (i.e. the same one as Gtalk, Gmail, customized homepage, etc.) The tinfoil-hat crowd will point out that this will allow Google to snoop all your packets and associate them will all of your e-mail and your chat logs.</li>
+<li>The installs will be on city-owned light poles. Parts of Mountain View will not get service immediately because their light poles are owned by PGE and Google and the city have to negotiate with PGE more. Don&rsquo;t hold your breath on this, folks. PGE&rsquo;s probably got some powerline Internet thing it wants to do instead.</li>
+<li>The equipment taps power to the light poles, and as such is unmetered. Google will pay $36 per pole per year for power. That&rsquo;s $0.0041 per hour. If electricity costs the city 4 cents per kilowatt hour, that means the devices use 100 watts of power. Seems like a fair price.</li>
+<li>There is no mention of solar power or battery backup, which means that this system will be useless for disaster response. Also, because the equipment taps the utility power for the lights, it will not be possible to use generator power to fix some portion of the mesh. Finally, if street light circuits were de-prioritized for repair by the power company during an emergency (as seems likely), the Google wifi mesh would come back slower than other networking technologies.</li>
+<li>There is talk of running a VLAN over the network in the future for city services use. It is not going to be in 1.0. The security aspects of having city services data running over a wireless mesh would need to be thought about. I&rsquo;m not saying it&rsquo;s a bad idea, but it&rsquo;s a sizable liability for Google to take on.</li>
+<li>There are grainy, useless pictures of the proposed hardware. No surprise, it looks like commodity stuff. Google&rsquo;s value-add will be in software.</li>
+<li>There is no discussion of how the boxes will get installed. I suspect Google will contract that job out to someone with a fleet of boom trucks. Perhaps they will have <a href="http://www.peek-traffic.co.uk/">Peek</a> do it, who you see around town fixing traffic lights.</li>
+</ul>
+<p>This project is significant for more than the normal <a href="http://www.chron.com/disp/story.mpl/business/3469077.html">&ldquo;Telcos Battle Municipal Wifi&rdquo;</a> reason. This is going to be a real mesh network. Mesh networking is one of those urban legends among networking people. Everyone says that they are nifty, but no one has ever seen one work. Perhaps Google will nail this like they have so many other things.</p>
+<p>On a related note, there&rsquo;s a site called wifi.google.com. It redirects you to the Google personalized homepage. But by searching for <a href="http://www.google.com/search?q=site%3Awifi.google.com&amp;sourceid=mozilla-search&amp;start=0&amp;start=0&amp;ie=utf-8&amp;oe=utf-8&amp;client=firefox-a&amp;rls=org.mozilla:en-US:official">all the links Google knows about to wifi.google.com</a> I found more info. In particular, I found <a href="https://wifi.google.com/faq.html">this FAQ</a> about something called Google Secure Access (BETA). When you try to download it, you get a page saying they have turned off downloads. But you can still download it via <a href="http://wifi.google.com/RedirToGoogleSecureAccessInstaller.html">one of the links</a> the web search above turned up. After I installed it, I took a look at the about box. It says, &ldquo;Tunc tua res agitur, Paries cum proximus ardet.&rdquo; Which is Greek (well, ok, Latin) to me. (Someone on the net translated: &ldquo;It is your problem when your neighbor&rsquo;s wall is burning.&rdquo;)</p>
+<p>Now, Google says clearly that this won&rsquo;t work for me on my home Internet connection. I need to go to one of their hotspots to see it working. But that doesn&rsquo;t stop me from playing, does it?</p>
+<p>When you tell it to connect, it tries to open a PPTP connection to 66.28.250.33. But <a href="http://www.samspade.org/whois/66.28.250.33">who owns</a> that IP address? The reverse DNS says &ldquo;plsf2internet.putnamlovellnbf.com&rdquo;. Is that a mistake? What the heck is Putnam Lovell NBF, an investment bank, doing running a PPTP server for Google to connect to?</p>
+<p><strong>Update:</strong> As of Jan 2007, vpn.google.com points at addresses in the <a href="http://samspade.org/whois/64.9.224.69">NET-64-9-224-0-1</a> block, which is named GOOGLE-WIFI-MV. Hmm, no more Putnam Lovell NBF.</p>
+<p>Later, after timing out or something, it popped up a normal Windows VPN signin box. I typed my Google username and password, and it started to try to connect to vpn.google.com. I did a name lookup, and got these back: 66.28.250.23, 66.28.250.25, 66.28.250.26, 66.28.250.27. Those are from the same IP address range, so they are also owned by Putnam Lovell NBF. Why is a Google DNS name pointing at addresses owned by someone else? (And why did no one else notice this but me? This story broke back in September, and 1000 people posted ways to make Mac and Linux PPTP implementations work with the same servers.)</p>
+<p>My guess is this is Google&rsquo;s answer to the criticism that them hosting a VPN server makes it possible for them to snoop all your data. They set up some kind of escrow agreement with Putnam Lovell so that they can provide this service, but have a trusted intermediary in the loop. But the interesting thing is that it cuts Google off from doing anything clever in their network to implement PPTP.</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+
+<ul class="share-buttons">
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Google WiFi on linkedin"
+            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.nella.org%2f2005%2f11%2f29%2fgoogle-wifi%2f&amp;title=Google%20WiFi&amp;summary=Google%20WiFi&amp;source=https%3a%2f%2fblog.nella.org%2f2005%2f11%2f29%2fgoogle-wifi%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Google WiFi on ycombinator"
+            href="https://news.ycombinator.com/submitlink?t=Google%20WiFi&u=https%3a%2f%2fblog.nella.org%2f2005%2f11%2f29%2fgoogle-wifi%2f">
+            <svg version="1.1" xml:space="preserve" width="30px" height="30px" viewBox="0 0 512 512" fill="currentColor"
+                xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
+                <path
+                    d="M449.446 0C483.971 0 512 28.03 512 62.554L512 449.446C512 483.97 483.97 512 449.446 512L62.554 512C28.03 512 0 483.97 0 449.446L0 62.554C0 28.03 28.029 0 62.554 0L449.446 0ZM183.8767 87.9921H121.8427L230.6673 292.4508V424.0079H281.3328V292.4508L390.1575 87.9921H328.1233L256 238.2489z" />
+            </svg>
+        </a>
+    </li>
+</ul>
+
+  </footer>
+</article>
+    </main>
+    
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

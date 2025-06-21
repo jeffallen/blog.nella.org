@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Geeking | jra&#39;s thoughts</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="canonical" href="https://blog.nella.org/category/geeking/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.3beea2776320e39a6c8d0589cd10cf4cbbbe3ca9b6f0363cfeef1417ed39a195.css" integrity="sha256-O&#43;6id2Mg45psjQWJzRDPTLu&#43;PKm28DY8/u8UF&#43;05oZU=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://blog.nella.org/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://blog.nella.org/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://blog.nella.org/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://blog.nella.org/apple-touch-icon.png">
+<link rel="mask-icon" href="https://blog.nella.org/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" type="application/rss+xml" href="https://blog.nella.org/category/geeking/feed.xml">
+<link rel="alternate" hreflang="en" href="https://blog.nella.org/category/geeking/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend&display=swap" rel="stylesheet">
+<meta property="og:url" content="https://blog.nella.org/category/geeking/">
+  <meta property="og:site_name" content="jra&#39;s thoughts">
+  <meta property="og:title" content="Geeking">
+  <meta property="og:locale" content="en-US">
+  <meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Geeking">
+<meta name="twitter:description" content="">
+
+</head>
+
+<body class="list" id="top">
+<script>
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://blog.nella.org/" accesskey="h" title="jra&#39;s thoughts (Alt + H)">jra&#39;s thoughts</a>
+            <div class="logo-switches">
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main"> 
+<header class="page-header"><div class="breadcrumbs"><a href="https://blog.nella.org/">Home</a>&nbsp;»&nbsp;<a href="https://blog.nella.org/category/">Category</a></div>
+  <h1>
+    Geeking
+  </h1>
+</header>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Google Video hacking
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>I decided to look into Google Video a bit, now that they are selling stuff.
+First things first, I looked into how the Google Video Player works for free files. (I’m a cheapskate.) It’s Google Engineering at it’s finest; the simplest thing that will work, and no simpler. When you click to see a movie in the Google Video Player, you download a tiny text file (with file extension GVP). That causes the Google Video Player to launch. It reads the file and starts to download the video via HTTP, just like the Flash player is doing in the web browser. The GVP file is just a text file, so you can open it and find the URL. If you fetch the URL yourself with wget (i.e. no cookies, no javascript, etc) you get a big binary stream. The content-type claims that it is “video/x-msvideo”, but it does not play in Windows Media Player.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2006-01-10 20:56:18 +0000 +0000'>January 10, 2006</span>&nbsp;·&nbsp;5 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Google Video hacking" href="https://blog.nella.org/2006/01/10/google-video-hacking/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">GPS satellites are spy satellites too
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>I ran across this intriguing sentence in a GAO report on Los Alamos National Labs:
+LANL fabricates suites of sensors for Global Positioning System satellites that are used to monitor nuclear detonations.
+Interesting. Wonder what else GPS satellites do…
+</p>
+  </div>
+  <footer class="entry-footer"><span title='2006-01-03 14:21:47 +0000 +0000'>January 3, 2006</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to GPS satellites are spy satellites too" href="https://blog.nella.org/2006/01/03/gps-satellites-are-spy-satellites-too/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Feature wish
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>I want a Firefox extension that lets me select some text on a webpage, right click, and get that HTML in a box to edit. Once I edit it, I want the extension to compute the diff between my edited copy and the copy in the web page, find an address to send it to the author of the page via e-mail, and send the diff to them. To find the e-mail address, it will look in the HTML for a hint via some standard HTML or some semi-standard HTML dealie that it defines itself. If it doesn’t find the e-mail address that way, then maybe something like trying to send e-mail to the technical contact for the domain name, according to Whois. Or maybe just “webmaster@$domain”.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2005-12-08 03:28:05 +0000 +0000'>December 8, 2005</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Feature wish" href="https://blog.nella.org/2005/12/08/feature-wish/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Google WiFi
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Info on Google’s proposal to the City of Mountain View to put in a WiFi network is publically available (490K PDF).
+There are some interesting things:
+It will be using mesh technology. There will be about 400 mesh nodes, and 3 uplinks to the Internet (which Google says will use fiber, as though the media really matters). The system will use a captive portal, requiring you to log in. The username and password will be a Google account (i.e. the same one as Gtalk, Gmail, customized homepage, etc.) The tinfoil-hat crowd will point out that this will allow Google to snoop all your packets and associate them will all of your e-mail and your chat logs. The installs will be on city-owned light poles. Parts of Mountain View will not get service immediately because their light poles are owned by PGE and Google and the city have to negotiate with PGE more. Don’t hold your breath on this, folks. PGE’s probably got some powerline Internet thing it wants to do instead. The equipment taps power to the light poles, and as such is unmetered. Google will pay $36 per pole per year for power. That’s $0.0041 per hour. If electricity costs the city 4 cents per kilowatt hour, that means the devices use 100 watts of power. Seems like a fair price. There is no mention of solar power or battery backup, which means that this system will be useless for disaster response. Also, because the equipment taps the utility power for the lights, it will not be possible to use generator power to fix some portion of the mesh. Finally, if street light circuits were de-prioritized for repair by the power company during an emergency (as seems likely), the Google wifi mesh would come back slower than other networking technologies. There is talk of running a VLAN over the network in the future for city services use. It is not going to be in 1.0. The security aspects of having city services data running over a wireless mesh would need to be thought about. I’m not saying it’s a bad idea, but it’s a sizable liability for Google to take on. There are grainy, useless pictures of the proposed hardware. No surprise, it looks like commodity stuff. Google’s value-add will be in software. There is no discussion of how the boxes will get installed. I suspect Google will contract that job out to someone with a fleet of boom trucks. Perhaps they will have Peek do it, who you see around town fixing traffic lights. This project is significant for more than the normal “Telcos Battle Municipal Wifi” reason. This is going to be a real mesh network. Mesh networking is one of those urban legends among networking people. Everyone says that they are nifty, but no one has ever seen one work. Perhaps Google will nail this like they have so many other things.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2005-11-29 03:57:16 +0000 +0000'>November 29, 2005</span>&nbsp;·&nbsp;5 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Google WiFi" href="https://blog.nella.org/2005/11/29/google-wifi/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Google Local for Mobiles
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>If you have a phone that can download Java games, and you know how to make it go visit URL’s outside the walled garden your provider desperately wants to keep you locked inside, you can go to this URL: http://google.com/glm to get Google Local for Mobiles.
+It will let you do everything that Google Maps can do on your phone. including satellite images! With my tiny screen, it’s probably mostly a geewhiz thing. With a hiptop it would be pretty neat, I bet.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2005-11-27 01:58:57 +0000 +0000'>November 27, 2005</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Google Local for Mobiles" href="https://blog.nella.org/2005/11/27/google-local-for-mobiles/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">It&#39;s a small Internet
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>An ex-coworker made an interesting survey of HTTP headers. During which he found my own comments on apparent typos in HTTP headers.
+Hi Andrew! It’s good to see you are still hacking!
+</p>
+  </div>
+  <footer class="entry-footer"><span title='2005-08-15 11:10:40 +0000 +0000'>August 15, 2005</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to It&#39;s a small Internet" href="https://blog.nella.org/2005/08/15/its-a-small-internet/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Apple&#39;s new mouse
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Apple released the Mighty Mouse today. Leave it to Apple to “innovate” themselves into making a zero button, four button mouse. Yes, they added some space-age alien technology to sense your “clicking” through the shell so that there would BE NO BUTTONS.
+Because, seriously, the fact that there are buttons on my mouse is the BIGGEST SINGLE PROBLEM in my daily digital life.
+Idiots.
+The entire product is captured nicely in this quote (from here):
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2005-08-02 17:02:50 +0000 +0000'>August 2, 2005</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Apple&#39;s new mouse" href="https://blog.nella.org/2005/08/02/apples-new-mouse/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">No Commenting?
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Some people have asked why I do not allow comments on my blog. The answer is that this is my space, and I want total control of what’s here. Fighting comment spam is a losing proposition, and I don’t want to be involved in it.
+I have trackbacks turned on, so if you are using a blogging system that supports them, anything you say on your blog that links to my blog will be crosslinked between the two blogs (and i will see it, just as if you posted a comment to my blog). If you don’t have a blog and feel like you are muzzled by my decision to not have comments, I have a simple solution for you: get a blog, and post to it. (If you don’t know how to get your own blog, ask me and I’ll help you.)
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2005-03-25 15:36:48 +0000 +0000'>March 25, 2005</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to No Commenting?" href="https://blog.nella.org/2005/03/25/no-commenting/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Small world!
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>A coworker of mine from when I was at Tellme has started a new blog to show and tell what he’s learning and thinking about network configuration management. In his most recent posting it turns out he’s found a paper written by a friend of mine from college! What a small world!
+This problem is an important one. Automated system administration is a well accepted concept at this point. You simply cannot run 10,000 node clusters without extensive automation, and there are a lot of clusters that size these days (not to mention service providers who use over 10,000 computers to implement their service). Networks were growing in absolute size due to the pervasive nature of the computers they connect now. But as if that wasn’t enough to demand automation, network admins are adding a myriad of devices on top of (and embedded within) their networks, all of which have configurations that depend on the overall configuration. Over and over again, we see in outages in production networks precipitated by seemingly unrelated changes in far-off parts of the network. Assuming you can predict the dependencies and write some software to address them, automated network configuration management should be able to nip some of these outages in the bud.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2005-03-11 11:13:20 +0000 +0000'>March 11, 2005</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Small world!" href="https://blog.nella.org/2005/03/11/small-world/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Jabber
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>I’m on Jabber as jra@nella.org. I’m running my own server, and supposedly other Jabber servers are supposed to be able to contact mine and send me messages. I’m not convinced it’s really working because my test case didn’t seem to do what I expected. So if you use Jabber and want to talk to me, give it a try.
+The Jabber guys ship their stuff configured to talk to MySQL instead of to BerkeleyDB. Doesn’t make sense, since the average Fedora Core install has the right BerkeleyDB, but doesn’t have MySQL. Dumb, dumb, dumb. We need to lower the bar to non-commercial chat systems, not make it harder.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2005-01-20 00:40:53 +0000 +0000'>January 20, 2005</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Jabber" href="https://blog.nella.org/2005/01/20/jabber/"></a>
+</article>
+<footer class="page-footer">
+  <nav class="pagination">
+    <a class="prev" href="https://blog.nella.org/category/geeking/page/9/">
+      «&nbsp;Prev&nbsp;
+    </a>
+    <a class="next" href="https://blog.nella.org/category/geeking/page/11/">Next&nbsp;&nbsp;»
+    </a>
+  </nav>
+</footer>
+    </main>
+    
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+</body>
+
+</html>

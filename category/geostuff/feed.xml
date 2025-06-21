@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Geostuff on jra&#39;s thoughts</title>
+    <link>https://blog.nella.org/category/geostuff/</link>
+    <description>Recent content in Geostuff on jra&#39;s thoughts</description>
+    <generator>Hugo -- 0.147.8</generator>
+    <language>en-US</language>
+    <lastBuildDate>Tue, 18 Mar 2014 23:36:54 +0000</lastBuildDate>
+    <atom:link href="https://blog.nella.org/category/geostuff/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>What fits into Russia?</title>
+      <link>https://blog.nella.org/2014/03/18/what-fits-into-russia/</link>
+      <pubDate>Tue, 18 Mar 2014 23:36:54 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=1041</guid> 
+      <description>&lt;p&gt;&lt;div style=&#34;position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;&#34;&gt;
+      &lt;iframe allow=&#34;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen&#34; loading=&#34;eager&#34; referrerpolicy=&#34;strict-origin-when-cross-origin&#34; src=&#34;https://www.youtube.com/embed/1Zm6HzN5YVI?autoplay=0&amp;amp;controls=1&amp;amp;end=0&amp;amp;loop=0&amp;amp;mute=0&amp;amp;start=0&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; title=&#34;YouTube video&#34;&gt;&lt;/iframe&gt;
+    &lt;/div&gt;
+
+Apparently Ukraine does, again now.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Comparing Geographical Sizes</title>
+      <link>https://blog.nella.org/2009/03/22/comparing-geographical-sizes/</link>
+      <pubDate>Sun, 22 Mar 2009 21:41:59 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=581</guid> 
+      <description>&lt;p&gt;A long time ago I thought it would be fun to open two windows and see two things on Google Maps next to each other. That way, I could compare the sizes of them. But getting the scale set the same on both maps was not easy. Wouldn&amp;rsquo;t it be neat if the scale of the maps was set to the same?&lt;/p&gt;
+&lt;p&gt;I finally got around to implementing this with Google Maps API:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Locations Database in Gnome</title>
+      <link>https://blog.nella.org/2008/11/19/locations-database-in-gnome/</link>
+      <pubDate>Wed, 19 Nov 2008 00:59:10 +0000</pubDate>
+       <guid isPermaLink="false">http://blog.nella.org/?p=434</guid> 
+      <description>&lt;p&gt;There&amp;rsquo;s a nifty feature hidden in Gnome that&amp;rsquo;s interesting to play with. Click on the date in the upper right. You get an applet with a calendar. Below the calendar is &amp;ldquo;Locations&amp;rdquo;, click on that. Nifty little map showing the line where sunset and sunrise are. Click on edit, and you get to add your favorite locations to the map. But not just your favorite timezones, you get to pick from a huge list of geographic places. My hometown, little Roseburg Oregon is in there. African capitals are in there, though sadly Monrovia got missed. And when you add the clocks, you get weather too!&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

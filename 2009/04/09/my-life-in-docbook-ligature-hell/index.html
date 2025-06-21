@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>My life in DocBook ligature hell | jra&#39;s thoughts</title>
+<meta name="keywords" content="">
+<meta name="description" content="I am working on a new project. The result will be a document. I want to publish it in several formats, including HTML, PDF, and Word. (Hot tip: if you rename a RTF file to end in DOC, you&rsquo;re done. Don&rsquo;t make DOC files, they suck. Make RTF files, which any editor can read. You just have to trick your users and Word into using RTF&rsquo;s by renaming them.)
+The accepted standard these days for formatting a document into PDF, RTF and HTML is DocBook. In fact, the modern implementation of DocBook is just &ldquo;XML &#43; XSL (&#43; FO)&rdquo;. You could do pretty much the same thing with XML and XSL yourself, but then your document would not be compatible with someone else&rsquo;s formatting instructions, and you&rsquo;d be redoing a bunch of work other people already did.">
+<meta name="author" content="jra">
+<link rel="canonical" href="https://blog.nella.org/2009/04/09/my-life-in-docbook-ligature-hell/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.3beea2776320e39a6c8d0589cd10cf4cbbbe3ca9b6f0363cfeef1417ed39a195.css" integrity="sha256-O&#43;6id2Mg45psjQWJzRDPTLu&#43;PKm28DY8/u8UF&#43;05oZU=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://blog.nella.org/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://blog.nella.org/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://blog.nella.org/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://blog.nella.org/apple-touch-icon.png">
+<link rel="mask-icon" href="https://blog.nella.org/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://blog.nella.org/2009/04/09/my-life-in-docbook-ligature-hell/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend&display=swap" rel="stylesheet">
+<meta property="og:url" content="https://blog.nella.org/2009/04/09/my-life-in-docbook-ligature-hell/">
+  <meta property="og:site_name" content="jra&#39;s thoughts">
+  <meta property="og:title" content="My life in DocBook ligature hell">
+  <meta property="og:description" content="I am working on a new project. The result will be a document. I want to publish it in several formats, including HTML, PDF, and Word. (Hot tip: if you rename a RTF file to end in DOC, you’re done. Don’t make DOC files, they suck. Make RTF files, which any editor can read. You just have to trick your users and Word into using RTF’s by renaming them.)
+The accepted standard these days for formatting a document into PDF, RTF and HTML is DocBook. In fact, the modern implementation of DocBook is just “XML &#43; XSL (&#43; FO)”. You could do pretty much the same thing with XML and XSL yourself, but then your document would not be compatible with someone else’s formatting instructions, and you’d be redoing a bunch of work other people already did.">
+  <meta property="og:locale" content="en-US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2009-04-09T00:24:58+00:00">
+    <meta property="article:modified_time" content="2009-04-09T00:24:58+00:00">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="My life in DocBook ligature hell">
+<meta name="twitter:description" content="I am working on a new project. The result will be a document. I want to publish it in several formats, including HTML, PDF, and Word. (Hot tip: if you rename a RTF file to end in DOC, you&rsquo;re done. Don&rsquo;t make DOC files, they suck. Make RTF files, which any editor can read. You just have to trick your users and Word into using RTF&rsquo;s by renaming them.)
+The accepted standard these days for formatting a document into PDF, RTF and HTML is DocBook. In fact, the modern implementation of DocBook is just &ldquo;XML &#43; XSL (&#43; FO)&rdquo;. You could do pretty much the same thing with XML and XSL yourself, but then your document would not be compatible with someone else&rsquo;s formatting instructions, and you&rsquo;d be redoing a bunch of work other people already did.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://blog.nella.org/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "My life in DocBook ligature hell",
+      "item": "https://blog.nella.org/2009/04/09/my-life-in-docbook-ligature-hell/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "My life in DocBook ligature hell",
+  "name": "My life in DocBook ligature hell",
+  "description": "I am working on a new project. The result will be a document. I want to publish it in several formats, including HTML, PDF, and Word. (Hot tip: if you rename a RTF file to end in DOC, you\u0026rsquo;re done. Don\u0026rsquo;t make DOC files, they suck. Make RTF files, which any editor can read. You just have to trick your users and Word into using RTF\u0026rsquo;s by renaming them.)\nThe accepted standard these days for formatting a document into PDF, RTF and HTML is DocBook. In fact, the modern implementation of DocBook is just \u0026ldquo;XML + XSL (+ FO)\u0026rdquo;. You could do pretty much the same thing with XML and XSL yourself, but then your document would not be compatible with someone else\u0026rsquo;s formatting instructions, and you\u0026rsquo;d be redoing a bunch of work other people already did.\n",
+  "keywords": [
+    
+  ],
+  "articleBody": "I am working on a new project. The result will be a document. I want to publish it in several formats, including HTML, PDF, and Word. (Hot tip: if you rename a RTF file to end in DOC, you’re done. Don’t make DOC files, they suck. Make RTF files, which any editor can read. You just have to trick your users and Word into using RTF’s by renaming them.)\nThe accepted standard these days for formatting a document into PDF, RTF and HTML is DocBook. In fact, the modern implementation of DocBook is just “XML + XSL (+ FO)”. You could do pretty much the same thing with XML and XSL yourself, but then your document would not be compatible with someone else’s formatting instructions, and you’d be redoing a bunch of work other people already did.\nSo DocBook is interesting, but by default it was making my document ugly. Really, really ugly. I just had to do something about it, and that lead me into playing with fonts and layout. Fonts went easy, because there’s really good info in DocBook XSL: The Complete Guide. Farting around finding free TTF fonts was a pain in the butt, but I eventually paired Futura with Garamond, on the advice of the nifty (and niftily named) Esperfonto.\nSince I was obsessing about the way the page looked, I decided it would be nice to turn on whatever magic DocBook has available to make printed pages look nice. After all, if DocBook is good enough for O’Reilly, it ought to be good enough for me. I’d already noticed that DocBook was making my quotes curve (as long as you use the hideously verbose tags). Then I looked into getting my apostrophes to curve.\nHello? Tap tap. Is this thing on?\nTurns out the number one rule of the DocBook Club is you don’t talk about the DocBook Club. There’s plenty of mailing lists and stuff, but there are no answers. Eventually, it seemed to me the actual answer is “insert the Unicode symbol for them yourself”.\nWow, that’s seriously fucking stupid. Not even Word is that stupid… and I thought Word had the market cornered on stupid.\nSo I gave up on curved apostrophes for a bit and went to go turn on ligatures. Since you are probably like me and don’t know your ligatures from your descenders, check out this great picture:\nClick on the picture to go learn more. It’s a great website – lots of typo geekery and puns… my kind of stuff. There’s also cool stuff on ligatures there.\nSo after much gnashing of teeth and experimenting, here’s what I’m coming to see about DocBook, PDF and HTML:\nLigatures work, and can be quite beautiful.\nLigatures make searching in the PDF document fail mysteriously, because the underlying word is gone, and what remains are the characters that get displayed. “Difficult” is a different word than “Di ffi-ligature cult”. Because PDF is all about the flash, no one has gotten around to fixing this. It would take rocket science. What needed to happen was about 20 years ago someone should have stood up and said, “wait! words are words, and instructions for showing words are not words, and when the two are different, both have to be preserved!”. And in fact, MacOS seems to have this… watch this video to see that Macs can add ligatures “on top of” underlying text without forgetting what the text itself is:\nUsing typographic ligature on Mac OS X from Cédric Hüsler on Vimeo.\nLigatures don’t work with all fonts. That makes them tricky to use in PDF (but doable) and really dangerous to do in HTML (where there’s no guarantee what font you’ll get).\nDocBook has no support whatsoever for ligatures, just as support is absent for curved apostrophes. It just boils down to “type the Unicode”.\nSo, now I’m contemplating one of two ways forward:\nJust forget them all together, which would be a shame Write a script called “ligify” that finds all the ligatures and puts them in, and only let it run for the PDF generation, not the HTML generation. (Bad interactions between nXML mode and XML’s stupid macros mean I already have to do my own macro expansion with sed anyway.) I’m becoming an expert in DocBook publishing, which would be a nice thing to have on my resume, except that I fear I’d slit my wrists if I was doing this stuff every day. How can it be that SGML has existed 20 years, and it’s STILL THIS BAD? This is clearly an example of Leonard’s Law (software will be as bad as its users will tolerate).\n",
+  "wordCount" : "778",
+  "inLanguage": "en",
+  "datePublished": "2009-04-09T00:24:58Z",
+  "dateModified": "2009-04-09T00:24:58Z",
+  "author":{
+    "@type": "Person",
+    "name": "jra"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://blog.nella.org/2009/04/09/my-life-in-docbook-ligature-hell/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "jra's thoughts",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://blog.nella.org/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://blog.nella.org/" accesskey="h" title="jra&#39;s thoughts (Alt + H)">jra&#39;s thoughts</a>
+            <div class="logo-switches">
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://blog.nella.org/">Home</a>&nbsp;»&nbsp;<a href="https://blog.nella.org/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      My life in DocBook ligature hell
+    </h1>
+    <div class="post-meta"><span title='2009-04-09 00:24:58 +0000 +0000'>April 9, 2009</span>&nbsp;·&nbsp;4 min&nbsp;·&nbsp;jra
+
+</div>
+  </header> 
+  <div class="post-content"><p>I am working on a new project. The result will be a document. I want to publish it in several formats, including HTML, PDF, and Word. (Hot tip: if you rename a RTF file to end in DOC, you&rsquo;re done. Don&rsquo;t make DOC files, they suck. Make RTF files, which any editor can read. You just have to trick your users and Word into using RTF&rsquo;s by renaming them.)</p>
+<p>The accepted standard these days for formatting a document into PDF, RTF and HTML is DocBook. In fact, the modern implementation of DocBook is just &ldquo;XML + XSL (+ FO)&rdquo;. You could do pretty much the same thing with XML and XSL yourself, but then your document would not be compatible with someone else&rsquo;s formatting instructions, and you&rsquo;d be redoing a bunch of work other people already did.</p>
+<p>So DocBook is interesting, but by default it was making my document ugly. Really, really ugly. I just had to do something about it, and that lead me into playing with fonts and layout. Fonts went easy, because there&rsquo;s really good info in <a href="http://www.sagehill.net/docbookxsl/">DocBook XSL: The Complete Guide</a>. Farting around finding free TTF fonts was a pain in the butt, but I eventually paired Futura with Garamond, on the advice of the nifty (and niftily named) <a href="http://www.esperfonto.com/">Esperfonto</a>.</p>
+<p>Since I was obsessing about the way the page looked, I decided it would be nice to turn on whatever magic DocBook has available to make printed pages look nice. After all, if DocBook is good enough for O&rsquo;Reilly, it ought to be good enough for me. I&rsquo;d already noticed that DocBook was making my quotes curve (as long as you use the hideously verbose <quote></quote> tags). Then I looked into getting my apostrophes to curve.</p>
+<p>Hello? Tap tap. Is this thing on?</p>
+<p>Turns out the number one rule of the DocBook Club is you don&rsquo;t talk about the DocBook Club. There&rsquo;s plenty of mailing lists and stuff, but there are no answers. Eventually, it seemed to me the actual answer is &ldquo;insert the Unicode symbol for them yourself&rdquo;.</p>
+<p>Wow, that&rsquo;s seriously fucking stupid. Not even Word is that stupid&hellip; and I thought Word had the market cornered on stupid.</p>
+<p>So I gave up on curved apostrophes for a bit and went to go turn on ligatures. Since you are probably like me and don&rsquo;t know your ligatures from your descenders, check out this great picture:</p>
+<p><img loading="lazy" src="/wp-content/uploads/2020/05/serifsandsherifs1.gif"></p>
+<p>Click on the picture to go learn more. It&rsquo;s a great website &ndash; lots of typo geekery and puns&hellip; my kind of stuff. There&rsquo;s also <a href="http://ilovetypography.com/2007/09/09/decline-and-fall-of-the-ligature/">cool stuff on ligatures</a> there.</p>
+<p>So after much gnashing of teeth and experimenting, here&rsquo;s what I&rsquo;m coming to see about DocBook, PDF and HTML:</p>
+<ul>
+<li>
+<p>Ligatures work, and can be quite beautiful.</p>
+</li>
+<li>
+<p>Ligatures make searching in the PDF document fail mysteriously, because the underlying word is gone, and what remains are the characters that get displayed. &ldquo;Difficult&rdquo; is a different word than &ldquo;Di ffi-ligature cult&rdquo;. Because PDF is all about the flash, no one has gotten around to fixing this. It would take rocket science. What needed to happen was about 20 years ago someone should have stood up and said, &ldquo;wait! words are words, and instructions for showing words are not words, and when the two are different, both have to be preserved!&rdquo;. And in fact, MacOS seems to have this&hellip; watch this video to see that Macs can add ligatures &ldquo;on top of&rdquo; underlying text without forgetting what the text itself is:</p>
+<p><a href="https://vimeo.com/2454026">Using typographic ligature on Mac OS X</a> from <a href="https://vimeo.com/keepthebyte">Cédric Hüsler</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
+</li>
+<li>
+<p>Ligatures don&rsquo;t work with all fonts. That makes them tricky to use in PDF (but doable) and really dangerous to do in HTML (where there&rsquo;s no guarantee what font you&rsquo;ll get).</p>
+</li>
+<li>
+<p>DocBook has no support whatsoever for ligatures, just as support is absent for curved apostrophes. It just boils down to &ldquo;type the Unicode&rdquo;.</p>
+</li>
+</ul>
+<p>So, now I&rsquo;m contemplating one of two ways forward:</p>
+<ul>
+<li>Just forget them all together, which would be a shame</li>
+<li>Write a script called &ldquo;ligify&rdquo; that finds all the ligatures and puts them in, and only let it run for the PDF generation, not the HTML generation. (Bad interactions between nXML mode and XML&rsquo;s stupid macros mean I already have to do my own macro expansion with sed anyway.)</li>
+</ul>
+<p>I&rsquo;m becoming an expert in DocBook publishing, which would be a nice thing to have on my resume, except that I fear I&rsquo;d slit my wrists if I was doing this stuff every day. How can it be that SGML has existed 20 years, and it&rsquo;s STILL THIS BAD? This is clearly an example of Leonard&rsquo;s Law (software will be as bad as its users will tolerate).</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+
+<ul class="share-buttons">
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share My life in DocBook ligature hell on linkedin"
+            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.nella.org%2f2009%2f04%2f09%2fmy-life-in-docbook-ligature-hell%2f&amp;title=My%20life%20in%20DocBook%20ligature%20hell&amp;summary=My%20life%20in%20DocBook%20ligature%20hell&amp;source=https%3a%2f%2fblog.nella.org%2f2009%2f04%2f09%2fmy-life-in-docbook-ligature-hell%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share My life in DocBook ligature hell on ycombinator"
+            href="https://news.ycombinator.com/submitlink?t=My%20life%20in%20DocBook%20ligature%20hell&u=https%3a%2f%2fblog.nella.org%2f2009%2f04%2f09%2fmy-life-in-docbook-ligature-hell%2f">
+            <svg version="1.1" xml:space="preserve" width="30px" height="30px" viewBox="0 0 512 512" fill="currentColor"
+                xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
+                <path
+                    d="M449.446 0C483.971 0 512 28.03 512 62.554L512 449.446C512 483.97 483.97 512 449.446 512L62.554 512C28.03 512 0 483.97 0 449.446L0 62.554C0 28.03 28.029 0 62.554 0L449.446 0ZM183.8767 87.9921H121.8427L230.6673 292.4508V424.0079H281.3328V292.4508L390.1575 87.9921H328.1233L256 238.2489z" />
+            </svg>
+        </a>
+    </li>
+</ul>
+
+  </footer>
+</article>
+    </main>
+    
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

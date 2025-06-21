@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head>
+	<meta name="generator" content="Hugo 0.147.8"><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>jra&#39;s thoughts</title>
+
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="canonical" href="https://blog.nella.org/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.3beea2776320e39a6c8d0589cd10cf4cbbbe3ca9b6f0363cfeef1417ed39a195.css" integrity="sha256-O&#43;6id2Mg45psjQWJzRDPTLu&#43;PKm28DY8/u8UF&#43;05oZU=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://blog.nella.org/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://blog.nella.org/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://blog.nella.org/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://blog.nella.org/apple-touch-icon.png">
+<link rel="mask-icon" href="https://blog.nella.org/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" type="application/rss+xml" href="https://blog.nella.org/feed.xml">
+<link rel="alternate" type="application/json" href="https://blog.nella.org/index.json">
+<link rel="alternate" hreflang="en" href="https://blog.nella.org/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend&display=swap" rel="stylesheet">
+<meta property="og:url" content="https://blog.nella.org/">
+  <meta property="og:site_name" content="jra&#39;s thoughts">
+  <meta property="og:title" content="jra&#39;s thoughts">
+  <meta property="og:locale" content="en-US">
+  <meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jra&#39;s thoughts">
+<meta name="twitter:description" content="">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "jra's thoughts",
+  "url": "https://blog.nella.org/",
+  "description": "",
+  "logo": "https://blog.nella.org/favicon.ico",
+  "sameAs": [
+      
+  ]
+}
+</script>
+</head>
+
+<body class="list" id="top">
+<script>
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://blog.nella.org/" accesskey="h" title="jra&#39;s thoughts (Alt + H)">jra&#39;s thoughts</a>
+            <div class="logo-switches">
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main"> 
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Gobs on the wire
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>This week, I want to talk about how to use Go to write a client/server system with both synchronous requests and asynchronous event notifications.
+To help learn Go, I wrote a clone of the Conserver console server. Now, of course, the world didn’t need another console server, but it turned out to be an interesting experiment, because what a console server does is well suited to the tools Go gives a programmer. A console server’s job is to gather the output from one or more serial cables (or, when there’s a terminal server in the mix, one or more TCP connections implementing the Rtelnet “protocol”). It logs that output to files, and makes the output available in realtime to zero or more watchers. It allows one and only one of the watchers to be read-write, to actually control the device.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2011-01-17 18:24:54 +0000 +0000'>January 17, 2011</span>&nbsp;·&nbsp;9 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Gobs on the wire" href="https://blog.nella.org/2011/01/17/gobs-on-the-wire/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">The impatient producer
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Last week I showed how a channel could link a producer and a consumer, and I idly speculated on how you’d set the depth of the queue, relative to the rate and variability of the producer and the consumer’s need for new input.
+This weekend, I got to thinking about my next interesting Go project. It will be an HTTP proxy that can do some nifty tricks to offload a slow Internet link. One of the features I thought I might add would be something to send all the new HTML it sees through a secondary processing system in order to find extra assets it might want to cache. This is a case of a producer that wants to act totally independently of the consumer. If the secondary processing goroutine is slow, or hung inserting something into a database, or whatever, the producer (the HTTP reply) can’t hang – he needs to reply to the client.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2011-01-11 04:17:52 +0000 +0000'>January 11, 2011</span>&nbsp;·&nbsp;5 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to The impatient producer" href="https://blog.nella.org/2011/01/11/the-impatient-producer/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Using a channel as a queue
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>I try to write a Go article every Monday, but the holiday season has disrupted me a bit. So here’s a little something I dug out of my stocking to get things going again.
+I thought an interesting way to play with the exp/draw package, the http client, and the image decoder would be a program to animate the tiles from Google Maps, showing the world scrolling by, as though you were in an airplane looking straight down and flying in a straight line. It came to me in one of those flying dreams… (not really).
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2011-01-03 15:10:23 +0000 +0000'>January 3, 2011</span>&nbsp;·&nbsp;6 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Using a channel as a queue" href="https://blog.nella.org/2011/01/03/using-a-channel-as-a-queue/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">A simpler way to embed data
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>In my post about how to efficiently put data into a Go binary, I mentioned that strings are immutable, and can be accessed without causing the Go runtime to copy them. This turns out to be the key to a simpler way to achieve what I wanted to do.
+By simpler I mean, “no cgo”. That’s a nice simplification, because up until recently, your final static binary image linked to the cgo code dynamically, and that made using my technique impossible in the context of the Tiny runtime, where there is no dynamic linker. Recently cgo has changed, but at the same time, I’ve discovered how to use native strings to do what I want, so let’s see how it works.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2010-12-17 16:23:56 +0000 +0000'>December 17, 2010</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to A simpler way to embed data" href="https://blog.nella.org/2010/12/17/a-simpler-way-to-embed-data/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">RTM&#39;s puzzle
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Here is a little program to that implements RTM’s series for Cliff Stoll.
+package main import &#34;fmt&#34; func count(s []int) int { i := 1 x := s[0] for ; i &lt; len(s); i&#43;&#43; { if s[i] != x { break } } return i } func next(s []int) []int { res := []int{} for len(s) &gt; 0 { n := count(s) res = append(res, n, s[0]) if n == len(s) { break } s = s[n:] } return res } func max(s []int) (m int) { for _, x := range s { if x &gt; m { m = x } } return } func main() { s := []int{1} for i := 0; i &lt; 200; i&#43;&#43; { s = next(s) fmt.Println(len(s), max(s)) } } </p>
+  </div>
+  <footer class="entry-footer"><span title='2010-12-17 01:16:25 +0000 +0000'>December 17, 2010</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to RTM&#39;s puzzle" href="https://blog.nella.org/2010/12/17/rtms-puzzle/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Where is bytes.NewReaderAt?
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>I have a nice source of []byte slices (see last post), and now I’d like to do something with them that resembles a filesystem. I was planning on just using a map from name to file contents, which would work ok. But then I remembered seeing the archive/zip package, and I thought how much cooler it would be to just make my prototype filesystem, zip it up, put the zip file into my Go program (see last post) and then access the filesystem via the archive/zip package later.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2010-12-13 15:37:15 +0000 +0000'>December 13, 2010</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Where is bytes.NewReaderAt?" href="https://blog.nella.org/2010/12/13/where-is-bytesnewreaderat/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Fat Constants, Thin Constants
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>I play from time to time with a patch for Go that makes the Tiny runtime more capable. My current goal is to get a new backend for exp/draw working which writes to the SVGA screen. It would be cool to be able to decode the Go mascot and have him flying around the screen or something.
+In the Tiny runtime, there’s no OS, so there’s no disk drivers, so there’s no filesystem, so there’s no files. Which makes decoding a PNG and showing it kind of hard. But if the program carries along the data with it, in the form of a []byte, then you could use bytes.NewReader to turn it into an io.Reader and then pass it to image/png.Decode. So that’s what I set out to do.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2010-12-13 15:23:33 +0000 +0000'>December 13, 2010</span>&nbsp;·&nbsp;7 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Fat Constants, Thin Constants" href="https://blog.nella.org/2010/12/13/fat-constants-thin-constants/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Passing function pointers through channels in Go
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Is is possible? Of course!
+package main func add(x, y int) int { return x &#43; y } func mul(x, y int) int { return x * y } func runner(ch chan func(int, int)(int)) { for f := range ch { println(&#34;f(1, 2) = &#34;, f(1, 2)) } } func main() { ch := make(chan func(int, int)(int)) go runner(ch) ch &lt;- add ch &lt;- mul ch &lt;- add close(ch) } Is it useful? Probably, but this demo doesn’t show how yet… have to think about what patterns this makes possible.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2010-12-03 09:55:23 +0000 +0000'>December 3, 2010</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Passing function pointers through channels in Go" href="https://blog.nella.org/2010/12/03/passing-function-pointers-through-channels-in-go/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Where&#39;s all the magic? In the linker...
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>I have been trying to make a post per week about Go, but that requires learning something interesting during the week. I’m currently cycling between several little Go toys as I get the time. One is to make Go on raw hardware more useful/interesting. Another is a clone of the console server from conserver.com written in Go. Neither one of those little projects is at a point where I can really explain much about it, but not for want of trying… This week my Go console server project taught me that netchan cannot send channels (OK, I wasn’t really shocked at this, but I was hoping that it might work), and so I’ll need to make my own protocol, and include some proxy channel reader/writers at each end of the TCP connection to send the data into the channel like I want. On the raw-hardware side, I got stuck on code that ends up incorrect once it ends up in the ELF file. Go figure.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2010-11-15 22:06:13 +0000 +0000'>November 15, 2010</span>&nbsp;·&nbsp;6 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Where&#39;s all the magic? In the linker..." href="https://blog.nella.org/2010/11/15/wheres-all-the-magic-in-the-linker/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Who said life is fair? The Go scheduler certainly didn&#39;t...
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>In my last post, I showed a program that had a strange behavior that caught my eye. I was trying to look at how Go handles shared access to globals, but the program also had the unintended effect of measuring the “fairness” of the Go scheduler. Here’s the program again, for context:
+package main import &#34;runtime&#34; var x int var ch = make(chan bool) func f(inc int) { for { println(&#34;f: &#34;, inc) x &#43;= inc ch &lt;- true } } func main() { go f(1) go f(-1) runtime.Gosched() for { _ = &lt;- ch _ = &lt;- ch println(&#34;main sees x = &#34;, x) } } When you run this with GOMAXPROCS=3, and you are on a machine with at least three cores, you get precisely what you’d expect: three system threads, each one running one goroutine, and total fairness: f(1) happens once for every f(-1), and the long-run value of x is around 0, but sometimes higher or lower.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2010-11-08 08:35:27 +0000 +0000'>November 8, 2010</span>&nbsp;·&nbsp;6 min&nbsp;·&nbsp;jra</footer>
+  <a class="entry-link" aria-label="post link to Who said life is fair? The Go scheduler certainly didn&#39;t..." href="https://blog.nella.org/2010/11/08/who-said-life-is-fair-the-go-scheduler-certainly-didnt/"></a>
+</article>
+<footer class="page-footer">
+  <nav class="pagination">
+    <a class="prev" href="https://blog.nella.org/page/7/">
+      «&nbsp;Prev&nbsp;
+    </a>
+    <a class="next" href="https://blog.nella.org/page/9/">Next&nbsp;&nbsp;»
+    </a>
+  </nav>
+</footer>
+    </main>
+    
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+</body>
+
+</html>
